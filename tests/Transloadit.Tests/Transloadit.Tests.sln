@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transloadit.Tests", "Transloadit.Tests.csproj", "{FC3C0ED0-53F6-5DFA-E6CE-3D617A6FCE78}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FC3C0ED0-53F6-5DFA-E6CE-3D617A6FCE78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC3C0ED0-53F6-5DFA-E6CE-3D617A6FCE78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC3C0ED0-53F6-5DFA-E6CE-3D617A6FCE78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC3C0ED0-53F6-5DFA-E6CE-3D617A6FCE78}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0DAAB098-5EDC-4FDF-B5F0-36149E3DE458}
+	EndGlobalSection
+EndGlobal
