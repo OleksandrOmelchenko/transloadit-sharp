@@ -91,12 +91,6 @@ namespace Transloadit.Assembly
         void SetTemplateID(string templateID);
 
         /// <summary>
-        /// Converts the builder to ApiData and gets the object, which will be the base of the sent Transloadit request
-        /// </summary>
-        /// <returns>Data to be sent to Transloadit backend</returns>
-        ApiData ToApiData();
-
-        /// <summary>
         /// Converts the builder to JSON string and gets it
         /// </summary>
         /// <returns>Parameter tree as JSON string</returns>

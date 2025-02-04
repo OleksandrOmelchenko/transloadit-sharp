@@ -10,22 +10,17 @@ namespace Transloadit.Models
 
     public class PriorityJobSlots
     {
-        [JsonProperty("count")]
         public int Count { get; set; }
 
-        [JsonProperty("slots")]
         public Slots Slots { get; set; }
     }
 
     public class QueueResponse
     {
-        [JsonProperty("ok")]
         public string Ok { get; set; }
 
-        [JsonProperty("message")]
         public string Message { get; set; }
 
-        [JsonProperty("priority_job_slots")]
         public PriorityJobSlots PriorityJobSlots { get; set; }
     }
 

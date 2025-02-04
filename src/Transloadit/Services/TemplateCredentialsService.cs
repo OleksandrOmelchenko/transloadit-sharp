@@ -14,29 +14,29 @@ namespace Transloadit.Services
             _client = client;
         }
 
-        public async Task<TemplateCredentialsResponse> GetAsync(string id)
+        public async Task<CredentialResponse> GetAsync(string credentialIdOrName)
         {
-            return await _client.SendRequest<TemplateCredentialsResponse>(HttpMethod.Get, $"/template_credentials/{id}");
+            return await _client.SendRequest<CredentialResponse>(HttpMethod.Get, $"/template_credentials/{credentialIdOrName}");
         }
 
-        public async Task<TemplateCredentialsResponse> GetListAsync()
+        public async Task<CredentialsListResponse> GetListAsync()
         {
-            return await _client.SendRequest<TemplateCredentialsResponse>(HttpMethod.Get, $"/template_credentials");
+            return await _client.SendRequest<CredentialsListResponse>(HttpMethod.Get, $"/template_credentials");
         }
 
-        public async Task<TemplateCredentialsResponse> DeleteAsync(string id)
+        public async Task<CredentialResponse> CreateAsync(CreateCredentialsRequestBase credential)
         {
-            return await _client.SendRequest<TemplateCredentialsResponse>(HttpMethod.Delete, $"/template_credentials/{id}");
+            return await _client.SendRequest<CredentialResponse>(HttpMethod.Post, $"/template_credentials", credential);
         }
 
-        public async Task<CreateCredentialResponse> CreateAsync(CreateCredentialsRequestBase credential)
+        public async Task<CredentialResponse> UpdateAsync(string credentialIdOrName, CreateCredentialsRequestBase credential)
         {
-            return await _client.SendRequest<CreateCredentialResponse>(HttpMethod.Post, $"/template_credentials", credential);
+            return await _client.SendRequest<CredentialResponse>(HttpMethod.Put, $"/template_credentials/{credentialIdOrName}", credential);
         }
 
-        public async Task<TemplateCredentialsResponse> UpdateAsync(object template)
+        public async Task<CredentialsListResponse> DeleteAsync(string credentialIdOrName)
         {
-            return await _client.SendRequest<TemplateCredentialsResponse>(HttpMethod.Put, $"/template_credentials");
+            return await _client.SendRequest<CredentialsListResponse>(HttpMethod.Delete, $"/template_credentials/{credentialIdOrName}");
         }
     }
 }

@@ -263,21 +263,7 @@ namespace Transloadit.Assembly
             return JsonConvert.SerializeObject(GetParams()).Replace("/", "\\/");
         }
 
-        /// <summary>
-        /// Converts the builder to ApiData and gets the object, which will be the base of the sent Transloadit request
-        /// </summary>
-        /// <returns>Data to be sent to Transloadit backend</returns>
-        public ApiData ToApiData()
-        {
-            ApiData apiData = new ApiData();
-            apiData.Files = files;
-            apiData.Fields.Add("params", ToJsonString());
-            foreach (KeyValuePair<string, object> field in fields)
-            {
-                apiData.Fields.Add(field.Key, field.Value);
-            }
-            return apiData;
-        }
+        
 
         #endregion
 

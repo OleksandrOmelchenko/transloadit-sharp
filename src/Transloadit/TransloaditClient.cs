@@ -96,7 +96,7 @@ namespace Transloadit
 
             var content = await result.Content.ReadAsStringAsync();
 
-            var res = JsonConvert.DeserializeObject<T>(content);
+            var res = JsonConvert.DeserializeObject<T>(content, _jsonSerializerSettings);
             return res;
         }
 

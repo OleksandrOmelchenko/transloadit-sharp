@@ -3,19 +3,6 @@ using System.Collections.Generic;
 
 namespace Transloadit.Models.TemplateCredentials
 {
-    public class CredentialContent
-    {
-        public string Type { get; set; }
-        public string Name { get; set; }
-        public string Host { get; set; }
-        public string User { get; set; }
-        public string Password { get; set; }
-        public string Bucket { get; set; }
-        public string BucketRegion { get; set; }
-        public string Key { get; set; }
-        public string Secret { get; set; }
-    }
-
     public class Credential
     {
         public string Id { get; set; }
@@ -25,18 +12,18 @@ namespace Transloadit.Models.TemplateCredentials
         public DateTimeOffset Created { get; set; }
         public DateTimeOffset Modified { get; set; }
         public DateTimeOffset? Deleted { get; set; }
-        public Content Content { get; set; }
+        public Dictionary<string, string> Content { get; set; }
         public string Stringified { get; set; }
     }
 
-    public class TemplateCredentialsResponse
+    public class CredentialsListResponse
     {
         public string Ok { get; set; }
         public string Message { get; set; }
         public List<Credential> Credentials { get; set; }
     }
 
-    public class CreateCredentialResponse
+    public class CredentialResponse
     {
         public string Ok { get; set; }
         public string Message { get; set; }

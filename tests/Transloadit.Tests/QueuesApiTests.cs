@@ -19,7 +19,7 @@ namespace Transloadit.Tests
                  PageSize = 10,
                  Page = 0
              };*/
-            var templates = await client.Queues.GetAsync();
+            var templates = await client.Queues.GetJobSlotsAsync();
 
             // Assert.Equal("BILL_FOUND", billing.Ok);
         }
