@@ -1,14 +1,15 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using Transloadit.Models;
+using Transloadit.Services;
 
 namespace Transloadit
 {
@@ -20,11 +21,23 @@ namespace Transloadit
         private readonly string _secret;
         private readonly TransloaditClientOptions _options;
 
+        private static JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings
+        {
+            NullValueHandling = NullValueHandling.Ignore,
+            ContractResolver = new DefaultContractResolver
+            {
+                NamingStrategy = new SnakeCaseNamingStrategy()
+            }
+        };
 
         private const string ApiBase = "https://api2.transloadit.com";
 
         private BillingService _billingService;
         private TemplateService _templateService;
+        private AssembliesService _assembliesService;
+        private QueuesService _queuesService;
+        private TemplateCredentialsService _templateCredentialsService;
+        private AssemblyNotificationsService _assemblyNotificationsService;
 
         public TransloaditClient(string key, string secret, TransloaditClientOptions options = null)
         {
@@ -47,6 +60,10 @@ namespace Transloadit
 
         public BillingService Billing => _billingService ??= new BillingService(this);
         public TemplateService Templates => _templateService ??= new TemplateService(this);
+        public AssembliesService Assemblies => _assembliesService ??= new AssembliesService(this);
+        public QueuesService Queues => _queuesService ??= new QueuesService(this);
+        public TemplateCredentialsService TemplateCredentials => _templateCredentialsService ??= new TemplateCredentialsService(this);
+        public AssemblyNotificationsService AssemblyNotifications => _assemblyNotificationsService ??= new AssemblyNotificationsService(this);
 
         public static string BuildQuery(IEnumerable<KeyValuePair<string, string>> values)
         {
@@ -72,7 +89,7 @@ namespace Transloadit
             return $"sha384:{res}";
         }
 
-        public async Task<T> SendRequest<T>(HttpMethod httpMethod, string path, Dictionary<string, object> parameters = null)
+        public async Task<T> SendRequest<T>(HttpMethod httpMethod, string path, BaseParams parameters = null)
         {
             var request = BuildRequest(httpMethod, path, parameters);
             var result = await _options.HttpClient.SendAsync(request);
@@ -86,31 +103,50 @@ namespace Transloadit
         private HttpRequestMessage BuildRequest(
             HttpMethod httpMethod,
             string path,
-            Dictionary<string, object> parameters = null,
-            HttpContent content = null)
+            BaseParams parameters = null,
+            MultipartFormDataContent content = null)
         {
-            parameters ??= new Dictionary<string, object>();
-            var auth = new Dictionary<string, string>
+            parameters ??= new BaseParams();
+            parameters.Auth ??= new AuthParams
             {
-                ["key"] = _key,
-                ["expires"] = DateTime.UtcNow.AddMinutes(20).ToString("yyyy'/'MM'/'dd HH:mm:ss+00:00")
+                Key = _key,
+                Expires = DateTime.UtcNow.AddMinutes(20).ToString("yyyy'/'MM'/'dd HH:mm:ss+00:00")
             };
-            parameters["auth"] = auth;
 
-            var queryMap = new Dictionary<string, string>
+            var paramsJson = JsonConvert.SerializeObject(parameters, _jsonSerializerSettings);
+            var signature = CalculateSignature(paramsJson, _secret);
+
+            if (httpMethod == HttpMethod.Get)
             {
-                ["params"] = JsonConvert.SerializeObject(parameters)
-            };
-            queryMap["signature"] = CalculateSignature(queryMap["params"], _secret);
+                var queryMap = new Dictionary<string, string>
+                {
+                    ["params"] = paramsJson,
+                    ["signature"] = signature
+                };
 
-            var query = BuildQuery(queryMap);
+                var query = BuildQuery(queryMap);
+                path = path + "?" + query;
+            }
 
             var message = new HttpRequestMessage
             {
                 Method = httpMethod,
-                RequestUri = new Uri(new Uri(ApiBase), path + "?" + query),
-
+                RequestUri = new Uri(new Uri(ApiBase), path),
             };
+
+            if (httpMethod == HttpMethod.Post || httpMethod == HttpMethod.Delete || httpMethod == HttpMethod.Put)
+            {
+                content ??= new MultipartFormDataContent();
+
+                content.Add(new StringContent(paramsJson), "params");
+                content.Add(new StringContent(signature), "signature");
+
+            }
+            if (content != null)
+            {
+                message.Content = content;
+            }
+
             return message;
         }
     }
@@ -122,5 +158,5 @@ namespace Transloadit
 
     }
 
-   
+
 }

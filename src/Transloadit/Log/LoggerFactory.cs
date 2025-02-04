@@ -52,7 +52,7 @@ namespace Transloadit.Log
                     Type t = Type.GetType(type);
                     if (t == null)
                     {
-                        throw new Exceptions.LoggerClassNotFoundException(type);
+                        //throw new Exceptions.LoggerClassNotFoundException(type);
                     }
 
                     try
