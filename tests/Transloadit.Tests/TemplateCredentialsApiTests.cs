@@ -20,8 +20,9 @@ namespace Transloadit.Tests
         {
             var client = new TransloaditClient(Transloadit.AuthKey, Transloadit.AuthSecret);
             var templateCredentials = await client.TemplateCredentials.GetListAsync();
+            
 
-            Assert.Equal("TEMPLATE_CREDENTIALS_FOUND", templateCredentials.Ok);
+            Assert.Equal("TEMPLATE_CREDENTIALS_FOUND", templateCredentials.Base.Ok);
         }
 
         [Theory]
@@ -31,7 +32,7 @@ namespace Transloadit.Tests
             var client = new TransloaditClient(Transloadit.AuthKey, Transloadit.AuthSecret);
             var template = await client.TemplateCredentials.GetAsync(credentialIdOrName);
 
-            Assert.Equal("TEMPLATE_FOUND", template.Ok);
+            Assert.Equal("TEMPLATE_FOUND", template.Base.Ok);
         }
 
         [Theory]

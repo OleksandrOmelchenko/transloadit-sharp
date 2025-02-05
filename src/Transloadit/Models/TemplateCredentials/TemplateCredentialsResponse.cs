@@ -16,17 +16,13 @@ namespace Transloadit.Models.TemplateCredentials
         public string Stringified { get; set; }
     }
 
-    public class CredentialsListResponse
+    public class CredentialsListResponse : ResponseBase
     {
-        public string Ok { get; set; }
-        public string Message { get; set; }
         public List<Credential> Credentials { get; set; }
     }
 
-    public class CredentialResponse
+    public class CredentialResponse : ResponseBase
     {
-        public string Ok { get; set; }
-        public string Message { get; set; }
         public Credential Credential { get; set; }
     }
 }

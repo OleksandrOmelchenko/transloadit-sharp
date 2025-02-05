@@ -36,14 +36,8 @@ namespace Transloadit.Models
         public string Path { get; set; }
     }
 
-    public class TemplateResponse
+    public class TemplateResponse : ResponseBase
     {
-        [JsonProperty("ok")]
-        public string Ok { get; set; }
-
-        [JsonProperty("message")]
-        public string Message { get; set; }
-
         [JsonProperty("id")]
         public string Id { get; set; }
 

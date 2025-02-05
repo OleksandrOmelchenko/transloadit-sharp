@@ -170,17 +170,8 @@ namespace Transloadit.Models
     {
     }
 
-    public class AssemblyResponse
+    public class AssemblyResponse : ResponseBase
     {
-        [JsonProperty("ok")]
-        public string Ok { get; set; }
-
-        [JsonProperty("http_code")]
-        public int HttpCode { get; set; }
-
-        [JsonProperty("message")]
-        public string Message { get; set; }
-
         [JsonProperty("assembly_id")]
         public string AssemblyId { get; set; }
 
@@ -474,7 +465,7 @@ namespace Transloadit.Models
 
 
 
-    public class ReplayNotificationResponse
+    public class ReplayNotificationResponse : ResponseBase
     {
 
     }

@@ -32,8 +32,7 @@ namespace Transloadit.Tests
 
             var client = new TransloaditClient(config.AuthKey, config.AuthSecret);
             var template = await client.Templates.GetAsync(templateId);
-
-            Assert.Equal("TEMPLATE_FOUND", template.Ok);
+            Assert.Equal("TEMPLATE_FOUND", template.Base.Ok);
         }
 
     }

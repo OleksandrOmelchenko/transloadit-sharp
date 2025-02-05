@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Transloadit.Models;
 using Transloadit.Services;
 
 namespace Transloadit
@@ -89,15 +90,18 @@ namespace Transloadit
             return $"sha384:{res}";
         }
 
-        public async Task<T> SendRequest<T>(HttpMethod httpMethod, string path, BaseParams parameters = null)
+        public async Task<T> SendRequest<T>(HttpMethod httpMethod, string path, BaseParams parameters = null) where T : ResponseBase
         {
             var request = BuildRequest(httpMethod, path, parameters);
-            var result = await _options.HttpClient.SendAsync(request);
+            var response = await _options.HttpClient.SendAsync(request);
 
-            var content = await result.Content.ReadAsStringAsync();
+            var content = await response.Content.ReadAsStringAsync();
 
-            var res = JsonConvert.DeserializeObject<T>(content, _jsonSerializerSettings);
-            return res;
+            var transloaditResponse = new TransloaditResponse(response.StatusCode, response.Headers, content);
+
+            var parsed = JsonConvert.DeserializeObject<T>(content, _jsonSerializerSettings);
+            parsed.TransloaditResponse = transloaditResponse;
+            return parsed;
         }
 
         private HttpRequestMessage BuildRequest(

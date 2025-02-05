@@ -1,32 +1,34 @@
 using System;
 using System.Threading.Tasks;
-using Transloadit.Tests.Configuration;
 using Xunit;
 
 namespace Transloadit.Tests
 {
-    public class BillingApiTests
+    public class BillingApiTests : TestBase
     {
         [Fact]
         public async Task GetBillingDateTime()
         {
-            var config = TestConfiguration.ReadFromAppSettings().Transloadit;
+            var billing = await TransloaditClient.Billing.GetAsync(DateTime.Now);
 
-            var client = new TransloaditClient(config.AuthKey, config.AuthSecret);
-            var billing = await client.Billing.GetAsync(DateTime.Now);
-
-            Assert.Equal("BILL_FOUND", billing.Ok);
+            Assert.Equal("BILL_FOUND", billing.Base.Ok);
         }
 
         [Fact]
         public async Task GetBillingYearMonth()
         {
-            var config = TestConfiguration.ReadFromAppSettings().Transloadit;
-
-            var client = new TransloaditClient(config.AuthKey, config.AuthSecret);
+            var client = new TransloaditClient(Transloadit.AuthKey, Transloadit.AuthSecret);
             var billing = await client.Billing.GetAsync(2025, 2);
 
-            Assert.Equal("BILL_FOUND", billing.Ok);
+            Assert.Equal("BILL_FOUND", billing.Base.Ok);
+        }
+
+        [Fact(Skip = "For some reason response is always successful")]
+        public async Task GetNonExistingBilling()
+        {
+            var future = DateTime.Now.AddMonths(2);
+            var billing = await TransloaditClient.Billing.GetAsync(future);
+            Assert.Equal("BILL_ERROR_OR_SOMETHING", billing.Base.Ok);
         }
     }
 }

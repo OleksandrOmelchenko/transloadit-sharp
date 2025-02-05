@@ -1,28 +1,16 @@
-using System;
-using System.Net.Sockets;
 using System.Threading.Tasks;
-using Transloadit.Tests.Configuration;
 using Xunit;
 
 namespace Transloadit.Tests
 {
-    public class QueuesApiTests
+    public class QueuesApiTests : TestBase
     {
         [Fact]
         public async Task GetQueue()
         {
-            var config = TestConfiguration.ReadFromAppSettings().Transloadit;
+            var jobSlots = await TransloaditClient.Queues.GetJobSlotsAsync();
 
-            var client = new TransloaditClient(config.AuthKey, config.AuthSecret);
-            /* var par = new PaginationParams
-             {
-                 PageSize = 10,
-                 Page = 0
-             };*/
-            var templates = await client.Queues.GetJobSlotsAsync();
-
-            // Assert.Equal("BILL_FOUND", billing.Ok);
+            Assert.Equal("PRIORITY_JOB_SLOTS_FOUND", jobSlots.Base.Ok);
         }
-
     }
 }

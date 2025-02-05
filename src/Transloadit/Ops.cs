@@ -1,9 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
+using Transloadit.Models;
 
 namespace Transloadit
 {
-    public class PaginatedList<T>
+    public class PaginatedList<T> : ResponseBase
     {
         public int Count { get; set; }
 
@@ -21,10 +22,10 @@ namespace Transloadit
     {
         [JsonProperty("key")]
         public string Key { get; set; }
-        
+
         [JsonProperty("expires")]
         public string Expires { get; set; }
-        
+
         [JsonProperty("nonce")]
         public string Nonce { get; set; }
     }
