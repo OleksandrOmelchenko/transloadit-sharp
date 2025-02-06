@@ -1,8 +1,8 @@
 ﻿namespace Transloadit.Models.TemplateCredentials
 {
-    public class CreateFtpCredentialsRequest : CreateCredentialsRequestBase
+    public class FtpCredentialsRequest : CredentialsRequestBase
     {
-        public CreateFtpCredentialsRequest()
+        public FtpCredentialsRequest()
         {
             Type = "ftp";
         }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Transloadit.Models
+namespace Transloadit.Models.Assemblies
 {
     public class Fields
     {
@@ -465,8 +465,5 @@ namespace Transloadit.Models
 
 
 
-    public class ReplayNotificationResponse : ResponseBase
-    {
 
-    }
 }

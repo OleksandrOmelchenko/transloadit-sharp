@@ -1,8 +1,8 @@
 ﻿namespace Transloadit.Models.TemplateCredentials
 {
-    public class CreateBackBlazeCredentialsRequest : CreateCredentialsRequestBase
+    public class BackBlazeCredentialsRequest : CredentialsRequestBase
     {
-        public CreateBackBlazeCredentialsRequest()
+        public BackBlazeCredentialsRequest()
         {
             Type = "backblaze";
         }

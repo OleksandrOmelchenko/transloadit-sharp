@@ -2,6 +2,7 @@
 
 using System.Threading.Tasks;
 using Transloadit.Models;
+using Transloadit.Models.Templates;
 
 namespace Transloadit.Services
 {
@@ -14,29 +15,29 @@ namespace Transloadit.Services
             _client = client;
         }
 
-        public async Task<TemplateResponse> GetAsync(string id)
+        public async Task<TemplateResponse> GetAsync(string templateId)
         {
-            return await _client.SendRequest<TemplateResponse>(HttpMethod.Get, $"/templates/{id}");
+            return await _client.SendRequest<TemplateResponse>(HttpMethod.Get, $"/templates/{templateId}");
         }
 
-        public async Task<PaginatedList<TemplateResponse>> GetListAsync(PaginationParams paginationParams = null)
+        public async Task<PaginatedListResponse<TemplateResponse>> GetListAsync(PaginationParams paginationParams = null)
         {
-            return await _client.SendRequest<PaginatedList<TemplateResponse>>(HttpMethod.Get, $"/templates", paginationParams);
+            return await _client.SendRequest<PaginatedListResponse<TemplateResponse>>(HttpMethod.Get, $"/templates", paginationParams);
         }
 
-        public async Task<TemplateResponse> DeleteAsync(string id)
+        public async Task<TemplateResponse> CreateAsync(TemplateRequest template)
         {
-            return await _client.SendRequest<TemplateResponse>(HttpMethod.Delete, $"/templates/{id}");
+            return await _client.SendRequest<TemplateResponse>(HttpMethod.Post, $"/templates", template);
         }
 
-        public async Task<TemplateResponse> CreateAsync(object template)
+        public async Task<TemplateResponse> UpdateAsync(string templateId, TemplateRequest template)
         {
-            return await _client.SendRequest<TemplateResponse>(HttpMethod.Post, $"/templates");
+            return await _client.SendRequest<TemplateResponse>(HttpMethod.Put, $"/templates/{templateId}", template);
         }
 
-        public async Task<TemplateResponse> UpdateAsync(object template)
+        public async Task<TemplateResponse> DeleteAsync(string templateId)
         {
-            return await _client.SendRequest<TemplateResponse>(HttpMethod.Put, $"/templates");
+            return await _client.SendRequest<TemplateResponse>(HttpMethod.Delete, $"/templates/{templateId}");
         }
     }
 }

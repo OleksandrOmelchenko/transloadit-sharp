@@ -1,8 +1,8 @@
 ﻿namespace Transloadit.Models.TemplateCredentials
 {
-    public class CreateRackSpaceCredentialsRequest : CreateCredentialsRequestBase
+    public class RackSpaceCredentialsRequest : CredentialsRequestBase
     {
-        public CreateRackSpaceCredentialsRequest()
+        public RackSpaceCredentialsRequest()
         {
             Type = "rackspace";
         }

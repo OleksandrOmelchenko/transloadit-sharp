@@ -1,8 +1,8 @@
 ﻿namespace Transloadit.Models.TemplateCredentials
 {
-    public class CreateDigitalOceanCredentialsRequest : CreateCredentialsRequestBase
+    public class DigitalOceanCredentialsRequest : CredentialsRequestBase
     {
-        public CreateDigitalOceanCredentialsRequest()
+        public DigitalOceanCredentialsRequest()
         {
             Type = "digitalocean";
         }

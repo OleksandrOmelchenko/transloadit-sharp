@@ -1,8 +1,8 @@
 ﻿namespace Transloadit.Models.TemplateCredentials
 {
-    public class CreateCloudFlareCredentialsRequest : CreateCredentialsRequestBase
+    public class CloudFlareCredentialsRequest : CredentialsRequestBase
     {
-        public CreateCloudFlareCredentialsRequest()
+        public CloudFlareCredentialsRequest()
         {
             Type = "cloudflare";
         }

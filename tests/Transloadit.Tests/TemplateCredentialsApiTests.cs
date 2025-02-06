@@ -41,7 +41,7 @@ namespace Transloadit.Tests
         {
             var client = new TransloaditClient(Transloadit.AuthKey, Transloadit.AuthSecret);
 
-            var s3Creds = new CreateS3CredentialsRequest
+            var s3Creds = new S3CredentialsRequest
             {
                 Name = "my-s3-test3",
                 Content = new S3CredentialsContent
@@ -60,7 +60,7 @@ namespace Transloadit.Tests
         {
             var client = new TransloaditClient(Transloadit.AuthKey, Transloadit.AuthSecret);
 
-            var s3Creds = new CreateFtpCredentialsRequest
+            var s3Creds = new FtpCredentialsRequest
             {
                 Name = "my-ftp-test",
                 Content = new FtpCredentialsContent
@@ -80,7 +80,7 @@ namespace Transloadit.Tests
 
             var name = $"{Guid.NewGuid()}-{DateTime.Now:yyyyMMddHHmmss}";
 
-            var ftpCredential = new CreateFtpCredentialsRequest
+            var ftpCredential = new FtpCredentialsRequest
             {
                 Name = name,
                 Content = new FtpCredentialsContent
@@ -95,7 +95,7 @@ namespace Transloadit.Tests
 
             var getCreds = await client.TemplateCredentials.GetAsync(credentialResponse.Credential.Id);
 
-            var newFtpCredential = new CreateFtpCredentialsRequest
+            var newFtpCredential = new FtpCredentialsRequest
             {
                 Name = name,
                 Content = new FtpCredentialsContent

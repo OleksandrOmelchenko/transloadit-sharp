@@ -1,32 +1,19 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using Transloadit.Models;
 
-namespace Transloadit
+namespace Transloadit.Models
 {
-    public class PaginatedList<T> : ResponseBase
-    {
-        public int Count { get; set; }
-
-        public List<T> Items { get; set; }
-    }
-
-
     public class BaseParams
     {
-        [JsonProperty("auth")]
         internal AuthParams Auth { get; set; }
     }
 
     public class AuthParams
     {
-        [JsonProperty("key")]
         public string Key { get; set; }
 
-        [JsonProperty("expires")]
         public string Expires { get; set; }
 
-        [JsonProperty("nonce")]
         public string Nonce { get; set; }
     }
 

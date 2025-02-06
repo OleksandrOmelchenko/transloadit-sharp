@@ -1,8 +1,8 @@
 ﻿namespace Transloadit.Models.TemplateCredentials
 {
-    public class CreateSupabaseCredentialsRequest : CreateCredentialsRequestBase
+    public class SupabaseCredentialsRequest : CredentialsRequestBase
     {
-        public CreateSupabaseCredentialsRequest()
+        public SupabaseCredentialsRequest()
         {
             Type = "supabase";
         }

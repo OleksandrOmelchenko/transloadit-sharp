@@ -24,12 +24,12 @@ namespace Transloadit.Services
             return await _client.SendRequest<CredentialsListResponse>(HttpMethod.Get, $"/template_credentials");
         }
 
-        public async Task<CredentialResponse> CreateAsync(CreateCredentialsRequestBase credential)
+        public async Task<CredentialResponse> CreateAsync(CredentialsRequestBase credential)
         {
             return await _client.SendRequest<CredentialResponse>(HttpMethod.Post, $"/template_credentials", credential);
         }
 
-        public async Task<CredentialResponse> UpdateAsync(string credentialIdOrName, CreateCredentialsRequestBase credential)
+        public async Task<CredentialResponse> UpdateAsync(string credentialIdOrName, CredentialsRequestBase credential)
         {
             return await _client.SendRequest<CredentialResponse>(HttpMethod.Put, $"/template_credentials/{credentialIdOrName}", credential);
         }

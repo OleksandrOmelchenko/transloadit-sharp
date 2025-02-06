@@ -1,8 +1,8 @@
 ﻿namespace Transloadit.Models.TemplateCredentials
 {
-    public class CreateS3CredentialsRequest : CreateCredentialsRequestBase
+    public class S3CredentialsRequest : CredentialsRequestBase
     {
-        public CreateS3CredentialsRequest()
+        public S3CredentialsRequest()
         {
             Type = "s3";
         }

@@ -1,8 +1,8 @@
 ﻿namespace Transloadit.Models.TemplateCredentials
 {
-    public class CreateHttpCredentialsRequest : CreateCredentialsRequestBase
+    public class HttpCredentialsRequest : CredentialsRequestBase
     {
-        public CreateHttpCredentialsRequest()
+        public HttpCredentialsRequest()
         {
             Type = "http";
         }

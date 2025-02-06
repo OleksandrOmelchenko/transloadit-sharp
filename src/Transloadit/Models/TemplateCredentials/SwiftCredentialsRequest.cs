@@ -1,8 +1,8 @@
 ﻿namespace Transloadit.Models.TemplateCredentials
 {
-    public class CreateSwiftCredentialsRequest : CreateCredentialsRequestBase
+    public class SwiftCredentialsRequest : CredentialsRequestBase
     {
-        public CreateSwiftCredentialsRequest()
+        public SwiftCredentialsRequest()
         {
             Type = "swift";
         }

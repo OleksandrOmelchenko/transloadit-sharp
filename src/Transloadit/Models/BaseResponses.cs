@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http.Headers;
 
@@ -31,6 +32,13 @@ namespace Transloadit.Models
 
         [JsonIgnore]
         public IResponseBase Base => this;
+    }
+
+    public class PaginatedListResponse<T> : ResponseBase
+    {
+        public int Count { get; set; }
+
+        public List<T> Items { get; set; }
     }
 
     public class TransloaditResponse

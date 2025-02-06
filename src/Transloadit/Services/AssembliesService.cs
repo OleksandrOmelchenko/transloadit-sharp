@@ -2,6 +2,7 @@
 
 using System.Threading.Tasks;
 using Transloadit.Models;
+using Transloadit.Models.Assemblies;
 
 namespace Transloadit.Services
 {
@@ -19,9 +20,9 @@ namespace Transloadit.Services
             return await _client.SendRequest<AssemblyResponse>(HttpMethod.Get, $"/assemblies/{id}");
         }
 
-        public async Task<PaginatedList<AssemblyResponse>> GetListAsync(PaginationParams paginationParams = null)
+        public async Task<PaginatedListResponse<AssemblyResponse>> GetListAsync(PaginationParams paginationParams = null)
         {
-            return await _client.SendRequest<PaginatedList<AssemblyResponse>>(HttpMethod.Get, $"/assemblies", paginationParams);
+            return await _client.SendRequest<PaginatedListResponse<AssemblyResponse>>(HttpMethod.Get, $"/assemblies", paginationParams);
         }
 
         public async Task<AssemblyResponse> CancelAsync(string id)

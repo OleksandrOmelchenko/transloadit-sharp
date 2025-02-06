@@ -1,8 +1,8 @@
 ﻿namespace Transloadit.Models.TemplateCredentials
 {
-    public class CreateWasabiCredentialsRequest : CreateCredentialsRequestBase
+    public class WasabiCredentialsRequest : CredentialsRequestBase
     {
-        public CreateWasabiCredentialsRequest()
+        public WasabiCredentialsRequest()
         {
             Type = "wasabi";
         }

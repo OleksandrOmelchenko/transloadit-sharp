@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 
 using System.Threading.Tasks;
-using Transloadit.Models;
+using Transloadit.Models.AssemblyNotifications;
 
 namespace Transloadit.Services
 {

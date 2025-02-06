@@ -1,8 +1,8 @@
 ﻿namespace Transloadit.Models.TemplateCredentials
 {
-    public class CreateOAuthCredentialsRequest : CreateCredentialsRequestBase
+    public class OAuthCredentialsRequest : CredentialsRequestBase
     {
-        public CreateOAuthCredentialsRequest()
+        public OAuthCredentialsRequest()
         {
             Type = "companion";
         }

@@ -1,8 +1,8 @@
 ﻿namespace Transloadit.Models.TemplateCredentials
 {
-    public class CreateAzureCredentialsRequest : CreateCredentialsRequestBase
+    public class AzureCredentialsRequest : CredentialsRequestBase
     {
-        public CreateAzureCredentialsRequest()
+        public AzureCredentialsRequest()
         {
             Type = "azure";
         }

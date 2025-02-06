@@ -2,15 +2,15 @@
 
 namespace Transloadit.Models.TemplateCredentials
 {
-    public abstract class CreateCredentialsRequestBase : BaseParams
+    public abstract class CredentialsRequestBase : BaseParams
     {
         public string Name { get; set; }
         public string Type { get; protected set; }
     }
 
-    public class CreateGenericCredentialsRequest : CreateCredentialsRequestBase
+    public class GenericCredentialsRequest : CredentialsRequestBase
     {
-        public CreateGenericCredentialsRequest(string type)
+        public GenericCredentialsRequest(string type)
         {
             Type = type;
         }
@@ -18,10 +18,8 @@ namespace Transloadit.Models.TemplateCredentials
         public Dictionary<string, string> Content { get; set; }
     }
 
-    public class CreateCredentialsRequest<T> : CreateCredentialsRequestBase
+    public class CredentialsRequest<T> : CredentialsRequestBase
     {
         public T Content { get; set; }
     }
-
-   
 }

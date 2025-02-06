@@ -1,8 +1,8 @@
 ﻿namespace Transloadit.Models.TemplateCredentials
 {
-    public class CreateMinioCredentialsRequest : CreateCredentialsRequestBase
+    public class MinioCredentialsRequest : CredentialsRequestBase
     {
-        public CreateMinioCredentialsRequest()
+        public MinioCredentialsRequest()
         {
             Type = "minio";
         }
