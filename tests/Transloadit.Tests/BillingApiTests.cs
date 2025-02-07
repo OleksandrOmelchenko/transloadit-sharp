@@ -17,8 +17,7 @@ namespace Transloadit.Tests
         [Fact]
         public async Task GetBillingYearMonth()
         {
-            var client = new TransloaditClient(Transloadit.AuthKey, Transloadit.AuthSecret);
-            var billing = await client.Billing.GetAsync(2025, 2);
+            var billing = await TransloaditClient.Billing.GetAsync(2025, 2);
 
             Assert.Equal("BILL_FOUND", billing.Base.Ok);
         }

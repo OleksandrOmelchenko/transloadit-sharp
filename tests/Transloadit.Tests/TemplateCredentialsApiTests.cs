@@ -1,26 +1,17 @@
 using System;
 using System.Threading.Tasks;
-using Transloadit.Models.TemplateCredentials;
-using Transloadit.Tests.Configuration;
+using Transloadit.Models.Credentials;
 using Xunit;
 
 namespace Transloadit.Tests
 {
-    public class TemplateCredentialsApiTests
+    public class TemplateCredentialsApiTests : TestBase
     {
-        private TransloaditConfig Transloadit { get; set; }
-
-        public TemplateCredentialsApiTests()
-        {
-            Transloadit = TestConfiguration.ReadFromAppSettings().Transloadit;
-        }
-
         [Fact]
         public async Task GetTemplatesCredentialsList()
         {
-            var client = new TransloaditClient(Transloadit.AuthKey, Transloadit.AuthSecret);
-            var templateCredentials = await client.TemplateCredentials.GetListAsync();
-            
+            var templateCredentials = await TransloaditClient.Credentials.GetListAsync();
+
 
             Assert.Equal("TEMPLATE_CREDENTIALS_FOUND", templateCredentials.Base.Ok);
         }
@@ -29,18 +20,14 @@ namespace Transloadit.Tests
         [InlineData("sftp-some")]
         public async Task GetTemplateCredential(string credentialIdOrName)
         {
-            var client = new TransloaditClient(Transloadit.AuthKey, Transloadit.AuthSecret);
-            var template = await client.TemplateCredentials.GetAsync(credentialIdOrName);
+            var template = await TransloaditClient.Credentials.GetAsync(credentialIdOrName);
 
             Assert.Equal("TEMPLATE_FOUND", template.Base.Ok);
         }
 
-        [Theory]
-        [InlineData("047e1008c1ec4ea3a719d57f3648eff8")]
-        public async Task CreateCredentials(string templateId)
+        [Fact]
+        public async Task CreateCredentials()
         {
-            var client = new TransloaditClient(Transloadit.AuthKey, Transloadit.AuthSecret);
-
             var s3Creds = new S3CredentialsRequest
             {
                 Name = "my-s3-test3",
@@ -52,14 +39,12 @@ namespace Transloadit.Tests
                     Secret = "the secret"
                 }
             };
-            var response = await client.TemplateCredentials.CreateAsync(s3Creds);
+            var response = await TransloaditClient.Credentials.CreateAsync(s3Creds);
         }
 
         [Fact]
         public async Task CreateFtpCredentials()
         {
-            var client = new TransloaditClient(Transloadit.AuthKey, Transloadit.AuthSecret);
-
             var ftpCredentials = new FtpCredentialsRequest
             {
                 Name = "my-ftp-test",
@@ -70,14 +55,12 @@ namespace Transloadit.Tests
                     User = "asdf"
                 }
             };
-            var response = await client.TemplateCredentials.CreateAsync(ftpCredentials);
+            var response = await TransloaditClient.Credentials.CreateAsync(ftpCredentials);
         }
 
         [Fact]
         public async Task CreateCreateGetUpdateDeleteCredential()
         {
-            var client = new TransloaditClient(Transloadit.AuthKey, Transloadit.AuthSecret);
-
             var name = $"{Guid.NewGuid()}-{DateTime.Now:yyyyMMddHHmmss}";
 
             var ftpCredential = new FtpCredentialsRequest
@@ -91,9 +74,9 @@ namespace Transloadit.Tests
                 }
             };
 
-            var credentialResponse = await client.TemplateCredentials.CreateAsync(ftpCredential);
+            var credentialResponse = await TransloaditClient.Credentials.CreateAsync(ftpCredential);
 
-            var getCreds = await client.TemplateCredentials.GetAsync(credentialResponse.Credential.Id);
+            var getCreds = await TransloaditClient.Credentials.GetAsync(credentialResponse.Credential.Id);
 
             var newFtpCredential = new FtpCredentialsRequest
             {
@@ -106,12 +89,12 @@ namespace Transloadit.Tests
                 }
             };
 
-            var a = await client.TemplateCredentials.UpdateAsync(getCreds.Credential.Id, newFtpCredential);
+            var a = await TransloaditClient.Credentials.UpdateAsync(getCreds.Credential.Id, newFtpCredential);
 
 
-            var deleteResponse = await client.TemplateCredentials.DeleteAsync(name);
+            var deleteResponse = await TransloaditClient.Credentials.DeleteAsync(name);
 
-            var getNotFound = await client.TemplateCredentials.GetAsync(name);
+            var getNotFound = await TransloaditClient.Credentials.GetAsync(name);
         }
 
     }

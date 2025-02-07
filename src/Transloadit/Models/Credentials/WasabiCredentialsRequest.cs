@@ -1,4 +1,4 @@
-﻿namespace Transloadit.Models.TemplateCredentials
+﻿namespace Transloadit.Models.Credentials
 {
     public class WasabiCredentialsRequest : CredentialsRequestBase
     {

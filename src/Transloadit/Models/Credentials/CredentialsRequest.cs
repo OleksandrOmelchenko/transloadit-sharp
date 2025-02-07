@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Transloadit.Models.TemplateCredentials
+namespace Transloadit.Models.Credentials
 {
     public abstract class CredentialsRequestBase : BaseParams
     {

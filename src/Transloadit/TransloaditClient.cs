@@ -31,10 +31,10 @@ namespace Transloadit
         };
 
         private BillingService _billingService;
-        private TemplateService _templateService;
+        private TemplatesService _templatesService;
         private AssembliesService _assembliesService;
         private QueuesService _queuesService;
-        private TemplateCredentialsService _templateCredentialsService;
+        private CredentialsService _credentialsService;
         private AssemblyNotificationsService _assemblyNotificationsService;
 
         public TransloaditClient(string key, string secret, TransloaditClientOptions options = null)
@@ -56,10 +56,10 @@ namespace Transloadit
         }
 
         public BillingService Billing => _billingService ??= new BillingService(this);
-        public TemplateService Templates => _templateService ??= new TemplateService(this);
+        public TemplatesService Templates => _templatesService ??= new TemplatesService(this);
         public AssembliesService Assemblies => _assembliesService ??= new AssembliesService(this);
         public QueuesService Queues => _queuesService ??= new QueuesService(this);
-        public TemplateCredentialsService TemplateCredentials => _templateCredentialsService ??= new TemplateCredentialsService(this);
+        public CredentialsService Credentials => _credentialsService ??= new CredentialsService(this);
         public AssemblyNotificationsService AssemblyNotifications => _assemblyNotificationsService ??= new AssemblyNotificationsService(this);
 
         public static string BuildQuery(IEnumerable<KeyValuePair<string, string>> values)

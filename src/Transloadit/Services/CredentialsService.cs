@@ -1,15 +1,15 @@
 ﻿using System.Net.Http;
 
 using System.Threading.Tasks;
-using Transloadit.Models.TemplateCredentials;
+using Transloadit.Models.Credentials;
 
 namespace Transloadit.Services
 {
-    public class TemplateCredentialsService
+    public class CredentialsService
     {
         private readonly TransloaditClient _client;
 
-        public TemplateCredentialsService(TransloaditClient client)
+        public CredentialsService(TransloaditClient client)
         {
             _client = client;
         }

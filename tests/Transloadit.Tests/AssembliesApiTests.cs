@@ -6,20 +6,17 @@ using Xunit;
 
 namespace Transloadit.Tests
 {
-    public class AssembliesApiTests
+    public class AssembliesApiTests : TestBase
     {
         [Fact]
         public async Task GetAssembliesList()
         {
-            var config = TestConfiguration.ReadFromAppSettings().Transloadit;
-
-            var client = new TransloaditClient(config.AuthKey, config.AuthSecret);
            /* var par = new PaginationParams
             {
                 PageSize = 10,
                 Page = 0
             };*/
-            var assemblies = await client.Assemblies.GetListAsync();
+            var assemblies = await TransloaditClient.Assemblies.GetListAsync();
 
             // Assert.Equal("BILL_FOUND", billing.Ok);
         }
@@ -30,10 +27,7 @@ namespace Transloadit.Tests
         [InlineData("b4e2544a8346437ebc7bc0e86b67d1e1")]
         public async Task GetAssembly(string id)
         {
-            var config = TestConfiguration.ReadFromAppSettings().Transloadit;
-
-            var client = new TransloaditClient(config.AuthKey, config.AuthSecret);
-            var assembly = await client.Assemblies.GetAsync(id);
+            var assembly = await TransloaditClient.Assemblies.GetAsync(id);
 
            // Assert.Equal("TEMPLATE_FOUND", template.Ok);
         }

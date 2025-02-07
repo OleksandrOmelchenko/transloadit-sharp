@@ -6,11 +6,11 @@ using Transloadit.Models.Templates;
 
 namespace Transloadit.Services
 {
-    public class TemplateService
+    public class TemplatesService
     {
         private readonly TransloaditClient _client;
 
-        public TemplateService(TransloaditClient client)
+        public TemplatesService(TransloaditClient client)
         {
             _client = client;
         }
