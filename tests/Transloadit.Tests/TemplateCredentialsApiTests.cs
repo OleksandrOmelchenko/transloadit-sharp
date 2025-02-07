@@ -60,7 +60,7 @@ namespace Transloadit.Tests
         {
             var client = new TransloaditClient(Transloadit.AuthKey, Transloadit.AuthSecret);
 
-            var s3Creds = new FtpCredentialsRequest
+            var ftpCredentials = new FtpCredentialsRequest
             {
                 Name = "my-ftp-test",
                 Content = new FtpCredentialsContent
@@ -70,7 +70,7 @@ namespace Transloadit.Tests
                     User = "asdf"
                 }
             };
-            var response = await client.TemplateCredentials.CreateAsync(s3Creds);
+            var response = await client.TemplateCredentials.CreateAsync(ftpCredentials);
         }
 
         [Fact]

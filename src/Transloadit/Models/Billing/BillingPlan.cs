@@ -2,7 +2,7 @@
 
 namespace Transloadit.Models.Billing
 {
-    public class Plan
+    public class BillingPlan
     {
         public string Id { get; set; }
 

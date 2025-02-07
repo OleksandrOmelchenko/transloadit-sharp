@@ -5,6 +5,7 @@ namespace Transloadit.Models
 {
     public class BaseParams
     {
+        [JsonProperty("auth")]
         internal AuthParams Auth { get; set; }
     }
 
@@ -15,6 +16,10 @@ namespace Transloadit.Models
         public string Expires { get; set; }
 
         public string Nonce { get; set; }
+
+        public string Referer { get; set; }
+
+        public int MaxSize { get; set; }
     }
 
     public class PaginationParams : BaseParams
@@ -25,12 +30,6 @@ namespace Transloadit.Models
         [JsonProperty("pagesize")]
         public int? PageSize { get; set; }
 
-        [JsonProperty("sort")]
-        public string Sort { get; set; } //["id", "name", "created", "modified"]
-
-        [JsonProperty("order")]
-        public string Order { get; set; } //desc, asc
-
         [JsonProperty("fromdate")]
         public string FromDate { get; set; }
 
@@ -39,5 +38,12 @@ namespace Transloadit.Models
 
         [JsonProperty("keywords")]
         public List<string> Keywords { get; set; }
+    }
+
+    public class TemplateListRequest : PaginationParams
+    {
+        public string Sort { get; set; } //["id", "name", "created", "modified"]
+
+        public string Order { get; set; } //desc, asc
     }
 }

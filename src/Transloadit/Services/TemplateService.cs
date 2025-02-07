@@ -20,7 +20,7 @@ namespace Transloadit.Services
             return await _client.SendRequest<TemplateResponse>(HttpMethod.Get, $"/templates/{templateId}");
         }
 
-        public async Task<PaginatedListResponse<TemplateResponse>> GetListAsync(PaginationParams paginationParams = null)
+        public async Task<PaginatedListResponse<TemplateResponse>> GetListAsync(TemplateListRequest paginationParams = null)
         {
             return await _client.SendRequest<PaginatedListResponse<TemplateResponse>>(HttpMethod.Get, $"/templates", paginationParams);
         }

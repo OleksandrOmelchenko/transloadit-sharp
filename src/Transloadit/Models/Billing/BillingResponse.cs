@@ -16,7 +16,7 @@ namespace Transloadit.Models.Billing
 
         public DateTime Created { get; set; }
 
-        public Plan Plan { get; set; }
+        public BillingPlan Plan { get; set; }
 
         public string Currency { get; set; }
 

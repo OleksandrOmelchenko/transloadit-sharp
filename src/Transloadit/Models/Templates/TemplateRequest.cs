@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Transloadit.Models.Templates
 {
@@ -12,6 +8,26 @@ namespace Transloadit.Models.Templates
 
         public int RequireSignatureAuth { get; set; }
 
-        public object Template { get; set; }
+        public TemplateBodyBase Template { get; set; }
+    }
+
+    public abstract class TemplateBodyBase
+    {
+
+    }
+
+    public class TemplateBodyGeneric : TemplateBodyBase
+    {
+        public Dictionary<string, Dictionary<string, object>> Steps { get; set; }
+    }
+
+    public class TemplateBody : TemplateBodyBase
+    {
+        public Dictionary<string, RobotBase> Steps { get; set; }
+    }
+
+    public abstract class RobotBase
+    {
+        public string Robot { get; protected set; }
     }
 }

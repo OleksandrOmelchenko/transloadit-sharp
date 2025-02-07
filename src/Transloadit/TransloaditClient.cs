@@ -15,13 +15,13 @@ namespace Transloadit
 {
     public class TransloaditClient
     {
-        private readonly HttpClient _httpClient;
+        private const string ApiBase = "https://api2.transloadit.com";
 
         private readonly string _key;
         private readonly string _secret;
         private readonly TransloaditClientOptions _options;
 
-        private static JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings
+        private static readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings
         {
             NullValueHandling = NullValueHandling.Ignore,
             ContractResolver = new DefaultContractResolver
@@ -29,8 +29,6 @@ namespace Transloadit
                 NamingStrategy = new SnakeCaseNamingStrategy()
             }
         };
-
-        private const string ApiBase = "https://api2.transloadit.com";
 
         private BillingService _billingService;
         private TemplateService _templateService;
@@ -43,18 +41,17 @@ namespace Transloadit
         {
             _key = key;
             _secret = secret;
-            _options = options ?? BuildDefault();
+            _options = MergeOptions(options);
         }
 
-        private TransloaditClientOptions BuildDefault()
+        private static TransloaditClientOptions MergeOptions(TransloaditClientOptions options)
         {
             return new TransloaditClientOptions
             {
-                ApiBase = ApiBase,
-                HttpClient = new HttpClient
-                {
-                    BaseAddress = new Uri(ApiBase)
-                }
+                ApiBase = options?.ApiBase ?? new Uri(ApiBase),
+                HttpClient = options?.HttpClient ?? new HttpClient(),
+                RequestSerializerSettings = options?.RequestSerializerSettings ?? _jsonSerializerSettings,
+                ResponseSerializerSettings = options?.ResponseSerializerSettings ?? _jsonSerializerSettings,
             };
         }
 
@@ -82,11 +79,11 @@ namespace Transloadit
 
         private string CalculateSignature(string parameters, string key)
         {
-            using var cry = new HMACSHA384(Encoding.UTF8.GetBytes(key));
-            var hashBytes = cry.ComputeHash(Encoding.UTF8.GetBytes(parameters));
-            var res = ToLowerHex(hashBytes);
+            using var crypto = new HMACSHA384(Encoding.UTF8.GetBytes(key));
+            var hashBytes = crypto.ComputeHash(Encoding.UTF8.GetBytes(parameters));
+            var hash = ToLowerHex(hashBytes);
 
-            return $"sha384:{res}";
+            return $"sha384:{hash}";
         }
 
         public async Task<T> SendRequest<T>(HttpMethod httpMethod, string path, BaseParams parameters = null) where T : ResponseBase
@@ -131,19 +128,13 @@ namespace Transloadit
                 path = path + "?" + query;
             }
 
-            var message = new HttpRequestMessage
-            {
-                Method = httpMethod,
-                RequestUri = new Uri(new Uri(ApiBase), path),
-            };
-
+            var message = new HttpRequestMessage(httpMethod, new Uri(_options.ApiBase, path));
             if (httpMethod == HttpMethod.Post || httpMethod == HttpMethod.Delete || httpMethod == HttpMethod.Put)
             {
                 content ??= new MultipartFormDataContent();
 
                 content.Add(new StringContent(paramsJson), "params");
                 content.Add(new StringContent(signature), "signature");
-
             }
             if (content != null)
             {
@@ -153,13 +144,4 @@ namespace Transloadit
             return message;
         }
     }
-
-    public class TransloaditClientOptions
-    {
-        public string ApiBase { get; set; }
-        public HttpClient HttpClient { get; set; }
-
-    }
-
-
 }

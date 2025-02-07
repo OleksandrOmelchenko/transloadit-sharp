@@ -1,18 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Transloadit.Models.Assemblies
 {
-    public class Fields
-    {
-        [JsonProperty("associate_with_template_id")]
-        public string AssociateWithTemplateId { get; set; }
-    }
-
     public class Meta
     {
         [JsonProperty("width")]
@@ -58,28 +49,28 @@ namespace Transloadit.Models.Assemblies
         public object DateFileCreated { get; set; }
 
         [JsonProperty("title")]
-        public object Title { get; set; }
+        public string Title { get; set; }
 
         [JsonProperty("description")]
-        public object Description { get; set; }
+        public string Description { get; set; }
 
         [JsonProperty("duration")]
         public object Duration { get; set; }
 
         [JsonProperty("location")]
-        public object Location { get; set; }
+        public string Location { get; set; }
 
         [JsonProperty("city")]
-        public object City { get; set; }
+        public string City { get; set; }
 
         [JsonProperty("state")]
-        public object State { get; set; }
+        public string State { get; set; }
 
         [JsonProperty("country")]
-        public object Country { get; set; }
+        public string Country { get; set; }
 
         [JsonProperty("country_code")]
-        public object CountryCode { get; set; }
+        public string CountryCode { get; set; }
 
         [JsonProperty("keywords")]
         public object Keywords { get; set; }
@@ -106,7 +97,7 @@ namespace Transloadit.Models.Assemblies
         public object FNumber { get; set; }
 
         [JsonProperty("iso")]
-        public object Iso { get; set; }
+        public string Iso { get; set; }
 
         [JsonProperty("light_value")]
         public object LightValue { get; set; }
@@ -121,10 +112,10 @@ namespace Transloadit.Models.Assemblies
         public object WhiteBalance { get; set; }
 
         [JsonProperty("device_name")]
-        public object DeviceName { get; set; }
+        public string DeviceName { get; set; }
 
         [JsonProperty("device_vendor")]
-        public object DeviceVendor { get; set; }
+        public string DeviceVendor { get; set; }
 
         [JsonProperty("latitude")]
         public object Latitude { get; set; }
@@ -136,16 +127,16 @@ namespace Transloadit.Models.Assemblies
         public string Orientation { get; set; }
 
         [JsonProperty("creator")]
-        public object Creator { get; set; }
+        public string Creator { get; set; }
 
         [JsonProperty("author")]
-        public object Author { get; set; }
+        public string Author { get; set; }
 
         [JsonProperty("copyright")]
         public string Copyright { get; set; }
 
         [JsonProperty("copyright_notice")]
-        public object CopyrightNotice { get; set; }
+        public string CopyrightNotice { get; set; }
 
         [JsonProperty("rights")]
         public object Rights { get; set; }
@@ -154,16 +145,16 @@ namespace Transloadit.Models.Assemblies
         public object DominantColors { get; set; }
 
         [JsonProperty("xp_title")]
-        public object XpTitle { get; set; }
+        public string XpTitle { get; set; }
 
         [JsonProperty("xp_comment")]
-        public object XpComment { get; set; }
+        public string XpComment { get; set; }
 
         [JsonProperty("xp_keywords")]
         public object XpKeywords { get; set; }
 
         [JsonProperty("xp_subject")]
-        public object XpSubject { get; set; }
+        public string XpSubject { get; set; }
     }
 
     public class Results
@@ -290,7 +281,7 @@ namespace Transloadit.Models.Assemblies
         public object LastJobCompleted { get; set; }
 
         [JsonProperty("fields")]
-        public Fields Fields { get; set; }
+        public Dictionary<string, object> Fields { get; set; }
 
         [JsonProperty("running_jobs")]
         public List<object> RunningJobs { get; set; }
@@ -461,9 +452,23 @@ namespace Transloadit.Models.Assemblies
         public string Type { get; set; }
     }
 
-
-
-
-
-
+    public class AssemblyCompactResponse : ResponseBase
+    {
+        public string Id { get; set; }
+        public string ParentId { get; set; }
+        public string AccountId { get; set; }
+        public string TemplateId { get; set; }
+        public string Instance { get; set; }
+        public string NotifyUrl { get; set; }
+        public string RedirectUrl { get; set; }
+        public string Files { get; set; }
+        public string Region { get; set; }
+        public int WarningCount { get; set; }
+        public int NumInputFiles { get; set; }
+        public double ExecutionDuration { get; set; }
+        public DateTimeOffset ExecutionStart { get; set; }
+        public DateTimeOffset Created { get; set; }
+        public int CreatedTs { get; set; }
+        public string TemplateName { get; set; }
+    }
 }

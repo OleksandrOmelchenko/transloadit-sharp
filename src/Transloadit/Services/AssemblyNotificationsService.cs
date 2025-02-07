@@ -14,9 +14,12 @@ namespace Transloadit.Services
             _client = client;
         }
 
-        public async Task<ReplayNotificationResponse> ReplayAsync(string assemblyId)
+        public async Task<ReplayNotificationResponse> ReplayAsync(string assemblyId, ReplayNotificationRequest notificationRequest = null)
         {
-            return await _client.SendRequest<ReplayNotificationResponse>(HttpMethod.Post, $"/assembly_notifications/{assemblyId}/replay");
+            return await _client.SendRequest<ReplayNotificationResponse>(
+                HttpMethod.Post,
+                $"/assembly_notifications/{assemblyId}/replay",
+                notificationRequest);
         }
     }
 }

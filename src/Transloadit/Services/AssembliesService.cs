@@ -15,19 +15,29 @@ namespace Transloadit.Services
             _client = client;
         }
 
-        public async Task<AssemblyResponse> GetAsync(string id)
+        public async Task<AssemblyResponse> GetAsync(string assemblyId)
         {
-            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Get, $"/assemblies/{id}");
+            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Get, $"/assemblies/{assemblyId}");
         }
 
-        public async Task<PaginatedListResponse<AssemblyResponse>> GetListAsync(PaginationParams paginationParams = null)
+        public async Task<PaginatedListResponse<AssemblyCompactResponse>> GetListAsync(AssemblyListRequest paginationParams = null)
         {
-            return await _client.SendRequest<PaginatedListResponse<AssemblyResponse>>(HttpMethod.Get, $"/assemblies", paginationParams);
+            return await _client.SendRequest<PaginatedListResponse<AssemblyCompactResponse>>(HttpMethod.Get, $"/assemblies", paginationParams);
         }
 
-        public async Task<AssemblyResponse> CancelAsync(string id)
+        public async Task<AssemblyResponse> CreateAsync(AssemblyRequest assembly)
         {
-            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Delete, $"/assemblies/{id}");
+            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Post, $"/assemblies", assembly);
+        }
+
+        public async Task<AssemblyResponse> UpdateAsync(AssemblyRequest assembly)
+        {
+            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Put, $"/assemblies", assembly);
+        }
+
+        public async Task<AssemblyResponse> CancelAsync(string assemblyId)
+        {
+            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Delete, $"/assemblies/{assemblyId}");
         }
 
         public async Task<AssemblyResponse> CancelByUrlAsync(string assemblyUrl)
@@ -35,19 +45,9 @@ namespace Transloadit.Services
             return await _client.SendRequest<AssemblyResponse>(HttpMethod.Delete, assemblyUrl); //todo: different method
         }
 
-        public async Task<AssemblyResponse> CreateAsync(object template)
+        public async Task<AssemblyResponse> ReplayAsync(string assemblyId, ReplayAssemblyRequest replayAssembly = null)
         {
-            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Post, $"/assemblies");
-        }
-
-        public async Task<AssemblyResponse> ReplayAsync(string id)
-        {
-            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Post, $"/assemblies/{id}/replay");
-        }
-
-        public async Task<AssemblyResponse> UpdateAsync(object template)
-        {
-            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Put, $"/assemblies");
+            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Post, $"/assemblies/{assemblyId}/replay", replayAssembly);
         }
     }
 }
