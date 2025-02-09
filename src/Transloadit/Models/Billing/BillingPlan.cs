@@ -10,13 +10,13 @@ namespace Transloadit.Models.Billing
 
         public string Slug { get; set; }
 
-        public int PricePerMonth { get; set; }
+        public decimal PricePerMonth { get; set; }
 
-        public int GbIncluded { get; set; }
+        public decimal GbIncluded { get; set; }
 
-        public int GbLimit { get; set; }
+        public decimal? GbLimit { get; set; }
 
-        public object FileSizeLimitInGb { get; set; }
+        public decimal? FileSizeLimitInGb { get; set; }
 
         public int MaxJobsSimulteneous { get; set; }
 
@@ -28,13 +28,13 @@ namespace Transloadit.Models.Billing
 
         public int HasLifetimeLimit { get; set; }
 
-        public int PricePerGb { get; set; }
+        public decimal PricePerGb { get; set; }
 
         public object Tiers { get; set; }
 
         public string Currency { get; set; }
 
-        public object UsdExchangeRate { get; set; }
+        public decimal? UsdExchangeRate { get; set; }
 
         public int Published { get; set; }
 
@@ -48,14 +48,14 @@ namespace Transloadit.Models.Billing
 
         public string Comments { get; set; }
 
-        public DateTime Created { get; set; }
+        public DateTimeOffset Created { get; set; }
 
-        public DateTime Modified { get; set; }
+        public DateTimeOffset Modified { get; set; }
 
-        public DateTime? Deleted { get; set; }
+        public DateTimeOffset? Deleted { get; set; }
 
-        public object NumMachines { get; set; }
+        public int? NumMachines { get; set; }
 
-        public object PricePerMachine { get; set; }
+        public decimal? PricePerMachine { get; set; }
     }
 }

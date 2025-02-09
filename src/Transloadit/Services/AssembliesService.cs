@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 
 using System.Threading.Tasks;
 using Transloadit.Models;
@@ -25,9 +26,9 @@ namespace Transloadit.Services
             return await _client.SendRequest<PaginatedListResponse<AssemblyCompactResponse>>(HttpMethod.Get, $"/assemblies", paginationParams);
         }
 
-        public async Task<AssemblyResponse> CreateAsync(AssemblyRequest assembly)
+        public async Task<AssemblyResponse> CreateAsync(AssemblyRequest assembly, MultipartFormDataContent formData = null)
         {
-            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Post, $"/assemblies", assembly);
+            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Post, $"/assemblies", assembly, formData);
         }
 
         public async Task<AssemblyResponse> UpdateAsync(AssemblyRequest assembly)
@@ -40,9 +41,9 @@ namespace Transloadit.Services
             return await _client.SendRequest<AssemblyResponse>(HttpMethod.Delete, $"/assemblies/{assemblyId}");
         }
 
-        public async Task<AssemblyResponse> CancelByUrlAsync(string assemblyUrl)
+        public async Task<AssemblyResponse> CancelAsync(Uri assemblyUrl)
         {
-            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Delete, assemblyUrl); //todo: different method
+            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Delete, assemblyUrl);
         }
 
         public async Task<AssemblyResponse> ReplayAsync(string assemblyId, ReplayAssemblyRequest replayAssembly = null)

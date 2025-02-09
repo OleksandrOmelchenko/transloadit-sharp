@@ -23,7 +23,7 @@ namespace Transloadit.Models.Assemblies
         public string Type { get; set; } //all, uploading, executing, canceled, completed, failed or request_aborted
     }
 
-    public class ReplayAssemblyRequest : PaginationParams
+    public class ReplayAssemblyRequest : BaseParams
     {
         public Dictionary<string, RobotBase> Steps { get; set; }
 

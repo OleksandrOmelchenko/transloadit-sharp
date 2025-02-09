@@ -12,6 +12,9 @@
   <ItemGroup>
     <None Remove="appsettings.json" />
     <None Remove="appsettings.Tests.json" />
+    <None Remove="TestData\flower-field.jpg" />
+    <None Remove="TestData\flowers.jpg" />
+    <None Remove="TestData\snowflake.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,6 +22,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="appsettings.Tests.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\flower-field.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\flowers.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snowflake.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

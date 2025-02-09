@@ -6,36 +6,36 @@ namespace Transloadit.Models.Billing
     public class RobotBilling
     {
         [JsonProperty("rawGb")]
-        public int RawGb { get; set; }
+        public decimal RawGb { get; set; }
 
-        public int Gb { get; set; }
+        public decimal Gb { get; set; }
 
         [JsonProperty("freeGb")]
-        public int FreeGb { get; set; }
+        public decimal FreeGb { get; set; }
 
         [JsonProperty("discountedGb")]
-        public int DiscountedGb { get; set; }
+        public decimal DiscountedGb { get; set; }
 
         [JsonProperty("gbFactorApplied")]
-        public int GbFactorApplied { get; set; }
+        public decimal GbFactorApplied { get; set; }
 
-        public int Factor { get; set; }
+        public decimal Factor { get; set; }
 
         public List<RobotBillingByRegionAndFactor> ByRegionAndFactor { get; set; }
     }
 
     public class RobotBillingByRegionAndFactor
     {
-        public int Factor { get; set; }
+        public decimal Factor { get; set; }
 
         [JsonProperty("rawGb")]
-        public int RawGb { get; set; }
+        public decimal RawGb { get; set; }
 
         [JsonProperty("gbFactorApplied")]
-        public int GbFactorApplied { get; set; }
+        public decimal GbFactorApplied { get; set; }
 
         [JsonProperty("freeGb")]
-        public int FreeGb { get; set; }
+        public decimal FreeGb { get; set; }
 
         public string Region { get; set; }
     }

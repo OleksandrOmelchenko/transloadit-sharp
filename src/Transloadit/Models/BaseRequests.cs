@@ -19,7 +19,7 @@ namespace Transloadit.Models
 
         public string Referer { get; set; }
 
-        public int MaxSize { get; set; }
+        public int? MaxSize { get; set; }
     }
 
     public class PaginationParams : BaseParams

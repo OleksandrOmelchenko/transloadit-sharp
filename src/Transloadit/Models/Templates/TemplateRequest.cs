@@ -8,20 +8,10 @@ namespace Transloadit.Models.Templates
 
         public int RequireSignatureAuth { get; set; }
 
-        public TemplateBodyBase Template { get; set; }
+        public TemplateRequestContent Template { get; set; }
     }
 
-    public abstract class TemplateBodyBase
-    {
-
-    }
-
-    public class TemplateBodyGeneric : TemplateBodyBase
-    {
-        public Dictionary<string, Dictionary<string, object>> Steps { get; set; }
-    }
-
-    public class TemplateBody : TemplateBodyBase
+    public class TemplateRequestContent
     {
         public Dictionary<string, RobotBase> Steps { get; set; }
     }

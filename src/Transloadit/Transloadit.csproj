@@ -5,12 +5,6 @@
     <LangVersion>8</LangVersion>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Properties\**" />
-    <EmbeddedResource Remove="Properties\**" />
-    <None Remove="Properties\**" />
-  </ItemGroup>
-
   <ItemGroup Condition=" '$(TargetFramework)' == 'net461'">
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="9.0.1" />
     <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />

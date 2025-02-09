@@ -5,13 +5,12 @@ using Xunit;
 
 namespace Transloadit.Tests
 {
-    public class TemplateCredentialsApiTests : TestBase
+    public class CredentialsApiTests : TestBase
     {
         [Fact]
         public async Task GetTemplatesCredentialsList()
         {
             var templateCredentials = await TransloaditClient.Credentials.GetListAsync();
-
 
             Assert.Equal("TEMPLATE_CREDENTIALS_FOUND", templateCredentials.Base.Ok);
         }

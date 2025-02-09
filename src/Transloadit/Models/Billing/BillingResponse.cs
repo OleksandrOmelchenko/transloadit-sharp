@@ -14,7 +14,7 @@ namespace Transloadit.Models.Billing
 
         public string Month { get; set; }
 
-        public DateTime Created { get; set; }
+        public DateTimeOffset Created { get; set; }
 
         public BillingPlan Plan { get; set; }
 
@@ -42,42 +42,42 @@ namespace Transloadit.Models.Billing
 
         public Dictionary<string, RobotBilling> Robots { get; set; }
 
-        public int SubTotal { get; set; }
+        public decimal SubTotal { get; set; }
 
         public bool IsProrated { get; set; }
 
-        public int UsedGb { get; set; }
+        public decimal UsedGb { get; set; }
 
-        public int AdditionalGb { get; set; }
+        public decimal AdditionalGb { get; set; }
 
-        public int AdditionalGbFee { get; set; }
+        public decimal AdditionalGbFee { get; set; }
 
-        public int FinalSubTotal { get; set; }
+        public decimal FinalSubTotal { get; set; }
 
-        public int RewardDiscountPercent { get; set; }
+        public decimal RewardDiscountPercent { get; set; }
 
-        public int RewardDiscount { get; set; }
+        public decimal RewardDiscount { get; set; }
 
-        public int CouponDiscountPercent { get; set; }
+        public decimal CouponDiscountPercent { get; set; }
 
-        public int CouponDiscount { get; set; }
+        public decimal CouponDiscount { get; set; }
 
-        public int SignupDiscountPercent { get; set; }
+        public decimal SignupDiscountPercent { get; set; }
 
-        public int SignupDiscount { get; set; }
+        public decimal SignupDiscount { get; set; }
 
-        public int Credit { get; set; }
+        public decimal Credit { get; set; }
 
-        public int BillLimit { get; set; }
+        public decimal BillLimit { get; set; }
 
-        public int VatRate { get; set; }
+        public decimal VatRate { get; set; }
 
-        public int Vat { get; set; }
+        public decimal Vat { get; set; }
 
         public bool ReverseChargeVat { get; set; }
 
         public string VatId { get; set; }
 
-        public int Total { get; set; }
+        public decimal Total { get; set; }
     }
 }

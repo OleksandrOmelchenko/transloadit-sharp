@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -86,23 +87,35 @@ namespace Transloadit
             return $"sha384:{hash}";
         }
 
-        public async Task<T> SendRequest<T>(HttpMethod httpMethod, string path, BaseParams parameters = null) where T : ResponseBase
+        public async Task<T> SendRequest<T>(
+            HttpMethod httpMethod,
+            string path,
+            BaseParams parameters = null,
+            MultipartFormDataContent formData = null) where T : ResponseBase
         {
-            var request = BuildRequest(httpMethod, path, parameters);
+            var uri = new Uri(_options.ApiBase, path);
+            return await SendRequest<T>(httpMethod, uri, parameters, formData);
+        }
+
+        public async Task<T> SendRequest<T>(
+           HttpMethod httpMethod,
+           Uri uri,
+           BaseParams parameters = null,
+           MultipartFormDataContent formData = null) where T : ResponseBase
+        {
+            var request = BuildRequest(httpMethod, uri, parameters, formData);
             var response = await _options.HttpClient.SendAsync(request);
 
             var content = await response.Content.ReadAsStringAsync();
 
-            var transloaditResponse = new TransloaditResponse(response.StatusCode, response.Headers, content);
-
             var parsed = JsonConvert.DeserializeObject<T>(content, _jsonSerializerSettings);
-            parsed.TransloaditResponse = transloaditResponse;
+            parsed.TransloaditResponse = new TransloaditResponse(response.StatusCode, response.Headers, content);
             return parsed;
         }
 
         private HttpRequestMessage BuildRequest(
             HttpMethod httpMethod,
-            string path,
+            Uri uri,
             BaseParams parameters = null,
             MultipartFormDataContent content = null)
         {
@@ -125,10 +138,10 @@ namespace Transloadit
                 };
 
                 var query = BuildQuery(queryMap);
-                path = path + "?" + query;
+                uri = new Uri(uri, "?" + query);
             }
 
-            var message = new HttpRequestMessage(httpMethod, new Uri(_options.ApiBase, path));
+            var message = new HttpRequestMessage(httpMethod, uri);
             if (httpMethod == HttpMethod.Post || httpMethod == HttpMethod.Delete || httpMethod == HttpMethod.Put)
             {
                 content ??= new MultipartFormDataContent();

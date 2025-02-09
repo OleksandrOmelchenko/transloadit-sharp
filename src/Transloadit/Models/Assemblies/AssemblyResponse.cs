@@ -13,7 +13,7 @@ namespace Transloadit.Models.Assemblies
         public int Height { get; set; }
 
         [JsonProperty("date_file_modified")]
-        public string DateFileModified { get; set; }
+        public DateTimeOffset? DateFileModified { get; set; }
 
         [JsonProperty("aspect_ratio")]
         public double AspectRatio { get; set; }
@@ -43,10 +43,10 @@ namespace Transloadit.Models.Assemblies
         public object SvgViewBoxHeight { get; set; }
 
         [JsonProperty("date_recorded")]
-        public object DateRecorded { get; set; }
+        public DateTimeOffset? DateRecorded { get; set; }
 
         [JsonProperty("date_file_created")]
-        public object DateFileCreated { get; set; }
+        public DateTimeOffset? DateFileCreated { get; set; }
 
         [JsonProperty("title")]
         public string Title { get; set; }
@@ -76,7 +76,7 @@ namespace Transloadit.Models.Assemblies
         public object Keywords { get; set; }
 
         [JsonProperty("aperture")]
-        public object Aperture { get; set; }
+        public double Aperture { get; set; }
 
         [JsonProperty("exposure_compensation")]
         public object ExposureCompensation { get; set; }
@@ -236,7 +236,7 @@ namespace Transloadit.Models.Assemblies
         public string TransloaditClient { get; set; }
 
         [JsonProperty("start_date")]
-        public string StartDate { get; set; }
+        public DateTimeOffset StartDate { get; set; }
 
         [JsonProperty("upload_meta_data_extracted")]
         public bool UploadMetaDataExtracted { get; set; }
@@ -251,7 +251,7 @@ namespace Transloadit.Models.Assemblies
         public bool HasDupeJobs { get; set; }
 
         [JsonProperty("execution_start")]
-        public string ExecutionStart { get; set; }
+        public DateTimeOffset ExecutionStart { get; set; }
 
         [JsonProperty("execution_duration")]
         public double ExecutionDuration { get; set; }
@@ -260,7 +260,7 @@ namespace Transloadit.Models.Assemblies
         public double QueueDuration { get; set; }
 
         [JsonProperty("jobs_queue_duration")]
-        public int JobsQueueDuration { get; set; }
+        public double JobsQueueDuration { get; set; }
 
         [JsonProperty("notify_start")]
         public object NotifyStart { get; set; }
@@ -428,13 +428,13 @@ namespace Transloadit.Models.Assemblies
         public UserMeta UserMeta { get; set; }
 
         [JsonProperty("as")]
-        public object As { get; set; }
+        public string As { get; set; }
 
         [JsonProperty("queue")]
         public string Queue { get; set; }
 
         [JsonProperty("queue_time")]
-        public int QueueTime { get; set; }
+        public double QueueTime { get; set; }
 
         [JsonProperty("exec_time")]
         public double ExecTime { get; set; }

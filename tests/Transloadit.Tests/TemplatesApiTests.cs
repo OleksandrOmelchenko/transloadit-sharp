@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Transloadit.Models;
 using Transloadit.Models.Templates;
-using Transloadit.Tests.Configuration;
 using Xunit;
 
 namespace Transloadit.Tests
@@ -39,22 +38,20 @@ namespace Transloadit.Tests
             var templateRequest = new TemplateRequest
             {
                 Name = $"my-test-generic-template-{DateTime.UtcNow:yyyyMMddHHmmss}",
-                Template = new TemplateBodyGeneric
+                Template = new TemplateRequestContent
                 {
-                    Steps = new Dictionary<string, Dictionary<string, object>>
+                    Steps = new Dictionary<string, RobotBase>
                     {
-                        ["import"] = new Dictionary<string, object>
+                        ["import"] = new TestHttpImportRobot
                         {
-                            ["robot"] = "/http/import",
-                            ["url"] = "https://demos.transloadit.com/66/01604e7d0248109df8c7cc0f8daef8/snowflake.jpg"
+                            Url = "https://demos.transloadit.com/66/01604e7d0248109df8c7cc0f8daef8/snowflake.jpg"
                         },
-                        ["resize"] = new Dictionary<string, object>
+                        ["resize"] = new TestImageResizeRobot
                         {
-                            ["robot"] = "/image/resize",
-                            ["use"] = "import",
-                            ["result"] = true,
-                            ["width"] = 130,
-                            ["height"] = 130,
+                            Use = "import",
+                            Result = true,
+                            Width = 130,
+                            Height = 130
                         }
                     }
                 }
@@ -74,5 +71,28 @@ namespace Transloadit.Tests
 
         }
 
+    }
+
+    public class TestImageResizeRobot : RobotBase
+    {
+        public string Use { get; set; }
+        public bool Result { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+
+        public TestImageResizeRobot()
+        {
+            Robot = "/image/resize";
+        }
+    }
+
+    public class TestHttpImportRobot : RobotBase
+    {
+        public string Url { get; set; }
+
+        public TestHttpImportRobot()
+        {
+            Robot = "/http/import";
+        }
     }
 }
