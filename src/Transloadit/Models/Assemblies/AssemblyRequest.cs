@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Transloadit.Models.Templates;
+using Transloadit.Models.Robots;
 
 namespace Transloadit.Models.Assemblies
 {

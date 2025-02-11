@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Transloadit.Models.Robots;
 
 namespace Transloadit.Models.Templates
 {
@@ -14,10 +15,5 @@ namespace Transloadit.Models.Templates
     public class TemplateRequestContent
     {
         public Dictionary<string, RobotBase> Steps { get; set; }
-    }
-
-    public abstract class RobotBase
-    {
-        public string Robot { get; protected set; }
     }
 }

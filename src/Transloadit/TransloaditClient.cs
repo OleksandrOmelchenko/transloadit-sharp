@@ -2,7 +2,6 @@
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -10,6 +9,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Transloadit.Models;
+using Transloadit.Serialization;
 using Transloadit.Services;
 
 namespace Transloadit
@@ -27,8 +27,12 @@ namespace Transloadit
             NullValueHandling = NullValueHandling.Ignore,
             ContractResolver = new DefaultContractResolver
             {
-                NamingStrategy = new SnakeCaseNamingStrategy()
-            }
+                NamingStrategy = new SnakeCaseNamingStrategy(),
+            },
+            Converters = new List<JsonConverter>
+            {
+                new AnyOfConverter()
+            },
         };
 
         private BillingService _billingService;
@@ -123,7 +127,7 @@ namespace Transloadit
             parameters.Auth ??= new AuthParams
             {
                 Key = _key,
-                Expires = DateTime.UtcNow.AddMinutes(20).ToString("yyyy'/'MM'/'dd HH:mm:ss+00:00")
+                Expires = DateTime.UtcNow.AddMinutes(30).ToString("yyyy'/'MM'/'dd HH:mm:ss+00:00")
             };
 
             var paramsJson = JsonConvert.SerializeObject(parameters, _jsonSerializerSettings);
