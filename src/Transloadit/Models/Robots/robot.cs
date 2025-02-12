@@ -3,6 +3,22 @@ using Transloadit.Serialization;
 
 namespace Transloadit.Models.Robots
 {
+    public class AdvancedUse
+    {
+        public AnyOf<List<string>, List<AdvancedStep>> Steps { get; set; }
+        public bool? BundleSteps { get; set; }
+        public bool? GroupByOriginal { get; set; }
+        public List<string> Fields { get; set; }
+    }
+
+    public class AdvancedStep
+    {
+        public string Name { get; set; }
+        public string As { get; set; }
+        public string Fields { get; set; }
+    }
+
+
     public class TestImageResizeRobot : RobotBase
     {
         public string Use { get; set; }

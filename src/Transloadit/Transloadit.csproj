@@ -17,14 +17,9 @@
 
   <ItemGroup>
     <Folder Include="Models\Robots\FileExporting\" />
-    <Folder Include="Models\Robots\FileCompressing\" />
     <Folder Include="Models\Robots\AudioEncoding\" />
-    <Folder Include="Models\Robots\ImageManipulation\" />
     <Folder Include="Models\Robots\AI\" />
     <Folder Include="Models\Robots\Documents\" />
-    <Folder Include="Models\Robots\Code\" />
-    <Folder Include="Models\Robots\FileFiltering\" />
-    <Folder Include="Models\Robots\MediaCataloging\" />
     <Folder Include="Models\Robots\VideoEncoding\" />
   </ItemGroup>
 
