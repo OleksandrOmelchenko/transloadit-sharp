@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Transloadit.Serialization;
 
 namespace Transloadit.Models.Robots.AudioEncoding
 {
@@ -12,8 +11,6 @@ namespace Transloadit.Models.Robots.AudioEncoding
         public int? SampleRate { get; set; }
         public string FfmpegStack { get; set; }
         public Dictionary<string, object> Ffmpeg { get; set; }
-
-        //todo: hls params, not listed in docs?
 
         public AudioEncodeRobot()
         {

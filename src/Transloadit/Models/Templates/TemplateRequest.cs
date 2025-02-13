@@ -16,4 +16,11 @@ namespace Transloadit.Models.Templates
     {
         public Dictionary<string, RobotBase> Steps { get; set; }
     }
+
+    public class TemplateListRequest : PaginationParams
+    {
+        public string Sort { get; set; } //["id", "name", "created", "modified"]
+
+        public string Order { get; set; } //desc, asc
+    }
 }

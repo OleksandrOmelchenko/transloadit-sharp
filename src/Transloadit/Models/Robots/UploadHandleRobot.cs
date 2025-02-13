@@ -1,6 +1,4 @@
-﻿using Transloadit.Serialization;
-
-namespace Transloadit.Models.Robots
+﻿namespace Transloadit.Models.Robots
 {
     public class UploadHandleRobot : RobotBase
     {

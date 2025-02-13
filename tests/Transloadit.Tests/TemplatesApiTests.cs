@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Transloadit.Models;
 using Transloadit.Models.Robots;
 using Transloadit.Models.Templates;
 using Xunit;
@@ -45,7 +46,7 @@ namespace Transloadit.Tests
             Assert.Equal(httpImportRobot.Robot, createResponse.Content.Steps["import"]["robot"]);
             Assert.Equal(httpImportRobot.Url, createResponse.Content.Steps["import"]["url"]);
             Assert.Equal(imageResizeRobot.Robot, createResponse.Content.Steps["resize"]["robot"]);
-            Assert.Equal(imageResizeRobot.Use, createResponse.Content.Steps["resize"]["use"]);
+            Assert.Equal(imageResizeRobot.Use.Value, createResponse.Content.Steps["resize"]["use"]);
             Assert.Equal(imageResizeRobot.Result, createResponse.Content.Steps["resize"]["result"]);
             Assert.Equal(imageResizeRobot.Width, Convert.ToInt32(createResponse.Content.Steps["resize"]["width"]));
             Assert.Equal(imageResizeRobot.Height, Convert.ToInt32(createResponse.Content.Steps["resize"]["height"]));
@@ -58,7 +59,7 @@ namespace Transloadit.Tests
             Assert.Equal(httpImportRobot.Robot, templateResponse.Content.Steps["import"]["robot"]);
             Assert.Equal(httpImportRobot.Url, templateResponse.Content.Steps["import"]["url"]);
             Assert.Equal(imageResizeRobot.Robot, templateResponse.Content.Steps["resize"]["robot"]);
-            Assert.Equal(imageResizeRobot.Use, templateResponse.Content.Steps["resize"]["use"]);
+            Assert.Equal(imageResizeRobot.Use.Value, templateResponse.Content.Steps["resize"]["use"]);
             Assert.Equal(imageResizeRobot.Result, templateResponse.Content.Steps["resize"]["result"]);
             Assert.Equal(imageResizeRobot.Width, Convert.ToInt32(templateResponse.Content.Steps["resize"]["width"]));
             Assert.Equal(imageResizeRobot.Height, Convert.ToInt32(templateResponse.Content.Steps["resize"]["height"]));
@@ -113,7 +114,7 @@ namespace Transloadit.Tests
 
     public class TestImageResizeRobot : RobotBase
     {
-        public string Use { get; set; }
+        public AnyOf<string, List<string>> Use { get; set; }
         public bool Result { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }

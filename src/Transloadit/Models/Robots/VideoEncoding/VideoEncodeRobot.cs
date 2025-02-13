@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Transloadit.Models.Robots.ImageManipulation;
-using Transloadit.Serialization;
 
 namespace Transloadit.Models.Robots.VideoEncoding
 {

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Transloadit.Serialization;
 
 namespace Transloadit.Models.Robots
 {
@@ -27,5 +26,20 @@ namespace Transloadit.Models.Robots
         public bool? Recursive { get; set; }
         public int? PageNumber { get; set; }
         public int? FilesPerPage { get; set; }
+    }
+
+    public class AdvancedUse
+    {
+        public AnyOf<List<string>, List<AdvancedStep>> Steps { get; set; }
+        public bool? BundleSteps { get; set; }
+        public bool? GroupByOriginal { get; set; }
+        public List<string> Fields { get; set; }
+    }
+
+    public class AdvancedStep
+    {
+        public string Name { get; set; }
+        public string As { get; set; }
+        public string Fields { get; set; }
     }
 }

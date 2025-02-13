@@ -39,11 +39,4 @@ namespace Transloadit.Models
         [JsonProperty("keywords")]
         public List<string> Keywords { get; set; }
     }
-
-    public class TemplateListRequest : PaginationParams
-    {
-        public string Sort { get; set; } //["id", "name", "created", "modified"]
-
-        public string Order { get; set; } //desc, asc
-    }
 }

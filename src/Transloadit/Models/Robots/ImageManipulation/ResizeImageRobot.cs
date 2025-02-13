@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using Transloadit.Serialization;
 
 namespace Transloadit.Models.Robots.ImageManipulation
 {

@@ -1,10 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
-using System;
-using System.Linq;
-using System.Reflection;
+﻿using System;
 
-namespace Transloadit.Serialization
+namespace Transloadit.Models
 {
     public abstract class AnyOf
     {
@@ -136,35 +132,5 @@ namespace Transloadit.Serialization
         public static implicit operator T1(AnyOf<T1, T2, T3> anyOf) => anyOf._value1;
         public static implicit operator T2(AnyOf<T1, T2, T3> anyOf) => anyOf._value2;
         public static implicit operator T3(AnyOf<T1, T2, T3> anyOf) => anyOf._value3;
-    }
-
-    public class AnyOfConverter : JsonConverter
-    {
-        public override bool CanWrite => true;
-
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            switch (value)
-            {
-                case null:
-                    serializer.Serialize(writer, null);
-                    break;
-                case AnyOf anyOf:
-                    serializer.Serialize(writer, anyOf.Value);
-                    break;
-                default:
-                    throw new JsonSerializationException($"Unexpected value type: {value.GetType()}");
-            }
-        }
-
-        public override bool CanConvert(Type objectType)
-        {
-            return typeof(AnyOf).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
-        }
-
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
