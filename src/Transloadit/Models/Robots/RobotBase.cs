@@ -15,6 +15,13 @@ namespace Transloadit.Models.Robots
         public AnyOf<string, List<string>> Path { get; set; }
     }
 
+    public class StoreRobotBase : RobotBase
+    {
+        public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
+        public string Credentials { get; set; }
+        public AnyOf<string, List<string>> Path { get; set; }
+    }
+
     public class PaginatedImportRobotBase : ImportRobotBase
     {
         public bool? Recursive { get; set; }
