@@ -10,6 +10,7 @@ namespace Transloadit.Models
         string Ok { get; set; }
         string Message { get; set; }
         string Error { get; set; }
+        string Reason { get; set; }
         int? HttpCode { get; set; }
     }
 
@@ -26,6 +27,9 @@ namespace Transloadit.Models
 
         [JsonProperty("error")]
         string IResponseBase.Error { get; set; }
+
+        [JsonProperty("reason")]
+        string IResponseBase.Reason { get; set; }
 
         [JsonProperty("http_code")]
         int? IResponseBase.HttpCode { get; set; }

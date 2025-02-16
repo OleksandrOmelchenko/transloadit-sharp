@@ -1,8 +1,9 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Transloadit.Models.Assemblies;
+using Transloadit.Models.Robots;
 using Xunit;
 
 namespace Transloadit.Tests
@@ -11,19 +12,6 @@ namespace Transloadit.Tests
     {
         [Fact]
         public async Task CreateAssembly()
-        {
-            var createAssembly = new AssemblyRequest
-            {
-                TemplateId = "6d4a87848f8b4360880b77fea526289d"
-            };
-
-            var response = await TransloaditClient.Assemblies.CreateAsync(createAssembly);
-
-            Assert.Equal("ASSEMBLY_EXECUTING", response.Base.Ok);
-        }
-
-        [Fact]
-        public async Task CreateAssembly2()
         {
             var createAssembly = new AssemblyRequest
             {
@@ -37,11 +25,22 @@ namespace Transloadit.Tests
         }
 
         [Fact]
-        public async Task CreateAssembly3()
+        public async Task CreateAssemblyWithSteps()
         {
+            var imageResizeRobot = new TestImageResizeRobot
+            {
+                Use = ":original",
+                Result = true,
+                Width = 130,
+                Height = 130
+            };
+
             var createAssembly = new AssemblyRequest
             {
-                TemplateId = "13b80ca8f14140d6b1c9bd6a41d61f42",
+                Steps = new Dictionary<string, RobotBase>
+                {
+                    ["resize"] = imageResizeRobot
+                }
             };
 
             var file = new ByteArrayContent(File.ReadAllBytes(@"TestData/snowflake.jpg"));
@@ -57,6 +56,8 @@ namespace Transloadit.Tests
             var response = await TransloaditClient.Assemblies.CreateAsync(createAssembly, formData);
 
             Assert.Equal("ASSEMBLY_EXECUTING", response.Base.Ok);
+            Assert.Equal(3, response.NumInputFiles);
+            Assert.Equal(3, response.Uploads.Count);
         }
 
 
@@ -74,17 +75,5 @@ namespace Transloadit.Tests
             Assert.Equal(assemblyCount, assemblies.Items.Count);
             Assert.True(assemblyCount < assemblies.Count);
         }
-
-        [Theory]
-        [InlineData("6c5ad8ac73024db381ce8a9f2de3f9e1")]
-        [InlineData("06f4a4b760d84e6191d5d1b25b3190e1")]
-        [InlineData("b4e2544a8346437ebc7bc0e86b67d1e1")]
-        public async Task GetAssembly(string id)
-        {
-            var assembly = await TransloaditClient.Assemblies.GetAsync(id);
-
-            // Assert.Equal("TEMPLATE_FOUND", template.Ok);
-        }
-
     }
 }

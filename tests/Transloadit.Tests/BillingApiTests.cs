@@ -7,7 +7,7 @@ namespace Transloadit.Tests
     public class BillingApiTests : TestBase
     {
         [Fact]
-        public async Task GetBillingDateTime()
+        public async Task GetBillingByDateTime_Should_Succeed()
         {
             var billing = await TransloaditClient.Billing.GetAsync(DateTime.Now);
 
@@ -15,7 +15,7 @@ namespace Transloadit.Tests
         }
 
         [Fact]
-        public async Task GetBillingYearMonth()
+        public async Task GetBillingByYearAndMonth_Should_Succeed()
         {
             var billing = await TransloaditClient.Billing.GetAsync(2025, 2);
 
@@ -23,7 +23,7 @@ namespace Transloadit.Tests
         }
 
         [Fact(Skip = "For some reason response is always successful")]
-        public async Task GetNonExistingBilling()
+        public async Task GetNonExistingBilling_Should_Fail()
         {
             var future = DateTime.Now.AddMonths(2);
             var billing = await TransloaditClient.Billing.GetAsync(future);

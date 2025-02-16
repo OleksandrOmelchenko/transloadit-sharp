@@ -1,4 +1,7 @@
 ﻿using Transloadit.Tests.Configuration;
+using Xunit;
+
+[assembly: CollectionBehavior(DisableTestParallelization = true)]
 
 namespace Transloadit.Tests
 {

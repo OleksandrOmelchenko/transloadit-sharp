@@ -1,16 +1,14 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Transloadit.Models;
 using Transloadit.Serialization;
 using Transloadit.Services;
+using Transloadit.Utilities;
 
 namespace Transloadit
 {
@@ -42,6 +40,13 @@ namespace Transloadit
         private CredentialsService _credentialsService;
         private AssemblyNotificationsService _assemblyNotificationsService;
 
+        public BillingService Billing => _billingService ??= new BillingService(this);
+        public TemplatesService Templates => _templatesService ??= new TemplatesService(this);
+        public AssembliesService Assemblies => _assembliesService ??= new AssembliesService(this);
+        public QueuesService Queues => _queuesService ??= new QueuesService(this);
+        public CredentialsService Credentials => _credentialsService ??= new CredentialsService(this);
+        public AssemblyNotificationsService AssemblyNotifications => _assemblyNotificationsService ??= new AssemblyNotificationsService(this);
+
         public TransloaditClient(string key, string secret, TransloaditClientOptions options = null)
         {
             _key = key;
@@ -60,36 +65,8 @@ namespace Transloadit
             };
         }
 
-        public BillingService Billing => _billingService ??= new BillingService(this);
-        public TemplatesService Templates => _templatesService ??= new TemplatesService(this);
-        public AssembliesService Assemblies => _assembliesService ??= new AssembliesService(this);
-        public QueuesService Queues => _queuesService ??= new QueuesService(this);
-        public CredentialsService Credentials => _credentialsService ??= new CredentialsService(this);
-        public AssemblyNotificationsService AssemblyNotifications => _assemblyNotificationsService ??= new AssemblyNotificationsService(this);
-
-        public static string BuildQuery(IEnumerable<KeyValuePair<string, string>> values)
-        {
-            return string.Join("&", values.Select(p => $"{WebUtility.UrlEncode(p.Key)}={WebUtility.UrlEncode(p.Value)}"));
-        }
-
-        private string ToLowerHex(byte[] bytes)
-        {
-            var builder = new StringBuilder(bytes.Length * 2);
-            for (int i = 0; i < bytes.Length; i++)
-            {
-                builder.Append(bytes[i].ToString("x2"));
-            }
-            return builder.ToString();
-        }
-
-        private string CalculateSignature(string parameters, string key)
-        {
-            using var crypto = new HMACSHA384(Encoding.UTF8.GetBytes(key));
-            var hashBytes = crypto.ComputeHash(Encoding.UTF8.GetBytes(parameters));
-            var hash = ToLowerHex(hashBytes);
-
-            return $"sha384:{hash}";
-        }
+        public static string BuildQuery(string paramsJson, string signature) 
+            => $"?params={WebUtility.UrlEncode(paramsJson)}&signature={WebUtility.UrlEncode(signature)}";
 
         public async Task<T> SendRequest<T>(
             HttpMethod httpMethod,
@@ -124,25 +101,17 @@ namespace Transloadit
             MultipartFormDataContent content = null)
         {
             parameters ??= new BaseParams();
-            parameters.Auth ??= new AuthParams
-            {
-                Key = _key,
-                Expires = DateTime.UtcNow.AddMinutes(30).ToString("yyyy'/'MM'/'dd HH:mm:ss+00:00")
-            };
+            parameters.Auth ??= new AuthParams();
+            parameters.Auth.Key ??= _key;
+            parameters.Auth.Expires ??= DateTime.UtcNow.AddMinutes(30);
 
             var paramsJson = JsonConvert.SerializeObject(parameters, _jsonSerializerSettings);
-            var signature = CalculateSignature(paramsJson, _secret);
+            var signature = SignatureUtilities.CalculateSignature(paramsJson, _secret);
 
             if (httpMethod == HttpMethod.Get)
             {
-                var queryMap = new Dictionary<string, string>
-                {
-                    ["params"] = paramsJson,
-                    ["signature"] = signature
-                };
-
-                var query = BuildQuery(queryMap);
-                uri = new Uri(uri, "?" + query);
+                var query = BuildQuery(paramsJson, signature);
+                uri = new Uri(uri, query);
             }
 
             var message = new HttpRequestMessage(httpMethod, uri);

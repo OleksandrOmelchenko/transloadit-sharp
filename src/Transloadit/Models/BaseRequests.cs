@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using Transloadit.Serialization;
 
 namespace Transloadit.Models
 {
@@ -7,13 +9,19 @@ namespace Transloadit.Models
     {
         [JsonProperty("auth")]
         internal AuthParams Auth { get; set; }
+
+        public void SetAuth(AuthParams authParams)
+        {
+            Auth = authParams;
+        }
     }
 
     public class AuthParams
     {
         public string Key { get; set; }
 
-        public string Expires { get; set; }
+        [JsonConverter(typeof(AuthExpiresDateTimeConverter))]
+        public DateTime? Expires { get; set; }
 
         public string Nonce { get; set; }
 

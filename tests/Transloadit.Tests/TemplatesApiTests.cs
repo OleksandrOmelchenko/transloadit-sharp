@@ -11,7 +11,7 @@ namespace Transloadit.Tests
     public class TemplatesApiTests : TestBase
     {
         [Fact]
-        public async Task CreateGetUpdateListDeleteTemplate()
+        public async Task CreateGetUpdateListDeleteTemplate_Should_Succeed()
         {
             var httpImportRobot = new TestHttpImportRobot
             {

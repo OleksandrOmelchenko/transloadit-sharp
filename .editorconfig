@@ -4,7 +4,7 @@ root = true
 [*]
 indent_style = space
 csharp_indent_labels = one_less_than_current
-csharp_using_directive_placement = outside_namespace:silent
+csharp_using_directive_placement = outside_namespace:warning
 csharp_prefer_simple_using_statement = true:suggestion
 csharp_prefer_braces = true:silent
 csharp_style_namespace_declarations = block_scoped:silent
@@ -88,7 +88,7 @@ dotnet_naming_symbols.non_field_members.required_modifiers =
 # Constants are PascalCase
 dotnet_naming_rule.constants_should_be_pascal_case.severity = suggestion
 dotnet_naming_rule.constants_should_be_pascal_case.symbols = constants
-dotnet_naming_rule.constants_should_be_pascal_case.style = constant_style
+dotnet_naming_rule.constants_should_be_pascal_case.style = pascal_case
 
 dotnet_naming_symbols.constants.applicable_kinds = field, local
 dotnet_naming_symbols.constants.required_modifiers = const
@@ -147,3 +147,5 @@ dotnet_style_qualification_for_field = false:silent
 
 # IDE0060: Remove unused parameter
 dotnet_diagnostic.IDE0060.severity = error
+
+dotnet_sort_system_directives_first = true

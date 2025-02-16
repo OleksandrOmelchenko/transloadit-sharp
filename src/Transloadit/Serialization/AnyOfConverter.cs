@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Reflection;
+using Newtonsoft.Json;
 using Transloadit.Models;
 
 namespace Transloadit.Serialization
