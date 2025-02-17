@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Transloadit.Constants;
 using Transloadit.Models;
 using Transloadit.Models.Assemblies;
 using Transloadit.Models.Robots;
@@ -38,7 +39,7 @@ namespace Transloadit.Tests
             });
 
             var createResponse = await TransloaditClient.Templates.CreateAsync(templateRequest);
-            Assert.Equal("GET_ACCOUNT_UNKNOWN_AUTH_KEY", createResponse.Base.Error);
+            Assert.Equal(ResponseCodes.GetAccountUnknownAuthKey, createResponse.Base.Error);
             Assert.Equal(400, createResponse.Base.HttpCode);
         }
 
@@ -73,7 +74,7 @@ namespace Transloadit.Tests
 
             var response = await TransloaditClient.Assemblies.CreateAsync(createAssembly, formData);
 
-            Assert.Equal("MAX_SIZE_EXCEEDED", response.Base.Error);
+            Assert.Equal(ResponseCodes.MaxSizeExceeded, response.Base.Error);
             Assert.Equal(400, response.Base.HttpCode);
         }
 

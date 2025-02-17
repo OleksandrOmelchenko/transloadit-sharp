@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Transloadit.Constants;
 using Xunit;
 
 namespace Transloadit.Tests
@@ -6,11 +7,11 @@ namespace Transloadit.Tests
     public class QueuesApiTests : TestBase
     {
         [Fact]
-        public async Task GetQueue()
+        public async Task GetQueue_Should_Succeed()
         {
             var jobSlots = await TransloaditClient.Queues.GetJobSlotsAsync();
 
-            Assert.Equal("PRIORITY_JOB_SLOTS_FOUND", jobSlots.Base.Ok);
+            Assert.Equal(ResponseCodes.PriorityJobSlotsFound, jobSlots.Base.Ok);
         }
     }
 }

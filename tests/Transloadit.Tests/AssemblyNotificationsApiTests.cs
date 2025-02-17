@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Transloadit.Constants;
 using Transloadit.Models.Assemblies;
 using Transloadit.Models.Robots;
 using Xunit;
@@ -9,11 +10,11 @@ namespace Transloadit.Tests
     public class AssemblyNotificationsApiTests : TestBase
     {
         [Fact]
-        public async Task ReplayNonExistentAssemblyNotification()
+        public async Task ReplayNonExistentAssemblyNotification_Should_Fail()
         {
             var response = await TransloaditClient.AssemblyNotifications.ReplayAsync("non-existent");
 
-            Assert.Equal("SERVER_404", response.Base.Error);
+            Assert.Equal(ResponseCodes.Server404, response.Base.Error);
             Assert.Equal(404, response.Base.HttpCode);
         }
 
@@ -33,11 +34,11 @@ namespace Transloadit.Tests
             };
 
             var createResponse = await TransloaditClient.Assemblies.CreateAsync(assemblyRequest);
-            Assert.Equal("ASSEMBLY_EXECUTING", createResponse.Base.Ok);
+            Assert.Equal(ResponseCodes.AssemblyExecuting, createResponse.Base.Ok);
 
             var response = await TransloaditClient.AssemblyNotifications.ReplayAsync(createResponse.AssemblyId);
 
-            Assert.Equal("SERVER_404", response.Base.Error);
+            Assert.Equal(ResponseCodes.Server404, response.Base.Error);
             Assert.Equal(404, response.Base.HttpCode);
         }
     }

@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Transloadit.Constants;
 using Xunit;
 
 namespace Transloadit.Tests
@@ -11,7 +12,7 @@ namespace Transloadit.Tests
         {
             var billing = await TransloaditClient.Billing.GetAsync(DateTime.Now);
 
-            Assert.Equal("BILL_FOUND", billing.Base.Ok);
+            Assert.Equal(ResponseCodes.BillFound, billing.Base.Ok);
         }
 
         [Fact]
@@ -19,7 +20,7 @@ namespace Transloadit.Tests
         {
             var billing = await TransloaditClient.Billing.GetAsync(2025, 2);
 
-            Assert.Equal("BILL_FOUND", billing.Base.Ok);
+            Assert.Equal(ResponseCodes.BillFound, billing.Base.Ok);
         }
 
         [Fact(Skip = "For some reason response is always successful")]

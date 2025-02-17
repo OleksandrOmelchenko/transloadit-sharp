@@ -56,5 +56,11 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Transloadit\Transloadit.csproj" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <None Update="TestData\lorem.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
 </Project>

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Transloadit.Constants;
 using Transloadit.Models;
 using Transloadit.Models.Robots;
 using Transloadit.Models.Templates;
@@ -39,7 +40,7 @@ namespace Transloadit.Tests
             };
 
             var createResponse = await TransloaditClient.Templates.CreateAsync(templateRequest);
-            Assert.Equal("TEMPLATE_CREATED", createResponse.Base.Ok);
+            Assert.Equal(ResponseCodes.TemplateCreated, createResponse.Base.Ok);
             Assert.Equal(templateRequest.Name, createResponse.Name);
             Assert.Equal(templateRequest.RequireSignatureAuth, createResponse.RequireSignatureAuth);
             Assert.Equal(2, createResponse.Content.Steps.Count);
@@ -52,7 +53,7 @@ namespace Transloadit.Tests
             Assert.Equal(imageResizeRobot.Height, Convert.ToInt32(createResponse.Content.Steps["resize"]["height"]));
 
             var templateResponse = await TransloaditClient.Templates.GetAsync(createResponse.Id);
-            Assert.Equal("TEMPLATE_FOUND", templateResponse.Base.Ok);
+            Assert.Equal(ResponseCodes.TemplateFound, templateResponse.Base.Ok);
             Assert.Equal(templateRequest.Name, templateResponse.Name);
             Assert.Equal(templateRequest.RequireSignatureAuth, templateResponse.RequireSignatureAuth);
             Assert.Equal(2, templateResponse.Content.Steps.Count);
@@ -91,7 +92,7 @@ namespace Transloadit.Tests
             //sending update request 2 times because the first one fails for some reason on api side
             _ = await TransloaditClient.Templates.UpdateAsync(createResponse.Id, updateTemplateRequest);
             var updateResponse = await TransloaditClient.Templates.UpdateAsync(createResponse.Id, updateTemplateRequest);
-            Assert.Equal("TEMPLATE_UPDATED", updateResponse.Base.Ok);
+            Assert.Equal(ResponseCodes.TemplateUpdated, updateResponse.Base.Ok);
             Assert.Equal(updateTemplateRequest.Name, updateResponse.Name);
             Assert.Equal(updateTemplateRequest.RequireSignatureAuth, updateResponse.RequireSignatureAuth);
             Assert.Equal(2, updateResponse.Content.Steps.Count);
@@ -103,11 +104,11 @@ namespace Transloadit.Tests
             Assert.Equal(imageOptimizeRobot.Priority, updateResponse.Content.Steps["optimize"]["priority"]);
 
             var deleteResponse = await TransloaditClient.Templates.DeleteAsync(createResponse.Id);
-            Assert.Equal("TEMPLATE_DELETED", deleteResponse.Base.Ok);
+            Assert.Equal(ResponseCodes.TemplateDeleted, deleteResponse.Base.Ok);
             Assert.NotNull(deleteResponse.Base.Message);
 
             var getDeletedResponse = await TransloaditClient.Templates.GetAsync(createResponse.Id);
-            Assert.Equal("TEMPLATE_NOT_FOUND", getDeletedResponse.Base.Error);
+            Assert.Equal(ResponseCodes.TemplateNotFound, getDeletedResponse.Base.Error);
             Assert.NotNull(getDeletedResponse.Base.Message);
         }
     }

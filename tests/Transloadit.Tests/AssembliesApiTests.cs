@@ -1,9 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Transloadit.Constants;
 using Transloadit.Models.Assemblies;
 using Transloadit.Models.Robots;
+using Transloadit.Models.Robots.FileCompressing;
+using Transloadit.Models.Robots.FileImporting;
+using Transloadit.Models.Templates;
 using Xunit;
 
 namespace Transloadit.Tests
@@ -11,21 +16,74 @@ namespace Transloadit.Tests
     public class AssembliesApiTests : TestBase
     {
         [Fact]
-        public async Task CreateAssembly()
+        public async Task CreateAssemblyFromTemplateWithFields_ShouldSucceed()
         {
+            var templateRequest = new TemplateRequest
+            {
+                Name = $"my-test-generic-template-{DateTime.UtcNow:yyyyMMddHHmmss}",
+                Template = new TemplateRequestContent
+                {
+                    Steps = new Dictionary<string, RobotBase>
+                    {
+                        ["import"] = new HttpImportRobot
+                        {
+                            Url = "https://demos.transloadit.com/66/${fields.image_guid}/${fields.image}",
+                        },
+                    }
+                }
+            };
+            var createTemplateResponse = await TransloaditClient.Templates.CreateAsync(templateRequest);
+            Assert.Equal(ResponseCodes.TemplateCreated, createTemplateResponse.Base.Ok);
+
             var createAssembly = new AssemblyRequest
             {
-                TemplateId = "6d4a87848f8b4360880b77fea526289d",
+                TemplateId = createTemplateResponse.Id,
                 Quiet = true,
+                Fields = new Dictionary<string, object> { ["image"] = "snowflake.jpg" }
+            };
+            var formData = new MultipartFormDataContent
+            {
+                { new StringContent("01604e7d0248109df8c7cc0f8daef8"), "image_guid" }
             };
 
-            var response = await TransloaditClient.Assemblies.CreateAsync(createAssembly);
+            var assemblyResponse = await TransloaditClient.Assemblies.CreateAsync(createAssembly, formData);
+            Assert.Equal(ResponseCodes.AssemblyExecuting, assemblyResponse.Base.Ok);
+            Assert.Null(assemblyResponse.TemplateId);
 
-            Assert.Equal("ASSEMBLY_EXECUTING", response.Base.Ok);
+            var deleteTemplateResponse = await TransloaditClient.Templates.DeleteAsync(createTemplateResponse.Id);
+            Assert.Equal(ResponseCodes.TemplateDeleted, deleteTemplateResponse.Base.Ok);
         }
 
         [Fact]
-        public async Task CreateAssemblyWithSteps()
+        public async Task CreateAssemblyWithAdvancedUse_Should_Succeed()
+        {
+            var createAssembly = new AssemblyRequest
+            {
+                Steps = new Dictionary<string, RobotBase>
+                {
+                    ["compress"] = new FileCompressRobot
+                    {
+                        Use = new AdvancedUse
+                        {
+                            Steps = new List<AdvancedStep> { new AdvancedStep { Name = ":original", As = "new" } }
+                        },
+                        Format = "zip"
+                    }
+                }
+            };
+
+            var file = new ByteArrayContent(File.ReadAllBytes(@"TestData/lorem.txt"));
+            var formData = new MultipartFormDataContent
+            {
+                { file, "file-first", "lorem.txt" },
+            };
+
+            var response = await TransloaditClient.Assemblies.CreateAsync(createAssembly, formData);
+            Assert.Equal(ResponseCodes.AssemblyExecuting, response.Base.Ok);
+        }
+
+        [Fact]
+        public async Task CreateAssemblyWithSteps_Should_Succeed()
         {
             var imageResizeRobot = new TestImageResizeRobot
             {
@@ -55,7 +113,7 @@ namespace Transloadit.Tests
 
             var response = await TransloaditClient.Assemblies.CreateAsync(createAssembly, formData);
 
-            Assert.Equal("ASSEMBLY_EXECUTING", response.Base.Ok);
+            Assert.Equal(ResponseCodes.AssemblyExecuting, response.Base.Ok);
             Assert.Equal(3, response.NumInputFiles);
             Assert.Equal(3, response.Uploads.Count);
         }
