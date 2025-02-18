@@ -42,4 +42,12 @@ namespace Transloadit.Models.Robots
         public string As { get; set; }
         public string Fields { get; set; }
     }
+
+    public class OutputMeta
+    {
+        public bool? HasTransparency { get; set; }
+        public bool? DominantColors { get; set; }
+        public bool? Colorspace { get; set; }
+        public bool? MeanVolume { get; set; }
+    }
 }

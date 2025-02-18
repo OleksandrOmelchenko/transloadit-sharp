@@ -6,12 +6,12 @@
     public static class FFMpegStack
     {
         /// <summary>
-        /// Version 5.
+        /// Version 5.0.0.
         /// </summary>
         public const string V5 = "v5.0.0";
 
         /// <summary>
-        /// Version 6.
+        /// Version 6.0.0.
         /// </summary>
         public const string V6 = "v6.0.0";
     }

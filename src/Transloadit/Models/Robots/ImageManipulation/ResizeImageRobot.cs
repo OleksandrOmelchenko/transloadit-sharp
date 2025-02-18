@@ -6,7 +6,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
     public class ResizeImageRobot : RobotBase
     {
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
-        public AnyOf<bool, UploadOutputMeta> OutputMeta { get; set; }
+        public AnyOf<bool, OutputMeta> OutputMeta { get; set; }
         public string Format { get; set; }
         public int? Width { get; set; }
         public int? Height { get; set; }

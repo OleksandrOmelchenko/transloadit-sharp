@@ -5,7 +5,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
     public class ImageMergeRobot : RobotBase
     {
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
-        public AnyOf<bool, UploadOutputMeta> OutputMeta { get; set; }
+        public AnyOf<bool, OutputMeta> OutputMeta { get; set; }
         public string Format { get; set; }
         public string Direction { get; set; }
         public int? Border { get; set; }

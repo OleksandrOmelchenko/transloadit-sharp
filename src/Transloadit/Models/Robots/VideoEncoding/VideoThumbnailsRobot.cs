@@ -5,7 +5,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
     public class VideoThumbnailsRobot : RobotBase
     {
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
-        public AnyOf<bool, UploadOutputMeta> OutputMeta { get; set; }
+        public AnyOf<bool, OutputMeta> OutputMeta { get; set; }
         public int? Count { get; set; }
         public AnyOf<List<int>, List<string>> Offsets { get; set; }
         public string Format { get; set; }

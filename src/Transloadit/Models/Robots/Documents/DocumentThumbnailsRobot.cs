@@ -5,7 +5,7 @@ namespace Transloadit.Models.Robots.Documents
     public class DocumentThumbnailsRobot : RobotBase
     {
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
-        public AnyOf<bool, UploadOutputMeta> OutputMeta { get; set; }
+        public AnyOf<bool, OutputMeta> OutputMeta { get; set; }
         public int? Page { get; set; }
         public string Format { get; set; }
         public int? Delay { get; set; }
