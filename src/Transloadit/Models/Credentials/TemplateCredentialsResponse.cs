@@ -25,4 +25,9 @@ namespace Transloadit.Models.Credentials
     {
         public Credential Credential { get; set; }
     }
+
+    public class DeleteCredentialsResponse : ResponseBase
+    {
+
+    }
 }

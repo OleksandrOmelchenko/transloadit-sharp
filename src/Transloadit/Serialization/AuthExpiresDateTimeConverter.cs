@@ -2,6 +2,9 @@
 
 namespace Transloadit.Serialization
 {
+    /// <summary>
+    /// Represents date time converter used to format dates in specific Trasloadit format.
+    /// </summary>
     public class AuthExpiresDateTimeConverter : IsoDateTimeConverter
     {
         public AuthExpiresDateTimeConverter()

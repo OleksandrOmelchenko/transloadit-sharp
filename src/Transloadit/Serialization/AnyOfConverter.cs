@@ -5,6 +5,9 @@ using Transloadit.Models;
 
 namespace Transloadit.Serialization
 {
+    /// <summary>
+    /// Represents json converter used to serialize <see cref="AnyOf"/> objects.
+    /// </summary>
     public class AnyOfConverter : JsonConverter
     {
         public override bool CanWrite => true;

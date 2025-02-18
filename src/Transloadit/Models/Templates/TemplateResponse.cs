@@ -22,4 +22,9 @@ namespace Transloadit.Models.Templates
     {
         public Dictionary<string, Dictionary<string, object>> Steps { get; set; }
     }
+
+    public class DeleteTemplateResponse : ResponseBase
+    {
+
+    }
 }
