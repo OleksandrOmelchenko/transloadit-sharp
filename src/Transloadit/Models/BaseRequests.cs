@@ -76,13 +76,15 @@ namespace Transloadit.Models
         /// Gets or sets the minimum entity creation date.
         /// </summary>
         [JsonProperty("fromdate")]
-        public string FromDate { get; set; }
+        [JsonConverter(typeof(PaginationDateTimeConverter))]
+        public DateTime? FromDate { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum entity creation date.
         /// </summary>
         [JsonProperty("todate")]
-        public string ToDate { get; set; }
+        [JsonConverter(typeof(PaginationDateTimeConverter))]
+        public DateTime? ToDate { get; set; }
 
         /// <summary>
         /// Gets or sets keywords to be matched against certain fields.

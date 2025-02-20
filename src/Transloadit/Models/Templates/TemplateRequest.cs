@@ -19,8 +19,14 @@ namespace Transloadit.Models.Templates
 
     public class TemplateListRequest : PaginationParams
     {
-        public string Sort { get; set; } //["id", "name", "created", "modified"]
+        /// <summary>
+        /// Gets or sets sorting property. One of <see cref="Constants.TemplateSortProperties"/>: <c>id</c>, <c>name</c>, <c>created</c>, <c>modified</c>.
+        /// </summary>
+        public string Sort { get; set; }
 
-        public string Order { get; set; } //desc, asc
+        /// <summary>
+        /// Get or sets ordering direction. One of <see cref="Constants.Orderings"/>: <c>asc</c>, <c>desc</c>.
+        /// </summary>
+        public string Order { get; set; }
     }
 }

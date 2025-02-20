@@ -20,7 +20,11 @@ namespace Transloadit.Models.Assemblies
 
     public class AssemblyListRequest : PaginationParams
     {
-        public string Type { get; set; } //all, uploading, executing, canceled, completed, failed or request_aborted
+        /// <summary>
+        /// Get or sets assembly status. One of <see cref="Constants.AssemlyStatuses"/>:
+        /// <c>all</c>, <c>uploading</c>, <c>executing</c>, <c>canceled</c>, <c>completed</c>, <c>failed</c>, <c>request_aborted</c>.
+        /// </summary>
+        public string Type { get; set; }
     }
 
     public class ReplayAssemblyRequest : BaseParams

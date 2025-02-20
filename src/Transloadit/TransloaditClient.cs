@@ -79,7 +79,7 @@ namespace Transloadit
         /// </summary>
         /// <param name="key">Transloadit auth key.</param>
         /// <param name="secret">Transloadit auth secret.</param>
-        /// <param name="options">Options allowing to overwrite <see cref="TransloaditClient"/> defaults.</param>
+        /// <param name="options">Options allowing to overwrite <see cref="TransloaditClient"/> defaults. Will be merged with default values.</param>
         public TransloaditClient(string key, string secret, TransloaditClientOptions options = null)
         {
             _key = key;
@@ -104,8 +104,8 @@ namespace Transloadit
         /// <typeparam name="T">Response type to parse into.</typeparam>
         /// <param name="httpMethod">HTTP method to use.</param>
         /// <param name="path">Request path.</param>
-        /// <param name="parameters">Request parameters.</param>
-        /// <param name="formData">Request form data.</param>
+        /// <param name="parameters">Request parameters. Auhtorization parameters are added automatically.</param>
+        /// <param name="formData">Request form data. Usually contains file uploads and <c>${fields.*}</c> assembly parameters.</param>
         /// <returns>Parsed response.</returns>
         public async Task<T> SendRequest<T>(
             HttpMethod httpMethod,
@@ -120,12 +120,11 @@ namespace Transloadit
         /// <summary>
         /// Sends request to the specified url.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <typeparam name="T">Response type to parse into.</typeparam>
         /// <param name="httpMethod">HTTP method to use.</param>
         /// <param name="uri">Request url.</param>
-        /// <param name="parameters">Request parameters.</param>
-        /// <param name="formData">Request form data.</param>
+        /// <param name="parameters">Request parameters. Auhtorization parameters are added automatically.</param>
+        /// <param name="formData">Request form data. Usually contains file uploads and <c>${fields.*}</c> assembly parameters.</param>
         /// <returns>Parsed response.</returns>
         public async Task<T> SendRequest<T>(
            HttpMethod httpMethod,

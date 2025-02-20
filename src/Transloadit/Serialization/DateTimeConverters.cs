@@ -12,4 +12,15 @@ namespace Transloadit.Serialization
             DateTimeFormat = "yyyy'/'MM'/'dd HH:mm:ss+00:00";
         }
     }
+
+    /// <summary>
+    /// Represents date time converter used to format dates when using pagination.
+    /// </summary>
+    public class PaginationDateTimeConverter : IsoDateTimeConverter
+    {
+        public PaginationDateTimeConverter()
+        {
+            DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+        }
+    }
 }

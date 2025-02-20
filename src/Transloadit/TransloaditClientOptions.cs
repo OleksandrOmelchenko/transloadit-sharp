@@ -15,7 +15,7 @@ namespace Transloadit
         public Uri ApiBase { get; set; }
 
         /// <summary>
-        /// Get or sets 
+        /// Get or sets HttpClient used for sending API requests.
         /// </summary>
         public HttpClient HttpClient { get; set; }
 
