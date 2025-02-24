@@ -116,7 +116,6 @@ namespace Transloadit.Tests
     public class TestImageResizeRobot : RobotBase
     {
         public AnyOf<string, List<string>> Use { get; set; }
-        public bool Result { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
 

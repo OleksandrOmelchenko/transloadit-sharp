@@ -1,4 +1,5 @@
-﻿namespace Transloadit.Constants
+﻿#pragma warning disable 1591
+namespace Transloadit.Constants
 {
     /// <summary>
     /// Contains available fonts.
