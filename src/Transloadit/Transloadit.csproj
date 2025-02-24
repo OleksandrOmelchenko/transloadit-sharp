@@ -1,18 +1,50 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFrameworks>net461;netstandard2.0;net5.0;net6.0;net7.0;net8.0</TargetFrameworks>
-    <LangVersion>8</LangVersion>
+    <AssemblyName>Transloadit</AssemblyName>
+    <Title>Transloadit Sharp</Title>
+    <Version>0.8.0</Version>
+    <PackageTags>transloadit</PackageTags>
+    <Description>Transloadit Sharp is an API client and portable class library for the Transloadit API.</Description>
+    <Authors>Oleksandr Omelchenko</Authors>
+
+    <!--<TreatWarningsAsErrors>true</TreatWarningsAsErrors>-->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+    <PackageId>$(AssemblyName)</PackageId>
+    <PackageProjectUrl>https://github.com/OleksandrOmelchenko/transloadit-sharp</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/OleksandrOmelchenko/transloadit-sharp</RepositoryUrl>
+    <Deterministic>false</Deterministic>
+    <DebugSymbols>true</DebugSymbols>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <IncludeSymbols>false</IncludeSymbols>
+    <SignAssembly>True</SignAssembly>
+    <CheckEolTargetFramework>false</CheckEolTargetFramework>
+    <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
   </PropertyGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net461'">
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="9.0.1" />
-    <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
-    <Reference Include="System.Net.Http" />
+  <PropertyGroup>
+    <TargetFrameworks>net452;net461;netstandard2.0;net5.0;net6.0;net7.0;net8.0</TargetFrameworks>
+    <LangVersion>12</LangVersion>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <!-- source link properties -->
+  <PropertyGroup>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+    <None Include="../../readme.md" Link="readme.md" Pack="true" PackagePath="/" Visible="false" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-  </ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
 
 </Project>
