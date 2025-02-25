@@ -47,7 +47,7 @@ namespace Transloadit.Models.Assemblies
     public class AssemblyListRequest : PaginationParams
     {
         /// <summary>
-        /// Get or sets assembly status. One of <see cref="Constants.AssemlyStatuses"/>:
+        /// Get or sets assembly status. One of <see cref="Constants.ListAssemlyStatuses"/>:
         /// <c>all</c>, <c>uploading</c>, <c>executing</c>, <c>canceled</c>, <c>completed</c>, <c>failed</c>, <c>request_aborted</c>.
         /// </summary>
         public string Type { get; set; }

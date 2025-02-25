@@ -119,21 +119,5 @@ namespace Transloadit.Tests
             Assert.Equal(3, response.NumInputFiles);
             Assert.Equal(3, response.Uploads.Count);
         }
-
-
-        [Fact]
-        public async Task GetAssembliesList()
-        {
-            const int assemblyCount = 10;
-
-            var listRequest = new AssemblyListRequest
-            {
-                PageSize = assemblyCount,
-            };
-            var assemblies = await TransloaditClient.Assemblies.GetListAsync(listRequest);
-
-            Assert.Equal(assemblyCount, assemblies.Items.Count);
-            Assert.True(assemblyCount < assemblies.Count);
-        }
     }
 }

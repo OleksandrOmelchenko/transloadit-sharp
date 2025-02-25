@@ -17,7 +17,10 @@ namespace Transloadit.Models.Robots.Documents
         /// </summary>
         public string Url { get; set; }
 
-
+        /// <summary>
+        /// The format of the resulting image. The supported values are <c>pdf</c>, <c>jpg</c>, <c>jpeg</c> and <c>png</c>.
+        /// <para>Default: <c>png</c>.</para>
+        /// </summary>
         public string Format { get; set; }
 
         /// <summary>

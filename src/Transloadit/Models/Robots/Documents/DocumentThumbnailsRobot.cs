@@ -24,6 +24,11 @@ namespace Transloadit.Models.Robots.Documents
         /// The PDF page that you want to convert to an image. By default the value is <c>null</c> which means that all pages will be converted into images.
         /// </summary>
         public int? Page { get; set; }
+
+        /// <summary>
+        /// The format of the extracted image(s). If you specify the value <c>gif</c>, then an animated gif cycling through all pages is created.
+        /// <para>Default: <c>png</c>.</para>
+        /// </summary>
         public string Format { get; set; }
 
         /// <summary>

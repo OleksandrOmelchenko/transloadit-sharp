@@ -182,12 +182,12 @@ namespace Transloadit.Models.Assemblies
         /// <summary>
         /// Bytes received.
         /// </summary>
-        public int BytesReceived { get; set; }
+        public long BytesReceived { get; set; }
 
         /// <summary>
         /// Bytes expected.
         /// </summary>
-        public int BytesExpected { get; set; }
+        public long BytesExpected { get; set; }
 
         /// <summary>
         /// Upload duration.
@@ -227,7 +227,7 @@ namespace Transloadit.Models.Assemblies
         /// <summary>
         /// Assembly warnings.
         /// </summary>
-        public List<string> Warnings { get; set; }
+        public List<AssemblyWarning> Warnings { get; set; }
 
         /// <summary>
         /// Whether Assembly is infinite.
@@ -259,29 +259,51 @@ namespace Transloadit.Models.Assemblies
         /// </summary>
         public double JobsQueueDuration { get; set; }
 
-        public object NotifyStart { get; set; }
+        /// <summary>
+        /// Notification start date.
+        /// </summary>
+        public DateTimeOffset? NotifyStart { get; set; }
 
         /// <summary>
         /// Notification url to which Transloadit will send Assembly status when the Assembly is completed.
         /// </summary>
         public string NotifyUrl { get; set; }
 
-        public object NotifyResponseCode { get; set; }
+        /// <summary>
+        /// Notification response code.
+        /// </summary>
+        public int? NotifyResponseCode { get; set; }
 
-        public object NotifyResponseData { get; set; }
+        /// <summary>
+        /// Notification response data.
+        /// </summary>
+        public string NotifyResponseData { get; set; }
 
-        public object NotifyDuration { get; set; }
+        /// <summary>
+        /// Notification duration.
+        /// </summary>
+        public double? NotifyDuration { get; set; }
 
-        public object LastJobCompleted { get; set; }
+        /// <summary>
+        /// Date of the last completed job.
+        /// </summary>
+        public DateTimeOffset? LastJobCompleted { get; set; }
 
+        /// <summary>
+        /// Assembly fields.
+        /// </summary>
         public Dictionary<string, object> Fields { get; set; }
 
+        //todo: figure out type
+        /// <summary>
+        /// Running jobs.
+        /// </summary>
         public List<object> RunningJobs { get; set; }
 
         /// <summary>
         /// Bytes usage.
         /// </summary>
-        public int BytesUsage { get; set; }
+        public long BytesUsage { get; set; }
 
         /// <summary>
         /// Usage tags.
@@ -298,6 +320,9 @@ namespace Transloadit.Models.Assemblies
         /// </summary>
         public List<string> StartedJobs { get; set; }
 
+        /// <summary>
+        /// Parent Assembly status.
+        /// </summary>
         public object ParentAssemblyStatus { get; set; }
 
         /// <summary>
@@ -531,5 +556,21 @@ namespace Transloadit.Models.Assemblies
         /// Upload execution time.
         /// </summary>
         public double ExecTime { get; set; }
+    }
+
+    /// <summary>
+    /// Represents assembly warning.
+    /// </summary>
+    public class AssemblyWarning
+    {
+        /// <summary>
+        /// Warning level.
+        /// </summary>
+        public string Level { get; set; }
+
+        /// <summary>
+        /// Warning message.
+        /// </summary>
+        public string Msg { get; set; }
     }
 }
