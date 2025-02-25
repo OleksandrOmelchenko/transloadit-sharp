@@ -7,6 +7,10 @@ namespace Transloadit.Models.Robots.FileExporting
     /// </summary>
     public class BackBlazeStoreRobot : StoreRobotBase
     {
+        /// <summary>
+        /// A JavaScript object containing a list of metadata to be set for this file on backblaze, such as <c>{ FileURL: "${file.url_name}" }</c>. 
+        /// This can also include any available <a href="https://transloadit.com/docs/topics/assembly-instructions/#assembly-variables">Assembly variables</a>.
+        /// </summary>
         public Dictionary<string, string> Headers { get; set; }
 
         /// <summary>

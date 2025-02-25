@@ -19,11 +19,45 @@ namespace Transloadit.Models.Robots.AudioEncoding
         /// <para>Default: <c>{}</c>.</para>
         /// </summary>
         public AnyOf<bool, OutputMeta> OutputMeta { get; set; }
+
+        /// <summary>
+        /// Performs conversion using pre-configured settings. If you specify your own FFmpeg parameters using the Robot's ffmpeg parameter 
+        /// and you have not specified a preset, then the default mp3 preset is not applied. This is to prevent you from having to override 
+        /// each of the MP3 preset's values manually. One of <see cref="Constants.AudioEncodingPresetsV5"/> 
+        /// or <see cref="Constants.AudioEncodingPresetsV6"/>.
+        /// </summary>
         public string Preset { get; set; }
+
+        /// <summary>
+        /// Bit rate of the resulting audio file, in bits per second. If not specified will default to the bit rate of the input audio file.
+        /// </summary>
         public int? Bitrate { get; set; }
+
+        /// <summary>
+        /// Sample rate of the resulting audio file, in Hertz. If not specified will default to the sample rate of the input audio file.
+        /// </summary>
         public int? SampleRate { get; set; }
-        public double? Duration { get; set; }
+
+        /// <summary>
+        /// Duration of the output file compared to the duration of all merged audio files. Can be <c>first</c> (duration of the first input file), 
+        /// <c>shortest</c> (duration of the shortest audio file) or <c>longest</c> for the duration of the longest input file.
+        /// <para>Default: <c>longest</c>.</para>
+        /// </summary>
+        public string Duration { get; set; }
+
+        /// <summary>
+        /// Specifies if any input files that do not match the target duration should be looped to match it. Useful for audio merging 
+        /// where your overlay file is typically much shorter than the main audio file.
+        /// <para>Default: <c>false</c>.</para>
+        /// </summary>
         public bool? Loop { get; set; }
+
+        /// <summary>
+        /// Valid values are <c>average</c> and <c>sum</c> here. <c>average</c> means each input is scaled 1/n (n is the number of inputs) 
+        /// or <c>sum</c> which means each individual audio stays on the same volume, but since we merge tracks 'on top' of each other, 
+        /// this could result in very loud output.
+        /// <para>Default: <c>average</c>.</para>
+        /// </summary>
         public string Volume { get; set; }
 
         /// <summary>

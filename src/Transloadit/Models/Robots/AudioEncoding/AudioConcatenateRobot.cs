@@ -19,9 +19,31 @@ namespace Transloadit.Models.Robots.AudioEncoding
         /// <para>Default: <c>{}</c>.</para>
         /// </summary>
         public AnyOf<bool, OutputMeta> OutputMeta { get; set; }
+
+        /// <summary>
+        /// Performs conversion using pre-configured settings. If you specify your own FFmpeg parameters using the Robot's ffmpeg parameter 
+        /// and you have not specified a preset, then the default mp3 preset is not applied. This is to prevent you from having to override 
+        /// each of the MP3 preset's values manually. One of <see cref="Constants.AudioEncodingPresetsV5"/> 
+        /// or <see cref="Constants.AudioEncodingPresetsV6"/>.
+        /// </summary>
         public string Preset { get; set; }
+
+        /// <summary>
+        /// Bit rate of the resulting audio file, in bits per second. If not specified will default to the bit rate of the input audio file.
+        /// </summary>
         public int? Bitrate { get; set; }
+
+        /// <summary>
+        /// Sample rate of the resulting audio file, in Hertz. If not specified will default to the sample rate of the input audio file.
+        /// </summary>
         public int? SampleRate { get; set; }
+
+        /// <summary>
+        /// When used this adds an audio fade in and out effect between each section of your concatenated audio file. The float value is used, 
+        /// so if you want an audio delay effect of 500 milliseconds between each video section, you would select 0.5. Integer values 
+        /// can also be represented.
+        /// <para>Default: <c>1.0</c>.</para>
+        /// </summary>
         public double? AudioFadeSeconds { get; set; }
 
         /// <summary>

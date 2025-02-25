@@ -11,6 +11,11 @@ namespace Transloadit.Models.Robots.MediaCataloging
         /// Specifies which Step(s) to use as input.
         /// </summary>
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
+
+        /// <summary>
+        /// A key/value map defining the metadata to write into the file. Valid metadata keys can be found 
+        /// <a href="https://exiftool.org/TagNames/EXIF.html">here</a>. For example: <c>ProcessingSoftware</c>.
+        /// </summary>
         public Dictionary<string, object> DataToWrite { get; set; }
 
         /// <summary>

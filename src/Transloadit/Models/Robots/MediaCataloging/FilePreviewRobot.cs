@@ -14,6 +14,12 @@ namespace Transloadit.Models.Robots.MediaCataloging
         public string Format { get; set; }
         public int? Width { get; set; }
         public int? Height { get; set; }
+
+        /// <summary>
+        /// Image resize strategy. One of <see cref="Constants.ResizeStrategy"/>: <c>fit</c>, <c>fillcrop</c>, <c>min_fit</c>, 
+        /// <c>pad</c>, <c>stretch</c> and <c>crop</c>.
+        /// <para>Default: <c>pad</c>.</para>
+        /// </summary>
         public string ResizeStrategy { get; set; }
         public string Background { get; set; }
         public PreviewStrategy Strategy { get; set; }

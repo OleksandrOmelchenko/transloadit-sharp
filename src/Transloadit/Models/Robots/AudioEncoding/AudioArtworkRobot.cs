@@ -11,7 +11,18 @@ namespace Transloadit.Models.Robots.AudioEncoding
         /// Specifies which Step(s) to use as input.
         /// </summary>
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
+
+        /// <summary>
+        /// What should be done with the audio file. A value of <c>extract</c> means audio artwork will be extracted. 
+        /// A value of <c>insert</c> means the provided image will be inserted as audio artwork.
+        /// <para>Default: <c>extract</c>.</para>
+        /// </summary>
         public string Method { get; set; }
+
+        /// <summary>
+        /// Whether the original file should be transcoded into a new format if there is an issue with the original file.
+        /// <para>Default: <c>false</c>.</para>
+        /// </summary>
         public bool? ChangeFormatIfNecessary { get; set; }
 
         /// <summary>
