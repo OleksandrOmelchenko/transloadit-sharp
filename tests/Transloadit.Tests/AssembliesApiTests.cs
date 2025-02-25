@@ -81,6 +81,7 @@ namespace Transloadit.Tests
 
             var response = await TransloaditClient.Assemblies.CreateAsync(createAssembly, formData);
             Assert.Equal(ResponseCodes.AssemblyExecuting, response.Base.Ok);
+            Assert.Equal("transloadit-sharp/0.8.0", response.TransloaditClient);
         }
 
         [Fact]

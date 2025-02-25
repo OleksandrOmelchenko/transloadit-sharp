@@ -89,10 +89,12 @@ namespace Transloadit
 
         private static TransloaditClientOptions MergeOptions(TransloaditClientOptions options)
         {
+            var httpClient = options?.HttpClient ?? new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("Transloadit-Client", "transloadit-sharp/0.8.0");
             return new TransloaditClientOptions
             {
                 ApiBase = options?.ApiBase ?? new Uri(ApiBase),
-                HttpClient = options?.HttpClient ?? new HttpClient(),
+                HttpClient = httpClient,
                 RequestSerializerSettings = options?.RequestSerializerSettings ?? _jsonSerializerSettings,
                 ResponseSerializerSettings = options?.ResponseSerializerSettings ?? _jsonSerializerSettings,
             };
