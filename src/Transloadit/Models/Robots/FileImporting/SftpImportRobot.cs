@@ -9,7 +9,16 @@ namespace Transloadit.Models.Robots.FileImporting
     {
         public AnyOf<bool, List<string>> IgnoreErrors { get; set; }
         public string Credentials { get; set; }
+
+        /// <summary>
+        /// The path on your SFTP server where to search for files.
+        /// </summary>
         public string Path { get; set; }
+
+        /// <summary>
+        /// The port to use for the connection.
+        /// <para>Default: <c>22</c>.</para>
+        /// </summary>
         public int? Port { get; set; }
 
         /// <summary>
