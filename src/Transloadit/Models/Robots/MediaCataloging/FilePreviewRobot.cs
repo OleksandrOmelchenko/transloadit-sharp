@@ -2,8 +2,14 @@
 
 namespace Transloadit.Models.Robots.MediaCataloging
 {
+    /// <summary>
+    /// Represents <c>/file/preview</c> Robot.
+    /// </summary>
     public class FilePreviewRobot : RobotBase
     {
+        /// <summary>
+        /// Specifies which Step(s) to use as input.
+        /// </summary>
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
         public string Format { get; set; }
         public int? Width { get; set; }
@@ -30,6 +36,9 @@ namespace Transloadit.Models.Robots.MediaCataloging
         public int? ClipFramerate { get; set; }
         public bool? ClipLoop { get; set; }
 
+        /// <summary>
+        /// Initializes <c>/file/preview</c> Robot.
+        /// </summary>
         public FilePreviewRobot()
         {
             Robot = "/file/preview";

@@ -2,6 +2,9 @@
 
 namespace Transloadit.Models.Robots.FileExporting
 {
+    /// <summary>
+    /// Represents <c>/tus/store</c> Robot.
+    /// </summary>
     public class TusStoreRobot : RobotBase
     {
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
@@ -12,6 +15,9 @@ namespace Transloadit.Models.Robots.FileExporting
         public string UrlTemplate { get; set; }
         public string SslUrlTemplate { get; set; }
 
+        /// <summary>
+        /// Initializes <c>/tus/store</c> Robot.
+        /// </summary>
         public TusStoreRobot()
         {
             Robot = "/tus/store";

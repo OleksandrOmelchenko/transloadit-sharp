@@ -3,8 +3,12 @@ using System.Collections.Generic;
 
 namespace Transloadit.Models.Credentials
 {
+    /// <summary>
+    /// Represents Template Credential data.
+    /// </summary>
     public class Credential
     {
+
         public string Id { get; set; }
         public string AccountId { get; set; }
         public string Name { get; set; }
@@ -26,6 +30,9 @@ namespace Transloadit.Models.Credentials
         public Credential Credential { get; set; }
     }
 
+    /// <summary>
+    /// Represents Template Credentials deletion response.
+    /// </summary>
     public class DeleteCredentialsResponse : ResponseBase
     {
 

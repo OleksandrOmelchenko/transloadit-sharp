@@ -44,32 +44,32 @@ namespace Transloadit
         private AssemblyNotificationsService _assemblyNotificationsService;
 
         /// <summary>
-        /// Gets Billing service.
+        /// Billing service.
         /// </summary>
         public BillingService Billing => _billingService ??= new BillingService(this);
 
         /// <summary>
-        /// Gets Templates service.
+        /// Templates service.
         /// </summary>
         public TemplatesService Templates => _templatesService ??= new TemplatesService(this);
 
         /// <summary>
-        /// Gets Assemblies service.
+        /// Assemblies service.
         /// </summary>
         public AssembliesService Assemblies => _assembliesService ??= new AssembliesService(this);
 
         /// <summary>
-        /// Gets Queues service.
+        /// Queues service.
         /// </summary>
         public QueuesService Queues => _queuesService ??= new QueuesService(this);
 
         /// <summary>
-        /// Gets Template Credentials service.
+        /// Template Credentials service.
         /// </summary>
         public CredentialsService Credentials => _credentialsService ??= new CredentialsService(this);
 
         /// <summary>
-        /// Gets Assembly Notifications service.
+        /// Assembly Notifications service.
         /// </summary>
         public AssemblyNotificationsService AssemblyNotifications => _assemblyNotificationsService ??= new AssemblyNotificationsService(this);
 

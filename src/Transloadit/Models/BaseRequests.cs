@@ -29,28 +29,28 @@ namespace Transloadit.Models
     public class AuthParams
     {
         /// <summary>
-        /// Gets or sets Transloadit auth key.
+        /// Transloadit auth key.
         /// </summary>
         public string Key { get; set; }
 
         /// <summary>
-        /// Get or sets signature expiration date.
+        /// Signature expiration date.
         /// </summary>
         [JsonConverter(typeof(AuthExpiresDateTimeConverter))]
         public DateTime? Expires { get; set; }
 
         /// <summary>
-        /// Get or sets a value (better randomly generated) which helps preventing signature re-use and defend against replay attacks.
+        /// A value (better randomly generated) which helps preventing signature re-use and defend against replay attacks.
         /// </summary>
         public string Nonce { get; set; }
 
         /// <summary>
-        /// Get or sets a regular expression to match against the HTTP referer of this upload.
+        /// A regular expression to match against the HTTP referer of this upload.
         /// </summary>
         public string Referer { get; set; }
 
         /// <summary>
-        /// Gets or sets maximum size that an upload can have in bytes.
+        /// Maximum size that an upload can have in bytes.
         /// </summary>
         public int? MaxSize { get; set; }
     }
@@ -61,33 +61,33 @@ namespace Transloadit.Models
     public class PaginationParams : BaseParams
     {
         /// <summary>
-        /// Gets or sets page number.
+        /// Page number.
         /// </summary>
         [JsonProperty("page")]
         public int? Page { get; set; }
 
         /// <summary>
-        /// Gets or sets page size.
+        /// Page size.
         /// </summary>
         [JsonProperty("pagesize")]
         public int? PageSize { get; set; }
 
         /// <summary>
-        /// Gets or sets the minimum entity creation date.
+        /// The minimum entity creation date.
         /// </summary>
         [JsonProperty("fromdate")]
         [JsonConverter(typeof(PaginationDateTimeConverter))]
         public DateTime? FromDate { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum entity creation date.
+        /// The maximum entity creation date.
         /// </summary>
         [JsonProperty("todate")]
         [JsonConverter(typeof(PaginationDateTimeConverter))]
         public DateTime? ToDate { get; set; }
 
         /// <summary>
-        /// Gets or sets keywords to be matched against certain fields.
+        /// Keywords to be matched against certain fields.
         /// </summary>
         [JsonProperty("keywords")]
         public List<string> Keywords { get; set; }

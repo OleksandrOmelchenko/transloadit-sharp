@@ -2,6 +2,9 @@
 
 namespace Transloadit.Models.Robots.FileExporting
 {
+    /// <summary>
+    /// Represents <c>/s3/store</c> Robot.
+    /// </summary>
     public class S3StoreRobot : StoreRobotBase
     {
         public string UrlPrefix { get; set; }
@@ -13,6 +16,9 @@ namespace Transloadit.Models.Robots.FileExporting
         public bool? NoVhost { get; set; }
         public int? SignUrlsFor { get; set; }
 
+        /// <summary>
+        /// Initializes <c>/s3/store</c> Robot.
+        /// </summary>
         public S3StoreRobot()
         {
             Robot = "/s3/store";

@@ -2,6 +2,9 @@
 
 namespace Transloadit.Models.Robots.FileImporting
 {
+    /// <summary>
+    /// Represents <c>/http/import</c> Robot.
+    /// </summary>
     public class HttpImportRobot : RobotBase
     {
         public AnyOf<bool, List<string>> IgnoreErrors { get; set; }
@@ -12,6 +15,9 @@ namespace Transloadit.Models.Robots.FileImporting
         public List<string> ImportOnErrors { get; set; }
         public bool? FailFast { get; set; }
 
+        /// <summary>
+        /// Initializes <c>/http/import</c> Robot.
+        /// </summary>
         public HttpImportRobot()
         {
             Robot = "/http/import";

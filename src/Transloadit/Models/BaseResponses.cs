@@ -11,27 +11,27 @@ namespace Transloadit.Models
     public interface IResponseBase
     {
         /// <summary>
-        /// Gets or sets success status code.
+        /// Success status code.
         /// </summary>
         string Ok { get; set; }
 
         /// <summary>
-        /// Gets or sets success or error message.
+        /// Success or error message.
         /// </summary>
         string Message { get; set; }
 
         /// <summary>
-        /// Gets or sets error status code.
+        /// Error status code.
         /// </summary>
         string Error { get; set; }
 
         /// <summary>
-        /// Gets or sets error reason message.
+        /// Error reason message.
         /// </summary>
         string Reason { get; set; }
 
         /// <summary>
-        /// Gets or sets response HTTP code.
+        /// Response HTTP code.
         /// </summary>
         int? HttpCode { get; set; }
     }
@@ -64,7 +64,7 @@ namespace Transloadit.Models
         int? IResponseBase.HttpCode { get; set; }
 
         /// <summary>
-        /// Gets base response properties.
+        /// Base response properties.
         /// </summary>
         [JsonIgnore]
         public IResponseBase Base => this;
@@ -77,12 +77,12 @@ namespace Transloadit.Models
     public class PaginatedListResponse<T> : ResponseBase
     {
         /// <summary>
-        /// Gets or sets total items count.
+        /// Total items count.
         /// </summary>
         public int Count { get; set; }
 
         /// <summary>
-        /// Gets or sets paginated items.
+        /// Paginated items.
         /// </summary>
         public List<T> Items { get; set; }
     }
@@ -93,17 +93,17 @@ namespace Transloadit.Models
     public class TransloaditResponse
     {
         /// <summary>
-        /// Gets the HTTP status code of the response.
+        /// The HTTP status code of the response.
         /// </summary>
         public HttpStatusCode StatusCode { get; }
 
         /// <summary>
-        /// Gets the HTTP headers of the response.
+        /// The HTTP headers of the response.
         /// </summary>
         public HttpResponseHeaders Headers { get; }
 
         /// <summary>
-        /// Gets the content of the response.
+        /// The content of the response.
         /// </summary>
         public string Content { get; }
 

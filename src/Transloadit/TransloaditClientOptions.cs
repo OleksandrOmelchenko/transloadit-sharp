@@ -10,22 +10,22 @@ namespace Transloadit
     public class TransloaditClientOptions
     {
         /// <summary>
-        /// Gets or sets base API url.
+        /// Base API url.
         /// </summary>
         public Uri ApiBase { get; set; }
 
         /// <summary>
-        /// Get or sets HttpClient used for sending API requests.
+        /// HttpClient used for sending API requests.
         /// </summary>
         public HttpClient HttpClient { get; set; }
 
         /// <summary>
-        /// Gets or sets <see cref="JsonSerializerSettings"/> for response deserialization.
+        /// <see cref="JsonSerializerSettings"/> for response deserialization.
         /// </summary>
         public JsonSerializerSettings ResponseSerializerSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets <see cref="JsonSerializerSettings"/> for request serialization.
+        /// <see cref="JsonSerializerSettings"/> for request serialization.
         /// </summary>
         public JsonSerializerSettings RequestSerializerSettings { get; set; }
     }

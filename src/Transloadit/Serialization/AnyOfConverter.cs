@@ -10,8 +10,10 @@ namespace Transloadit.Serialization
     /// </summary>
     public class AnyOfConverter : JsonConverter
     {
+        /// <inheritdoc />
         public override bool CanWrite => true;
 
+        /// <inheritdoc />
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             switch (value)
@@ -27,11 +29,13 @@ namespace Transloadit.Serialization
             }
         }
 
+        /// <inheritdoc />
         public override bool CanConvert(Type objectType)
         {
             return typeof(AnyOf).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
         }
 
+        /// <inheritdoc />
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             throw new NotImplementedException();

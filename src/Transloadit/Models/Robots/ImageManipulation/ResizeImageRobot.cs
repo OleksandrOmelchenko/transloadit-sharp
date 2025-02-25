@@ -3,8 +3,14 @@ using System.Collections.Generic;
 
 namespace Transloadit.Models.Robots.ImageManipulation
 {
+    /// <summary>
+    /// Represents <c>/image/resize</c> Robot.
+    /// </summary>
     public class ResizeImageRobot : RobotBase
     {
+        /// <summary>
+        /// Specifies which Step(s) to use as input.
+        /// </summary>
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
         public AnyOf<bool, OutputMeta> OutputMeta { get; set; }
         public string Format { get; set; }
@@ -38,6 +44,11 @@ namespace Transloadit.Models.Robots.ImageManipulation
         public AnyOf<bool, string> Clip { get; set; }
         public bool? Negate { get; set; }
         public int? Density { get; set; }
+
+        /// <summary>
+        /// ImageMagic stack version. One of <see cref="Constants.ImageMagickStack"/>: <c>v2.0.10</c> or <c>v3.0.1</c>.
+        /// <para>Default: <c>v2.0.10</c>.</para>
+        /// </summary>
         public string ImagemagickStack { get; set; }
         public List<TextData> Text { get; set; }
         public string WatermarkUrl { get; set; }
@@ -47,6 +58,9 @@ namespace Transloadit.Models.Robots.ImageManipulation
         public string WatermarkSize { get; set; }
         public string WatermarkResizeStrategy { get; set; }
 
+        /// <summary>
+        /// Initializes <c>/image/resize</c> Robot.
+        /// </summary>
         public ResizeImageRobot()
         {
             Robot = "/image/resize";

@@ -2,6 +2,9 @@
 
 namespace Transloadit.Models.Robots.FileExporting
 {
+    /// <summary>
+    /// Represents <c>/youtube/store</c> Robot.
+    /// </summary>
     public class YoutubeStoreRobot : RobotBase
     {
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
@@ -12,6 +15,9 @@ namespace Transloadit.Models.Robots.FileExporting
         public string Keywords { get; set; }
         public string Visibility { get; set; }
 
+        /// <summary>
+        /// Initializes <c>/youtube/store</c> Robot.
+        /// </summary>
         public YoutubeStoreRobot()
         {
             Robot = "/youtube/store";
