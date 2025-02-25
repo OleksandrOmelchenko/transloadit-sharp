@@ -41,6 +41,7 @@ namespace Transloadit.Tests
                 Quiet = true,
                 Fields = new Dictionary<string, object> { ["image"] = "snowflake.jpg" }
             };
+            createAssembly.DisableSignatureAuth();
             var formData = new MultipartFormDataContent
             {
                 { new StringContent("01604e7d0248109df8c7cc0f8daef8"), "image_guid" }

@@ -145,6 +145,8 @@ namespace Transloadit
         private static string BuildQuery(string paramsJson, string signature)
             => $"?params={WebUtility.UrlEncode(paramsJson)}&signature={WebUtility.UrlEncode(signature)}";
 
+        private static string BuildQuery(string paramsJson) => $"?params={WebUtility.UrlEncode(paramsJson)}";
+
         private HttpRequestMessage BuildRequest(
             HttpMethod httpMethod,
             Uri uri,
@@ -154,14 +156,19 @@ namespace Transloadit
             parameters ??= new BaseParams();
             parameters.Auth ??= new AuthParams();
             parameters.Auth.Key ??= _key;
-            parameters.Auth.Expires ??= DateTime.UtcNow.AddMinutes(30);
+            if (parameters.EnableSignatureAuth)
+            {
+                parameters.Auth.Expires ??= DateTime.UtcNow.AddMinutes(30);
+            }
 
             var paramsJson = JsonConvert.SerializeObject(parameters, _jsonSerializerSettings);
-            var signature = SignatureUtilities.CalculateSignature(paramsJson, _secret);
+            var signature = parameters.EnableSignatureAuth
+                ? SignatureUtilities.CalculateSignature(paramsJson, _secret)
+                : null;
 
             if (httpMethod == HttpMethod.Get)
             {
-                var query = BuildQuery(paramsJson, signature);
+                var query = parameters.EnableSignatureAuth ? BuildQuery(paramsJson, signature) : BuildQuery(paramsJson);
                 uri = new Uri(uri, query);
             }
 
@@ -169,9 +176,11 @@ namespace Transloadit
             if (httpMethod == HttpMethod.Post || httpMethod == HttpMethod.Delete || httpMethod == HttpMethod.Put)
             {
                 content ??= new MultipartFormDataContent();
-
                 content.Add(new StringContent(paramsJson), "params");
-                content.Add(new StringContent(signature), "signature");
+                if (parameters.EnableSignatureAuth)
+                {
+                    content.Add(new StringContent(signature), "signature");
+                }
             }
             if (content != null)
             {

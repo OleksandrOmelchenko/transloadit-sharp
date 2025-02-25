@@ -18,6 +18,9 @@ namespace Transloadit.Models.Templates
         /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// Template content.
+        /// </summary>
         public TemplateContent Content { get; set; }
 
         /// <summary>
@@ -25,13 +28,23 @@ namespace Transloadit.Models.Templates
         /// </summary>
         public int RequireSignatureAuth { get; set; }
 
+        /// <summary>
+        /// Transcoding result expiration date.
+        /// </summary>
         public DateTimeOffset? TranscodingResultExpiry { get; set; }
 
+        /// <summary>
+        /// Assembly status expiration date.
+        /// </summary>
         public DateTimeOffset? AssemblyStatusExpiry { get; set; }
     }
 
+    /// <summary>
+    /// Represents template content.
+    /// </summary>
     public class TemplateContent
     {
+
         public Dictionary<string, Dictionary<string, object>> Steps { get; set; }
     }
 

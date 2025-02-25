@@ -14,7 +14,8 @@ namespace Transloadit.Models.Templates
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the value which controls whether signature is required when using the template. Use <c>1</c> to deny requests that do not include a signature.
+        /// Gets or sets the value which controls whether signature is required when using the template. 
+        /// Use <c>1</c> to deny requests that do not include a signature.
         /// <para>Default: <c>0</c>.</para>
         /// </summary>
         public int RequireSignatureAuth { get; set; }

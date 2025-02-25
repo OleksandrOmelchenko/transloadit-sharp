@@ -30,7 +30,11 @@ namespace Transloadit.Services
         /// <returns>Requested assembly data.</returns>
         public async Task<AssemblyResponse> GetAsync(string assemblyId)
         {
-            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Get, $"/assemblies/{assemblyId}");
+            var parameters = new BaseParams
+            {
+                EnableSignatureAuth = false,
+            };
+            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Get, $"/assemblies/{assemblyId}", parameters);
         }
 
         /// <summary>
@@ -61,7 +65,11 @@ namespace Transloadit.Services
         /// <returns>Canceled assembly data.</returns>
         public async Task<AssemblyResponse> CancelAsync(string assemblyId)
         {
-            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Delete, $"/assemblies/{assemblyId}");
+            var parameters = new BaseParams
+            {
+                EnableSignatureAuth = false,
+            };
+            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Delete, $"/assemblies/{assemblyId}", parameters);
         }
 
         /// <summary>
