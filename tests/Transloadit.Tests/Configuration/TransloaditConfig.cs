@@ -6,5 +6,7 @@
 
         public string AuthKey { get; set; }
         public string AuthSecret { get; set; }
+
+        public string NotifyUrl { get; set; }
     }
 }

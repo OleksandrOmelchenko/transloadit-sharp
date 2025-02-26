@@ -21,20 +21,15 @@ namespace Transloadit.Models.Assemblies
         public string NotifyUrl { get; set; }
 
         /// <summary>
-        /// An object of pairs (name -> value) that can be used as <a href="https://transloadit.com/docs/topics/assembly-instructions/#assembly-variables">Assembly Variables</a>.
+        /// An object of pairs (name -> value) that can be used as 
+        /// <a href="https://transloadit.com/docs/topics/assembly-instructions/#assembly-variables">Assembly Variables</a>.
         /// </summary>
         public Dictionary<string, object> Fields { get; set; }
 
         /// <summary>
-        /// Whether to allow overriding template steps. Set this to false to disallow <a href="https://transloadit.com/docs/topics/templates/#overruling-templates-at-runtime">Overruling Templates at Runtime</a>. 
-        /// If set to <c>false</c> then <c>template_id</c> and <c>steps</c> will be mutually exclusive and only supply one of those parameters may be supplied.
-        /// <para>Default: <c>true</c>.</para>
-        /// </summary>
-        public bool AllowStepsOverride { get; set; }
-
-        /// <summary>
         /// Whether to exclude Assembly data in the response. If set to <c>true</c>, a successful Assembly response will only include the 
-        /// <c>ok</c> and <c>assembly_id</c> fields. An erroneous Assembly will only include the <c>error</c>, <c>http_code</c>, <c>message</c> and <c>assembly_id</c> fields. 
+        /// <c>ok</c> and <c>assembly_id</c> fields. An erroneous Assembly will only include the <c>error</c>, <c>http_code</c>, 
+        /// <c>message</c> and <c>assembly_id</c> fields. 
         /// The full Assembly Status will then still be sent to the <c>notify_url</c> if one was specified.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>

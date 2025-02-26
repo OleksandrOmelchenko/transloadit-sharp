@@ -23,11 +23,12 @@ namespace Transloadit.Tests
                 Name = $"my-test-generic-template-{DateTime.UtcNow:yyyyMMddHHmmss}",
                 Template = new TemplateRequestContent
                 {
+                    Fields = new Dictionary<string, object> { ["number"] = 66 },
                     Steps = new Dictionary<string, RobotBase>
                     {
                         ["import"] = new HttpImportRobot
                         {
-                            Url = "https://demos.transloadit.com/66/${fields.image_guid}/${fields.image}",
+                            Url = "https://demos.transloadit.com/${fields.number}/${fields.image_guid}/${fields.image}",
                         },
                     }
                 }
@@ -38,8 +39,14 @@ namespace Transloadit.Tests
             var createAssembly = new AssemblyRequest
             {
                 TemplateId = createTemplateResponse.Id,
-                Quiet = true,
-                Fields = new Dictionary<string, object> { ["image"] = "snowflake.jpg" }
+                Fields = new Dictionary<string, object> { ["image"] = "snowflake.jpg" },
+                Steps = new Dictionary<string, RobotBase>
+                {
+                    ["import"] = new HttpImportRobot
+                    {
+                        FailFast = true,
+                    }
+                }
             };
             createAssembly.DisableSignatureAuth();
             var formData = new MultipartFormDataContent
@@ -49,7 +56,9 @@ namespace Transloadit.Tests
 
             var assemblyResponse = await TransloaditClient.Assemblies.CreateAsync(createAssembly, formData);
             Assert.Equal(ResponseCodes.AssemblyExecuting, assemblyResponse.Base.Ok);
-            Assert.Null(assemblyResponse.TemplateId);
+            Assert.Equal(66L, assemblyResponse.Fields["number"]);
+            Assert.Equal("snowflake.jpg", assemblyResponse.Fields["image"]);
+            Assert.Equal("01604e7d0248109df8c7cc0f8daef8", assemblyResponse.Fields["image_guid"]);
 
             var deleteTemplateResponse = await TransloaditClient.Templates.DeleteAsync(createTemplateResponse.Id);
             Assert.Equal(ResponseCodes.TemplateDeleted, deleteTemplateResponse.Base.Ok);
@@ -80,6 +89,44 @@ namespace Transloadit.Tests
             };
 
             var response = await TransloaditClient.Assemblies.CreateAsync(createAssembly, formData);
+            Assert.Equal(ResponseCodes.AssemblyExecuting, response.Base.Ok);
+        }
+
+        [Fact]
+        public async Task CreateQuietAssembly_Should_BeEmpty()
+        {
+            var createAssembly = new AssemblyRequest
+            {
+                Quiet = true,
+                Steps = new Dictionary<string, RobotBase>
+                {
+                    ["import"] = new TestHttpImportRobot
+                    {
+                        Url = "https://demos.transloadit.com/66/01604e7d0248109df8c7cc0f8daef8/snowflake.jpg"
+                    }
+                }
+            };
+            var response = await TransloaditClient.Assemblies.CreateAsync(createAssembly);
+
+            Assert.Equal(ResponseCodes.AssemblyExecuting, response.Base.Ok);
+            Assert.Null(response.TemplateId);
+        }
+
+        [Fact]
+        public async Task CreateAssembly_Should_HaveTransloaditClient()
+        {
+            var createAssembly = new AssemblyRequest
+            {
+                Steps = new Dictionary<string, RobotBase>
+                {
+                    ["import"] = new TestHttpImportRobot
+                    {
+                        Url = "https://demos.transloadit.com/66/01604e7d0248109df8c7cc0f8daef8/snowflake.jpg"
+                    }
+                }
+            };
+            var response = await TransloaditClient.Assemblies.CreateAsync(createAssembly);
+
             Assert.Equal(ResponseCodes.AssemblyExecuting, response.Base.Ok);
             Assert.Equal("transloadit-sharp/0.8.0", response.TransloaditClient);
         }
@@ -118,6 +165,180 @@ namespace Transloadit.Tests
             Assert.Equal(ResponseCodes.AssemblyExecuting, response.Base.Ok);
             Assert.Equal(3, response.NumInputFiles);
             Assert.Equal(3, response.Uploads.Count);
+        }
+
+        [Fact]
+        public async Task CreateAssemblyFromTemplateWithRequiredSignatureAuth_ShouldFail()
+        {
+            var templateRequest = new TemplateRequest
+            {
+                Name = $"my-test-generic-template-{DateTime.UtcNow:yyyyMMddHHmmss}",
+                RequireSignatureAuth = 1,
+                Template = new TemplateRequestContent
+                {
+                    Steps = new Dictionary<string, RobotBase>
+                    {
+                        ["import"] = new HttpImportRobot
+                        {
+                            Url = "https://demos.transloadit.com/66/01604e7d0248109df8c7cc0f8daef8/snowflake.jpg",
+                        },
+                    }
+                }
+            };
+            var createTemplateResponse = await TransloaditClient.Templates.CreateAsync(templateRequest);
+            Assert.Equal(ResponseCodes.TemplateCreated, createTemplateResponse.Base.Ok);
+
+            var createAssembly = new AssemblyRequest
+            {
+                TemplateId = createTemplateResponse.Id,
+                Quiet = true,
+            };
+            createAssembly.DisableSignatureAuth();
+
+            var assemblyResponse = await TransloaditClient.Assemblies.CreateAsync(createAssembly);
+            Assert.Equal(ResponseCodes.NoAuthExpiresParameter, assemblyResponse.Base.Error);
+            Assert.Equal(400, assemblyResponse.Base.HttpCode);
+
+            var deleteTemplateResponse = await TransloaditClient.Templates.DeleteAsync(createTemplateResponse.Id);
+            Assert.Equal(ResponseCodes.TemplateDeleted, deleteTemplateResponse.Base.Ok);
+        }
+
+        [Fact]
+        public async Task CreateAssemblyWithStepsAndTemplateDisallowingStepsOverride_ShoulFail()
+        {
+            var httpImportRobot = new TestHttpImportRobot
+            {
+                Url = "https://demos.transloadit.com/66/01604e7d0248109df8c7cc0f8daef8/snowflake.jpg"
+            };
+            var imageResizeRobot = new TestImageResizeRobot
+            {
+                Use = "import",
+                Result = true,
+                Width = 130,
+                Height = 130
+            };
+
+            var templateRequest = new TemplateRequest
+            {
+                Name = $"my-test-generic-template-{DateTime.UtcNow:yyyyMMddHHmmss}",
+                Template = new TemplateRequestContent
+                {
+                    AllowStepsOverride = false,
+                    Steps = new Dictionary<string, RobotBase>
+                    {
+                        ["import"] = httpImportRobot,
+                        ["resize"] = imageResizeRobot
+                    }
+                }
+            };
+
+            var templateResponse = await TransloaditClient.Templates.CreateAsync(templateRequest);
+            var assemblyRequest = new AssemblyRequest
+            {
+                TemplateId = templateResponse.Id,
+                Steps = new Dictionary<string, RobotBase>
+                {
+                    ["resize"] = new TestImageResizeRobot
+                    {
+                        Width = 200,
+                        Height = 200,
+                    }
+                }
+            };
+
+            var assemblyResponse = await TransloaditClient.Assemblies.CreateAsync(assemblyRequest);
+            Assert.Equal(ResponseCodes.TemplateDeniesStepsOverride, assemblyResponse.Base.Error);
+            Assert.Equal(400, assemblyResponse.Base.HttpCode);
+
+            var deleteTemplateResponse = await TransloaditClient.Templates.DeleteAsync(templateResponse.Id);
+            Assert.Equal(ResponseCodes.TemplateDeleted, deleteTemplateResponse.Base.Ok);
+        }
+
+        [Fact]
+        public async Task CreateAssemblyWithTemplateQuiet_ShouldSucceed()
+        {
+            var httpImportRobot = new TestHttpImportRobot
+            {
+                Url = "https://demos.transloadit.com/66/01604e7d0248109df8c7cc0f8daef8/snowflake.jpg"
+            };
+
+            var templateRequest = new TemplateRequest
+            {
+                Name = $"my-test-generic-template-{DateTime.UtcNow:yyyyMMddHHmmss}",
+                Template = new TemplateRequestContent
+                {
+                    Quiet = true,
+                    Steps = new Dictionary<string, RobotBase>
+                    {
+                        ["import"] = httpImportRobot,
+                    }
+                }
+            };
+
+            var templateResponse = await TransloaditClient.Templates.CreateAsync(templateRequest);
+            var assemblyRequest = new AssemblyRequest
+            {
+                TemplateId = templateResponse.Id,
+            };
+            assemblyRequest.DisableSignatureAuth();
+
+            var assemblyResponse = await TransloaditClient.Assemblies.CreateAsync(assemblyRequest);
+            Assert.Equal(ResponseCodes.AssemblyExecuting, assemblyResponse.Base.Ok);
+            Assert.Null(assemblyResponse.TemplateId);
+
+            var deleteTemplateResponse = await TransloaditClient.Templates.DeleteAsync(templateResponse.Id);
+            Assert.Equal(ResponseCodes.TemplateDeleted, deleteTemplateResponse.Base.Ok);
+        }
+
+        [Fact]
+        public async Task Tsdf()
+        {
+            var httpImportRobot = new TestHttpImportRobot
+            {
+                Url = "https://demos.transloadit.com/66/01604e7d0248109df8c7cc0f8daef8/${fields.image}"
+            };
+            var imageResizeRobot = new TestImageResizeRobot
+            {
+                Use = "import",
+                Result = true,
+                Width = 130,
+                Height = 130
+            };
+
+            var templateRequest = new TemplateRequest
+            {
+                Name = $"my-test-generic-template-{DateTime.UtcNow:yyyyMMddHHmmss}",
+                Template = new TemplateRequestContent
+                {
+                    Fields = new Dictionary<string, object> { ["image"] = "snowflake.jpg" },
+                    Steps = new Dictionary<string, RobotBase>
+                    {
+                        ["import"] = httpImportRobot,
+                        ["resize"] = imageResizeRobot
+                    }
+                }
+            };
+
+            var templateResponse = await TransloaditClient.Templates.CreateAsync(templateRequest);
+            var assemblyRequest = new AssemblyRequest
+            {
+                TemplateId = templateResponse.Id,
+                Steps = new Dictionary<string, RobotBase>
+                {
+                    ["resize"] = new TestImageResizeRobot
+                    {
+                        Width = 200,
+                        Height = 200,
+                    }
+                }
+            };
+
+            var assemblyResponse = await TransloaditClient.Assemblies.CreateAsync(assemblyRequest);
+            Assert.Equal(ResponseCodes.AssemblyExecuting, assemblyResponse.Base.Ok);
+            Assert.Null(assemblyResponse.TemplateId);
+
+            var deleteTemplateResponse = await TransloaditClient.Templates.DeleteAsync(templateResponse.Id);
+            Assert.Equal(ResponseCodes.TemplateDeleted, deleteTemplateResponse.Base.Ok);
         }
     }
 }
