@@ -8,6 +8,9 @@ namespace Transloadit.Models.Assemblies
     /// </summary>
     public class AssemblyRequest : BaseParams
     {
+        /// <summary>
+        /// Assembly instructions.
+        /// </summary>
         public Dictionary<string, RobotBase> Steps { get; set; }
 
         /// <summary>
@@ -53,7 +56,9 @@ namespace Transloadit.Models.Assemblies
     /// </summary>
     public class ReplayAssemblyRequest : BaseParams
     {
-
+        /// <summary>
+        /// Assembly instructions.
+        /// </summary>
         public Dictionary<string, RobotBase> Steps { get; set; }
 
         /// <summary>

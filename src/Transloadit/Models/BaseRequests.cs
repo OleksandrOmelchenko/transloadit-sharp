@@ -13,6 +13,7 @@ namespace Transloadit.Models
         [JsonProperty("auth")]
         internal AuthParams Auth { get; set; }
 
+        [JsonIgnore]
         internal bool EnableSignatureAuth { get; set; } = true;
 
         /// <summary>

@@ -36,6 +36,7 @@ namespace Transloadit.Tests
             };
 
             var createResponse = await TransloaditClient.Assemblies.CreateAsync(assemblyRequest);
+            Assert.True(createResponse.IsSuccessResponse());
             Assert.Equal(ResponseCodes.AssemblyExecuting, createResponse.Base.Ok);
             Assert.Equal(Transloadit.NotifyUrl, createResponse.NotifyUrl);
 
@@ -81,6 +82,7 @@ namespace Transloadit.Tests
                 }
             };
             var templateResponse = await TransloaditClient.Templates.CreateAsync(templateRequest);
+            Assert.True(templateResponse.IsSuccessResponse());
             Assert.Equal(ResponseCodes.TemplateCreated, templateResponse.Base.Ok);
 
             var assemblyRequest = new AssemblyRequest
@@ -89,6 +91,7 @@ namespace Transloadit.Tests
             };
 
             var createResponse = await TransloaditClient.Assemblies.CreateAsync(assemblyRequest);
+            Assert.True(createResponse.IsSuccessResponse());
             Assert.Equal(ResponseCodes.AssemblyExecuting, createResponse.Base.Ok);
             Assert.Equal(Transloadit.NotifyUrl, createResponse.NotifyUrl);
 
@@ -115,6 +118,7 @@ namespace Transloadit.Tests
             Assert.NotNull(assembly.NotifyResponseData);
 
             var deleteTemplateResponse = await TransloaditClient.Templates.DeleteAsync(templateResponse.Id);
+            Assert.True(deleteTemplateResponse.IsSuccessResponse());
             Assert.Equal(ResponseCodes.TemplateDeleted, deleteTemplateResponse.Base.Ok);
         }
     }

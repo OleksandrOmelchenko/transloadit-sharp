@@ -138,7 +138,7 @@ namespace Transloadit
             var response = await _options.HttpClient.SendAsync(request);
 
             var content = await response.Content.ReadAsStringAsync();
-
+            
             var parsed = JsonConvert.DeserializeObject<T>(content, _jsonSerializerSettings);
             parsed.TransloaditResponse = new TransloaditResponse(response.StatusCode, response.Headers, content);
             return parsed;

@@ -289,56 +289,5 @@ namespace Transloadit.Tests
             var deleteTemplateResponse = await TransloaditClient.Templates.DeleteAsync(templateResponse.Id);
             Assert.Equal(ResponseCodes.TemplateDeleted, deleteTemplateResponse.Base.Ok);
         }
-
-        [Fact]
-        public async Task Tsdf()
-        {
-            var httpImportRobot = new TestHttpImportRobot
-            {
-                Url = "https://demos.transloadit.com/66/01604e7d0248109df8c7cc0f8daef8/${fields.image}"
-            };
-            var imageResizeRobot = new TestImageResizeRobot
-            {
-                Use = "import",
-                Result = true,
-                Width = 130,
-                Height = 130
-            };
-
-            var templateRequest = new TemplateRequest
-            {
-                Name = $"my-test-generic-template-{DateTime.UtcNow:yyyyMMddHHmmss}",
-                Template = new TemplateRequestContent
-                {
-                    Fields = new Dictionary<string, object> { ["image"] = "snowflake.jpg" },
-                    Steps = new Dictionary<string, RobotBase>
-                    {
-                        ["import"] = httpImportRobot,
-                        ["resize"] = imageResizeRobot
-                    }
-                }
-            };
-
-            var templateResponse = await TransloaditClient.Templates.CreateAsync(templateRequest);
-            var assemblyRequest = new AssemblyRequest
-            {
-                TemplateId = templateResponse.Id,
-                Steps = new Dictionary<string, RobotBase>
-                {
-                    ["resize"] = new TestImageResizeRobot
-                    {
-                        Width = 200,
-                        Height = 200,
-                    }
-                }
-            };
-
-            var assemblyResponse = await TransloaditClient.Assemblies.CreateAsync(assemblyRequest);
-            Assert.Equal(ResponseCodes.AssemblyExecuting, assemblyResponse.Base.Ok);
-            Assert.Null(assemblyResponse.TemplateId);
-
-            var deleteTemplateResponse = await TransloaditClient.Templates.DeleteAsync(templateResponse.Id);
-            Assert.Equal(ResponseCodes.TemplateDeleted, deleteTemplateResponse.Base.Ok);
-        }
     }
 }

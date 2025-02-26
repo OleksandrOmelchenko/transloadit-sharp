@@ -73,6 +73,9 @@ namespace Transloadit.Models.Billing
         public decimal PricePerGb { get; set; }
 
         //todo: type
+        /// <summary>
+        /// Billing tiers.
+        /// </summary>
         public object Tiers { get; set; }
 
         /// <summary>

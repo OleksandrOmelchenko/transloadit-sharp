@@ -44,7 +44,9 @@ namespace Transloadit.Models.Templates
     /// </summary>
     public class TemplateContent
     {
-
+        /// <summary>
+        /// Assembly instructions.
+        /// </summary>
         public Dictionary<string, Dictionary<string, object>> Steps { get; set; }
     }
 

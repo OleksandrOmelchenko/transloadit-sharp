@@ -12,6 +12,7 @@ namespace Transloadit.Tests
             var jobSlots = await TransloaditClient.Queues.GetJobSlotsAsync();
 
             Assert.Equal(ResponseCodes.PriorityJobSlotsFound, jobSlots.Base.Ok);
+            Assert.True(jobSlots.IsSuccessResponse());
         }
     }
 }

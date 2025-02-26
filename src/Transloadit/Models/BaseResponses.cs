@@ -68,6 +68,12 @@ namespace Transloadit.Models
         /// </summary>
         [JsonIgnore]
         public IResponseBase Base => this;
+
+        /// <summary>
+        /// Checks whether received successful response by checking <c>ok</c> and <c>error</c> properties.
+        /// </summary>
+        /// <returns>Whether the response is successful.</returns>
+        public bool IsSuccessResponse() => Base.Ok is not null || Base.Error is null;
     }
 
     /// <summary>

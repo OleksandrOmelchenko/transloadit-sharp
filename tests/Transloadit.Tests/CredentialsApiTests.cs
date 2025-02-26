@@ -23,8 +23,9 @@ namespace Transloadit.Tests
                     User = "admin"
                 }
             };
-            
+
             var createCredentialResponse = await TransloaditClient.Credentials.CreateAsync(ftpCredential);
+            Assert.True(createCredentialResponse.IsSuccessResponse());
             Assert.Equal(ResponseCodes.TemplateCredentialsCreated, createCredentialResponse.Base.Ok);
             Assert.Equal(ftpCredential.Name, createCredentialResponse.Credential.Name);
             Assert.Equal(ftpCredential.Content.Host, createCredentialResponse.Credential.Content["host"]);
@@ -32,6 +33,7 @@ namespace Transloadit.Tests
             Assert.Equal(ftpCredential.Content.User, createCredentialResponse.Credential.Content["user"]);
 
             var getCredentialResponse = await TransloaditClient.Credentials.GetAsync(createCredentialResponse.Credential.Id);
+            Assert.True(getCredentialResponse.IsSuccessResponse());
             Assert.Equal(ResponseCodes.TemplateCredentialsRead, getCredentialResponse.Base.Ok);
             Assert.Equal(ftpCredential.Name, getCredentialResponse.Credential.Name);
             Assert.Equal(ftpCredential.Content.Host, getCredentialResponse.Credential.Content["host"]);
@@ -50,6 +52,7 @@ namespace Transloadit.Tests
             };
 
             var updateResponse = await TransloaditClient.Credentials.UpdateAsync(getCredentialResponse.Credential.Id, newFtpCredential);
+            Assert.True(updateResponse.IsSuccessResponse());
             Assert.Equal(ResponseCodes.TemplateCredentialsUpdated, updateResponse.Base.Ok);
             Assert.Equal(newFtpCredential.Name, updateResponse.Credential.Name);
             Assert.Equal(newFtpCredential.Content.Host, updateResponse.Credential.Content["host"]);
@@ -57,13 +60,16 @@ namespace Transloadit.Tests
             Assert.Equal(newFtpCredential.Content.User, updateResponse.Credential.Content["user"]);
 
             var listCredentialsResponse = await TransloaditClient.Credentials.GetListAsync();
+            Assert.True(listCredentialsResponse.IsSuccessResponse());
             Assert.Equal(ResponseCodes.TemplateCredentialsFound, listCredentialsResponse.Base.Ok);
             Assert.True(listCredentialsResponse.Credentials.Count > 0);
 
             var deleteResponse = await TransloaditClient.Credentials.DeleteAsync(name);
+            Assert.True(deleteResponse.IsSuccessResponse());
             Assert.Equal(ResponseCodes.TemplateCredentialsDeleted, deleteResponse.Base.Ok);
 
             var notFoundResponse = await TransloaditClient.Credentials.GetAsync(name);
+            Assert.False(notFoundResponse.IsSuccessResponse());
             Assert.Equal(ResponseCodes.TemplateCredentialsNotRead, notFoundResponse.Base.Error);
             Assert.Equal(400, notFoundResponse.Base.HttpCode);
         }
