@@ -1,5 +1,9 @@
 ## Quick Start
 
+### Installation
+
+Nuget package [Transloadit](https://www.nuget.org/packages/Transloadit/).
+
 ### Create Transloadit client
 
 ```C#
@@ -8,7 +12,7 @@ using Transloadit;
 var client = new TransloaditClient("<auth key>", "<auth secret>");
 ```
 
-### Creating Assemblies
+### Create an Assembly
 
 Using a Template
 
@@ -94,7 +98,7 @@ var formData = new MultipartFormDataContent
 var assemblyResponse = await client.Assemblies.CreateAsync(assembly, formData);
 ```
 
-### Create Template and Credentials
+### Create a Template and Credentials
 
 ```C#
 var azureCredentials = new AzureCredentialsRequest
