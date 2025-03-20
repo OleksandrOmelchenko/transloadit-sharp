@@ -4,7 +4,7 @@ using Transloadit.Constants;
 using Transloadit.Models.Credentials;
 using Xunit;
 
-namespace Transloadit.Tests
+namespace Transloadit.Tests.Api
 {
     public class CredentialsApiTests : TestBase
     {

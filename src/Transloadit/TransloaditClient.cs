@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Transloadit.Constants;
 using Transloadit.Models;
 using Transloadit.Serialization;
 using Transloadit.Services;
@@ -30,10 +30,10 @@ namespace Transloadit
             {
                 NamingStrategy = new SnakeCaseNamingStrategy(),
             },
-            Converters = new List<JsonConverter>
-            {
+            Converters =
+            [
                 new AnyOfConverter()
-            },
+            ],
         };
 
         private BillingService _billingService;
@@ -82,15 +82,30 @@ namespace Transloadit
         /// <param name="options">Options allowing to overwrite <see cref="TransloaditClient"/> defaults. Will be merged with default values.</param>
         public TransloaditClient(string key, string secret, TransloaditClientOptions options = null)
         {
-            _key = key;
-            _secret = secret;
+            _key = key ?? throw new ArgumentNullException(nameof(key));
+            _secret = secret ?? throw new ArgumentNullException(nameof(key));
+            _options = MergeOptions(options);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TransloaditClient"/> class with specified authentication key
+        /// and optional <see cref="TransloaditClientOptions"/>. Suitable for operations that don't require 
+        /// <a href="https://transloadit.com/docs/api/authentication/#signature-authentication">signature authentication</a>
+        /// (like Assembly creation (optional), retrieving Assembly status, streaming Assembly changes and Assembly cancellation.
+        /// </summary>
+        /// <param name="key">Transloadit auth key.</param>
+        /// <param name="options">Options allowing to overwrite <see cref="TransloaditClient"/> defaults. Will be merged with default values.</param>
+        public TransloaditClient(string key, TransloaditClientOptions options = null)
+        {
+            _key = key ?? throw new ArgumentNullException(nameof(key));
             _options = MergeOptions(options);
         }
 
         private static TransloaditClientOptions MergeOptions(TransloaditClientOptions options)
         {
+            const string transloaditClient = $"transloadit-sharp/{ClientVersion.Current}";
             var httpClient = options?.HttpClient ?? new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("Transloadit-Client", "transloadit-sharp/0.8.0");
+            httpClient.DefaultRequestHeaders.Add("Transloadit-Client", transloaditClient);
             return new TransloaditClientOptions
             {
                 ApiBase = options?.ApiBase ?? new Uri(ApiBase),
@@ -138,7 +153,7 @@ namespace Transloadit
             var response = await _options.HttpClient.SendAsync(request).ConfigureAwait(false);
 
             var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            
+
             var parsed = JsonConvert.DeserializeObject<T>(content, _jsonSerializerSettings);
             parsed.TransloaditResponse = new TransloaditResponse(response.StatusCode, response.Headers, content);
             return parsed;
@@ -158,19 +173,21 @@ namespace Transloadit
             parameters ??= new BaseParams();
             parameters.Auth ??= new AuthParams();
             parameters.Auth.Key ??= _key;
-            if (parameters.EnableSignatureAuth)
+
+            var enableSignatureAuth = parameters.EnableSignatureAuth || _secret is not null;
+            if (enableSignatureAuth)
             {
                 parameters.Auth.Expires ??= DateTime.UtcNow.AddMinutes(30);
             }
 
             var paramsJson = JsonConvert.SerializeObject(parameters, _jsonSerializerSettings);
-            var signature = parameters.EnableSignatureAuth
+            var signature = enableSignatureAuth
                 ? SignatureUtilities.CalculateSignature(paramsJson, _secret)
                 : null;
 
             if (httpMethod == HttpMethod.Get)
             {
-                var query = parameters.EnableSignatureAuth ? BuildQuery(paramsJson, signature) : BuildQuery(paramsJson);
+                var query = enableSignatureAuth ? BuildQuery(paramsJson, signature) : BuildQuery(paramsJson);
                 uri = new Uri(uri, query);
             }
 
@@ -179,7 +196,7 @@ namespace Transloadit
             {
                 content ??= new MultipartFormDataContent();
                 content.Add(new StringContent(paramsJson), "params");
-                if (parameters.EnableSignatureAuth)
+                if (enableSignatureAuth)
                 {
                     content.Add(new StringContent(signature), "signature");
                 }
