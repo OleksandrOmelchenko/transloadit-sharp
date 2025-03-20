@@ -29,7 +29,8 @@ namespace Transloadit.Services
         /// <returns>Template data.</returns>
         public async Task<TemplateResponse> GetAsync(string templateId)
         {
-            return await _client.SendRequest<TemplateResponse>(HttpMethod.Get, $"/templates/{templateId}");
+            return await _client.SendRequest<TemplateResponse>(HttpMethod.Get, $"/templates/{templateId}")
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -39,7 +40,8 @@ namespace Transloadit.Services
         /// <returns>Paginated list of templates.</returns>
         public async Task<PaginatedListResponse<TemplateResponse>> GetListAsync(TemplateListRequest paginationParams = null)
         {
-            return await _client.SendRequest<PaginatedListResponse<TemplateResponse>>(HttpMethod.Get, $"/templates", paginationParams);
+            return await _client.SendRequest<PaginatedListResponse<TemplateResponse>>(HttpMethod.Get, $"/templates", paginationParams)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -49,7 +51,8 @@ namespace Transloadit.Services
         /// <returns>Created template data.</returns>
         public async Task<TemplateResponse> CreateAsync(TemplateRequest template)
         {
-            return await _client.SendRequest<TemplateResponse>(HttpMethod.Post, $"/templates", template);
+            return await _client.SendRequest<TemplateResponse>(HttpMethod.Post, $"/templates", template)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -60,7 +63,8 @@ namespace Transloadit.Services
         /// <returns>Updated template data.</returns>
         public async Task<TemplateResponse> UpdateAsync(string templateId, TemplateRequest template)
         {
-            return await _client.SendRequest<TemplateResponse>(HttpMethod.Put, $"/templates/{templateId}", template);
+            return await _client.SendRequest<TemplateResponse>(HttpMethod.Put, $"/templates/{templateId}", template)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -70,7 +74,8 @@ namespace Transloadit.Services
         /// <returns>Template deletion status.</returns>
         public async Task<DeleteTemplateResponse> DeleteAsync(string templateId)
         {
-            return await _client.SendRequest<DeleteTemplateResponse>(HttpMethod.Delete, $"/templates/{templateId}");
+            return await _client.SendRequest<DeleteTemplateResponse>(HttpMethod.Delete, $"/templates/{templateId}")
+                .ConfigureAwait(false);
         }
     }
 }

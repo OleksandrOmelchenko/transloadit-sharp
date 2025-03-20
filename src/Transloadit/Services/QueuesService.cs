@@ -27,7 +27,8 @@ namespace Transloadit.Services
         /// <returns>Job slots information.</returns>
         public async Task<QueueResponse> GetJobSlotsAsync()
         {
-            return await _client.SendRequest<QueueResponse>(HttpMethod.Get, $"/queues/job_slots");
+            return await _client.SendRequest<QueueResponse>(HttpMethod.Get, $"/queues/job_slots")
+                .ConfigureAwait(false);
         }
     }
 }

@@ -116,7 +116,7 @@ namespace Transloadit
             MultipartFormDataContent formData = null) where T : ResponseBase
         {
             var uri = new Uri(_options.ApiBase, path);
-            return await SendRequest<T>(httpMethod, uri, parameters, formData);
+            return await SendRequest<T>(httpMethod, uri, parameters, formData).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -135,9 +135,9 @@ namespace Transloadit
            MultipartFormDataContent formData = null) where T : ResponseBase
         {
             var request = BuildRequest(httpMethod, uri, parameters, formData);
-            var response = await _options.HttpClient.SendAsync(request);
+            var response = await _options.HttpClient.SendAsync(request).ConfigureAwait(false);
 
-            var content = await response.Content.ReadAsStringAsync();
+            var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             
             var parsed = JsonConvert.DeserializeObject<T>(content, _jsonSerializerSettings);
             parsed.TransloaditResponse = new TransloaditResponse(response.StatusCode, response.Headers, content);
