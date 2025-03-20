@@ -9,11 +9,13 @@ namespace Transloadit.Tests
     {
         public TransloaditConfig Transloadit { get; set; }
         public TransloaditClient TransloaditClient { get; set; }
+        public TransloaditClient TransloaditClientNoAuth { get; set; }
 
         public TestBase()
         {
             Transloadit = TestConfiguration.ReadFromAppSettings().Transloadit;
             TransloaditClient = new TransloaditClient(Transloadit.AuthKey, Transloadit.AuthSecret);
+            TransloaditClientNoAuth = new TransloaditClient(Transloadit.AuthKey);
         }
     }
 }
