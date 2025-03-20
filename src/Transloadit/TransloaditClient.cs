@@ -174,7 +174,7 @@ namespace Transloadit
             parameters.Auth ??= new AuthParams();
             parameters.Auth.Key ??= _key;
 
-            var enableSignatureAuth = parameters.EnableSignatureAuth || _secret is not null;
+            var enableSignatureAuth = parameters.EnableSignatureAuth && _secret is not null;
             if (enableSignatureAuth)
             {
                 parameters.Auth.Expires ??= DateTime.UtcNow.AddMinutes(30);

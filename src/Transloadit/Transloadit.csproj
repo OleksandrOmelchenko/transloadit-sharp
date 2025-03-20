@@ -3,6 +3,7 @@
     <AssemblyName>Transloadit</AssemblyName>
     <Title>Transloadit Sharp</Title>
     <Version>0.9.0</Version>
+    <Copyright>Copyright © 2025 Oleksandr Omelchenko.</Copyright>
     <PackageTags>transloadit</PackageTags>
     <Description>Transloadit Sharp is an API client and portable class library for the Transloadit API.</Description>
     <Authors>Oleksandr Omelchenko</Authors>
@@ -12,7 +13,7 @@
 
     <PackageId>$(AssemblyName)</PackageId>
     <PackageProjectUrl>https://github.com/OleksandrOmelchenko/transloadit-sharp</PackageProjectUrl>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/OleksandrOmelchenko/transloadit-sharp</RepositoryUrl>
     <Deterministic>false</Deterministic>
@@ -40,7 +41,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
     <None Include="../../readme.md" Link="readme.md" Pack="true" PackagePath="/" Visible="false" />
-    <None Include="../../LICENSE" Pack="true" PackagePath="/" />
+    <None Include="../../LICENSE" Pack="true" PackagePath="/" Visible="false" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">

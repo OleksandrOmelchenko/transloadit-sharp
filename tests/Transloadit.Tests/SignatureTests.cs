@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Transloadit.Tests
 {
-    public class SingatureTests
+    public class SignatureTests
     {
         [Theory]
         [InlineData(
