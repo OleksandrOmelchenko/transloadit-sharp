@@ -29,7 +29,8 @@ namespace Transloadit.Services
         /// <returns>Billing information.</returns>
         public async Task<BillingResponse> GetAsync(DateTime dateTime)
         {
-            return await GetAsync(dateTime.Year, dateTime.Month);
+            return await GetAsync(dateTime.Year, dateTime.Month)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -40,7 +41,8 @@ namespace Transloadit.Services
         /// <returns>Billing information.</returns>
         public async Task<BillingResponse> GetAsync(int year, int month)
         {
-            return await _client.SendRequest<BillingResponse>(HttpMethod.Get, $"/bill/{year:0000}-{month:00}");
+            return await _client.SendRequest<BillingResponse>(HttpMethod.Get, $"/bill/{year:0000}-{month:00}")
+                .ConfigureAwait(false);
         }
     }
 }

@@ -34,7 +34,8 @@ namespace Transloadit.Services
             {
                 EnableSignatureAuth = false,
             };
-            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Get, $"/assemblies/{assemblyId}", parameters);
+            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Get, $"/assemblies/{assemblyId}", parameters)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -44,7 +45,8 @@ namespace Transloadit.Services
         /// <returns>Paginated list of assemblies.</returns>
         public async Task<PaginatedListResponse<AssemblyCompactResponse>> GetListAsync(AssemblyListRequest paginationParams = null)
         {
-            return await _client.SendRequest<PaginatedListResponse<AssemblyCompactResponse>>(HttpMethod.Get, $"/assemblies", paginationParams);
+            return await _client.SendRequest<PaginatedListResponse<AssemblyCompactResponse>>(HttpMethod.Get, $"/assemblies", paginationParams)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -55,7 +57,8 @@ namespace Transloadit.Services
         /// <returns>Created assembly data.</returns>
         public async Task<AssemblyResponse> CreateAsync(AssemblyRequest assembly, MultipartFormDataContent formData = null)
         {
-            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Post, $"/assemblies", assembly, formData);
+            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Post, $"/assemblies", assembly, formData)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -69,7 +72,8 @@ namespace Transloadit.Services
             {
                 EnableSignatureAuth = false,
             };
-            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Delete, $"/assemblies/{assemblyId}", parameters);
+            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Delete, $"/assemblies/{assemblyId}", parameters)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -79,7 +83,8 @@ namespace Transloadit.Services
         /// <returns>Canceled assembly data.</returns>
         public async Task<AssemblyResponse> CancelAsync(Uri assemblyUrl)
         {
-            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Delete, assemblyUrl);
+            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Delete, assemblyUrl)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -90,7 +95,8 @@ namespace Transloadit.Services
         /// <returns>Replayed assembly data.</returns>
         public async Task<AssemblyResponse> ReplayAsync(string assemblyId, ReplayAssemblyRequest replayAssembly = null)
         {
-            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Post, $"/assemblies/{assemblyId}/replay", replayAssembly);
+            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Post, $"/assemblies/{assemblyId}/replay", replayAssembly)
+                .ConfigureAwait(false);
         }
     }
 }

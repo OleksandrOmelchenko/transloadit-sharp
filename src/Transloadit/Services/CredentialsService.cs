@@ -28,7 +28,8 @@ namespace Transloadit.Services
         /// <returns>Credentials data.</returns>
         public async Task<CredentialResponse> GetAsync(string credentialIdOrName)
         {
-            return await _client.SendRequest<CredentialResponse>(HttpMethod.Get, $"/template_credentials/{credentialIdOrName}");
+            return await _client.SendRequest<CredentialResponse>(HttpMethod.Get, $"/template_credentials/{credentialIdOrName}")
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -37,7 +38,8 @@ namespace Transloadit.Services
         /// <returns>Credentials list.</returns>
         public async Task<CredentialsListResponse> GetListAsync()
         {
-            return await _client.SendRequest<CredentialsListResponse>(HttpMethod.Get, $"/template_credentials");
+            return await _client.SendRequest<CredentialsListResponse>(HttpMethod.Get, $"/template_credentials")
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -47,7 +49,8 @@ namespace Transloadit.Services
         /// <returns>Created credentials data.</returns>
         public async Task<CredentialResponse> CreateAsync(CredentialsRequestBase credential)
         {
-            return await _client.SendRequest<CredentialResponse>(HttpMethod.Post, $"/template_credentials", credential);
+            return await _client.SendRequest<CredentialResponse>(HttpMethod.Post, $"/template_credentials", credential)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -58,7 +61,8 @@ namespace Transloadit.Services
         /// <returns>Updated credentials data.</returns>
         public async Task<CredentialResponse> UpdateAsync(string credentialIdOrName, CredentialsRequestBase credential)
         {
-            return await _client.SendRequest<CredentialResponse>(HttpMethod.Put, $"/template_credentials/{credentialIdOrName}", credential);
+            return await _client.SendRequest<CredentialResponse>(HttpMethod.Put, $"/template_credentials/{credentialIdOrName}", credential)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -68,7 +72,8 @@ namespace Transloadit.Services
         /// <returns>Credentials deletion status.</returns>
         public async Task<DeleteCredentialsResponse> DeleteAsync(string credentialIdOrName)
         {
-            return await _client.SendRequest<DeleteCredentialsResponse>(HttpMethod.Delete, $"/template_credentials/{credentialIdOrName}");
+            return await _client.SendRequest<DeleteCredentialsResponse>(HttpMethod.Delete, $"/template_credentials/{credentialIdOrName}")
+                .ConfigureAwait(false);
         }
     }
 }

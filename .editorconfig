@@ -149,3 +149,5 @@ dotnet_style_qualification_for_field = false:silent
 dotnet_diagnostic.IDE0060.severity = error
 
 dotnet_sort_system_directives_first = true
+
+dotnet_diagnostic.CA2007.severity = error

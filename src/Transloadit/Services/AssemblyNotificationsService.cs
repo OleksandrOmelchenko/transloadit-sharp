@@ -32,7 +32,8 @@ namespace Transloadit.Services
             return await _client.SendRequest<ReplayNotificationResponse>(
                 HttpMethod.Post,
                 $"/assembly_notifications/{assemblyId}/replay",
-                notificationRequest);
+                notificationRequest)
+                .ConfigureAwait(false);
         }
     }
 }
