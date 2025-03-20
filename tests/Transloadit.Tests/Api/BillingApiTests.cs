@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Transloadit.Constants;
 using Xunit;
 
-namespace Transloadit.Tests
+namespace Transloadit.Tests.Api
 {
     public class BillingApiTests : TestBase
     {

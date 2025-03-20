@@ -11,7 +11,7 @@ using Transloadit.Models.Robots.FileImporting;
 using Transloadit.Models.Templates;
 using Xunit;
 
-namespace Transloadit.Tests
+namespace Transloadit.Tests.Api
 {
     public class AssembliesApiTests : TestBase
     {
@@ -128,7 +128,7 @@ namespace Transloadit.Tests
             var response = await TransloaditClient.Assemblies.CreateAsync(createAssembly);
 
             Assert.Equal(ResponseCodes.AssemblyExecuting, response.Base.Ok);
-            Assert.Equal("transloadit-sharp/0.8.0", response.TransloaditClient);
+            Assert.Equal($"transloadit-sharp/{ClientVersion.Current}", response.TransloaditClient);
         }
 
         [Fact]

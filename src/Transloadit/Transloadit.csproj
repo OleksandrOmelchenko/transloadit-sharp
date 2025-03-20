@@ -2,7 +2,7 @@
   <PropertyGroup>
     <AssemblyName>Transloadit</AssemblyName>
     <Title>Transloadit Sharp</Title>
-    <Version>0.8.0</Version>
+    <Version>0.9.0</Version>
     <PackageTags>transloadit</PackageTags>
     <Description>Transloadit Sharp is an API client and portable class library for the Transloadit API.</Description>
     <Authors>Oleksandr Omelchenko</Authors>

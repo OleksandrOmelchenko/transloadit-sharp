@@ -7,7 +7,7 @@ using Transloadit.Models.Robots;
 using Transloadit.Models.Templates;
 using Xunit;
 
-namespace Transloadit.Tests
+namespace Transloadit.Tests.Api
 {
     public class AssemblyNotificationsApiTests : TestBase
     {
