@@ -5,6 +5,7 @@ using Transloadit.Constants;
 using Transloadit.Models.Assemblies;
 using Transloadit.Models.Robots;
 using Transloadit.Models.Templates;
+using Transloadit.Tests.Robots;
 using Xunit;
 
 namespace Transloadit.Tests.Api
@@ -60,7 +61,7 @@ namespace Transloadit.Tests.Api
             var createTemplate = new TemplateRequest
             {
                 Name = $"test-no-auth-template-{DateTime.UtcNow:yyyyMMddHHmmss}",
-                RequireSignatureAuth = 0,
+                RequireSignatureAuth = false,
                 Template = new TemplateRequestContent
                 {
                     Steps = new Dictionary<string, RobotBase>
@@ -97,7 +98,7 @@ namespace Transloadit.Tests.Api
             var createTemplate = new TemplateRequest
             {
                 Name = $"test-no-auth-template-{DateTime.UtcNow:yyyyMMddHHmmss}",
-                RequireSignatureAuth = 1,
+                RequireSignatureAuth = true,
                 Template = new TemplateRequestContent
                 {
                     Steps = new Dictionary<string, RobotBase>

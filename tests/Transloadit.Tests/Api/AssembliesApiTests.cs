@@ -9,6 +9,7 @@ using Transloadit.Models.Robots;
 using Transloadit.Models.Robots.FileCompressing;
 using Transloadit.Models.Robots.FileImporting;
 using Transloadit.Models.Templates;
+using Transloadit.Tests.Robots;
 using Xunit;
 
 namespace Transloadit.Tests.Api
@@ -173,7 +174,7 @@ namespace Transloadit.Tests.Api
             var templateRequest = new TemplateRequest
             {
                 Name = $"my-test-generic-template-{DateTime.UtcNow:yyyyMMddHHmmss}",
-                RequireSignatureAuth = 1,
+                RequireSignatureAuth = true,
                 Template = new TemplateRequestContent
                 {
                     Steps = new Dictionary<string, RobotBase>

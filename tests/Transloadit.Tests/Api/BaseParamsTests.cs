@@ -8,6 +8,7 @@ using Transloadit.Models;
 using Transloadit.Models.Assemblies;
 using Transloadit.Models.Robots;
 using Transloadit.Models.Templates;
+using Transloadit.Tests.Robots;
 using Xunit;
 
 namespace Transloadit.Tests.Api
