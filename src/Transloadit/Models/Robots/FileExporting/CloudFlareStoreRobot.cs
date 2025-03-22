@@ -21,6 +21,26 @@ namespace Transloadit.Models.Robots.FileExporting
         public int? SignUrlsFor { get; set; }
 
         /// <summary>
+        /// Cloudflare bucket.
+        /// </summary>
+        public string Bucket { get; set; }
+
+        /// <summary>
+        /// Cloudflare host.
+        /// </summary>
+        public string Host { get; set; }
+
+        /// <summary>
+        /// Cloudflare key.
+        /// </summary>
+        public string Key { get; set; }
+
+        /// <summary>
+        /// Cloudflare secret.
+        /// </summary>
+        public string Secret { get; set; }
+
+        /// <summary>
         /// Initializes <c>/cloudflare/store</c> Robot.
         /// </summary>
         public CloudFlareStoreRobot()

@@ -27,6 +27,26 @@ namespace Transloadit.Models.Robots.FileExporting
         public int? SignUrlsFor { get; set; }
 
         /// <summary>
+        /// Swift bucket.
+        /// </summary>
+        public string Bucket { get; set; }
+
+        /// <summary>
+        /// Swift host.
+        /// </summary>
+        public string Host { get; set; }
+
+        /// <summary>
+        /// Swift key.
+        /// </summary>
+        public string Key { get; set; }
+
+        /// <summary>
+        /// Swift secret.
+        /// </summary>
+        public string Secret { get; set; }
+
+        /// <summary>
         /// Initializes <c>/swift/store</c> Robot.
         /// </summary>
         public SwiftStoreRobot()

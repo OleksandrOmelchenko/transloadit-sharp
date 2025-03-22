@@ -32,7 +32,7 @@
         /// <summary>
         /// SFTP port.
         /// </summary>
-        public string Port { get; set; }
+        public int Port { get; set; }
 
         /// <summary>
         /// SFTP user.

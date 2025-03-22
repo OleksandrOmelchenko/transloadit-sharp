@@ -26,6 +26,26 @@ namespace Transloadit.Models.Robots.FileExporting
         public int? SignUrlsFor { get; set; }
 
         /// <summary>
+        /// MinIO bucket.
+        /// </summary>
+        public string Bucket { get; set; }
+
+        /// <summary>
+        /// MinIO key.
+        /// </summary>
+        public string Key { get; set; }
+
+        /// <summary>
+        /// MinIO secret.
+        /// </summary>
+        public string Secret { get; set; }
+
+        /// <summary>
+        /// MinIO host.
+        /// </summary>
+        public string Host { get; set; }
+
+        /// <summary>
         /// Initializes <c>/minio/store</c> Robot.
         /// </summary>
         public MinioStoreRobot()

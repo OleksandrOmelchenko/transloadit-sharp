@@ -38,6 +38,21 @@ namespace Transloadit.Models.Robots.FileImporting
         public bool? PassiveMode { get; set; }
 
         /// <summary>
+        /// FTP host.
+        /// </summary>
+        public string Host { get; set; }
+
+        /// <summary>
+        /// FTP user.
+        /// </summary>
+        public string User { get; set; }
+
+        /// <summary>
+        /// FTP password.
+        /// </summary>
+        public string Password { get; set; }
+
+        /// <summary>
         /// Initializes <c>/ftp/import</c> Robot.
         /// </summary>
         public FtpImportRobot()
