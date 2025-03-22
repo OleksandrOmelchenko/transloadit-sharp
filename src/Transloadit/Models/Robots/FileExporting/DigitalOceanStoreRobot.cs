@@ -33,6 +33,26 @@ namespace Transloadit.Models.Robots.FileExporting
         public int? SignUrlsFor { get; set; }
 
         /// <summary>
+        /// DigitalOcean space name.
+        /// </summary>
+        public string Space { get; set; }
+
+        /// <summary>
+        /// DigitalOcean space region.
+        /// </summary>
+        public string Region { get; set; }
+
+        /// <summary>
+        /// DigitalOcean space key.
+        /// </summary>
+        public string Key { get; set; }
+
+        /// <summary>
+        /// DigitalOcean space secret.
+        /// </summary>
+        public string Secret { get; set; }
+
+        /// <summary>
         /// Initializes <c>/digitalocean/store</c> Robot.
         /// </summary>
         public DigitalOceanStoreRobot()

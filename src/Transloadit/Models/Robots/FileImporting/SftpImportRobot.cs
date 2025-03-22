@@ -31,6 +31,26 @@ namespace Transloadit.Models.Robots.FileImporting
         /// </summary>
         public int? Port { get; set; }
 
+         /// <summary>
+        /// Swift bucket.
+        /// </summary>
+        public string Bucket { get; set; }
+
+        /// <summary>
+        /// Swift host.
+        /// </summary>
+        public string Host { get; set; }
+
+        /// <summary>
+        /// Swift key.
+        /// </summary>
+        public string Key { get; set; }
+
+        /// <summary>
+        /// Swift secret.
+        /// </summary>
+        public string Secret { get; set; }
+
         /// <summary>
         /// Initializes <c>/sftp/import</c> Robot.
         /// </summary>

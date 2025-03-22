@@ -28,6 +28,21 @@
         public bool? Secure { get; set; }
 
         /// <summary>
+        /// FTP host.
+        /// </summary>
+        public string Host { get; set; }
+
+        /// <summary>
+        /// FTP user.
+        /// </summary>
+        public string User { get; set; }
+
+        /// <summary>
+        /// FTP password.
+        /// </summary>
+        public string Password { get; set; }
+
+        /// <summary>
         /// Initializes <c>/ftp/store</c> Robot.
         /// </summary>
         public FtpStoreRobot()

@@ -23,6 +23,26 @@
         public string FileChmod { get; set; }
 
         /// <summary>
+        /// SFTP host.
+        /// </summary>
+        public string Host { get; set; }
+
+        /// <summary>
+        /// SFTP port.
+        /// </summary>
+        public int? Port { get; set; }
+
+        /// <summary>
+        /// SFTP user.
+        /// </summary>
+        public string User { get; set; }
+
+        /// <summary>
+        /// SFTP public key.
+        /// </summary>
+        public string PublicKey { get; set; }
+
+        /// <summary>
         /// Initializes <c>/sftp/store</c> Robot.
         /// </summary>
         public SftpStoreRobot()

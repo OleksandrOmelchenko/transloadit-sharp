@@ -46,6 +46,21 @@ namespace Transloadit.Models.Robots.FileExporting
         public string SasPermissions { get; set; }
 
         /// <summary>
+        /// Azure blob storage account.
+        /// </summary>
+        public string Account { get; set; }
+
+        /// <summary>
+        /// Azure blob storage key.
+        /// </summary>
+        public string Key { get; set; }
+
+        /// <summary>
+        /// Azure blob storage container.
+        /// </summary>
+        public string Container { get; set; }
+
+        /// <summary>
         /// Initializes <c>/azure/store</c> Robot.
         /// </summary>
         public AzureStoreRobot()

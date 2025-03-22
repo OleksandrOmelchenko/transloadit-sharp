@@ -14,6 +14,21 @@ namespace Transloadit.Models.Robots.FileExporting
         public Dictionary<string, string> Headers { get; set; }
 
         /// <summary>
+        /// Backblaze bucket name.
+        /// </summary>
+        public string Bucket { get; set; }
+
+        /// <summary>
+        /// Backblaze App Key ID.
+        /// </summary>
+        public string AppKeyId { get; set; }
+
+        /// <summary>
+        /// Backblaze App Key.
+        /// </summary>
+        public string AppKey { get; set; }
+
+        /// <summary>
         /// Initializes <c>/backblaze/store</c> Robot.
         /// </summary>
         public BackBlazeStoreRobot()

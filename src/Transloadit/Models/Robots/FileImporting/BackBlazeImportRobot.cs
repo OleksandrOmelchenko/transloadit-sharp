@@ -23,6 +23,21 @@
         public int? FilesPerPage { get; set; }
 
         /// <summary>
+        /// Backblaze bucket name.
+        /// </summary>
+        public string Bucket { get; set; }
+
+        /// <summary>
+        /// Backblaze App Key ID.
+        /// </summary>
+        public string AppKeyId { get; set; }
+
+        /// <summary>
+        /// Backblaze App Key.
+        /// </summary>
+        public string AppKey { get; set; }
+
+        /// <summary>
         /// Initializes <c>/backblaze/import</c> Robot.
         /// </summary>
         public BackBlazeImportRobot()

@@ -60,6 +60,26 @@ namespace Transloadit.Models.Robots.FileExporting
         public int? SignUrlsFor { get; set; }
 
         /// <summary>
+        /// S3 key.
+        /// </summary>
+        public string Key { get; set; }
+
+        /// <summary>
+        /// S3 secret.
+        /// </summary>
+        public string Secret { get; set; }
+
+        /// <summary>
+        /// S3 bucket name.
+        /// </summary>
+        public string Bucket { get; set; }
+
+        /// <summary>
+        /// S3 bucket region.
+        /// </summary>
+        public string BucketRegion { get; set; }
+
+        /// <summary>
         /// Initializes <c>/s3/store</c> Robot.
         /// </summary>
         public S3StoreRobot()
