@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 using Transloadit.Models.Robots;
+using Transloadit.Serialization;
 
 namespace Transloadit.Models.Assemblies
 {
@@ -80,6 +82,7 @@ namespace Transloadit.Models.Assemblies
         /// Whether to reparse the template.
         /// <para>Default: <c>0</c>.</para>
         /// </summary>
-        public int ReparseTemplate { get; set; }
+        [JsonConverter(typeof(BooleanToIntConverter))]
+        public bool? ReparseTemplate { get; set; }
     }
 }

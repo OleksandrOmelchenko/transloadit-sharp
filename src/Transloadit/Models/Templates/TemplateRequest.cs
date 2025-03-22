@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 using Transloadit.Models.Robots;
+using Transloadit.Serialization;
 
 namespace Transloadit.Models.Templates
 {
@@ -15,10 +17,11 @@ namespace Transloadit.Models.Templates
 
         /// <summary>
         /// Gets or sets the value which controls whether signature is required when using the template. 
-        /// Use <c>1</c> to deny requests that do not include a signature.
-        /// <para>Default: <c>0</c>.</para>
+        /// Use <c>true</c> to deny requests that do not include a signature.
+        /// <para>Default: <c>false</c>.</para>
         /// </summary>
-        public int RequireSignatureAuth { get; set; }
+        [JsonConverter(typeof(BooleanToIntConverter))]
+        public bool RequireSignatureAuth { get; set; }
 
         /// <summary>
         /// Gets or sets <a href="https://transloadit.com/docs/topics/assembly-instructions/">Assembly instructions</a>

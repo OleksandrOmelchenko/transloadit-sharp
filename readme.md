@@ -128,7 +128,7 @@ var s3Response = await client.Credentials.CreateAsync(s3Credentials);
 var templateRequest = new TemplateRequest
 {
     Name = "sync-cloud-documents",
-    RequireSignatureAuth = 1,
+    RequireSignatureAuth = true,
     Template = new TemplateRequestContent
     {
         AllowStepsOverride = true,

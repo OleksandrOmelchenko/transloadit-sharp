@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using Transloadit.Serialization;
 
 namespace Transloadit.Models.Templates
 {
@@ -26,7 +28,8 @@ namespace Transloadit.Models.Templates
         /// <summary>
         /// Whether <a href="https://transloadit.com/docs/api/authentication/#signature-authentication">signature authentication</a> is required.
         /// </summary>
-        public int RequireSignatureAuth { get; set; }
+        [JsonConverter(typeof(BooleanToIntConverter))]
+        public bool RequireSignatureAuth { get; set; }
 
         /// <summary>
         /// Transcoding result expiration date.
