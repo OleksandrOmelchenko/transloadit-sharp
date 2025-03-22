@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Transloadit.Constants;
-using Transloadit.Models;
 using Transloadit.Models.Robots;
 using Transloadit.Models.Templates;
+using Transloadit.Tests.Robots;
 using Xunit;
 
 namespace Transloadit.Tests.Api
@@ -78,7 +78,7 @@ namespace Transloadit.Tests.Api
             var updateTemplateRequest = new TemplateRequest
             {
                 Name = $"my-updated-generic-template-{DateTime.UtcNow:yyyyMMddHHmmss}",
-                RequireSignatureAuth = 1,
+                RequireSignatureAuth = true,
                 Template = new TemplateRequestContent
                 {
                     Steps = new Dictionary<string, RobotBase>
@@ -110,40 +110,6 @@ namespace Transloadit.Tests.Api
             var getDeletedResponse = await TransloaditClient.Templates.GetAsync(createResponse.Id);
             Assert.Equal(ResponseCodes.TemplateNotFound, getDeletedResponse.Base.Error);
             Assert.NotNull(getDeletedResponse.Base.Message);
-        }
-    }
-
-    public class TestImageResizeRobot : RobotBase
-    {
-        public AnyOf<string, List<string>> Use { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
-
-        public TestImageResizeRobot()
-        {
-            Robot = "/image/resize";
-        }
-    }
-
-    public class TestHttpImportRobot : RobotBase
-    {
-        public string Url { get; set; }
-
-        public TestHttpImportRobot()
-        {
-            Robot = "/http/import";
-        }
-    }
-
-    public class TestImageOptimizeRobot : RobotBase
-    {
-        public string Use { get; set; }
-        public string Priority { get; set; }
-        public bool PreserveMetaData { get; set; }
-
-        public TestImageOptimizeRobot()
-        {
-            Robot = "/image/optimize";
         }
     }
 }
