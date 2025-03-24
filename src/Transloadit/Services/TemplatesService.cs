@@ -38,9 +38,9 @@ namespace Transloadit.Services
         /// </summary>
         /// <param name="paginationParams">Pagination parameters.</param>
         /// <returns>Paginated list of templates.</returns>
-        public async Task<PaginatedListResponse<TemplateResponse>> GetListAsync(TemplateListRequest paginationParams = null)
+        public async Task<PaginatedListResponse<TemplateModel>> GetListAsync(TemplateListRequest paginationParams = null)
         {
-            return await _client.SendRequest<PaginatedListResponse<TemplateResponse>>(HttpMethod.Get, $"/templates", paginationParams)
+            return await _client.SendRequest<PaginatedListResponse<TemplateModel>>(HttpMethod.Get, $"/templates", paginationParams)
                 .ConfigureAwait(false);
         }
 
