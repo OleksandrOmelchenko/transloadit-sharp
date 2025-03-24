@@ -65,7 +65,7 @@ namespace Transloadit.Tests.Api
             Assert.Equal(imageResizeRobot.Width, Convert.ToInt32(templateResponse.Content.Steps["resize"]["width"]));
             Assert.Equal(imageResizeRobot.Height, Convert.ToInt32(templateResponse.Content.Steps["resize"]["height"]));
 
-            //always empty, why?
+            //always empty for certain keys, but returns list for others, why?
             var list = await TransloaditClient.Templates.GetListAsync();
             Assert.Equal(0, list.Count);
 
@@ -110,6 +110,12 @@ namespace Transloadit.Tests.Api
             var getDeletedResponse = await TransloaditClient.Templates.GetAsync(createResponse.Id);
             Assert.Equal(ResponseCodes.TemplateNotFound, getDeletedResponse.Base.Error);
             Assert.NotNull(getDeletedResponse.Base.Message);
+        }
+
+        [Fact]
+        public async Task ListTemplate_Should_Succeed()
+        {
+            //always empty, why?
         }
     }
 }

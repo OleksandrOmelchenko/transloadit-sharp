@@ -95,7 +95,7 @@ namespace Transloadit.Models.Assemblies
     public class ReplayAssemblyResponse : ResponseBase
     {
         /// <summary>
-        /// Whether
+        /// Whether replay request was successful.
         /// </summary>
         public bool Success { get; set; }
 
