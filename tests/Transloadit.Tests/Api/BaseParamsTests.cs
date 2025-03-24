@@ -91,7 +91,7 @@ namespace Transloadit.Tests.Api
 
             var response = await TransloaditClient.Assemblies.GetListAsync(listAssembliesRequest);
 
-            Assert.Null(response.Base.Error);
+            Assert.True(response.IsSuccessResponse());
         }
     }
 }

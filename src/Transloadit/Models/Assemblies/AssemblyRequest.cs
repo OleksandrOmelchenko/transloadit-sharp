@@ -80,7 +80,7 @@ namespace Transloadit.Models.Assemblies
 
         /// <summary>
         /// Whether to reparse the template.
-        /// <para>Default: <c>0</c>.</para>
+        /// <para>Default: <c>false</c>.</para>
         /// </summary>
         [JsonConverter(typeof(BooleanToIntConverter))]
         public bool? ReparseTemplate { get; set; }

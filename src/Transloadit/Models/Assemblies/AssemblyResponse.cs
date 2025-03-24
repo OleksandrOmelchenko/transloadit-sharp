@@ -90,6 +90,37 @@ namespace Transloadit.Models.Assemblies
     }
 
     /// <summary>
+    /// Represents Assembly replay response.
+    /// </summary>
+    public class ReplayAssemblyResponse : ResponseBase
+    {
+        /// <summary>
+        /// Whether
+        /// </summary>
+        public bool Success { get; set; }
+
+        /// <summary>
+        /// Assembly id.
+        /// </summary>
+        public string AssemblyId { get; set; }
+
+        /// <summary>
+        /// Assembly url.
+        /// </summary>
+        public string AssemblyUrl { get; set; }
+
+        /// <summary>
+        /// Assembly SSL url.
+        /// </summary>
+        public string AssemblySslUrl { get; set; }
+
+        /// <summary>
+        /// Notification url to which Transloadit will send Assembly status when the Assembly is completed.
+        /// </summary>
+        public string NotifyUrl { get; set; }
+    }
+
+    /// <summary>
     /// Represents assembly date.
     /// </summary>
     public class AssemblyResponse : ResponseBase

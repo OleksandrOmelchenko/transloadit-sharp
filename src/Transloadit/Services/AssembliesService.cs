@@ -93,9 +93,9 @@ namespace Transloadit.Services
         /// <param name="assemblyId">Assembly id.</param>
         /// <param name="replayAssembly">Replay assembly data.</param>
         /// <returns>Replayed assembly data.</returns>
-        public async Task<AssemblyResponse> ReplayAsync(string assemblyId, ReplayAssemblyRequest replayAssembly = null)
+        public async Task<ReplayAssemblyResponse> ReplayAsync(string assemblyId, ReplayAssemblyRequest replayAssembly = null)
         {
-            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Post, $"/assemblies/{assemblyId}/replay", replayAssembly)
+            return await _client.SendRequest<ReplayAssemblyResponse>(HttpMethod.Post, $"/assemblies/{assemblyId}/replay", replayAssembly)
                 .ConfigureAwait(false);
         }
     }
