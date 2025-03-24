@@ -33,13 +33,13 @@ namespace Transloadit.Tests.Api
                         Url = "https://demos.transloadit.com/66/01604e7d0248109df8c7cc0f8daef8/snowflake.jpg"
                     },
                 },
-                NotifyUrl = Transloadit.NotifyUrl,
+                NotifyUrl = Configuration.NotifyUrl,
             };
 
             var createResponse = await TransloaditClient.Assemblies.CreateAsync(assemblyRequest);
             Assert.True(createResponse.IsSuccessResponse());
             Assert.Equal(ResponseCodes.AssemblyExecuting, createResponse.Base.Ok);
-            Assert.Equal(Transloadit.NotifyUrl, createResponse.NotifyUrl);
+            Assert.Equal(Configuration.NotifyUrl, createResponse.NotifyUrl);
 
             AssemblyResponse assembly;
             while (true)
@@ -57,7 +57,7 @@ namespace Transloadit.Tests.Api
             await Task.Delay(2000);
             assembly = await TransloaditClient.Assemblies.GetAsync(createResponse.AssemblyId);
 
-            Assert.Equal(Transloadit.NotifyUrl, assembly.NotifyUrl);
+            Assert.Equal(Configuration.NotifyUrl, assembly.NotifyUrl);
             Assert.Equal(200, assembly.NotifyResponseCode);
             Assert.True(assembly.NotifyDuration > 0d);
             Assert.True(assembly.NotifyStart.HasValue);
@@ -79,7 +79,7 @@ namespace Transloadit.Tests.Api
                             Url = "https://demos.transloadit.com/66/01604e7d0248109df8c7cc0f8daef8/snowflake.jpg"
                         },
                     },
-                    NotifyUrl = Transloadit.NotifyUrl,
+                    NotifyUrl = Configuration.NotifyUrl,
                 }
             };
             var templateResponse = await TransloaditClient.Templates.CreateAsync(templateRequest);
@@ -94,7 +94,7 @@ namespace Transloadit.Tests.Api
             var createResponse = await TransloaditClient.Assemblies.CreateAsync(assemblyRequest);
             Assert.True(createResponse.IsSuccessResponse());
             Assert.Equal(ResponseCodes.AssemblyExecuting, createResponse.Base.Ok);
-            Assert.Equal(Transloadit.NotifyUrl, createResponse.NotifyUrl);
+            Assert.Equal(Configuration.NotifyUrl, createResponse.NotifyUrl);
 
             AssemblyResponse assembly;
             while (true)
@@ -112,7 +112,7 @@ namespace Transloadit.Tests.Api
             await Task.Delay(2000);
             assembly = await TransloaditClient.Assemblies.GetAsync(createResponse.AssemblyId);
 
-            Assert.Equal(Transloadit.NotifyUrl, assembly.NotifyUrl);
+            Assert.Equal(Configuration.NotifyUrl, assembly.NotifyUrl);
             Assert.Equal(200, assembly.NotifyResponseCode);
             Assert.True(assembly.NotifyDuration > 0d);
             Assert.True(assembly.NotifyStart.HasValue);

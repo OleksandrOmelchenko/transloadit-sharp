@@ -290,5 +290,87 @@ namespace Transloadit.Tests.Api
             var deleteTemplateResponse = await TransloaditClient.Templates.DeleteAsync(templateResponse.Id);
             Assert.Equal(ResponseCodes.TemplateDeleted, deleteTemplateResponse.Base.Ok);
         }
+
+        [Fact(Skip = "Replaying assembly works weird. Not sure what to test here. NotifyUrl is not applied on replay," +
+            "template is reparsed by default which doesn't correspond to docs and reparsing is not consistent between runs with different steps.")]
+        public async Task ReplayAssembly_ShouldSucceed()
+        {
+            var templateRequest = new TemplateRequest
+            {
+                Name = $"test-replay-template-{DateTime.UtcNow:yyyyMMddHHmmss}",
+                Template = new TemplateRequestContent
+                {
+                    Steps = new Dictionary<string, RobotBase>
+                    {
+                        ["import"] = new HttpImportRobot
+                        {
+                            Url = "https://demos.transloadit.com/66/01604e7d0248109df8c7cc0f8daef8/snowflake.jpg",
+                        }
+                    }
+                }
+            };
+
+            var templateResponse = await TransloaditClient.Templates.CreateAsync(templateRequest);
+            var assemblyRequest = new AssemblyRequest
+            {
+                TemplateId = templateResponse.Id,
+            };
+            assemblyRequest.DisableSignatureAuth();
+
+            var createAssemblyResponse = await TransloaditClient.Assemblies.CreateAsync(assemblyRequest);
+            Assert.True(createAssemblyResponse.IsSuccessResponse());
+
+            AssemblyResponse assembly;
+            while (true)
+            {
+                await Task.Delay(1000);
+                assembly = await TransloaditClient.Assemblies.GetAsync(createAssemblyResponse.AssemblyId);
+
+                if (assembly.Base.Ok != ResponseCodes.AssemblyExecuting)
+                {
+                    break;
+                }
+            }
+
+            var updateTemplateRequest = new TemplateRequest
+            {
+                Template = new TemplateRequestContent
+                {
+                    Steps = new Dictionary<string, RobotBase>
+                    {
+                        ["download"] = new HttpImportRobot
+                        {
+                            Url = "https://demos.transloadit.com/66/01604e7d0248109df8c7cc0f8daef8/snowflake.jpg",
+                            Headers = new List<string>
+                            {
+                                "X-Test: Demo Image"
+                            }
+                        }
+                    }
+                }
+            };
+
+            var updateTemplateReponse = await TransloaditClient.Templates.UpdateAsync(templateResponse.Id, updateTemplateRequest);
+
+            var firstReplayResponse = await TransloaditClient.Assemblies.ReplayAsync(createAssemblyResponse.AssemblyId, new ReplayAssemblyRequest { ReparseTemplate = false });
+            Assert.Equal(ResponseCodes.AssemblyReplaying, firstReplayResponse.Base.Ok);
+            var firstAssembly = await TransloaditClient.Assemblies.GetAsync(firstReplayResponse.AssemblyId);
+            Assert.True(firstAssembly.IsSuccessResponse());
+
+            var secondReplayResponse = await TransloaditClient.Assemblies.ReplayAsync(
+                createAssemblyResponse.AssemblyId,
+                new ReplayAssemblyRequest { ReparseTemplate = true, NotifyUrl = Configuration.NotifyUrl });
+            Assert.Equal(ResponseCodes.AssemblyReplaying, secondReplayResponse.Base.Ok);
+            var secondAssembly = await TransloaditClient.Assemblies.GetAsync(secondReplayResponse.AssemblyId);
+            Assert.True(secondAssembly.IsSuccessResponse());
+
+            var thirdReplayResponse = await TransloaditClient.Assemblies.ReplayAsync(createAssemblyResponse.AssemblyId);
+            Assert.Equal(ResponseCodes.AssemblyReplaying, firstReplayResponse.Base.Ok);
+            var thirdAssembly = await TransloaditClient.Assemblies.GetAsync(thirdReplayResponse.AssemblyId);
+            Assert.True(thirdAssembly.IsSuccessResponse());
+
+            var deleteTemplateResponse = await TransloaditClient.Templates.DeleteAsync(templateResponse.Id);
+            Assert.Equal(ResponseCodes.TemplateDeleted, deleteTemplateResponse.Base.Ok);
+        }
     }
 }
