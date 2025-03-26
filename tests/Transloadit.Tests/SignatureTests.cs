@@ -1,3 +1,4 @@
+using Transloadit.Services;
 using Transloadit.Utilities;
 using Xunit;
 
@@ -21,8 +22,11 @@ namespace Transloadit.Tests
         public void TestCalculateSignature(string input, string expectedSignature, SignatureAlgorithm signatureAlgorithm)
         {
             var hashKey = "ZAoE63deFCA915LupzPqTyOv4WCZmuOwJioIxwF3";
+            var signatureService = new SignatureService(hashKey);
+            var signatureFromService = signatureService.CalculateSignature(input, signatureAlgorithm);
             var signature = SignatureUtilities.CalculateSignature(input, hashKey, signatureAlgorithm);
             Assert.Equal(expectedSignature, signature);
+            Assert.Equal(expectedSignature, signatureFromService);
         }
 
         [Theory]
@@ -38,8 +42,11 @@ namespace Transloadit.Tests
         public void TestValidateSignature(string input, string expectedSignature)
         {
             var hashKey = "ZAoE63deFCA915LupzPqTyOv4WCZmuOwJioIxwF3";
+            var signatureService = new SignatureService(hashKey);
+            var validateFromService = signatureService.ValidateSignature(input, expectedSignature);
             var validated = SignatureUtilities.ValidateSignature(input, hashKey, expectedSignature);
             Assert.True(validated);
+            Assert.True(validateFromService);
         }
     }
 }

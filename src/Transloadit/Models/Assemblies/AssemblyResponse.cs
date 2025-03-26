@@ -86,7 +86,7 @@ namespace Transloadit.Models.Assemblies
         /// <summary>
         /// Assembly creation date as Unix epoch.
         /// </summary>
-        public int CreatedTs { get; set; }
+        public long CreatedTs { get; set; }
     }
 
     /// <summary>
