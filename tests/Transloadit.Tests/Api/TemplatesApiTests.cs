@@ -111,11 +111,5 @@ namespace Transloadit.Tests.Api
             Assert.Equal(ResponseCodes.TemplateNotFound, getDeletedResponse.Base.Error);
             Assert.NotNull(getDeletedResponse.Base.Message);
         }
-
-        [Fact]
-        public async Task ListTemplate_Should_Succeed()
-        {
-            //always empty, why?
-        }
     }
 }
