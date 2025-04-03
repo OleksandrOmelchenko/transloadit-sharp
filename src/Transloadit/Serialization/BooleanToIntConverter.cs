@@ -17,7 +17,7 @@ namespace Transloadit.Serialization
         /// <inheritdoc />
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            int integer = Convert.ToInt32(reader.Value);
+            var integer = Convert.ToInt32(reader.Value);
             return integer != 0;
         }
 

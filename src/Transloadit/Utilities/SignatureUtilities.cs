@@ -87,7 +87,7 @@ namespace Transloadit.Utilities
         private static string ToLowerHex(byte[] bytes)
         {
             var builder = new StringBuilder(bytes.Length * 2);
-            for (int i = 0; i < bytes.Length; i++)
+            for (var i = 0; i < bytes.Length; i++)
             {
                 builder.Append(bytes[i].ToString("x2"));
             }

@@ -53,6 +53,10 @@ namespace Transloadit.Tests.Api
 
             Assert.True(statusResponse.IsSuccessResponse());
             Assert.Equal(response.AssemblyId, statusResponse.AssemblyId);
+
+            var statusResponse2 = await TransloaditClientNoAuth.Assemblies.GetAsync(new Uri(response.AssemblySslUrl));
+            Assert.True(statusResponse2.IsSuccessResponse());
+            Assert.Equal(response.AssemblyId, statusResponse2.AssemblyId);
         }
 
         [Fact]
