@@ -1,0 +1,91 @@
+name: CI
+
+on:
+  workflow_dispatch:
+    inputs:
+      notifyUrl:
+        description: 'Notify url like https://webhook.site'
+        required: true
+        type: string
+
+jobs:
+  build:
+    name: Build and Test
+    environment: Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4.3.1
+        with:
+          dotnet-version: |
+            2.1.x
+            3.1.x
+            5.0.x
+            6.0.x
+            7.0.404
+            8.0.x
+
+      - name: Create Test Settings
+        run: |
+          cp tests/Transloadit.Tests/appsettings.json tests/Transloadit.Tests/appsettings.Tests.json
+          sed -i 's|"AuthKey": ""|"AuthKey": "${{ secrets.AUTH_KEY }}"|' tests/Transloadit.Tests/appsettings.Tests.json
+          sed -i 's|"AuthSecret": ""|"AuthSecret": "${{ secrets.AUTH_SECRET }}"|' tests/Transloadit.Tests/appsettings.Tests.json
+          sed -i 's|"NotifyUrl": ""|"NotifyUrl": "${{ inputs.notifyUrl }}"|' tests/Transloadit.Tests/appsettings.Tests.json
+
+      - name: Build Release
+        run: dotnet build -c Release
+
+      - name: Run Tests
+        run: |
+          dotnet test --no-build -f net6.0 -c Release
+          dotnet test --no-build -f net7.0 -c Release
+          dotnet test --no-build -f net8.0 -c Release
+        # dotnet test --no-build -f net461 -c Release
+
+
+      - name: Pack
+        run: dotnet pack src/Transloadit -c Release --no-build --output nuget
+      - name: "Upload Artifact"
+        uses: actions/upload-artifact@v4
+        with:
+          name: nuget
+          path: nuget/
+
+  tag:
+    name: Add Release Tag
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get Assembly Version
+        run: |
+          VERSION=$(sed -n 's/.*<Version>\(.*\)<\/Version>.*/\1/p' src/Transloadit/Transloadit.csproj)
+          echo "version=v$VERSION" >> $GITHUB_ENV
+          echo $VERSION
+
+      - name: Add Current Version Tag
+        uses: cardinalby/git-tag-action@v1.0
+        env:
+          TAG: ${{ env.version }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+  publish:
+    name: Publish
+    needs: [tag]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download NuGet Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: nuget
+          path: nuget
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4.3.1
+        with:
+          dotnet-version: 8.0.x
+      - name: Publish NuGet packages to NuGet
+        run: dotnet nuget push nuget/*.nupkg --api-key ${{ secrets.NUGET_KEY }} --source "nuget.org"
