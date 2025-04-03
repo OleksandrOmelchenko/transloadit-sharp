@@ -39,6 +39,21 @@ namespace Transloadit.Services
         }
 
         /// <summary>
+        /// Retrieves assembly data.
+        /// </summary>
+        /// <param name="assemblyUrl">Assembly url.</param>
+        /// <returns>Requested assembly data.</returns>
+        public async Task<AssemblyResponse> GetAsync(Uri assemblyUrl)
+        {
+            var parameters = new BaseParams
+            {
+                EnableSignatureAuth = false,
+            };
+            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Get, assemblyUrl, parameters)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// Retrieves paginated list of assemblies.
         /// </summary>
         /// <param name="paginationParams">Pagination parameters.</param>
