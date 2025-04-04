@@ -1,4 +1,4 @@
-name: CI
+name: NuGet Deploy
 
 on:
   workflow_dispatch:
@@ -65,7 +65,6 @@ jobs:
         run: |
           VERSION=$(sed -n 's/.*<Version>\(.*\)<\/Version>.*/\1/p' src/Transloadit/Transloadit.csproj)
           echo "version=v$VERSION" >> $GITHUB_ENV
-          echo $VERSION
 
       - name: Add Current Version Tag
         uses: cardinalby/git-tag-action@v1.0

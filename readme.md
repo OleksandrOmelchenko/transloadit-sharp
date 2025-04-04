@@ -9,6 +9,11 @@ Nuget package [Transloadit](https://www.nuget.org/packages/Transloadit/).
 ```C#
 using Transloadit;
 
+//suitable for operations not requiring signature authentication like Assembly creation, 
+//retrieving Assembly status, streaming Assembly changes and Assembly cancellation
+var client = new TransloaditClient("<auth key>");
+
+//for all APIs
 var client = new TransloaditClient("<auth key>", "<auth secret>");
 ```
 
