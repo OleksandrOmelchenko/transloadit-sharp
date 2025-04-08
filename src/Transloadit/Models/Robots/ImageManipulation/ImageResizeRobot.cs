@@ -6,7 +6,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
     /// <summary>
     /// Represents <c>/image/resize</c> Robot.
     /// </summary>
-    public class ResizeImageRobot : RobotBase
+    public class ImageResizeRobot : RobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.
@@ -311,7 +311,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// <summary>
         /// Initializes <c>/image/resize</c> Robot.
         /// </summary>
-        public ResizeImageRobot()
+        public ImageResizeRobot()
         {
             Robot = "/image/resize";
         }
@@ -403,25 +403,25 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// x1 coordinate.
         /// </summary>
         [JsonProperty("x1")]
-        public int X1 { get; set; }
+        public AnyOf<int, string> X1 { get; set; }
 
         /// <summary>
         /// y1 coordinate.
         /// </summary>
         [JsonProperty("y1")]
-        public int Y1 { get; set; }
+        public AnyOf<int, string> Y1 { get; set; }
 
         /// <summary>
         /// x2 coordinate.
         /// </summary>
         [JsonProperty("x2")]
-        public string X2 { get; set; }
+        public AnyOf<int, string> X2 { get; set; }
 
         /// <summary>
         /// y2 coordinate.
         /// </summary>
         [JsonProperty("y2")]
-        public string Y2 { get; set; }
+        public AnyOf<int, string> Y2 { get; set; }
     }
 
     /// <summary>
