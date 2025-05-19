@@ -103,6 +103,18 @@ var formData = new MultipartFormDataContent
 var assemblyResponse = await client.Assemblies.CreateAsync(assembly, formData);
 ```
 
+### Awaiting Assembly completion
+
+```C#
+var assemblyTracker = new AssemblyTracker(client);
+
+//by id (first gets the Assembly by id and then polls the status)
+var completedAssembly = await assemblyTracker.WaitCompletion(createAssemblyResponse.AssemblyId);
+
+//by assembly (checks passed Assembly and then polls the status)
+var completedAssembly = await assemblyTracker.WaitCompletion(createAssemblyResponse);
+```
+
 ### Create a Template and Credentials
 
 ```C#
