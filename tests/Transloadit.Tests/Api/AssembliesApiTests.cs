@@ -320,7 +320,7 @@ namespace Transloadit.Tests.Api
             var createAssemblyResponse = await TransloaditClient.Assemblies.CreateAsync(assemblyRequest);
             Assert.True(createAssemblyResponse.IsSuccessResponse());
             
-            _ = await AssemblyTracker.WaitCompletion(createAssemblyResponse);
+            _ = await AssemblyTracker.WaitCompletionAsync(createAssemblyResponse);
 
             var updateTemplateRequest = new TemplateRequest
             {

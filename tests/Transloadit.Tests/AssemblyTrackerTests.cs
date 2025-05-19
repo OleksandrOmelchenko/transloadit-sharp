@@ -30,7 +30,7 @@ namespace Transloadit.Tests
             var createAssemblyResponse = await TransloaditClient.Assemblies.CreateAsync(assemblyRequest);
             Assert.True(createAssemblyResponse.IsSuccessResponse());
 
-            var completedAssembly = await assemblyTracker.WaitCompletion(createAssemblyResponse.AssemblyId);
+            var completedAssembly = await assemblyTracker.WaitCompletionAsync(createAssemblyResponse.AssemblyId);
             Assert.Equal(ResponseCodes.AssemblyCompleted, completedAssembly.Base.Ok);
         }
     }

@@ -27,10 +27,10 @@ namespace Transloadit.Utilities
         /// <param name="assemblyId">Assembly id.</param>
         /// <param name="millisecondsDelay">Delay in milliseconds.</param>
         /// <returns>Completed assembly.</returns>
-        public async Task<AssemblyResponse> WaitCompletion(string assemblyId, int millisecondsDelay = 1000)
+        public async Task<AssemblyResponse> WaitCompletionAsync(string assemblyId, int millisecondsDelay = 1000)
         {
             var assemblyResponse = await _client.Assemblies.GetAsync(assemblyId).ConfigureAwait(false);
-            return await WaitCompletion(assemblyResponse, millisecondsDelay).ConfigureAwait(false);
+            return await WaitCompletionAsync(assemblyResponse, millisecondsDelay).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -39,10 +39,10 @@ namespace Transloadit.Utilities
         /// <param name="assemblyUrl">Assembly url.</param>
         /// <param name="millisecondsDelay">Delay in milliseconds.</param>
         /// <returns>Completed assembly.</returns>
-        public async Task<AssemblyResponse> WaitCompletion(Uri assemblyUrl, int millisecondsDelay = 1000)
+        public async Task<AssemblyResponse> WaitCompletionAsync(Uri assemblyUrl, int millisecondsDelay = 1000)
         {
             var assemblyResponse = await _client.Assemblies.GetAsync(assemblyUrl).ConfigureAwait(false);
-            return await WaitCompletion(assemblyResponse, millisecondsDelay).ConfigureAwait(false);
+            return await WaitCompletionAsync(assemblyResponse, millisecondsDelay).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Transloadit.Utilities
         /// <param name="assembly">Assembly.</param>
         /// <param name="millisecondsDelay">Delay in milliseconds.</param>
         /// <returns>Completed assembly.</returns>
-        public async Task<AssemblyResponse> WaitCompletion(AssemblyResponse assembly, int millisecondsDelay = 1000)
+        public async Task<AssemblyResponse> WaitCompletionAsync(AssemblyResponse assembly, int millisecondsDelay = 1000)
         {
             var assemblyResponse = assembly;
             while (assemblyResponse.Base.Ok is ResponseCodes.AssemblyExecuting or ResponseCodes.AssemblyUploading)

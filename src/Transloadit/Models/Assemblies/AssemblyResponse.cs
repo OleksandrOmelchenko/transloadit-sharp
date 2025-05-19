@@ -404,7 +404,7 @@ namespace Transloadit.Models.Assemblies
         /// <summary>
         /// Assembly results.
         /// </summary>
-        public Dictionary<string, object> Results { get; set; }
+        public Dictionary<string, List<FileResult>> Results { get; set; }
 
         /// <summary>
         /// Build id.
@@ -469,7 +469,7 @@ namespace Transloadit.Models.Assemblies
         public string Id { get; set; }
 
         /// <summary>
-        /// File upload file.
+        /// File upload name.
         /// </summary>
         public string Name { get; set; }
 
@@ -587,6 +587,147 @@ namespace Transloadit.Models.Assemblies
         /// Upload execution time.
         /// </summary>
         public double ExecTime { get; set; }
+    }
+
+    /// <summary>
+    /// Represents Assembly file result.
+    /// </summary>
+    public class FileResult
+    {
+        /// <summary>
+        /// Result id.
+        /// </summary>
+        public string Id { get; set; }
+
+        /// <summary>
+        /// File result name.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// File base name.
+        /// </summary>
+        public string Basename { get; set; }
+
+        /// <summary>
+        /// File extension.
+        /// </summary>
+        public string Ext { get; set; }
+
+        /// <summary>
+        /// File size.
+        /// </summary>
+        public int Size { get; set; }
+
+        /// <summary>
+        /// File MIME type.
+        /// </summary>
+        public string Mime { get; set; }
+
+        /// <summary>
+        /// File type.
+        /// </summary>
+        public string Type { get; set; }
+
+        /// <summary>
+        /// File field name.
+        /// </summary>
+        public string Field { get; set; }
+
+        /// <summary>
+        /// File MD5 hash.
+        /// </summary>
+        public string Md5hash { get; set; }
+
+        /// <summary>
+        /// File original id.
+        /// </summary>
+        public string OriginalId { get; set; }
+
+        /// <summary>
+        /// File original base name.
+        /// </summary>
+        public string OriginalBasename { get; set; }
+
+        /// <summary>
+        /// File original name.
+        /// </summary>
+        public string OriginalName { get; set; }
+
+        /// <summary>
+        /// File original path.
+        /// </summary>
+        public string OriginalPath { get; set; }
+
+        /// <summary>
+        /// File original MD5 hash.
+        /// </summary>
+        public string OriginalMd5hash { get; set; }
+
+        /// <summary>
+        /// Whether the result is from batch import.
+        /// </summary>
+        public bool FromBatchImport { get; set; }
+
+        /// <summary>
+        /// Whether the result is a TUS file.
+        /// </summary>
+        public bool IsTusFile { get; set; }
+
+        /// <summary>
+        /// TUS result url.
+        /// </summary>
+        public string TusUploadUrl { get; set; }
+
+        /// <summary>
+        /// Result url.
+        /// </summary>
+        public string Url { get; set; }
+
+        /// <summary>
+        /// Result SSL url.
+        /// </summary>
+        public string SslUrl { get; set; }
+
+        /// <summary>
+        /// Result metadata.
+        /// </summary>
+        public Dictionary<string, object> Meta { get; set; }
+
+        /// <summary>
+        /// Result user metadata.
+        /// </summary>
+        public Dictionary<string, object> UserMeta { get; set; }
+
+        /// <summary>
+        /// As alias.
+        /// </summary>
+        public string As { get; set; }
+
+        /// <summary>
+        /// Result queue name.
+        /// </summary>
+        public string Queue { get; set; }
+
+        /// <summary>
+        /// Result queue time.
+        /// </summary>
+        public double QueueTime { get; set; }
+
+        /// <summary>
+        /// Result execution time.
+        /// </summary>
+        public double ExecTime { get; set; }
+
+        /// <summary>
+        /// Processing cost.
+        /// </summary>
+        public int Cost { get; set; }
+
+        /// <summary>
+        /// Whether is temporary url.
+        /// </summary>
+        public bool IsTempUrl { get; set; }
     }
 
     /// <summary>
