@@ -41,17 +41,7 @@ namespace Transloadit.Tests.Api
             Assert.Equal(ResponseCodes.AssemblyExecuting, createResponse.Base.Ok);
             Assert.Equal(Configuration.NotifyUrl, createResponse.NotifyUrl);
 
-            AssemblyResponse assembly;
-            while (true)
-            {
-                await Task.Delay(1000);
-                assembly = await TransloaditClient.Assemblies.GetAsync(createResponse.AssemblyId);
-
-                if (assembly.Base.Ok != ResponseCodes.AssemblyExecuting)
-                {
-                    break;
-                }
-            }
+            var assembly = await AssemblyTracker.WaitCompletion(createResponse);
 
             //waiting 2 second allowing notification to finish
             await Task.Delay(2000);
@@ -96,17 +86,7 @@ namespace Transloadit.Tests.Api
             Assert.Equal(ResponseCodes.AssemblyExecuting, createResponse.Base.Ok);
             Assert.Equal(Configuration.NotifyUrl, createResponse.NotifyUrl);
 
-            AssemblyResponse assembly;
-            while (true)
-            {
-                await Task.Delay(1000);
-                assembly = await TransloaditClient.Assemblies.GetAsync(createResponse.AssemblyId);
-
-                if (assembly.Base.Ok != ResponseCodes.AssemblyExecuting)
-                {
-                    break;
-                }
-            }
+            var assembly = await AssemblyTracker.WaitCompletion(createResponse);
 
             //waiting 2 second allowing notification to finish
             await Task.Delay(2000);

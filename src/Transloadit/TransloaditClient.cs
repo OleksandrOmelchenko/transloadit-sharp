@@ -30,10 +30,7 @@ namespace Transloadit
             {
                 NamingStrategy = new SnakeCaseNamingStrategy(),
             },
-            Converters =
-            [
-                new AnyOfConverter()
-            ],
+            Converters = [new AnyOfConverter()],
         };
 
         private BillingService _billingService;

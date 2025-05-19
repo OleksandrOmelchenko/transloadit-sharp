@@ -319,18 +319,8 @@ namespace Transloadit.Tests.Api
 
             var createAssemblyResponse = await TransloaditClient.Assemblies.CreateAsync(assemblyRequest);
             Assert.True(createAssemblyResponse.IsSuccessResponse());
-
-            AssemblyResponse assembly;
-            while (true)
-            {
-                await Task.Delay(1000);
-                assembly = await TransloaditClient.Assemblies.GetAsync(createAssemblyResponse.AssemblyId);
-
-                if (assembly.Base.Ok != ResponseCodes.AssemblyExecuting)
-                {
-                    break;
-                }
-            }
+            
+            _ = await AssemblyTracker.WaitCompletion(createAssemblyResponse);
 
             var updateTemplateRequest = new TemplateRequest
             {
