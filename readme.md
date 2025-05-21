@@ -109,10 +109,10 @@ var assemblyResponse = await client.Assemblies.CreateAsync(assembly, formData);
 var assemblyTracker = new AssemblyTracker(client);
 
 //by id (first gets the Assembly by id and then polls the status)
-var completedAssembly = await assemblyTracker.WaitCompletion(createAssemblyResponse.AssemblyId);
+var completedAssembly = await assemblyTracker.WaitCompletionAsync(createAssemblyResponse.AssemblyId);
 
 //by assembly (checks passed Assembly and then polls the status)
-var completedAssembly = await assemblyTracker.WaitCompletion(createAssemblyResponse);
+var completedAssembly = await assemblyTracker.WaitCompletionAsync(createAssemblyResponse);
 ```
 
 ### Create a Template and Credentials
