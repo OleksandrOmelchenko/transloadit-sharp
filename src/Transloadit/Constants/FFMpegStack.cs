@@ -14,5 +14,10 @@
         /// Version 6.0.0.
         /// </summary>
         public const string V6 = "v6.0.0";
+
+        /// <summary>
+        /// Version 7.0.0.
+        /// </summary>
+        public const string V7 = "v7.0.0";
     }
 }
