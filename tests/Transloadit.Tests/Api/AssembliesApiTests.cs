@@ -9,6 +9,7 @@ using Transloadit.Models.Robots;
 using Transloadit.Models.Robots.FileCompressing;
 using Transloadit.Models.Robots.FileImporting;
 using Transloadit.Models.Templates;
+using Transloadit.Tests.Fixtures;
 using Transloadit.Tests.Robots;
 using Xunit;
 
@@ -101,10 +102,7 @@ namespace Transloadit.Tests.Api
                 Quiet = true,
                 Steps = new Dictionary<string, RobotBase>
                 {
-                    ["import"] = new TestHttpImportRobot
-                    {
-                        Url = "https://demos.transloadit.com/66/01604e7d0248109df8c7cc0f8daef8/snowflake.jpg"
-                    }
+                    ["import"] = TestDataFactory.GetDemoHttpImportRobot()
                 }
             };
             var response = await TransloaditClient.Assemblies.CreateAsync(createAssembly);
@@ -120,10 +118,7 @@ namespace Transloadit.Tests.Api
             {
                 Steps = new Dictionary<string, RobotBase>
                 {
-                    ["import"] = new TestHttpImportRobot
-                    {
-                        Url = "https://demos.transloadit.com/66/01604e7d0248109df8c7cc0f8daef8/snowflake.jpg"
-                    }
+                    ["import"] = TestDataFactory.GetDemoHttpImportRobot(),
                 }
             };
             var response = await TransloaditClient.Assemblies.CreateAsync(createAssembly);
@@ -179,10 +174,7 @@ namespace Transloadit.Tests.Api
                 {
                     Steps = new Dictionary<string, RobotBase>
                     {
-                        ["import"] = new HttpImportRobot
-                        {
-                            Url = "https://demos.transloadit.com/66/01604e7d0248109df8c7cc0f8daef8/snowflake.jpg",
-                        },
+                        ["import"] = TestDataFactory.GetDemoHttpImportRobot(),
                     }
                 }
             };
@@ -207,10 +199,6 @@ namespace Transloadit.Tests.Api
         [Fact]
         public async Task CreateAssemblyWithStepsAndTemplateDisallowingStepsOverride_ShoulFail()
         {
-            var httpImportRobot = new TestHttpImportRobot
-            {
-                Url = "https://demos.transloadit.com/66/01604e7d0248109df8c7cc0f8daef8/snowflake.jpg"
-            };
             var imageResizeRobot = new TestImageResizeRobot
             {
                 Use = "import",
@@ -227,7 +215,7 @@ namespace Transloadit.Tests.Api
                     AllowStepsOverride = false,
                     Steps = new Dictionary<string, RobotBase>
                     {
-                        ["import"] = httpImportRobot,
+                        ["import"] = TestDataFactory.GetDemoHttpImportRobot(),
                         ["resize"] = imageResizeRobot
                     }
                 }
@@ -258,11 +246,6 @@ namespace Transloadit.Tests.Api
         [Fact]
         public async Task CreateAssemblyWithTemplateQuiet_ShouldSucceed()
         {
-            var httpImportRobot = new TestHttpImportRobot
-            {
-                Url = "https://demos.transloadit.com/66/01604e7d0248109df8c7cc0f8daef8/snowflake.jpg"
-            };
-
             var templateRequest = new TemplateRequest
             {
                 Name = $"my-test-generic-template-{DateTime.UtcNow:yyyyMMddHHmmss}",
@@ -271,7 +254,7 @@ namespace Transloadit.Tests.Api
                     Quiet = true,
                     Steps = new Dictionary<string, RobotBase>
                     {
-                        ["import"] = httpImportRobot,
+                        ["import"] = TestDataFactory.GetDemoHttpImportRobot(),
                     }
                 }
             };
@@ -302,10 +285,7 @@ namespace Transloadit.Tests.Api
                 {
                     Steps = new Dictionary<string, RobotBase>
                     {
-                        ["import"] = new HttpImportRobot
-                        {
-                            Url = "https://demos.transloadit.com/66/01604e7d0248109df8c7cc0f8daef8/snowflake.jpg",
-                        }
+                        ["import"] = TestDataFactory.GetDemoHttpImportRobot(),
                     }
                 }
             };
@@ -319,7 +299,7 @@ namespace Transloadit.Tests.Api
 
             var createAssemblyResponse = await TransloaditClient.Assemblies.CreateAsync(assemblyRequest);
             Assert.True(createAssemblyResponse.IsSuccessResponse());
-            
+
             _ = await AssemblyTracker.WaitCompletionAsync(createAssemblyResponse);
 
             var updateTemplateRequest = new TemplateRequest

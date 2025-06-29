@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Transloadit.Constants;
 using Transloadit.Models.Robots;
 using Transloadit.Models.Templates;
+using Transloadit.Tests.Fixtures;
 using Transloadit.Tests.Robots;
 using Xunit;
 
@@ -14,10 +15,7 @@ namespace Transloadit.Tests.Api
         [Fact]
         public async Task CreateGetUpdateListDeleteTemplate_Should_Succeed()
         {
-            var httpImportRobot = new TestHttpImportRobot
-            {
-                Url = "https://demos.transloadit.com/66/01604e7d0248109df8c7cc0f8daef8/snowflake.jpg"
-            };
+            var httpImportRobot = TestDataFactory.GetDemoHttpImportRobot();
             var imageResizeRobot = new TestImageResizeRobot
             {
                 Use = "import",

@@ -8,6 +8,7 @@ using Transloadit.Models;
 using Transloadit.Models.Assemblies;
 using Transloadit.Models.Robots;
 using Transloadit.Models.Templates;
+using Transloadit.Tests.Fixtures;
 using Transloadit.Tests.Robots;
 using Xunit;
 
@@ -18,11 +19,6 @@ namespace Transloadit.Tests.Api
         [Fact]
         public async Task SetInvalidAuthKey_Should_Fail()
         {
-            var httpImportRobot = new TestHttpImportRobot
-            {
-                Url = "https://demos.transloadit.com/66/01604e7d0248109df8c7cc0f8daef8/snowflake.jpg"
-            };
-
             var templateRequest = new TemplateRequest
             {
                 Name = $"my-test-generic-template-{DateTime.UtcNow:yyyyMMddHHmmss}",
@@ -30,7 +26,7 @@ namespace Transloadit.Tests.Api
                 {
                     Steps = new Dictionary<string, RobotBase>
                     {
-                        ["import"] = httpImportRobot,
+                        ["import"] = TestDataFactory.GetDemoHttpImportRobot(),
                     }
                 }
             };

@@ -5,6 +5,7 @@ using Transloadit.Constants;
 using Transloadit.Models.Assemblies;
 using Transloadit.Models.Robots;
 using Transloadit.Models.Templates;
+using Transloadit.Tests.Fixtures;
 using Transloadit.Tests.Robots;
 using Xunit;
 
@@ -39,10 +40,7 @@ namespace Transloadit.Tests.Api
             {
                 Steps = new Dictionary<string, RobotBase>
                 {
-                    ["import"] = new TestHttpImportRobot
-                    {
-                        Url = "https://demos.transloadit.com/66/01604e7d0248109df8c7cc0f8daef8/snowflake.jpg"
-                    }
+                    ["import"] = TestDataFactory.GetDemoHttpImportRobot(),
                 }
             };
             var response = await TransloaditClientNoAuth.Assemblies.CreateAsync(createAssembly);
@@ -70,10 +68,7 @@ namespace Transloadit.Tests.Api
                 {
                     Steps = new Dictionary<string, RobotBase>
                     {
-                        ["import"] = new TestHttpImportRobot
-                        {
-                            Url = "https://demos.transloadit.com/66/01604e7d0248109df8c7cc0f8daef8/snowflake.jpg"
-                        }
+                        ["import"] = TestDataFactory.GetDemoHttpImportRobot(),
                     }
                 }
             };
@@ -107,10 +102,7 @@ namespace Transloadit.Tests.Api
                 {
                     Steps = new Dictionary<string, RobotBase>
                     {
-                        ["import"] = new TestHttpImportRobot
-                        {
-                            Url = "https://demos.transloadit.com/66/01604e7d0248109df8c7cc0f8daef8/snowflake.jpg"
-                        }
+                        ["import"] = TestDataFactory.GetDemoHttpImportRobot(),
                     }
                 }
             };
