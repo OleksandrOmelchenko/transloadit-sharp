@@ -141,6 +141,11 @@
         public const string AssemblyMemoryLimitExceeded = "ASSEMBLY_MEMORY_LIMIT_EXCEEDED";
 
         /// <summary>
+        /// The Assembly notification was replayed.
+        /// </summary>
+        public const string AssemblyNotificationReplayed = "ASSEMBLY_NOTIFICATION_REPLAYED";
+
+        /// <summary>
         /// The Assembly notifications could not be listed.
         /// </summary>
         public const string AssemblyNotificationsListError = "ASSEMBLY_NOTIFICATIONS_LIST_ERROR";

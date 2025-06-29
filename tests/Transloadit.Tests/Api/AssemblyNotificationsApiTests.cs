@@ -22,6 +22,44 @@ namespace Transloadit.Tests.Api
         }
 
         [Fact]
+        public async Task ReplayAssemblyNotification_Should_Succeed()
+        {
+            var assemblyRequest = new AssemblyRequest
+            {
+                Steps = new Dictionary<string, RobotBase>
+                {
+                    ["import"] = new TestHttpImportRobot
+                    {
+                        Url = "https://demos.transloadit.com/66/01604e7d0248109df8c7cc0f8daef8/snowflake.jpg"
+                    },
+                },
+                NotifyUrl = Configuration.NotifyUrl,
+            };
+
+            var createResponse = await TransloaditClient.Assemblies.CreateAsync(assemblyRequest);
+            Assert.True(createResponse.IsSuccessResponse());
+            Assert.Equal(ResponseCodes.AssemblyExecuting, createResponse.Base.Ok);
+            Assert.Equal(Configuration.NotifyUrl, createResponse.NotifyUrl);
+
+            var assembly = await AssemblyTracker.WaitCompletionAsync(createResponse);
+
+            //waiting 2 second allowing notification to finish
+            await Task.Delay(2000);
+            assembly = await TransloaditClient.Assemblies.GetAsync(createResponse.AssemblyId);
+
+            Assert.Equal(Configuration.NotifyUrl, assembly.NotifyUrl);
+            Assert.Equal(200, assembly.NotifyResponseCode);
+            Assert.True(assembly.NotifyDuration > 0d);
+            Assert.True(assembly.NotifyStart.HasValue);
+            Assert.NotNull(assembly.NotifyResponseData);
+
+            var notificationReplayResponse = await TransloaditClient.AssemblyNotifications.ReplayAsync(assembly.AssemblyId);
+
+            Assert.True(notificationReplayResponse.IsSuccessResponse());
+            Assert.Equal(ResponseCodes.AssemblyNotificationReplayed, notificationReplayResponse.Base.Ok);
+        }
+
+        [Fact]
         public async Task CreateAssemblyWithNotification_Should_ContainNotificationData()
         {
             var assemblyRequest = new AssemblyRequest

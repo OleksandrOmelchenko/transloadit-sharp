@@ -65,7 +65,7 @@ namespace Transloadit.Tests.Api
             Assert.Equal(imageResizeRobot.Width, Convert.ToInt32(templateResponse.Content.Steps["resize"]["width"]));
             Assert.Equal(imageResizeRobot.Height, Convert.ToInt32(templateResponse.Content.Steps["resize"]["height"]));
 
-            //always empty for certain keys, but returns list for others, why?
+            //bug: always empty for certain keys, but returns list for others, why?
             var list = await TransloaditClient.Templates.GetListAsync();
             Assert.Equal(0, list.Count);
 
@@ -89,7 +89,7 @@ namespace Transloadit.Tests.Api
                 }
             };
 
-            //sending update request 2 times because the first one fails for some reason on api side
+            //bug: sending update request 2 times because the first one fails for some reason on api side
             _ = await TransloaditClient.Templates.UpdateAsync(createResponse.Id, updateTemplateRequest);
             var updateResponse = await TransloaditClient.Templates.UpdateAsync(createResponse.Id, updateTemplateRequest);
             Assert.Equal(ResponseCodes.TemplateUpdated, updateResponse.Base.Ok);
