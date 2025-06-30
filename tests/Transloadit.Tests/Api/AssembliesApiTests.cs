@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Transloadit.Constants;
 using Transloadit.Models.Assemblies;
 using Transloadit.Models.Robots;
@@ -310,11 +311,8 @@ namespace Transloadit.Tests.Api
                     {
                         ["download"] = new HttpImportRobot
                         {
-                            Url = "https://demos.transloadit.com/66/01604e7d0248109df8c7cc0f8daef8/snowflake.jpg",
-                            Headers = new List<string>
-                            {
-                                "X-Test: Demo Image"
-                            }
+                            Url = TestConstants.DemoImageUrl,
+                            Headers = ["X-Test: Demo Image"],
                         }
                     }
                 }
@@ -322,22 +320,40 @@ namespace Transloadit.Tests.Api
 
             var updateTemplateReponse = await TransloaditClient.Templates.UpdateAsync(templateResponse.Id, updateTemplateRequest);
 
-            var firstReplayResponse = await TransloaditClient.Assemblies.ReplayAsync(createAssemblyResponse.AssemblyId, new ReplayAssemblyRequest { ReparseTemplate = false });
+            var firstReplayResponse = await TransloaditClient.Assemblies.ReplayAsync(
+                createAssemblyResponse.AssemblyId,
+                new ReplayAssemblyRequest { ReparseTemplate = false });
             Assert.Equal(ResponseCodes.AssemblyReplaying, firstReplayResponse.Base.Ok);
-            var firstAssembly = await TransloaditClient.Assemblies.GetAsync(firstReplayResponse.AssemblyId);
+            var firstAssembly = await AssemblyTracker.WaitCompletionAsync(firstReplayResponse.AssemblyId);
+            var firstAssemblySteps = JsonConvert.DeserializeObject<TemplateContent>(firstAssembly.MergedParams);
             Assert.True(firstAssembly.IsSuccessResponse());
+            //bug: first replay expicitly say to not reparse a template, but as the result first replay contains
+            //new and old templates versions merged
+            Assert.Equal(templateResponse.Content.Steps.Count, firstAssemblySteps.Steps.Count);
+            Assert.Equal(templateResponse.Content.Steps["import"]["url"], firstAssemblySteps.Steps["import"]["url"]);
 
             var secondReplayResponse = await TransloaditClient.Assemblies.ReplayAsync(
                 createAssemblyResponse.AssemblyId,
                 new ReplayAssemblyRequest { ReparseTemplate = true, NotifyUrl = Configuration.NotifyUrl });
             Assert.Equal(ResponseCodes.AssemblyReplaying, secondReplayResponse.Base.Ok);
-            var secondAssembly = await TransloaditClient.Assemblies.GetAsync(secondReplayResponse.AssemblyId);
+            Assert.Equal(Configuration.NotifyUrl, secondReplayResponse.NotifyUrl);
+            var secondAssembly = await AssemblyTracker.WaitCompletionAsync(secondReplayResponse.AssemblyId);
+            var secondAssemblySteps = JsonConvert.DeserializeObject<TemplateContent>(secondAssembly.MergedParams);
             Assert.True(secondAssembly.IsSuccessResponse());
+            //bug: assembly url is empty while even the replay response contains the passed url
+            Assert.Equal(Configuration.NotifyUrl, secondAssembly.NotifyUrl);
+            Assert.Equal(updateTemplateReponse.Content.Steps.Count, secondAssemblySteps.Steps.Count);
+            Assert.Equal(updateTemplateReponse.Content.Steps["download"]["url"], secondAssemblySteps.Steps["download"]["url"]);
+            Assert.Equal(updateTemplateReponse.Content.Steps["download"]["headers"], secondAssemblySteps.Steps["download"]["headers"]);
 
             var thirdReplayResponse = await TransloaditClient.Assemblies.ReplayAsync(createAssemblyResponse.AssemblyId);
             Assert.Equal(ResponseCodes.AssemblyReplaying, firstReplayResponse.Base.Ok);
-            var thirdAssembly = await TransloaditClient.Assemblies.GetAsync(thirdReplayResponse.AssemblyId);
+            var thirdAssembly = await AssemblyTracker.WaitCompletionAsync(thirdReplayResponse.AssemblyId);
+            var thirdAssemblySteps = JsonConvert.DeserializeObject<TemplateContent>(thirdAssembly.MergedParams);
             Assert.True(thirdAssembly.IsSuccessResponse());
+            Assert.Equal(templateResponse.Content.Steps.Count, thirdAssemblySteps.Steps.Count);
+            //bug: according to the docs the template is not reparsed on a replay by default
+            Assert.Equal(templateResponse.Content.Steps["import"]["url"], thirdAssemblySteps.Steps["import"]["url"]);
 
             var deleteTemplateResponse = await TransloaditClient.Templates.DeleteAsync(templateResponse.Id);
             Assert.Equal(ResponseCodes.TemplateDeleted, deleteTemplateResponse.Base.Ok);

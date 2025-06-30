@@ -6,7 +6,6 @@ using Transloadit.Models.Assemblies;
 using Transloadit.Models.Robots;
 using Transloadit.Models.Templates;
 using Transloadit.Tests.Fixtures;
-using Transloadit.Tests.Robots;
 using Xunit;
 
 namespace Transloadit.Tests.Api
