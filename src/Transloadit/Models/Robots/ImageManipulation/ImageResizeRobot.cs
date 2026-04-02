@@ -137,7 +137,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
         [JsonProperty("adaptive_filtering")]
-        public bool? AdaptiveFilering { get; set; }
+        public bool? AdaptiveFiltering { get; set; }
 
         /// <summary>
         /// Either the hexadecimal code or <a href="https://www.imagemagick.org/script/color.php#color_names">name</a> of the color used to fill 
@@ -217,7 +217,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// <para>Default: <c>1</c>.</para>
         /// </summary>
         [JsonProperty("brightness")]
-        public int? Brightness { get; set; }
+        public double? Brightness { get; set; }
 
         /// <summary>
         /// Increases or decreases the saturation of the image by using a multiplier. For example <c>1.5</c> would increase the saturation by 50%, 
@@ -225,7 +225,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// <para>Default: <c>1</c>.</para>
         /// </summary>
         [JsonProperty("saturation")]
-        public int? Saturation { get; set; }
+        public double? Saturation { get; set; }
 
         /// <summary>
         /// Changes the hue by rotating the color of the image. The value <c>100</c> would produce no change whereas <c>0</c> and <c>200</c> will 
