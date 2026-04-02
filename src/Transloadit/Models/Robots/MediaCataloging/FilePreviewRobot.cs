@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Transloadit.Models.Robots.MediaCataloging
 {
@@ -10,6 +11,7 @@ namespace Transloadit.Models.Robots.MediaCataloging
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
+        [JsonProperty("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
@@ -17,18 +19,21 @@ namespace Transloadit.Models.Robots.MediaCataloging
         /// its format is defined by <c>clip_format</c>.
         /// <para>Default: <c>png</c>.</para>
         /// </summary>
+        [JsonProperty("format")]
         public string Format { get; set; }
 
         /// <summary>
         /// Width of the thumbnail, in pixels. Value 1-5000.
         /// <para>Default: <c>300</c>.</para>
         /// </summary>
+        [JsonProperty("width")]
         public int? Width { get; set; }
 
         /// <summary>
         /// Height of the thumbnail, in pixels. Value 1-5000.
         /// <para>Default: <c>200</c>.</para>
         /// </summary>
+        [JsonProperty("height")]
         public int? Height { get; set; }
 
         /// <summary>
@@ -37,6 +42,7 @@ namespace Transloadit.Models.Robots.MediaCataloging
         /// One of <see cref="Constants.ResizeStrategy"/>: <c>fit</c>, <c>fillcrop</c>, <c>min_fit</c>, <c>pad</c>, <c>stretch</c> and <c>crop</c>.
         /// <para>Default: <c>pad</c>.</para>
         /// </summary>
+        [JsonProperty("resize_strategy")]
         public string ResizeStrategy { get; set; }
 
         /// <summary>
@@ -44,12 +50,14 @@ namespace Transloadit.Models.Robots.MediaCataloging
         /// (red, green, blue, alpha). Use <c>#00000000</c> for a transparent padding.
         /// <para>Default: <c>#ffffffff</c>.</para>
         /// </summary>
+        [JsonProperty("background")]
         public string Background { get; set; }
 
         /// <summary>
         /// Definition of the thumbnail generation process per file category. The parameter must be an object whose keys can be one of the file 
         /// categories: <c>audio</c>, <c>video</c>, <c>image</c>, <c>document</c>, <c>archive</c>, <c>webpage</c>, and <c>unknown</c>. 
         /// </summary>
+        [JsonProperty("strategy")]
         public PreviewStrategy Strategy { get; set; }
 
         /// <summary>
@@ -57,6 +65,7 @@ namespace Transloadit.Models.Robots.MediaCataloging
         /// Only used if the <c>waveform</c> strategy for audio files is applied.
         /// <para>Default: <c>#000000ff</c>.</para>
         /// </summary>
+        [JsonProperty("waveform_center_color")]
         public string WaveformCenterColor { get; set; }
 
         /// <summary>
@@ -64,6 +73,7 @@ namespace Transloadit.Models.Robots.MediaCataloging
         /// Only used if the <c>waveform</c> strategy for audio files is applied.
         /// <para>Default: <c>#000000ff</c>.</para>
         /// </summary>
+        [JsonProperty("waveform_outer_color")]
         public string WaveformOuterColor { get; set; }
 
         /// <summary>
@@ -71,6 +81,7 @@ namespace Transloadit.Models.Robots.MediaCataloging
         /// It can be utilized to ensure that the waveform only takes up a section of the preview thumbnail. Value 1-5000.
         /// <para>Default: <c>100</c>.</para>
         /// </summary>
+        [JsonProperty("waveform_height")]
         public string WaveformHeight { get; set; }
 
         /// <summary>
@@ -78,6 +89,7 @@ namespace Transloadit.Models.Robots.MediaCataloging
         /// It can be utilized to ensure that the waveform only takes up a section of the preview thumbnail. Value 1-5000.
         /// <para>Default: <c>300</c>.</para>
         /// </summary>
+        [JsonProperty("waveform_width")]
         public string WaveformWidth { get; set; }
 
         /// <summary>
@@ -86,12 +98,14 @@ namespace Transloadit.Models.Robots.MediaCataloging
         /// file extension (e.g. MP4, JPEG). The <c>square</c> style only includes a square variant of the icon showing the file type.
         /// <para>Default: <c>with-text</c>.</para>
         /// </summary>
+        [JsonProperty("icon_style")]
         public string IconStyle { get; set; }
 
         /// <summary>
         /// The color of the text used in the icon. The format is #rrggbb[aa]. Only used if the <c>icon</c> strategy is applied.
         /// <para>Default: <c>#a2a2a2</c>.</para>
         /// </summary>
+        [JsonProperty("icon_text_color")]
         public string IconTextColor { get; set; }
 
         /// <summary>
@@ -99,6 +113,7 @@ namespace Transloadit.Models.Robots.MediaCataloging
         /// One of <see cref="Constants.Fonts"/>.
         /// <para>Default: <c>Roboto</c>.</para>
         /// </summary>
+        [JsonProperty("icon_text_font")]
         public string IconTextFont { get; set; }
 
         /// <summary>
@@ -108,6 +123,7 @@ namespace Transloadit.Models.Robots.MediaCataloging
         /// overlaying custom text over the image using HTML etc.
         /// <para>Default: <c>extension</c>.</para>
         /// </summary>
+        [JsonProperty("icon_text_content")]
         public string IconTextContent { get; set; }
 
         /// <summary>
@@ -115,12 +131,14 @@ namespace Transloadit.Models.Robots.MediaCataloging
         /// If enabled, the images will be optimized using <c>/image/optimize</c> Robot.
         /// <para>Default: <c>true</c>.</para>
         /// </summary>
+        [JsonProperty("optimize")]
         public bool? Optimize { get; set; }
 
         /// <summary>
         /// Specifies whether conversion speed or compression ratio is prioritized when optimizing images. Only used if <c>optimize</c> is enabled.
         /// <para>Default: <c>conversion-speed</c>.</para>
         /// </summary>
+        [JsonProperty("optimize_priority")]
         public string OptimizePriority { get; set; }
 
         /// <summary>
@@ -128,6 +146,7 @@ namespace Transloadit.Models.Robots.MediaCataloging
         /// Only used if <c>optimize</c> is enabled. 
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
+        [JsonProperty("optimize_progressive")]
         public bool? OptimizeProgressive { get; set; }
 
         /// <summary>
@@ -135,6 +154,7 @@ namespace Transloadit.Models.Robots.MediaCataloging
         /// Possible formats are <c>webp</c>, <c>apng</c>, <c>avif</c> and <c>gif</c>. 
         /// <para>Default: <c>webp</c>.</para>
         /// </summary>
+        [JsonProperty("clip_format")]
         public string ClipFormat { get; set; }
 
         /// <summary>
@@ -143,6 +163,7 @@ namespace Transloadit.Models.Robots.MediaCataloging
         /// Larger offsets may seek to a position outside of the imported part and thus fail to generate a clip.
         /// <para>Default: <c>1</c>.</para>
         /// </summary>
+        [JsonProperty("clip_offset")]
         public double? ClipOffset { get; set; }
 
         /// <summary>
@@ -150,6 +171,7 @@ namespace Transloadit.Models.Robots.MediaCataloging
         /// Be aware that a longer clip duration also results in a larger file size, which might be undesirable for previews.
         /// <para>Default: <c>5</c>.</para>
         /// </summary>
+        [JsonProperty("clip_duration")]
         public double? ClipDuration { get; set; }
 
         /// <summary>
@@ -158,6 +180,7 @@ namespace Transloadit.Models.Robots.MediaCataloging
         /// which might be undesirable for previews. Value 1-60.
         /// <para>Default: <c>5</c>.</para>
         /// </summary>
+        [JsonProperty("clip_framerate")]
         public int? ClipFramerate { get; set; }
 
         /// <summary>
@@ -165,6 +188,7 @@ namespace Transloadit.Models.Robots.MediaCataloging
         /// once (<c>false</c>). Only used if the clip strategy for video files is applied.
         /// <para>Default: <c>true</c>.</para>
         /// </summary>
+        [JsonProperty("clip_loop")]
         public bool? ClipLoop { get; set; }
 
         /// <summary>
@@ -191,6 +215,7 @@ namespace Transloadit.Models.Robots.MediaCataloging
         /// </list>
         /// Default: <c>["artwork", "waveform", "icon"]</c>.
         /// </summary>
+        [JsonProperty("audio")]
         public List<string> Audio { get; set; }
 
         /// <summary>
@@ -205,6 +230,7 @@ namespace Transloadit.Models.Robots.MediaCataloging
         /// </list>
         /// Default: <c>["artwork", "frame", "icon"]</c>.
         /// </summary>
+        [JsonProperty("video")]
         public List<string> Video { get; set; }
 
         /// <summary>
@@ -217,6 +243,7 @@ namespace Transloadit.Models.Robots.MediaCataloging
         /// </list>
         /// Default: <c>["page", "icon"]</c>.
         /// </summary>
+        [JsonProperty("document")]
         public List<string> Document { get; set; }
 
         /// <summary>
@@ -228,6 +255,7 @@ namespace Transloadit.Models.Robots.MediaCataloging
         /// </list>
         /// Default: <c>["image", "icon"]</c>.
         /// </summary>
+        [JsonProperty("image")]
         public List<string> Image { get; set; }
 
         /// <summary>
@@ -239,6 +267,7 @@ namespace Transloadit.Models.Robots.MediaCataloging
         /// </list>
         /// Default: <c>["render", "icon"]</c>.
         /// </summary>
+        [JsonProperty("webpage")]
         public List<string> Webpage { get; set; }
 
         /// <summary>
@@ -249,6 +278,7 @@ namespace Transloadit.Models.Robots.MediaCataloging
         /// </list>
         /// Default: <c>["icon"]</c>.
         /// </summary>
+        [JsonProperty("archive")]
         public List<string> Archive { get; set; }
 
         /// <summary>
@@ -259,6 +289,7 @@ namespace Transloadit.Models.Robots.MediaCataloging
         /// </list>
         /// Default: <c>["icon"]</c>.
         /// </summary>
+        [JsonProperty("unknown")]
         public List<string> Unknown { get; set; }
     }
 }

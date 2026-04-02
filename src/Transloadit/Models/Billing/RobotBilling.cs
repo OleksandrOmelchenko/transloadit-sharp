@@ -17,6 +17,7 @@ namespace Transloadit.Models.Billing
         /// <summary>
         /// Gigabytes.
         /// </summary>
+        [JsonProperty("gb")]
         public decimal Gb { get; set; }
 
         /// <summary>
@@ -40,11 +41,13 @@ namespace Transloadit.Models.Billing
         /// <summary>
         /// Factor.
         /// </summary>
+        [JsonProperty("factor")]
         public decimal Factor { get; set; }
 
         /// <summary>
         /// Grouping by region and factor.
         /// </summary>
+        [JsonProperty("by_region_and_factor")]
         public List<RobotBillingByRegionAndFactor> ByRegionAndFactor { get; set; }
     }
 
@@ -56,6 +59,7 @@ namespace Transloadit.Models.Billing
         /// <summary>
         /// Factor.
         /// </summary>
+        [JsonProperty("factor")]
         public decimal Factor { get; set; }
 
         /// <summary>
@@ -79,6 +83,7 @@ namespace Transloadit.Models.Billing
         /// <summary>
         /// AWS Region.
         /// </summary>
+        [JsonProperty("region")]
         public string Region { get; set; }
     }
 }

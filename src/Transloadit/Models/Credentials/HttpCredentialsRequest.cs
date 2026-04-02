@@ -1,4 +1,6 @@
-﻿namespace Transloadit.Models.Credentials
+﻿using Newtonsoft.Json;
+
+namespace Transloadit.Models.Credentials
 {
     /// <summary>
     /// Represents HTTP credentials request.
@@ -16,6 +18,7 @@
         /// <summary>
         /// HTTP credentials content.
         /// </summary>
+        [JsonProperty("content")]
         public HttpCredentialsContent Content { get; set; }
     }
 
@@ -27,6 +30,7 @@
         /// <summary>
         /// HTTP headers.
         /// </summary>
+        [JsonProperty("headers")]
         public string Headers { get; set; }
     }
 }

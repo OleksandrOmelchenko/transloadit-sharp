@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Transloadit.Models.Robots.FileImporting
 {
@@ -13,43 +14,51 @@ namespace Transloadit.Models.Robots.FileImporting
         /// Including <c>"import"</c> in the array will ensure the Robot does not cease to function on any import errors either.
         /// Setting this parameter to <c>true</c> will set it to <c>["meta", "import"]</c> internally.
         /// </summary>
+        [JsonProperty("ignore_errors")]
         public AnyOf<bool, List<string>> IgnoreErrors { get; set; }
 
         /// <summary>
         /// Template credentials name.
         /// </summary>
+        [JsonProperty("credentials")]
         public string Credentials { get; set; }
 
         /// <summary>
         /// The path to the specific file or directory.
         /// </summary>
+        [JsonProperty("path")]
         public string Path { get; set; }
 
         /// <summary>
         /// The port to use for the FTP connection.
         /// <para>Default: <c>21</c>.</para>
         /// </summary>
+        [JsonProperty("port")]
         public int? Port { get; set; }
 
         /// <summary>
         /// Determines if passive mode should be used for the FTP connection.
         /// <para>Default: <c>true</c>.</para>
         /// </summary>
+        [JsonProperty("passive_mode")]
         public bool? PassiveMode { get; set; }
 
         /// <summary>
         /// FTP host.
         /// </summary>
+        [JsonProperty("host")]
         public string Host { get; set; }
 
         /// <summary>
         /// FTP user.
         /// </summary>
+        [JsonProperty("user")]
         public string User { get; set; }
 
         /// <summary>
         /// FTP password.
         /// </summary>
+        [JsonProperty("password")]
         public string Password { get; set; }
 
         /// <summary>

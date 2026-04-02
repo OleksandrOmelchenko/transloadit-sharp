@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Transloadit.Models.Robots.Documents
 {
@@ -10,6 +11,7 @@ namespace Transloadit.Models.Robots.Documents
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
+        [JsonProperty("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>

@@ -39,27 +39,32 @@ namespace Transloadit.Models
         /// <summary>
         /// Transloadit auth key.
         /// </summary>
+        [JsonProperty("key")]
         public string Key { get; set; }
 
         /// <summary>
         /// Signature expiration date.
         /// </summary>
+        [JsonProperty("expires")]
         [JsonConverter(typeof(AuthExpiresDateTimeConverter))]
         public DateTime? Expires { get; set; }
 
         /// <summary>
         /// A value (better randomly generated) which helps preventing signature re-use and defend against replay attacks.
         /// </summary>
+        [JsonProperty("nonce")]
         public string Nonce { get; set; }
 
         /// <summary>
         /// A regular expression to match against the HTTP referer of this upload.
         /// </summary>
+        [JsonProperty("referer")]
         public string Referer { get; set; }
 
         /// <summary>
         /// Maximum size that an upload can have in bytes.
         /// </summary>
+        [JsonProperty("max_size")]
         public int? MaxSize { get; set; }
     }
 

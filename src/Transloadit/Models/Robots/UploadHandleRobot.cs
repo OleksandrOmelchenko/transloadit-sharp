@@ -1,4 +1,7 @@
-﻿namespace Transloadit.Models.Robots
+﻿using Newtonsoft.Json;
+
+namespace Transloadit.Models.Robots
+
 {
     /// <summary>
     /// Represents <c>/upload/handle</c> Robot.
@@ -11,6 +14,7 @@
         /// This can be set to <c>false</c> to skip metadata extraction and speed up transcoding.
         /// <para>Default: <c>{}</c>.</para>
         /// </summary>
+        [JsonProperty("output_meta")]
         public AnyOf<bool, OutputMeta> OutputMeta { get; set; }
 
         /// <summary>

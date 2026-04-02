@@ -1,4 +1,6 @@
-﻿namespace Transloadit.Models.Robots.FileImporting
+﻿using Newtonsoft.Json;
+
+namespace Transloadit.Models.Robots.FileImporting
 {
     /// <summary>
     /// Represents <c>/s3/import</c> Robot.
@@ -8,21 +10,25 @@
         /// <summary>
         /// S3 key.
         /// </summary>
+        [JsonProperty("key")]
         public string Key { get; set; }
 
         /// <summary>
         /// S3 secret.
         /// </summary>
+        [JsonProperty("secret")]
         public string Secret { get; set; }
 
         /// <summary>
         /// S3 bucket name.
         /// </summary>
+        [JsonProperty("bucket")]
         public string Bucket { get; set; }
 
         /// <summary>
         /// S3 bucket region.
         /// </summary>
+        [JsonProperty("bucket_region")]
         public string BucketRegion { get; set; }
 
         /// <summary>

@@ -1,4 +1,6 @@
-﻿namespace Transloadit.Models.Credentials
+﻿using Newtonsoft.Json;
+
+namespace Transloadit.Models.Credentials
 {
     /// <summary>
     /// Represents FTP credentials request.
@@ -16,6 +18,7 @@
         /// <summary>
         /// FTP credentials content.
         /// </summary>
+        [JsonProperty("content")]
         public FtpCredentialsContent Content { get; set; }
     }
 
@@ -27,16 +30,19 @@
         /// <summary>
         /// FTP host.
         /// </summary>
+        [JsonProperty("host")]
         public string Host { get; set; }
 
         /// <summary>
         /// FTP user.
         /// </summary>
+        [JsonProperty("user")]
         public string User { get; set; }
 
         /// <summary>
         /// FTP password.
         /// </summary>
+        [JsonProperty("password")]
         public string Password { get; set; }
     }
 }

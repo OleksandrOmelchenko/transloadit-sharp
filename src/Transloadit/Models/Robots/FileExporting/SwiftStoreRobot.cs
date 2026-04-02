@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Transloadit.Models.Robots.FileExporting
 {
@@ -11,6 +12,7 @@ namespace Transloadit.Models.Robots.FileExporting
         /// The permissions used for this file.
         /// <para>Default: <c>public-read</c>.</para>
         /// </summary>
+        [JsonProperty("acl")]
         public string Acl { get; set; }
 
         /// <summary>
@@ -18,32 +20,38 @@ namespace Transloadit.Models.Robots.FileExporting
         /// This can also include any available <a href="https://transloadit.com/docs/topics/assembly-instructions/#assembly-variables">Assembly variables</a>.
         /// Object Metadata can be specified using <c>x-amz-meta-*</c> headers.
         /// </summary>
+        [JsonProperty("headers")]
         public Dictionary<string, string> Headers { get; set; }
 
         /// <summary>
         /// This parameter provides signed URLs in the result JSON (in the <c>signed_ssl_url</c> property). The number that you set this parameter 
         /// to is the URL expiry time in seconds. If this parameter is not used, no URL signing is done.
         /// </summary>
+        [JsonProperty("sign_urls_for")]
         public int? SignUrlsFor { get; set; }
 
         /// <summary>
         /// Swift bucket.
         /// </summary>
+        [JsonProperty("bucket")]
         public string Bucket { get; set; }
 
         /// <summary>
         /// Swift host.
         /// </summary>
+        [JsonProperty("host")]
         public string Host { get; set; }
 
         /// <summary>
         /// Swift key.
         /// </summary>
+        [JsonProperty("key")]
         public string Key { get; set; }
 
         /// <summary>
         /// Swift secret.
         /// </summary>
+        [JsonProperty("secret")]
         public string Secret { get; set; }
 
         /// <summary>
