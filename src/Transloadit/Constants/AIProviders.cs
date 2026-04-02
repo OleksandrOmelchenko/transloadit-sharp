@@ -14,5 +14,20 @@
         /// Google GCP.
         /// </summary>
         public const string Gcp = "gcp";
+
+        /// <summary>
+        /// OpenAI.
+        /// </summary>
+        public const string OpenAi = "openai";
+
+        /// <summary>
+        /// Anthropic.
+        /// </summary>
+        public const string Anthropic = "anthropic";
+
+        /// <summary>
+        /// Google AI.
+        /// </summary>
+        public const string Google = "google";
     }
 }

@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Transloadit.Constants;
 using Transloadit.Models;
+using Transloadit.Models.Tokens;
 using Transloadit.Serialization;
 using Transloadit.Services;
 using Transloadit.Utilities;
@@ -23,7 +27,7 @@ namespace Transloadit
         private readonly string _secret;
         private readonly TransloaditClientOptions _options;
 
-        private static readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings
+        private static readonly JsonSerializerSettings _jsonSerializerSettings = new()
         {
             NullValueHandling = NullValueHandling.Ignore,
             ContractResolver = new DefaultContractResolver
@@ -39,6 +43,7 @@ namespace Transloadit
         private QueuesService _queuesService;
         private CredentialsService _credentialsService;
         private AssemblyNotificationsService _assemblyNotificationsService;
+        private TokensService _tokensService;
 
         /// <summary>
         /// Billing service.
@@ -71,6 +76,11 @@ namespace Transloadit
         public AssemblyNotificationsService AssemblyNotifications => _assemblyNotificationsService ??= new AssemblyNotificationsService(this);
 
         /// <summary>
+        /// Tokens service.
+        /// </summary>
+        public TokensService Tokens => _tokensService ??= new TokensService(this);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="TransloaditClient"/> class with specified authentication key, secret 
         /// and optional <see cref="TransloaditClientOptions"/>.
         /// </summary>
@@ -80,7 +90,7 @@ namespace Transloadit
         public TransloaditClient(string key, string secret, TransloaditClientOptions options = null)
         {
             _key = key ?? throw new ArgumentNullException(nameof(key));
-            _secret = secret ?? throw new ArgumentNullException(nameof(key));
+            _secret = secret ?? throw new ArgumentNullException(nameof(secret));
             _options = MergeOptions(options);
         }
 
@@ -102,7 +112,10 @@ namespace Transloadit
         {
             const string transloaditClient = $"transloadit-sharp/{ClientVersion.Current}";
             var httpClient = options?.HttpClient ?? new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("Transloadit-Client", transloaditClient);
+            if (!httpClient.DefaultRequestHeaders.Contains("Transloadit-Client"))
+            {
+                _ = httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Transloadit-Client", transloaditClient);
+            }
             return new TransloaditClientOptions
             {
                 ApiBase = options?.ApiBase ?? new Uri(ApiBase),
@@ -151,7 +164,49 @@ namespace Transloadit
 
             var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            var parsed = JsonConvert.DeserializeObject<T>(content, _jsonSerializerSettings);
+            var parsed = JsonConvert.DeserializeObject<T>(content, _options.ResponseSerializerSettings);
+            parsed.TransloaditResponse = new TransloaditResponse(response.StatusCode, response.Headers, content);
+            return parsed;
+        }
+
+        internal async Task<TokenResponse> SendTokenRequest(TokenRequest request = null)
+        {
+            if (string.IsNullOrWhiteSpace(_secret))
+            {
+                throw new InvalidOperationException("Token requests require a client initialized with both key and secret.");
+            }
+
+            request ??= new TokenRequest();
+            request.GrantType ??= "client_credentials";
+
+            var formData = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("grant_type", request.GrantType),
+            };
+
+            if (!string.IsNullOrWhiteSpace(request.Scope))
+            {
+                formData.Add(new KeyValuePair<string, string>("scope", request.Scope));
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.Aud))
+            {
+                formData.Add(new KeyValuePair<string, string>("aud", request.Aud));
+            }
+
+            var uri = new Uri(_options.ApiBase, "/token");
+            var message = new HttpRequestMessage(HttpMethod.Post, uri)
+            {
+                Content = new FormUrlEncodedContent(formData),
+            };
+
+            var credentials = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{_key}:{_secret}"));
+            message.Headers.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+
+            var response = await _options.HttpClient.SendAsync(message).ConfigureAwait(false);
+            var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+            var parsed = JsonConvert.DeserializeObject<TokenResponse>(content, _options.ResponseSerializerSettings) ?? new TokenResponse();
             parsed.TransloaditResponse = new TransloaditResponse(response.StatusCode, response.Headers, content);
             return parsed;
         }
@@ -177,7 +232,7 @@ namespace Transloadit
                 parameters.Auth.Expires ??= DateTime.UtcNow.AddMinutes(30);
             }
 
-            var paramsJson = JsonConvert.SerializeObject(parameters, _jsonSerializerSettings);
+            var paramsJson = JsonConvert.SerializeObject(parameters, _options.RequestSerializerSettings);
             var signature = enableSignatureAuth
                 ? SignatureUtilities.CalculateSignature(paramsJson, _secret)
                 : null;
