@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Transloadit.Models.Robots.FileExporting
 {
@@ -10,21 +11,25 @@ namespace Transloadit.Models.Robots.FileExporting
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
+        [JsonProperty("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
         /// Template credentials name.
         /// </summary>
+        [JsonProperty("credentials")]
         public string Credentials { get; set; }
 
         /// <summary>
         /// The title of the video to be displayed on Vimeo.
         /// </summary>
+        [JsonProperty("title")]
         public string Title { get; set; }
 
         /// <summary>
         /// The description of the video to be displayed on Vimeo.
         /// </summary>
+        [JsonProperty("description")]
         public string Description { get; set; }
 
         /// <summary>
@@ -40,27 +45,32 @@ namespace Transloadit.Models.Robots.FileExporting
         /// </list>
         /// <para>Default: <c>anybody</c>.</para>
         /// </summary>
+        [JsonProperty("acl")]
         public string Acl { get; set; }
 
         /// <summary>
         /// The password to access the video if acl is <c>password</c>.
         /// </summary>
+        [JsonProperty("password")]
         public string Password { get; set; }
 
         /// <summary>
         /// An array of string IDs of showcases that you want to add the video to. The IDs can be found when browsing Vimeo. 
         /// </summary>
+        [JsonProperty("showcases")]
         public List<string> Showcases { get; set; }
 
         /// <summary>
         /// Whether or not the video can be downloaded from the Vimeo website.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
+        [JsonProperty("downloadable")]
         public bool? Downloadable { get; set; }
 
         /// <summary>
         /// The ID of the folder to which the video is uploaded.
         /// </summary>
+        [JsonProperty("folder_id")]
         public string FolderId { get; set; }
 
         /// <summary>

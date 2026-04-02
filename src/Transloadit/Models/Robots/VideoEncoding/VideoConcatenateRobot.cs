@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Transloadit.Models.Robots.VideoEncoding
 {
@@ -10,6 +11,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
+        [JsonProperty("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
@@ -18,6 +20,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// This can be set to <c>false</c> to skip metadata extraction and speed up transcoding.
         /// <para>Default: <c>{}</c>.</para>
         /// </summary>
+        [JsonProperty("output_meta")]
         public AnyOf<bool, OutputMeta> OutputMeta { get; set; }
 
         /// <summary>
@@ -27,24 +30,28 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// <see cref="Constants.VideoEncodingPresetsV6"/>.
         /// <para>Default: <c>flash</c>.</para>
         /// </summary>
+        [JsonProperty("preset")]
         public string Preset { get; set; }
 
         /// <summary>
         /// When used this adds a video fade in and out effect between each section of your concatenated video. The float value is used so if you want a video delay effect of 500 milliseconds between each video section you would select 0.5, however, integer values can also be represented. This parameter does not add a video fade effect at the beginning or end of your video. Please note this parameter is independent of adding audio fades between sections.
         /// <para>Default: <c>1.0</c>.</para>
         /// </summary>
+        [JsonProperty("video_fade_seconds")]
         public double? VideoFadeSeconds { get; set; }
 
         /// <summary>
         /// When used this adds an audio fade in and out effect between each section of your concatenated video. The float value is used so if you want an audio delay effect of 500 milliseconds between each video section you would select 0.5, however, integer values can also be represented. This parameter does not add an audio fade effect at the beginning or end of your video. Please note this parameter is independent of adding video fades between sections.
         /// <para>Default: <c>1.0</c>.</para>
         /// </summary>
+        [JsonProperty("audio_fade_seconds")]
         public double? AudioFadeSeconds { get; set; }
 
         /// <summary>
         /// FFmpeg stack version. One of <see cref="Constants.FFMpegStack"/>: <c>v5.0.0</c> or <c>v6.0.0</c>.
         /// <para>Default: <c>v5.0.0</c>.</para>
         /// </summary>
+        [JsonProperty("ffmpeg_stack")]
         public string FfmpegStack { get; set; }
 
         /// <summary>
@@ -52,6 +59,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// For available options, see the <a href="https://ffmpeg.org/ffmpeg-doc.html">FFmpeg documentation</a>. 
         /// Options specified here take precedence over the preset options.
         /// </summary>
+        [JsonProperty("ffmpeg")]
         public Dictionary<string, object> Ffmpeg { get; set; }
 
         /// <summary>

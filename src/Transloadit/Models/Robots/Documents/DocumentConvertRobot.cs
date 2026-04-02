@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Transloadit.Models.Robots.Documents
 {
@@ -10,6 +11,7 @@ namespace Transloadit.Models.Robots.Documents
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
+        [JsonProperty("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
@@ -18,6 +20,7 @@ namespace Transloadit.Models.Robots.Documents
         /// <c>txt</c>, <c>text</c>, <c>csv</c>, <c>xls</c>, <c>xlsx</c>, <c>xla</c>, <c>oda</c>, <c>odt</c>, <c>odd</c>, <c>ott</c>, <c>ppt</c>, 
         /// <c>pptx</c>, <c>ppz</c>, <c>pps</c>, <c>pot</c>, <c>rtf</c>, <c>rtx</c>, <c>latex</c>, <c>vtt</c> and <c>srt</c>.
         /// </summary>
+        [JsonProperty("format")]
         public string Format { get; set; }
 
         /// <summary>
@@ -25,12 +28,14 @@ namespace Transloadit.Models.Robots.Documents
         /// so when using this Robot to transform Markdown into HTML please specify which revision is being used.
         /// <para>Default: <c>gfm</c>.</para>
         /// </summary>
+        [JsonProperty("markdown_format")]
         public string MarkdownFormat { get; set; }
 
         /// <summary>
         /// This parameter overhauls your Markdown files styling based on several canned presets.
         /// <para>Default: <c>github</c>.</para>
         /// </summary>
+        [JsonProperty("markdown_theme")]
         public string MarkdownTheme { get; set; }
 
         /// <summary>
@@ -38,24 +43,28 @@ namespace Transloadit.Models.Robots.Documents
         /// Currently this parameter is only supported when converting from <c>html</c>.
         /// <para>Default: <c>6.25mm,6.25mm,14.11mm,6.25mm</c>.</para>
         /// </summary>
+        [JsonProperty("pdf_margin")]
         public string PdfMargin { get; set; }
 
         /// <summary>
         /// Print PDF background graphics. Currently this parameter is only supported when converting from <c>html</c>.
         /// <para>Default: <c>true</c>.</para>
         /// </summary>
+        [JsonProperty("pdf_print_background")]
         public bool? PdfPrintBackground { get; set; }
 
         /// <summary>
         /// PDF paper format. Currently this parameter is only supported when converting from <c>html</c>.
         /// <para>Default: <c>Letter</c>.</para>
         /// </summary>
+        [JsonProperty("pdf_format")]
         public string PdfFormat { get; set; }
 
         /// <summary>
         /// Display PDF header and footer. Currently this parameter is only supported when converting from <c>html</c>.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
+        [JsonProperty("pdf_display_header_footer")]
         public bool? PdfDisplayHeaderFooter { get; set; }
 
         /// <summary>
@@ -70,12 +79,14 @@ namespace Transloadit.Models.Robots.Documents
         /// <item><c>totalPages</c> - total pages in the document</item>
         /// </list>
         /// </summary>
+        [JsonProperty("pdf_header_template")]
         public string PdfHeaderTemplate { get; set; }
 
         /// <summary>
         /// HTML template for the PDF print footer. Should use the same format as the <c>pdf_header_template</c>. Currently this parameter 
         /// is only supported when converting from <c>html</c>, and requires <c>pdf_display_header_footer</c> to be enabled.
         /// </summary>
+        [JsonProperty("pdf_footer_template")]
         public string PdfFooterTemplate { get; set; }
 
         /// <summary>

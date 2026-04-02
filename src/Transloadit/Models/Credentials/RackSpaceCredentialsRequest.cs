@@ -1,4 +1,6 @@
-﻿namespace Transloadit.Models.Credentials
+﻿using Newtonsoft.Json;
+
+namespace Transloadit.Models.Credentials
 {
     /// <summary>
     /// Represents Rackspace credentials request.
@@ -16,6 +18,7 @@
         /// <summary>
         /// Rackspace credentials content.
         /// </summary>
+        [JsonProperty("content")]
         public RackSpaceCredentialsContent Content { get; set; }
     }
 
@@ -27,26 +30,31 @@
         /// <summary>
         /// Rackspace Cloud Files account type.
         /// </summary>
+        [JsonProperty("account_type")]
         public string AccountType { get; set; }
 
         /// <summary>
         /// Rackspace Cloud Files data center.
         /// </summary>
+        [JsonProperty("data_center")]
         public string DataCenter { get; set; }
 
         /// <summary>
         /// Rackspace Cloud Files container.
         /// </summary>
+        [JsonProperty("container")]
         public string Container { get; set; }
 
         /// <summary>
         /// Rackspace Cloud Files user.
         /// </summary>
+        [JsonProperty("user")]
         public string User { get; set; }
 
         /// <summary>
         /// Rackspace Cloud Files key.
         /// </summary>
+        [JsonProperty("key")]
         public string Key { get; set; }
     }
 }

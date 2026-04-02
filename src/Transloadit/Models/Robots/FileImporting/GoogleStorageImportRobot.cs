@@ -1,4 +1,6 @@
-﻿namespace Transloadit.Models.Robots.FileImporting
+﻿using Newtonsoft.Json;
+
+namespace Transloadit.Models.Robots.FileImporting
 {
     /// <summary>
     /// Represents <c>/google/import</c> Robot.
@@ -8,12 +10,14 @@
         /// <summary>
         /// Setting this to <c>true</c> will enable importing files from subdirectories and sub-subdirectories (etc.) of the given path.
         /// </summary>
+        [JsonProperty("recursive")]
         public bool? Recursive { get; set; }
 
         /// <summary>
         /// A string token used for pagination. The returned files of one paginated call have the next page token inside of their 
         /// meta data, which needs to be used for the subsequent paging call.
         /// </summary>
+        [JsonProperty("next_page_token")]
         public string NextPageToken { get; set; }
 
         /// <summary>
@@ -21,6 +25,7 @@
         /// compatibility in non-recursive imports.
         /// <para>Default: <c>1000</c>.</para>
         /// </summary>
+        [JsonProperty("files_per_page")]
         public int? FilesPerPage { get; set; }
 
         /// <summary>

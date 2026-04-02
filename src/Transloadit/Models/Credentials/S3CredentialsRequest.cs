@@ -1,4 +1,6 @@
-﻿namespace Transloadit.Models.Credentials
+﻿using Newtonsoft.Json;
+
+namespace Transloadit.Models.Credentials
 {
     /// <summary>
     /// Represents S3 credentials request.
@@ -16,6 +18,7 @@
         /// <summary>
         /// S3 credentials content.
         /// </summary>
+        [JsonProperty("content")]
         public S3CredentialsContent Content { get; set; }
     }
 
@@ -27,21 +30,25 @@
         /// <summary>
         /// S3 key.
         /// </summary>
+        [JsonProperty("key")]
         public string Key { get; set; }
 
         /// <summary>
         /// S3 secret.
         /// </summary>
+        [JsonProperty("secret")]
         public string Secret { get; set; }
 
         /// <summary>
         /// S3 bucket name.
         /// </summary>
+        [JsonProperty("bucket")]
         public string Bucket { get; set; }
 
         /// <summary>
         /// S3 bucket region.
         /// </summary>
+        [JsonProperty("bucket_region")]
         public string BucketRegion { get; set; }
     }
 }

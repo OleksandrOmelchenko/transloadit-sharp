@@ -85,11 +85,13 @@ namespace Transloadit.Models
         /// <summary>
         /// Total items count.
         /// </summary>
+        [JsonProperty("count")]
         public int Count { get; set; }
 
         /// <summary>
         /// Paginated items.
         /// </summary>
+        [JsonProperty("items")]
         public List<T> Items { get; set; }
     }
 

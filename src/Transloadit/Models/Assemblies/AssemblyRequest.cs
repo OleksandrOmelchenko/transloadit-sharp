@@ -13,22 +13,26 @@ namespace Transloadit.Models.Assemblies
         /// <summary>
         /// Assembly instructions.
         /// </summary>
+        [JsonProperty("steps")]
         public Dictionary<string, RobotBase> Steps { get; set; }
 
         /// <summary>
         /// Template id.
         /// </summary>
+        [JsonProperty("template_id")]
         public string TemplateId { get; set; }
 
         /// <summary>
         /// Notification url to which Transloadit will send Assembly status when the Assembly is completed.
         /// </summary>
+        [JsonProperty("notify_url")]
         public string NotifyUrl { get; set; }
 
         /// <summary>
         /// An object of pairs (name -> value) that can be used as 
         /// <a href="https://transloadit.com/docs/topics/assembly-instructions/#assembly-variables">Assembly Variables</a>.
         /// </summary>
+        [JsonProperty("fields")]
         public Dictionary<string, object> Fields { get; set; }
 
         /// <summary>
@@ -38,6 +42,7 @@ namespace Transloadit.Models.Assemblies
         /// The full Assembly Status will then still be sent to the <c>notify_url</c> if one was specified.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
+        [JsonProperty("quiet")]
         public bool? Quiet { get; set; }
     }
 
@@ -50,6 +55,7 @@ namespace Transloadit.Models.Assemblies
         /// Get or sets assembly status. One of <see cref="Constants.ListAssemlyStatuses"/>:
         /// <c>all</c>, <c>uploading</c>, <c>executing</c>, <c>canceled</c>, <c>completed</c>, <c>failed</c>, <c>request_aborted</c>.
         /// </summary>
+        [JsonProperty("type")]
         public string Type { get; set; }
     }
 
@@ -61,27 +67,32 @@ namespace Transloadit.Models.Assemblies
         /// <summary>
         /// Assembly instructions.
         /// </summary>
+        [JsonProperty("steps")]
         public Dictionary<string, RobotBase> Steps { get; set; }
 
         /// <summary>
         /// Template id.
         /// </summary>
+        [JsonProperty("template_id")]
         public string TemplateId { get; set; }
 
         /// <summary>
         /// Notification url to which Transloadit will send Assembly status when the Assembly is completed.
         /// </summary>
+        [JsonProperty("notify_url")]
         public string NotifyUrl { get; set; }
 
         /// <summary>
         /// An object of pairs (name -> value) that can be used as <a href="https://transloadit.com/docs/topics/assembly-instructions/#assembly-variables">Assembly Variables</a>.
         /// </summary>
+        [JsonProperty("fields")]
         public Dictionary<string, object> Fields { get; set; }
 
         /// <summary>
         /// Whether to reparse the template.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
+        [JsonProperty("reparse_template")]
         [JsonConverter(typeof(BooleanToIntConverter))]
         public bool? ReparseTemplate { get; set; }
     }

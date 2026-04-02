@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Transloadit.Models.Robots.ImageManipulation
 {
@@ -10,6 +11,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
+        [JsonProperty("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
@@ -18,6 +20,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// This can be set to <c>false</c> to skip metadata extraction and speed up transcoding.
         /// <para>Default: <c>{}</c>.</para>
         /// </summary>
+        [JsonProperty("output_meta")]
         public AnyOf<bool, OutputMeta> OutputMeta { get; set; }
 
         /// <summary>
@@ -25,6 +28,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// To change the image format, you can use <see cref="ImageResizeRobot"/>.
         /// <para>Default: <c>png</c>.</para>
         /// </summary>
+        [JsonProperty("format")]
         public string Format { get; set; }
 
         /// <summary>

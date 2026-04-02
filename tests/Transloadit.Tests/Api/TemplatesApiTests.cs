@@ -63,9 +63,8 @@ namespace Transloadit.Tests.Api
             Assert.Equal(imageResizeRobot.Width, Convert.ToInt32(templateResponse.Content.Steps["resize"]["width"]));
             Assert.Equal(imageResizeRobot.Height, Convert.ToInt32(templateResponse.Content.Steps["resize"]["height"]));
 
-            //bug: always empty for certain keys, but returns list for others, why?
             var list = await TransloaditClient.Templates.GetListAsync();
-            Assert.Equal(0, list.Count);
+            Assert.True(list.Count > 0);
 
             var imageOptimizeRobot = new TestImageOptimizeRobot
             {

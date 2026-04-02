@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Transloadit.Models.Robots.SmartCdn
 {
@@ -10,6 +11,7 @@ namespace Transloadit.Models.Robots.SmartCdn
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
+        [JsonProperty("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
@@ -22,6 +24,7 @@ namespace Transloadit.Models.Robots.SmartCdn
         /// "Content-Type": "${file.mime}; charset=utf-8", "Transfer-Encoding": "chunked", "Transloadit-Assembly": "…", 
         /// "Transloadit-RequestID": "…" }</c>.</para>
         /// </summary>
+        [JsonProperty("headers")]
         public Dictionary<string, string> Headers { get; set; }
 
         /// <summary>

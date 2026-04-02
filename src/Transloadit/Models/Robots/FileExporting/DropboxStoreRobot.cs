@@ -1,4 +1,6 @@
-﻿namespace Transloadit.Models.Robots.FileExporting
+﻿using Newtonsoft.Json;
+
+namespace Transloadit.Models.Robots.FileExporting
 {
     /// <summary>
     /// Represents <c>/dropbox/store</c> Robot.
@@ -8,6 +10,7 @@
         /// <summary>
         /// Whether to create a URL to this file for sharing with other people. This will overwrite the file's <c>url</c> property.
         /// </summary>
+        [JsonProperty("create_sharing_link")]
         public bool? CreateSharingLink { get; set; }
 
         /// <summary>

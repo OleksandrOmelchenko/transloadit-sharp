@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Transloadit.Models.Robots.FileCompressing
 {
@@ -10,6 +11,7 @@ namespace Transloadit.Models.Robots.FileCompressing
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
+        [JsonProperty("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
@@ -18,6 +20,7 @@ namespace Transloadit.Models.Robots.FileCompressing
         /// Including <c>"import"</c> in the array will ensure the Robot does not cease to function on any import errors either.
         /// Setting this parameter to <c>true</c> will set it to <c>["meta", "import"]</c> internally.
         /// </summary>
+        [JsonProperty("ignore_errors")]
         public AnyOf<bool, List<string>> IgnoreErrors { get; set; }
 
         /// <summary>

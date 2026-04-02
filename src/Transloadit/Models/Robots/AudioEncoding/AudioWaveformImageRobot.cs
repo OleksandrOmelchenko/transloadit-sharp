@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Transloadit.Models.Robots.AudioEncoding
 {
@@ -10,6 +11,7 @@ namespace Transloadit.Models.Robots.AudioEncoding
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
+        [JsonProperty("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
@@ -18,6 +20,7 @@ namespace Transloadit.Models.Robots.AudioEncoding
         /// This can be set to <c>false</c> to skip metadata extraction and speed up transcoding.
         /// <para>Default: <c>{}</c>.</para>
         /// </summary>
+        [JsonProperty("output_meta")]
         public AnyOf<bool, OutputMeta> OutputMeta { get; set; }
 
         /// <summary>
@@ -25,18 +28,21 @@ namespace Transloadit.Models.Robots.AudioEncoding
         /// otherwise a JSON file.
         /// <para>Default: <c>image</c>.</para>
         /// </summary>
+        [JsonProperty("format")]
         public string Format { get; set; }
 
         /// <summary>
         /// The width of the resulting image if the format <c>image</c> was selected.
         /// <para>Default: <c>256</c>.</para>
         /// </summary>
+        [JsonProperty("width")]
         public int? Width { get; set; }
 
         /// <summary>
         /// The height of the resulting image if the format <c>image</c> was selected.
         /// <para>Default: <c>64</c>.</para>
         /// </summary>
+        [JsonProperty("height")]
         public int? Height { get; set; }
 
         /// <summary>
@@ -44,6 +50,7 @@ namespace Transloadit.Models.Robots.AudioEncoding
         /// with the new tool offering an improved style. Other Robot parameters still function as described, with either tool.
         /// <para>Default: <c>0</c>.</para>
         /// </summary>
+        [JsonProperty("style")]
         public int? Style { get; set; }
 
         /// <summary>
@@ -51,24 +58,28 @@ namespace Transloadit.Models.Robots.AudioEncoding
         /// waveform graph or not.
         /// <para>Default: <c>0</c>.</para>
         /// </summary>
+        [JsonProperty("antialiasing")]
         public int? Antialiasing { get; set; }
 
         /// <summary>
         /// The background color of the resulting image in the "rrggbbaa" format (red, green, blue, alpha), if the format <c>image</c> was selected.
         /// <para>Default: <c>#00000000</c>.</para>
         /// </summary>
+        [JsonProperty("background_color")]
         public string BackgroundColor { get; set; }
 
         /// <summary>
         /// The color used in the center of the gradient. The format is "rrggbbaa" (red, green, blue, alpha).
         /// <para>Default: <c>000000ff</c>.</para>
         /// </summary>
+        [JsonProperty("center_color")]
         public string CenterColor { get; set; }
 
         /// <summary>
         /// The color used in the outer parts of the gradient. The format is "rrggbbaa" (red, green, blue, alpha).
         /// <para>Default: <c>000000ff</c>.</para>
         /// </summary>
+        [JsonProperty("outer_color")]
         public string OuterColor { get; set; }
 
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Transloadit.Models.Robots.FileImporting
 {
@@ -13,42 +14,50 @@ namespace Transloadit.Models.Robots.FileImporting
         /// Including <c>"import"</c> in the array will ensure the Robot does not cease to function on any import errors either.
         /// Setting this parameter to <c>true</c> will set it to <c>["meta", "import"]</c> internally.
         /// </summary>
+        [JsonProperty("ignore_errors")]
         public AnyOf<bool, List<string>> IgnoreErrors { get; set; }
 
         /// <summary>
         /// Template credentials name.
         /// </summary>
+        [JsonProperty("credentials")]
         public string Credentials { get; set; }
 
         /// <summary>
         /// The path on your SFTP server where to search for files.
         /// </summary>
+        [JsonProperty("path")]
         public string Path { get; set; }
 
         /// <summary>
         /// The port to use for the connection.
         /// <para>Default: <c>22</c>.</para>
         /// </summary>
+        [JsonProperty("port")]
         public int? Port { get; set; }
 
          /// <summary>
         /// Swift bucket.
         /// </summary>
+        [JsonProperty("bucket")]
         public string Bucket { get; set; }
 
         /// <summary>
         /// Swift host.
         /// </summary>
+        [JsonProperty("host")]
         public string Host { get; set; }
 
         /// <summary>
         /// Swift key.
         /// </summary>
+        [JsonProperty("key")]
         public string Key { get; set; }
 
         /// <summary>
         /// Swift secret.
         /// </summary>
+        [JsonProperty("secret")]
         public string Secret { get; set; }
 
         /// <summary>

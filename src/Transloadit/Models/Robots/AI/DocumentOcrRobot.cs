@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Transloadit.Models.Robots.AI
 {
@@ -10,11 +11,13 @@ namespace Transloadit.Models.Robots.AI
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
+        [JsonProperty("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
         /// Which AI provider to leverage. One of <see cref="Constants.AIProviders"/>: <c>aws</c> and <c>gcp</c>.
         /// </summary>
+        [JsonProperty("provider")]
         public string Provider { get; set; }
 
         /// <summary>
@@ -22,6 +25,7 @@ namespace Transloadit.Models.Robots.AI
         /// This parameter has no effect if the format parameter is set to <c>text</c>.
         /// <para>Default: <c>full</c>.</para>
         /// </summary>
+        [JsonProperty("granularity")]
         public string Granularity { get; set; }
 
         /// <summary>
@@ -35,6 +39,7 @@ namespace Transloadit.Models.Robots.AI
         /// <item><c>text</c> returns the recognized text as a plain UTF-8 encoded text file.</item>
         /// </list>
         /// </summary>
+        [JsonProperty("format")]
         public string Format { get; set; }
 
         /// <summary>
