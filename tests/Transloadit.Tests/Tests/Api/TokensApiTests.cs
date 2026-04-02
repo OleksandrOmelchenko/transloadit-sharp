@@ -43,11 +43,6 @@ namespace Transloadit.Tests.Api
             {
                 Assert.Equal(scope, response.Scope);
             }
-
-            if (aud != null)
-            {
-                Assert.Equal(aud, response.Aud);
-            }
         }
 
         [Fact]

@@ -30,11 +30,5 @@ namespace Transloadit.Models.Tokens
         /// </summary>
         [JsonProperty("scope")]
         public string Scope { get; set; }
-
-        /// <summary>
-        /// Optional audience value.
-        /// </summary>
-        [JsonProperty("aud")]
-        public string Aud { get; set; }
     }
 }
