@@ -39,6 +39,7 @@ namespace Transloadit
         private QueuesService _queuesService;
         private CredentialsService _credentialsService;
         private AssemblyNotificationsService _assemblyNotificationsService;
+        private TokensService _tokensService;
 
         /// <summary>
         /// Billing service.
@@ -69,6 +70,17 @@ namespace Transloadit
         /// Assembly Notifications service.
         /// </summary>
         public AssemblyNotificationsService AssemblyNotifications => _assemblyNotificationsService ??= new AssemblyNotificationsService(this);
+
+        /// <summary>
+        /// Tokens service.
+        /// </summary>
+        public TokensService Tokens => _tokensService ??= new TokensService(this);
+
+        internal string Key => _key;
+
+        internal string Secret => _secret;
+
+        internal TransloaditClientOptions Options => _options;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TransloaditClient"/> class with specified authentication key, secret 
