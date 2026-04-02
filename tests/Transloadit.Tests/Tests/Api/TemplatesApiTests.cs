@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Transloadit.Constants;
-using Transloadit.Models;
 using Transloadit.Models.Robots;
 using Transloadit.Models.Templates;
 using Transloadit.Tests.Fixtures;
@@ -64,16 +63,7 @@ namespace Transloadit.Tests.Api
             Assert.Equal(imageResizeRobot.Width, Convert.ToInt32(templateResponse.Content.Steps["resize"]["width"]));
             Assert.Equal(imageResizeRobot.Height, Convert.ToInt32(templateResponse.Content.Steps["resize"]["height"]));
 
-            PaginatedListResponse<TemplateModel> list = null;
-            for (int retryAttempt = 0; retryAttempt < 5; retryAttempt++)
-            {
-                list = await TransloaditClient.Templates.GetListAsync();
-                if (list.Items != null && list.Items.Exists(t => t.Id == createResponse.Id))
-                {
-                    break;
-                }
-                await Task.Delay(1000);
-            }
+            var list = await TransloaditClient.Templates.GetListAsync();
             Assert.NotNull(list?.Items);
             Assert.Contains(list.Items, t => t.Id == createResponse.Id);
 
