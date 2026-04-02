@@ -27,7 +27,7 @@ namespace Transloadit
         private readonly string _secret;
         private readonly TransloaditClientOptions _options;
 
-        private static readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings
+        private static readonly JsonSerializerSettings _jsonSerializerSettings = new()
         {
             NullValueHandling = NullValueHandling.Ignore,
             ContractResolver = new DefaultContractResolver
@@ -232,7 +232,7 @@ namespace Transloadit
                 parameters.Auth.Expires ??= DateTime.UtcNow.AddMinutes(30);
             }
 
-            var paramsJson = JsonConvert.SerializeObject(parameters, _jsonSerializerSettings);
+            var paramsJson = JsonConvert.SerializeObject(parameters, _options.RequestSerializerSettings);
             var signature = enableSignatureAuth
                 ? SignatureUtilities.CalculateSignature(paramsJson, _secret)
                 : null;
