@@ -36,26 +36,26 @@ namespace Transloadit.Models.Robots.FileImporting
         [JsonProperty("port")]
         public int? Port { get; set; }
 
-         /// <summary>
-        /// Swift bucket.
+        /// <summary>
+        /// The directory on the SFTP server to import files from.
         /// </summary>
         [JsonProperty("bucket")]
         public string Bucket { get; set; }
 
         /// <summary>
-        /// Swift host.
+        /// The hostname or IP address of the SFTP server.
         /// </summary>
         [JsonProperty("host")]
         public string Host { get; set; }
 
         /// <summary>
-        /// Swift key.
+        /// The authentication key used to connect to the SFTP server.
         /// </summary>
         [JsonProperty("key")]
         public string Key { get; set; }
 
         /// <summary>
-        /// Swift secret.
+        /// The authentication secret used to connect to the SFTP server.
         /// </summary>
         [JsonProperty("secret")]
         public string Secret { get; set; }
