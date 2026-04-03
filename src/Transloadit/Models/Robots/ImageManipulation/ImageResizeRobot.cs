@@ -289,7 +289,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// <para>Default: <c>v2.0.10</c>.</para>
         /// </summary>
         [JsonProperty("imagemagick_stack")]
-        public string ImagemagickStack { get; set; }
+        public string ImageMagickStack { get; set; }
 
         /// <summary>
         /// An array of objects each containing text rules. The following text parameters are intended to be used as properties 

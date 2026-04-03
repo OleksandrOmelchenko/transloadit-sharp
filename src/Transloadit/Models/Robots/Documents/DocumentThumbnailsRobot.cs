@@ -126,7 +126,7 @@ namespace Transloadit.Models.Robots.Documents
         /// <para>Default: <c>v2.0.10</c>.</para>
         /// </summary>
         [JsonProperty("imagemagick_stack")]
-        public string ImagemagickStack { get; set; }
+        public string ImageMagickStack { get; set; }
 
         /// <summary>
         /// Initializes <c>/document/thumbs</c> Robot.
