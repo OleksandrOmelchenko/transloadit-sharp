@@ -275,6 +275,23 @@ namespace Transloadit.Tests.Api
             Assert.Equal(ResponseCodes.TemplateDeleted, deleteTemplateResponse.Base.Ok);
         }
 
+        [Fact]
+        public async Task CreateAssemblyWithNonExistentRobot_ShouldFail()
+        {
+            var createAssembly = new AssemblyRequest
+            {
+                Steps = new Dictionary<string, RobotBase>
+                {
+                    ["invalid"] = new NonExistentRobot()
+                }
+            };
+
+            var response = await TransloaditClient.Assemblies.CreateAsync(createAssembly);
+
+            Assert.Equal(ResponseCodes.AssemblyStepUnknownRobot, response.Base.Error);
+            Assert.Equal(400, response.Base.HttpCode);
+        }
+
         [Fact(Skip = "Replaying assembly works weird. Not sure what to test here. NotifyUrl is not applied on replay," +
             "template is reparsed by default which doesn't correspond to docs and reparsing is not consistent between runs with different steps.")]
         public async Task ReplayAssembly_ShouldSucceed()

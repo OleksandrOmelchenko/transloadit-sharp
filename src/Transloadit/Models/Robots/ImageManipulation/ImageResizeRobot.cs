@@ -285,11 +285,11 @@ namespace Transloadit.Models.Robots.ImageManipulation
         public int? Density { get; set; }
 
         /// <summary>
-        /// ImageMagic stack version. One of <see cref="Constants.ImageMagickStack"/>: <c>v2.0.10</c> or <c>v3.0.1</c>.
+        /// ImageMagick stack version. One of <see cref="Constants.ImageMagickStack"/>: <c>v2.0.10</c> or <c>v3.0.1</c>.
         /// <para>Default: <c>v2.0.10</c>.</para>
         /// </summary>
         [JsonProperty("imagemagick_stack")]
-        public string ImagemagickStack { get; set; }
+        public string ImageMagickStack { get; set; }
 
         /// <summary>
         /// An array of objects each containing text rules. The following text parameters are intended to be used as properties 

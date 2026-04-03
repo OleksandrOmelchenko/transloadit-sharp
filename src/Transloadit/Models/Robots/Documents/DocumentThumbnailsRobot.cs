@@ -122,11 +122,11 @@ namespace Transloadit.Models.Robots.Documents
         public bool? PdfUseCropbox { get; set; }
 
         /// <summary>
-        /// ImageMagic stack version. One of <see cref="Constants.ImageMagickStack"/>: <c>v2.0.10</c> or <c>v3.0.1</c>.
+        /// ImageMagick stack version. One of <see cref="Constants.ImageMagickStack"/>: <c>v2.0.10</c> or <c>v3.0.1</c>.
         /// <para>Default: <c>v2.0.10</c>.</para>
         /// </summary>
         [JsonProperty("imagemagick_stack")]
-        public string ImagemagickStack { get; set; }
+        public string ImageMagickStack { get; set; }
 
         /// <summary>
         /// Initializes <c>/document/thumbs</c> Robot.
