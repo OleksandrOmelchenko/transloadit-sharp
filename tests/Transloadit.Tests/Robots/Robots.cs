@@ -37,4 +37,12 @@ namespace Transloadit.Tests.Robots
             Robot = "/image/optimize";
         }
     }
+
+    public class NonExistentRobot : RobotBase
+    {
+        public NonExistentRobot()
+        {
+            Robot = "/robot/does-not-exist";
+        }
+    }
 }
