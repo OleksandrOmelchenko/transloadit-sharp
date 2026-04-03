@@ -285,17 +285,6 @@ namespace Transloadit.Models.Robots.ImageManipulation
         public int? Density { get; set; }
 
         /// <summary>
-        /// Obsolete alias for <see cref="ImageMagickStack"/> kept for backward compatibility.
-        /// </summary>
-        [System.Obsolete("Use ImageMagickStack instead.")]
-        [JsonIgnore]
-        public string ImagemagickStack
-        {
-            get => ImageMagickStack;
-            set => ImageMagickStack = value;
-        }
-
-        /// <summary>
         /// ImageMagick stack version. One of <see cref="Constants.ImageMagickStack"/>: <c>v2.0.10</c> or <c>v3.0.1</c>.
         /// <para>Default: <c>v2.0.10</c>.</para>
         /// </summary>

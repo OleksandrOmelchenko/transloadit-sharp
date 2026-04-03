@@ -122,17 +122,6 @@ namespace Transloadit.Models.Robots.Documents
         public bool? PdfUseCropbox { get; set; }
 
         /// <summary>
-        /// Backward-compatible alias for <see cref="ImageMagickStack"/>.
-        /// </summary>
-        [System.Obsolete("Use ImageMagickStack instead.")]
-        [JsonIgnore]
-        public string ImagemagickStack
-        {
-            get => ImageMagickStack;
-            set => ImageMagickStack = value;
-        }
-
-        /// <summary>
         /// ImageMagick stack version. One of <see cref="Constants.ImageMagickStack"/>: <c>v2.0.10</c> or <c>v3.0.1</c>.
         /// <para>Default: <c>v2.0.10</c>.</para>
         /// </summary>
