@@ -48,9 +48,9 @@ jobs:
           Copy-Item "tests/Transloadit.Tests/appsettings.json" "tests/Transloadit.Tests/appsettings.Tests.json" -Force
           $settingsPath = "tests/Transloadit.Tests/appsettings.Tests.json"
           $settings = Get-Content $settingsPath -Raw | ConvertFrom-Json
-          $settings.AuthKey = "${{ secrets.AUTH_KEY }}"
-          $settings.AuthSecret = "${{ secrets.AUTH_SECRET }}"
-          $settings.NotifyUrl = "${{ inputs.notifyUrl }}"
+          $settings.Transloadit.AuthKey = "${{ secrets.AUTH_KEY }}"
+          $settings.Transloadit.AuthSecret = "${{ secrets.AUTH_SECRET }}"
+          $settings.Transloadit.NotifyUrl = "${{ inputs.notifyUrl }}"
           $settings | ConvertTo-Json -Depth 100 | Set-Content $settingsPath
 
       - name: Run Tests
@@ -80,9 +80,9 @@ jobs:
           Copy-Item "tests/Transloadit.Tests/appsettings.json" "tests/Transloadit.Tests/appsettings.Tests.json" -Force
           $settingsPath = "tests/Transloadit.Tests/appsettings.Tests.json"
           $settings = Get-Content $settingsPath -Raw | ConvertFrom-Json
-          $settings.AuthKey = "${{ secrets.AUTH_KEY }}"
-          $settings.AuthSecret = "${{ secrets.AUTH_SECRET }}"
-          $settings.NotifyUrl = "${{ inputs.notifyUrl }}"
+          $settings.Transloadit.AuthKey = "${{ secrets.AUTH_KEY }}"
+          $settings.Transloadit.AuthSecret = "${{ secrets.AUTH_SECRET }}"
+          $settings.Transloadit.NotifyUrl = "${{ inputs.notifyUrl }}"
           $settings | ConvertTo-Json -Depth 100 | Set-Content $settingsPath
 
       - name: Run .NET Framework Tests
