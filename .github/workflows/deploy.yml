@@ -55,8 +55,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    outputs:
-      tag_exists: ${{ steps.check_tag.outputs.exists }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -93,7 +91,6 @@ jobs:
     name: Publish
     needs: [tag]
     runs-on: ubuntu-latest
-    if: needs.tag.outputs.tag_exists != 'true'
     steps:
       - name: Download NuGet Artifacts
         uses: actions/download-artifact@v4
@@ -105,4 +102,4 @@ jobs:
         with:
           dotnet-version: 10.0.x
       - name: Publish NuGet packages to NuGet
-        run: dotnet nuget push nuget/*.nupkg --api-key ${{ secrets.NUGET_KEY }} --source "nuget.org"
+        run: dotnet nuget push nuget/*.nupkg --api-key ${{ secrets.NUGET_KEY }} --source "nuget.org" --skip-duplicate
