@@ -12,6 +12,9 @@ concurrency:
   group: deploy-${{ github.repository }}-${{ github.ref }}
   cancel-in-progress: false
 
+permissions:
+  contents: read
+
 jobs:
   tests:
     name: Run Tests
@@ -50,16 +53,32 @@ jobs:
     name: Add Release Tag
     needs: [build-package]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      tag_exists: ${{ steps.check_tag.outputs.exists }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Get Assembly Version
         id: get_version
         run: |
-          VERSION=$(sed -n 's/.*<Version>\(.*\)<\/Version>.*/\1/p' src/Transloadit/Transloadit.csproj)
+          VERSION=$(dotnet msbuild src/Transloadit/Transloadit.csproj -getProperty:Version)
           echo "version=v$VERSION" >> "$GITHUB_OUTPUT"
 
+      - name: Check Existing Tag
+        id: check_tag
+        run: |
+          if git rev-parse "${{ steps.get_version.outputs.version }}" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Add Current Version Tag
+        if: steps.check_tag.outputs.exists != 'true'
         uses: cardinalby/git-tag-action@v1.0
         env:
           TAG: ${{ steps.get_version.outputs.version }}
@@ -69,6 +88,7 @@ jobs:
     name: Publish
     needs: [tag]
     runs-on: ubuntu-latest
+    if: needs.tag.outputs.tag_exists != 'true'
     steps:
       - name: Download NuGet Artifacts
         uses: actions/download-artifact@v4

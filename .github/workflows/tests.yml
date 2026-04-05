@@ -7,6 +7,11 @@ on:
         description: Notify url like https://webhook.site
         required: true
         type: string
+    secrets:
+      AUTH_KEY:
+        required: true
+      AUTH_SECRET:
+        required: true
   workflow_dispatch:
     inputs:
       notifyUrl:
@@ -17,6 +22,9 @@ on:
 concurrency:
   group: tests-${{ github.repository }}-${{ github.ref }}
   cancel-in-progress: false
+
+permissions:
+  contents: read
 
 jobs:
   test-linux:
