@@ -1,6 +1,19 @@
 name: NuGet Deploy
 
 on:
+  workflow_call:
+    inputs:
+      notifyUrl:
+        description: Notify url like https://webhook.site
+        required: true
+        type: string
+    secrets:
+      AUTH_KEY:
+        required: true
+      AUTH_SECRET:
+        required: true
+      NUGET_KEY:
+        required: true
   workflow_dispatch:
     inputs:
       notifyUrl:
@@ -62,6 +75,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4.3.1
+        with:
+          dotnet-version: 10.0.x
+
       - name: Get Assembly Version
         id: get_version
         run: |
@@ -98,6 +116,6 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4.3.1
         with:
-          dotnet-version: 8.0.x
+          dotnet-version: 10.0.x
       - name: Publish NuGet packages to NuGet
         run: dotnet nuget push nuget/*.nupkg --api-key ${{ secrets.NUGET_KEY }} --source "nuget.org"
