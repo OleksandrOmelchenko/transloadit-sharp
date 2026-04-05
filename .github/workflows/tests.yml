@@ -77,11 +77,12 @@ jobs:
         shell: pwsh
         run: |
           Copy-Item "tests/Transloadit.Tests/appsettings.json" "tests/Transloadit.Tests/appsettings.Tests.json" -Force
-          $content = Get-Content "tests/Transloadit.Tests/appsettings.Tests.json" -Raw
-          $content = $content -replace '"AuthKey": ""', '"AuthKey": "${{ secrets.AUTH_KEY }}"'
-          $content = $content -replace '"AuthSecret": ""', '"AuthSecret": "${{ secrets.AUTH_SECRET }}"'
-          $content = $content -replace '"NotifyUrl": ""', '"NotifyUrl": "${{ inputs.notifyUrl }}"'
-          Set-Content "tests/Transloadit.Tests/appsettings.Tests.json" $content
+          $settingsPath = "tests/Transloadit.Tests/appsettings.Tests.json"
+          $settings = Get-Content $settingsPath -Raw | ConvertFrom-Json
+          $settings.AuthKey = "${{ secrets.AUTH_KEY }}"
+          $settings.AuthSecret = "${{ secrets.AUTH_SECRET }}"
+          $settings.NotifyUrl = "${{ inputs.notifyUrl }}"
+          $settings | ConvertTo-Json -Depth 100 | Set-Content $settingsPath
 
       - name: Build Release
         run: dotnet build -c Release
