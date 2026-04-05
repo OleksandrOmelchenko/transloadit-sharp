@@ -43,11 +43,15 @@ jobs:
           dotnet-version: ${{ matrix.dotnet-version }}
 
       - name: Create Test Settings
+        shell: pwsh
         run: |
-          cp tests/Transloadit.Tests/appsettings.json tests/Transloadit.Tests/appsettings.Tests.json
-          sed -i 's|"AuthKey": ""|"AuthKey": "${{ secrets.AUTH_KEY }}"|' tests/Transloadit.Tests/appsettings.Tests.json
-          sed -i 's|"AuthSecret": ""|"AuthSecret": "${{ secrets.AUTH_SECRET }}"|' tests/Transloadit.Tests/appsettings.Tests.json
-          sed -i 's|"NotifyUrl": ""|"NotifyUrl": "${{ inputs.notifyUrl }}"|' tests/Transloadit.Tests/appsettings.Tests.json
+          Copy-Item "tests/Transloadit.Tests/appsettings.json" "tests/Transloadit.Tests/appsettings.Tests.json" -Force
+          $settingsPath = "tests/Transloadit.Tests/appsettings.Tests.json"
+          $settings = Get-Content $settingsPath -Raw | ConvertFrom-Json
+          $settings.AuthKey = "${{ secrets.AUTH_KEY }}"
+          $settings.AuthSecret = "${{ secrets.AUTH_SECRET }}"
+          $settings.NotifyUrl = "${{ inputs.notifyUrl }}"
+          $settings | ConvertTo-Json -Depth 100 | Set-Content $settingsPath
 
       - name: Build Release
         run: dotnet build -c Release
