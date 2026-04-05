@@ -9,10 +9,18 @@ on:
         type: string
 
 jobs:
-  build:
-    name: Build and Test
+  tests:
+    name: Run Tests
+    uses: ./.github/workflows/tests.yml
+    with:
+      notifyUrl: ${{ inputs.notifyUrl }}
+    secrets: inherit
+
+  build-package:
+    name: Build and Package
     environment: Release
     runs-on: ubuntu-latest
+    needs: [tests]
 
     steps:
       - uses: actions/checkout@v4
@@ -20,35 +28,15 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4.3.1
         with:
-          dotnet-version: |
-            2.1.x
-            3.1.x
-            5.0.x
-            6.0.x
-            7.0.404
-            8.0.x
-
-      - name: Create Test Settings
-        run: |
-          cp tests/Transloadit.Tests/appsettings.json tests/Transloadit.Tests/appsettings.Tests.json
-          sed -i 's|"AuthKey": ""|"AuthKey": "${{ secrets.AUTH_KEY }}"|' tests/Transloadit.Tests/appsettings.Tests.json
-          sed -i 's|"AuthSecret": ""|"AuthSecret": "${{ secrets.AUTH_SECRET }}"|' tests/Transloadit.Tests/appsettings.Tests.json
-          sed -i 's|"NotifyUrl": ""|"NotifyUrl": "${{ inputs.notifyUrl }}"|' tests/Transloadit.Tests/appsettings.Tests.json
+          dotnet-version: 10.0.x
 
       - name: Build Release
-        run: dotnet build -c Release
-
-      - name: Run Tests
-        run: |
-          dotnet test --no-build -f net6.0 -c Release
-          dotnet test --no-build -f net7.0 -c Release
-          dotnet test --no-build -f net8.0 -c Release
-        # dotnet test --no-build -f net461 -c Release
-
+        run: dotnet build src/Transloadit/Transloadit.csproj -c Release
 
       - name: Pack
         run: dotnet pack src/Transloadit -c Release --no-build --output nuget
-      - name: "Upload Artifact"
+
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: nuget
@@ -56,7 +44,7 @@ jobs:
 
   tag:
     name: Add Release Tag
-    needs: [build]
+    needs: [build-package]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
