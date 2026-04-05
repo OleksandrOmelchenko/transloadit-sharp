@@ -53,11 +53,8 @@ jobs:
           $settings.NotifyUrl = "${{ inputs.notifyUrl }}"
           $settings | ConvertTo-Json -Depth 100 | Set-Content $settingsPath
 
-      - name: Build Release
-        run: dotnet build -c Release
-
       - name: Run Tests
-        run: dotnet test --no-build -f ${{ matrix.target-framework }} -c Release
+        run: dotnet test tests/Transloadit.Tests/Transloadit.Tests.csproj -c Release -f ${{ matrix.target-framework }}
 
   test-netfx:
     name: Test .NET Framework
@@ -88,8 +85,5 @@ jobs:
           $settings.NotifyUrl = "${{ inputs.notifyUrl }}"
           $settings | ConvertTo-Json -Depth 100 | Set-Content $settingsPath
 
-      - name: Build Release
-        run: dotnet build -c Release
-
       - name: Run .NET Framework Tests
-        run: dotnet test --no-build -f ${{ matrix.target-framework }} -c Release
+        run: dotnet test tests/Transloadit.Tests/Transloadit.Tests.csproj -c Release -f ${{ matrix.target-framework }}
