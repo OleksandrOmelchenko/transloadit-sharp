@@ -14,6 +14,10 @@ on:
         required: true
         type: string
 
+concurrency:
+  group: tests-${{ github.repository }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   test-linux:
     name: Test .NET (Linux)

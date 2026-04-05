@@ -8,6 +8,10 @@ on:
         required: true
         type: string
 
+concurrency:
+  group: deploy-${{ github.repository }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   tests:
     name: Run Tests
@@ -50,14 +54,15 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Get Assembly Version
+        id: get_version
         run: |
           VERSION=$(sed -n 's/.*<Version>\(.*\)<\/Version>.*/\1/p' src/Transloadit/Transloadit.csproj)
-          echo "version=v$VERSION" >> $GITHUB_ENV
+          echo "version=v$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Add Current Version Tag
         uses: cardinalby/git-tag-action@v1.0
         env:
-          TAG: ${{ env.version }}
+          TAG: ${{ steps.get_version.outputs.version }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
   publish:
