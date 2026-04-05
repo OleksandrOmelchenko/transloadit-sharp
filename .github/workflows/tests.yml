@@ -1,0 +1,90 @@
+name: Tests
+
+on:
+  workflow_call:
+    inputs:
+      notifyUrl:
+        description: Notify url like https://webhook.site
+        required: true
+        type: string
+  workflow_dispatch:
+    inputs:
+      notifyUrl:
+        description: Notify url like https://webhook.site
+        required: true
+        type: string
+
+jobs:
+  test-linux:
+    name: Test .NET (Linux)
+    environment: Release
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+      matrix:
+        include:
+          - target-framework: net6.0
+            dotnet-version: 6.0.x
+          - target-framework: net7.0
+            dotnet-version: 7.0.404
+          - target-framework: net8.0
+            dotnet-version: 8.0.x
+          - target-framework: net9.0
+            dotnet-version: 9.0.x
+          - target-framework: net10.0
+            dotnet-version: 10.0.x
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4.3.1
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+
+      - name: Create Test Settings
+        run: |
+          cp tests/Transloadit.Tests/appsettings.json tests/Transloadit.Tests/appsettings.Tests.json
+          sed -i 's|"AuthKey": ""|"AuthKey": "${{ secrets.AUTH_KEY }}"|' tests/Transloadit.Tests/appsettings.Tests.json
+          sed -i 's|"AuthSecret": ""|"AuthSecret": "${{ secrets.AUTH_SECRET }}"|' tests/Transloadit.Tests/appsettings.Tests.json
+          sed -i 's|"NotifyUrl": ""|"NotifyUrl": "${{ inputs.notifyUrl }}"|' tests/Transloadit.Tests/appsettings.Tests.json
+
+      - name: Build Release
+        run: dotnet build -c Release
+
+      - name: Run Tests
+        run: dotnet test --no-build -f ${{ matrix.target-framework }} -c Release
+
+  test-netfx:
+    name: Test .NET Framework
+    environment: Release
+    runs-on: windows-latest
+    needs: [test-linux]
+    strategy:
+      max-parallel: 1
+      matrix:
+        target-framework: [net461, net462, net472, net48]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4.3.1
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Create Test Settings
+        shell: pwsh
+        run: |
+          Copy-Item "tests/Transloadit.Tests/appsettings.json" "tests/Transloadit.Tests/appsettings.Tests.json" -Force
+          $content = Get-Content "tests/Transloadit.Tests/appsettings.Tests.json" -Raw
+          $content = $content -replace '"AuthKey": ""', '"AuthKey": "${{ secrets.AUTH_KEY }}"'
+          $content = $content -replace '"AuthSecret": ""', '"AuthSecret": "${{ secrets.AUTH_SECRET }}"'
+          $content = $content -replace '"NotifyUrl": ""', '"NotifyUrl": "${{ inputs.notifyUrl }}"'
+          Set-Content "tests/Transloadit.Tests/appsettings.Tests.json" $content
+
+      - name: Build Release
+        run: dotnet build -c Release
+
+      - name: Run .NET Framework Tests
+        run: dotnet test --no-build -f ${{ matrix.target-framework }} -c Release
