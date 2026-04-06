@@ -10,7 +10,7 @@ using Transloadit.Models.Robots.SmartCdn;
 using Transloadit.Models.Robots.VideoEncoding;
 using Xunit;
 
-namespace Transloadit.Tests.Robots
+namespace Transloadit.Tests.Tests
 {
     public class NewRobotsTests
     {

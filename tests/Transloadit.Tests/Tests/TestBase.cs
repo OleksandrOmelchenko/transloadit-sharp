@@ -4,7 +4,7 @@ using Xunit;
 
 [assembly: CollectionBehavior(DisableTestParallelization = true)]
 
-namespace Transloadit.Tests
+namespace Transloadit.Tests.Tests
 {
     public class TestBase
     {

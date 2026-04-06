@@ -8,7 +8,7 @@ using Transloadit.Models.Templates;
 using Transloadit.Tests.Fixtures;
 using Xunit;
 
-namespace Transloadit.Tests.Api
+namespace Transloadit.Tests.Tests.Api
 {
     public class AssemblyNotificationsApiTests : TestBase
     {
@@ -39,9 +39,7 @@ namespace Transloadit.Tests.Api
             Assert.Equal(Configuration.NotifyUrl, createResponse.NotifyUrl);
 
             var assembly = await AssemblyTracker.WaitCompletionAsync(createResponse);
-
-            //waiting 2 second allowing notification to finish
-            await Task.Delay(2000);
+            await WaitForNotificationAsync();
             assembly = await TransloaditClient.Assemblies.GetAsync(createResponse.AssemblyId);
 
             Assert.Equal(Configuration.NotifyUrl, assembly.NotifyUrl);
@@ -74,9 +72,7 @@ namespace Transloadit.Tests.Api
             Assert.Equal(Configuration.NotifyUrl, createResponse.NotifyUrl);
 
             var assembly = await AssemblyTracker.WaitCompletionAsync(createResponse);
-
-            //waiting 2 second allowing notification to finish
-            await Task.Delay(2000);
+            await WaitForNotificationAsync();
             assembly = await TransloaditClient.Assemblies.GetAsync(createResponse.AssemblyId);
 
             Assert.Equal(Configuration.NotifyUrl, assembly.NotifyUrl);
@@ -116,11 +112,8 @@ namespace Transloadit.Tests.Api
             Assert.Equal(Configuration.NotifyUrl, createResponse.NotifyUrl);
 
             var assembly = await AssemblyTracker.WaitCompletionAsync(createResponse);
-
-            //waiting 2 second allowing notification to finish
-            await Task.Delay(2000);
+            await WaitForNotificationAsync();
             assembly = await TransloaditClient.Assemblies.GetAsync(createResponse.AssemblyId);
-
             Assert.Equal(Configuration.NotifyUrl, assembly.NotifyUrl);
             Assert.Equal(200, assembly.NotifyResponseCode);
             Assert.True(assembly.NotifyDuration > 0d);
@@ -131,5 +124,7 @@ namespace Transloadit.Tests.Api
             Assert.True(deleteTemplateResponse.IsSuccessResponse());
             Assert.Equal(ResponseCodes.TemplateDeleted, deleteTemplateResponse.Base.Ok);
         }
+
+        private static async Task WaitForNotificationAsync(int delayMs = 3000) => await Task.Delay(delayMs);
     }
 }

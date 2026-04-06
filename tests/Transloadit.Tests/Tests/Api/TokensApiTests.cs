@@ -2,8 +2,9 @@ using System;
 using System.Threading.Tasks;
 using Transloadit.Models.Tokens;
 using Xunit;
+using Transloadit.Tests.Tests;
 
-namespace Transloadit.Tests.Api
+namespace Transloadit.Tests.Tests.Api
 {
     public class TokensApiTests : TestBase
     {

@@ -7,7 +7,7 @@ using Transloadit.Tests.Fixtures;
 using Transloadit.Utilities;
 using Xunit;
 
-namespace Transloadit.Tests
+namespace Transloadit.Tests.Tests
 {
     public class AssemblyTrackerTests : TestBase
     {
