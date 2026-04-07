@@ -2,26 +2,27 @@
 
 ### Installation
 
-Nuget package [Transloadit](https://www.nuget.org/packages/Transloadit/).
+NuGet package: [Transloadit](https://www.nuget.org/packages/Transloadit/).
 
 ### Create Transloadit client
 
-```C#
+```csharp
 using Transloadit;
 
-//suitable for operations not requiring signature authentication like Assembly creation, 
-//retrieving Assembly status, streaming Assembly changes and Assembly cancellation
-var client = new TransloaditClient("<auth key>");
+// suitable for operations not requiring signature authentication, like assembly creation
+// or retrieving assembly status
+var clientNoAuth = new TransloaditClient("<auth key>");
 
-//for all APIs
+// for all APIs (including those that require signature authentication)
 var client = new TransloaditClient("<auth key>", "<auth secret>");
 ```
 
 ### Create an Assembly
 
-Using a Template
+Using a template
 
-```C#
+```csharp
+using System.Collections.Generic;
 using Transloadit;
 using Transloadit.Models.Assemblies;
 
@@ -39,17 +40,18 @@ var assembly = new AssemblyRequest
 var assemblyResponse = await client.Assemblies.CreateAsync(assembly);
 if (assemblyResponse.IsSuccessResponse())
 {
-    //assembly was created and started successfully
+    // assembly was created and started successfully
 }
 else
 {
-    //there was an error during assembly creation
+    // there was an error during assembly creation
 }
 ```
 
-Specifying Steps
+Specifying steps
 
-```C#
+```csharp
+using System.Collections.Generic;
 using Transloadit;
 using Transloadit.Models.Assemblies;
 using Transloadit.Models.Robots;
@@ -87,13 +89,16 @@ var assemblyResponse = await client.Assemblies.CreateAsync(assembly);
 
 With file uploads
 
-```C#
+```csharp
+using System.IO;
+using System.Net.Http;
+
 var assembly = new AssemblyRequest
 {
     TemplateId = "47c5b0b70ac64deaa821eae6424bbb4f"
 };
-var file = new ByteArrayContent(File.ReadAllBytes(@"/images/snowflake.jpg"));
-var file1 = new ByteArrayContent(File.ReadAllBytes(@"/images/flower-field.jpg"));
+var file = new ByteArrayContent(File.ReadAllBytes("images/snowflake.jpg"));
+var file1 = new ByteArrayContent(File.ReadAllBytes("images/flower-field.jpg"));
 var formData = new MultipartFormDataContent
 {
     { file, "file-first", "snowflake.jpg" },
@@ -103,21 +108,23 @@ var formData = new MultipartFormDataContent
 var assemblyResponse = await client.Assemblies.CreateAsync(assembly, formData);
 ```
 
-### Awaiting Assembly completion
+### Awaiting assembly completion
 
-```C#
+```csharp
 var assemblyTracker = new AssemblyTracker(client);
 
-//by id (first gets the Assembly by id and then polls the status)
-var completedAssembly = await assemblyTracker.WaitCompletionAsync(createAssemblyResponse.AssemblyId);
+// by id (first gets the assembly by id and then polls the status)
+var completedAssembly = await assemblyTracker.WaitCompletionAsync(assemblyResponse.AssemblyId);
 
-//by assembly (checks passed Assembly and then polls the status)
-var completedAssembly = await assemblyTracker.WaitCompletionAsync(createAssemblyResponse);
+// by assembly (checks the passed assembly and then polls the status)
+var completedAssembly2 = await assemblyTracker.WaitCompletionAsync(assemblyResponse);
 ```
 
-### Create a Template and Credentials
+### Create a template and credentials
 
-```C#
+```csharp
+using System.Collections.Generic;
+
 var azureCredentials = new AzureCredentialsRequest
 {
     Name = "azure-storage",
@@ -154,13 +161,13 @@ var templateRequest = new TemplateRequest
             ["import"] = new AzureImportRobot
             {
                 Credentials = azureCredentials.Name,
-                //other properties...
+                // other properties...
             },
             ["store"] = new S3StoreRobot
             {
                 Use = "import",
                 Credentials = s3Credentials.Name,
-                //other properties...
+                // other properties...
             }
         }
     }
