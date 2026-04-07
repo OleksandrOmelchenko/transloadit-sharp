@@ -17,6 +17,25 @@ var clientNoAuth = new TransloaditClient("<auth key>");
 var client = new TransloaditClient("<auth key>", "<auth secret>");
 ```
 
+With custom JSON serializer settings
+
+```csharp
+using Newtonsoft.Json;
+using Transloadit;
+using Transloadit.Serialization;
+
+var settings = TransloaditSerializerSettings.CreateDefault();
+settings.Converters.Add(new MyCustomConverter());
+
+var options = new TransloaditClientOptions
+{
+    RequestSerializerSettings = settings,
+    ResponseSerializerSettings = settings,
+};
+
+var client = new TransloaditClient("<auth key>", "<auth secret>", options);
+```
+
 ### Create an Assembly
 
 Using a template
