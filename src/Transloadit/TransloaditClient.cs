@@ -99,12 +99,13 @@ namespace Transloadit
 
         private static TransloaditClientOptions MergeOptions(TransloaditClientOptions options)
         {
-            const string TransloaditClient = $"transloadit-sharp/{ClientVersion.Current}";
+            const string TransloaditClientHeaderValue = $"transloadit-sharp/{ClientVersion.Current}";
             const string TransloaditClientHeaderName = "Transloadit-Client";
             var httpClient = options?.HttpClient ?? new HttpClient();
-            // always set our Transloadit-Client header to the library version
-            httpClient.DefaultRequestHeaders.Remove(TransloaditClientHeaderName);
-            _ = httpClient.DefaultRequestHeaders.TryAddWithoutValidation(TransloaditClientHeaderName, TransloaditClient);
+            if (!httpClient.DefaultRequestHeaders.Contains(TransloaditClientHeaderName))
+            {
+                _ = httpClient.DefaultRequestHeaders.TryAddWithoutValidation(TransloaditClientHeaderName, TransloaditClientHeaderValue);
+            }
             var defaultSerializerSettings = TransloaditSerializerSettings.CreateDefault();
 
             return new TransloaditClientOptions
