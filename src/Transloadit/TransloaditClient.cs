@@ -106,14 +106,13 @@ namespace Transloadit
             {
                 _ = httpClient.DefaultRequestHeaders.TryAddWithoutValidation(TransloaditClientHeaderName, TransloaditClientHeaderValue);
             }
-            var defaultSerializerSettings = TransloaditSerializerSettings.CreateDefault();
 
             return new TransloaditClientOptions
             {
                 ApiBase = options?.ApiBase ?? new Uri(ApiBase),
                 HttpClient = httpClient,
-                RequestSerializerSettings = options?.RequestSerializerSettings ?? defaultSerializerSettings,
-                ResponseSerializerSettings = options?.ResponseSerializerSettings ?? defaultSerializerSettings,
+                RequestSerializerSettings = options?.RequestSerializerSettings ?? TransloaditSerializerSettings.CreateDefault(),
+                ResponseSerializerSettings = options?.ResponseSerializerSettings ?? TransloaditSerializerSettings.CreateDefault(),
             };
         }
 
