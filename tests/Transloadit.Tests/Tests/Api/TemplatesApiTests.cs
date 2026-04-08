@@ -6,9 +6,10 @@ using Transloadit.Models.Robots;
 using Transloadit.Models.Templates;
 using Transloadit.Tests.Fixtures;
 using Transloadit.Tests.Robots;
+using Transloadit.Tests.Tests;
 using Xunit;
 
-namespace Transloadit.Tests.Api
+namespace Transloadit.Tests.Tests.Api
 {
     public class TemplatesApiTests : TestBase
     {

@@ -6,7 +6,6 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using Transloadit.Constants;
 using Transloadit.Models;
 using Transloadit.Models.Tokens;
@@ -26,16 +25,6 @@ namespace Transloadit
         private readonly string _key;
         private readonly string _secret;
         private readonly TransloaditClientOptions _options;
-
-        private static readonly JsonSerializerSettings _jsonSerializerSettings = new()
-        {
-            NullValueHandling = NullValueHandling.Ignore,
-            ContractResolver = new DefaultContractResolver
-            {
-                NamingStrategy = new SnakeCaseNamingStrategy(),
-            },
-            Converters = [new AnyOfConverter()],
-        };
 
         private BillingService _billingService;
         private TemplatesService _templatesService;
@@ -110,18 +99,20 @@ namespace Transloadit
 
         private static TransloaditClientOptions MergeOptions(TransloaditClientOptions options)
         {
-            const string transloaditClient = $"transloadit-sharp/{ClientVersion.Current}";
+            const string TransloaditClientHeaderValue = $"transloadit-sharp/{ClientVersion.Current}";
+            const string TransloaditClientHeaderName = "Transloadit-Client";
             var httpClient = options?.HttpClient ?? new HttpClient();
-            if (!httpClient.DefaultRequestHeaders.Contains("Transloadit-Client"))
+            if (!httpClient.DefaultRequestHeaders.Contains(TransloaditClientHeaderName))
             {
-                _ = httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Transloadit-Client", transloaditClient);
+                _ = httpClient.DefaultRequestHeaders.TryAddWithoutValidation(TransloaditClientHeaderName, TransloaditClientHeaderValue);
             }
+
             return new TransloaditClientOptions
             {
                 ApiBase = options?.ApiBase ?? new Uri(ApiBase),
                 HttpClient = httpClient,
-                RequestSerializerSettings = options?.RequestSerializerSettings ?? _jsonSerializerSettings,
-                ResponseSerializerSettings = options?.ResponseSerializerSettings ?? _jsonSerializerSettings,
+                RequestSerializerSettings = options?.RequestSerializerSettings ?? TransloaditSerializerSettings.CreateDefault(),
+                ResponseSerializerSettings = options?.ResponseSerializerSettings ?? TransloaditSerializerSettings.CreateDefault(),
             };
         }
 
