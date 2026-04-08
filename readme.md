@@ -20,7 +20,6 @@ var client = new TransloaditClient("<auth key>", "<auth secret>");
 With custom JSON serializer settings
 
 ```csharp
-using Newtonsoft.Json;
 using Transloadit;
 using Transloadit.Serialization;
 

@@ -3,7 +3,7 @@ using Newtonsoft.Json.Serialization;
 using Transloadit.Serialization;
 using Xunit;
 
-namespace Transloadit.Tests
+namespace Transloadit.Tests.Tests
 {
     public class SerializationDefaultsTests
     {
