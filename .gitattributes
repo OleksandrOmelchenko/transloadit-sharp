@@ -7,6 +7,7 @@
 *.props text
 *.targets text
 *.sln text eol=crlf
+*.slnx text eol=crlf
 *.config text
 *.json text
 *.xml text
