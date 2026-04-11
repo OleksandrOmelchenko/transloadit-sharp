@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace Transloadit.Models.Robots.AI
 {
     /// <summary>
-    /// Represents <c>/video/generate</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/video-generate/">/video/generate</a> Robot.
     /// </summary>
     public class VideoGenerateRobot : RobotBase
     {
@@ -117,7 +117,7 @@ namespace Transloadit.Models.Robots.AI
         public string Provider { get; set; }
 
         /// <summary>
-        /// Initializes <c>/video/generate</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/video-generate/">/video/generate</a> Robot.
         /// </summary>
         public VideoGenerateRobot()
         {

@@ -3,9 +3,9 @@
 namespace Transloadit.Models.Robots.FileImporting
 {
     /// <summary>
-    /// Represents <c>/swift/import</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/swift-import/">/swift/import</a> Robot.
     /// </summary>
-    public class SwiftImportRobot : PaginatedImportRobotBase
+    public class SwiftImportRobot : ImportRobotBase
     {
         /// <summary>
         /// Swift bucket.
@@ -32,7 +32,7 @@ namespace Transloadit.Models.Robots.FileImporting
         public string Secret { get; set; }
 
         /// <summary>
-        /// Initializes <c>/swift/import</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/swift-import/">/swift/import</a> Robot.
         /// </summary>
         public SwiftImportRobot()
         {

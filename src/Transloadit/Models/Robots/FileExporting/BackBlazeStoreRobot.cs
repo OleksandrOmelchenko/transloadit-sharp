@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.FileExporting
 {
     /// <summary>
-    /// Represents <c>/backblaze/store</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/backblaze-store/">/backblaze/store</a> Robot.
     /// </summary>
     public class BackBlazeStoreRobot : StoreRobotBase
     {
@@ -34,7 +34,7 @@ namespace Transloadit.Models.Robots.FileExporting
         public string AppKey { get; set; }
 
         /// <summary>
-        /// Initializes <c>/backblaze/store</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/backblaze-store/">/backblaze/store</a> Robot.
         /// </summary>
         public BackBlazeStoreRobot()
         {

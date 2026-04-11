@@ -1,12 +1,12 @@
 ﻿namespace Transloadit.Models.Robots.FileImporting
 {
     /// <summary>
-    /// Represents <c>/dropbox/import</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/dropbox-import/">/dropbox/import</a> Robot.
     /// </summary>
     public class DropboxImportRobot : ImportRobotBase
     {
         /// <summary>
-        /// Initializes <c>/dropbox/import</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/dropbox-import/">/dropbox/import</a> Robot.
         /// </summary>
         public DropboxImportRobot()
         {

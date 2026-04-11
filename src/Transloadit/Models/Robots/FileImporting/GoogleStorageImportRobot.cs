@@ -3,7 +3,7 @@
 namespace Transloadit.Models.Robots.FileImporting
 {
     /// <summary>
-    /// Represents <c>/google/import</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/google-import/">/google/import</a> Robot.
     /// </summary>
     public class GoogleStorageImportRobot : ImportRobotBase
     {
@@ -29,7 +29,7 @@ namespace Transloadit.Models.Robots.FileImporting
         public int? FilesPerPage { get; set; }
 
         /// <summary>
-        /// Initializes <c>/google/import</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/google-import/">/google/import</a> Robot.
         /// </summary>
         public GoogleStorageImportRobot()
         {

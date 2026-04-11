@@ -3,9 +3,9 @@
 namespace Transloadit.Models.Robots.FileImporting
 {
     /// <summary>
-    /// Represents <c>/supabase/import</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/supabase-import/">/supabase/import</a> Robot.
     /// </summary>
-    public class SupabaseImportRobot : PaginatedImportRobotBase
+    public class SupabaseImportRobot : ImportRobotBase
     {
         /// <summary>
         /// Supabase bucket.
@@ -38,7 +38,7 @@ namespace Transloadit.Models.Robots.FileImporting
         public string Secret { get; set; }
 
         /// <summary>
-        /// Initializes <c>/supabase/import</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/supabase-import/">/supabase/import</a> Robot.
         /// </summary>
         public SupabaseImportRobot()
         {

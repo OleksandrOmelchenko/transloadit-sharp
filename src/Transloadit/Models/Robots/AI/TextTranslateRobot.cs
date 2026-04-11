@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.AI
 {
     /// <summary>
-    /// Represents <c>/text/translate</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/text-translate/">/text/translate</a> Robot.
     /// </summary>
     public class TextTranslateRobot : RobotBase
     {
@@ -37,7 +37,7 @@ namespace Transloadit.Models.Robots.AI
         public string SourceLanguage { get; set; }
 
         /// <summary>
-        /// Initializes <c>/text/translate</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/text-translate/">/text/translate</a> Robot.
         /// </summary>
         public TextTranslateRobot()
         {

@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 namespace Transloadit.Models.Robots.FileExporting
 {
     /// <summary>
-    /// Represents <c>/box/store</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/box-store/">/box/store</a> Robot.
     /// </summary>
     public class BoxStoreRobot : StoreRobotBase
     {
@@ -14,7 +14,7 @@ namespace Transloadit.Models.Robots.FileExporting
         public bool? CreateSharingLink { get; set; }
 
         /// <summary>
-        /// Initializes <c>/box/store</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/box-store/">/box/store</a> Robot.
         /// </summary>
         public BoxStoreRobot()
         {

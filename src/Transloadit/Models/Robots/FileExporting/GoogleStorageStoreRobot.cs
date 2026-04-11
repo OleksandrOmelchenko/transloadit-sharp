@@ -3,7 +3,7 @@
 namespace Transloadit.Models.Robots.FileExporting
 {
     /// <summary>
-    /// Represents <c>/google/store</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/google-store/">/google/store</a> Robot.
     /// </summary>
     public class GoogleStorageStoreRobot : StoreRobotBase
     {
@@ -34,7 +34,7 @@ namespace Transloadit.Models.Robots.FileExporting
         public string SslUrlTemplate { get; set; }
 
         /// <summary>
-        /// Initializes <c>/google/store</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/google-store/">/google/store</a> Robot.
         /// </summary>
         public GoogleStorageStoreRobot()
         {

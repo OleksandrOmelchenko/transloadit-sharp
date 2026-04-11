@@ -3,7 +3,7 @@
 namespace Transloadit.Models.Robots.FileExporting
 {
     /// <summary>
-    /// Represents <c>/ftp/store</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/ftp-store/">/ftp/store</a> Robot.
     /// </summary>
     public class FtpStoreRobot : StoreRobotBase
     {
@@ -52,7 +52,7 @@ namespace Transloadit.Models.Robots.FileExporting
         public string Password { get; set; }
 
         /// <summary>
-        /// Initializes <c>/ftp/store</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/ftp-store/">/ftp/store</a> Robot.
         /// </summary>
         public FtpStoreRobot()
         {

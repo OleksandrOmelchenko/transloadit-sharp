@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.FileFiltering
 {
     /// <summary>
-    /// Represents <c>/file/verify</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/file-verify/">/file/verify</a> Robot.
     /// </summary>
     public class FileVerifyRobot : RobotBase
     {
@@ -38,7 +38,7 @@ namespace Transloadit.Models.Robots.FileFiltering
         public string VerifyToBe { get; set; }
 
         /// <summary>
-        /// Initializes <c>/file/verify</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/file-verify/">/file/verify</a> Robot.
         /// </summary>
         public FileVerifyRobot()
         {

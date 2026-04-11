@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.FileImporting
 {
     /// <summary>
-    /// Represents <c>/box/import</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/box-import/">/box/import</a> Robot.
     /// </summary>
     public class BoxImportRobot : ImportRobotBase
     {
@@ -15,7 +15,7 @@ namespace Transloadit.Models.Robots.FileImporting
         public AnyOf<string, List<string>> ForceName { get; set; }
 
         /// <summary>
-        /// Initializes <c>/box/import</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/box-import/">/box/import</a> Robot.
         /// </summary>
         public BoxImportRobot()
         {

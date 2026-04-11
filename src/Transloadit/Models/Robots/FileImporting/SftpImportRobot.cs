@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace Transloadit.Models.Robots.FileImporting
 {
     /// <summary>
-    /// Represents <c>/sftp/import</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/sftp-import/">/sftp/import</a> Robot.
     /// </summary>
     public class SftpImportRobot : RobotBase
     {
@@ -61,7 +61,7 @@ namespace Transloadit.Models.Robots.FileImporting
         public string Secret { get; set; }
 
         /// <summary>
-        /// Initializes <c>/sftp/import</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/sftp-import/">/sftp/import</a> Robot.
         /// </summary>
         public SftpImportRobot()
         {

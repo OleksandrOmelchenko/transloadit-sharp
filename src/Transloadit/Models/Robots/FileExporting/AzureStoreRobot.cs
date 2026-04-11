@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.FileExporting
 {
     /// <summary>
-    /// Represents <c>/azure/store</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/azure-store/">/azure/store</a> Robot.
     /// </summary>
     public class AzureStoreRobot : StoreRobotBase
     {
@@ -72,7 +72,7 @@ namespace Transloadit.Models.Robots.FileExporting
         public string Container { get; set; }
 
         /// <summary>
-        /// Initializes <c>/azure/store</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/azure-store/">/azure/store</a> Robot.
         /// </summary>
         public AzureStoreRobot()
         {

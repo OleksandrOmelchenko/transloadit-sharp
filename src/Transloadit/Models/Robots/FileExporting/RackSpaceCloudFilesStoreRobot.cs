@@ -3,7 +3,7 @@
 namespace Transloadit.Models.Robots.FileExporting
 {
     /// <summary>
-    /// Represents <c>/cloudfiles/store</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/cloudfiles-store/">/cloudfiles/store</a> Robot.
     /// </summary>
     public class RackSpaceCloudFilesStoreRobot : StoreRobotBase
     {
@@ -38,7 +38,7 @@ namespace Transloadit.Models.Robots.FileExporting
         public string Key { get; set; }
 
         /// <summary>
-        /// Initializes <c>/cloudfiles/store</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/cloudfiles-store/">/cloudfiles/store</a> Robot.
         /// </summary>
         public RackSpaceCloudFilesStoreRobot()
         {

@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace Transloadit.Models.Robots.AI
 {
     /// <summary>
-    /// Represents <c>/document/ocr</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/document-ocr/">/document/ocr</a> Robot.
     /// </summary>
     public class DocumentOcrRobot : RobotBase
     {
@@ -43,7 +43,7 @@ namespace Transloadit.Models.Robots.AI
         public string Format { get; set; }
 
         /// <summary>
-        /// Initializes <c>/document/ocr</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/document-ocr/">/document/ocr</a> Robot.
         /// </summary>
         public DocumentOcrRobot()
         {

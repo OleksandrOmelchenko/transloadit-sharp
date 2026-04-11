@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace Transloadit.Models.Robots.AudioEncoding
 {
     /// <summary>
-    /// Represents <c>/audio/split</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/audio-split/">/audio/split</a> Robot.
     /// </summary>
     public class AudioSplitRobot : RobotBase
     {
@@ -57,7 +57,7 @@ namespace Transloadit.Models.Robots.AudioEncoding
         public List<AudioSplitSegment> Segments { get; set; }
 
         /// <summary>
-        /// Initializes <c>/audio/split</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/audio-split/">/audio/split</a> Robot.
         /// </summary>
         public AudioSplitRobot()
         {

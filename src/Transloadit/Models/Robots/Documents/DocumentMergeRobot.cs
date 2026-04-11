@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.Documents
 {
     /// <summary>
-    /// Represents <c>/document/merge</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/document-merge/">/document/merge</a> Robot.
     /// </summary>
     public class DocumentMergeRobot : RobotBase
     {
@@ -28,7 +28,7 @@ namespace Transloadit.Models.Robots.Documents
         public string OutputPassword { get; set; }
 
         /// <summary>
-        /// Initializes <c>/document/merge</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/document-merge/">/document/merge</a> Robot.
         /// </summary>
         public DocumentMergeRobot()
         {

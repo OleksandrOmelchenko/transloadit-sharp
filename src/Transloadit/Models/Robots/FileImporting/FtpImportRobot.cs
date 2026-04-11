@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.FileImporting
 {
     /// <summary>
-    /// Represents <c>/ftp/import</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/ftp-import/">/ftp/import</a> Robot.
     /// </summary>
     public class FtpImportRobot : RobotBase
     {
@@ -62,7 +62,7 @@ namespace Transloadit.Models.Robots.FileImporting
         public string Password { get; set; }
 
         /// <summary>
-        /// Initializes <c>/ftp/import</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/ftp-import/">/ftp/import</a> Robot.
         /// </summary>
         public FtpImportRobot()
         {

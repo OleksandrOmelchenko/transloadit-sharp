@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.AI
 {
     /// <summary>
-    /// Represents <c>/text/speak</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/text-speak/">/text/speak</a> Robot.
     /// </summary>
     public class TextSpeakRobot : RobotBase
     {
@@ -50,7 +50,7 @@ namespace Transloadit.Models.Robots.AI
         public bool? Ssml { get; set; }
 
         /// <summary>
-        /// Initializes <c>/text/speak</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/text-speak/">/text/speak</a> Robot.
         /// </summary>
         public TextSpeakRobot()
         {

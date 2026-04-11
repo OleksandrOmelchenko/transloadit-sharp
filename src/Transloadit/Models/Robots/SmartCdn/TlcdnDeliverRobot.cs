@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.SmartCdn
 {
     /// <summary>
-    /// Represents <c>/tlcdn/deliver</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/tlcdn-deliver/">/tlcdn/deliver</a> Robot.
     /// </summary>
     public class TlcdnDeliverRobot : RobotBase
     {
@@ -21,7 +21,7 @@ namespace Transloadit.Models.Robots.SmartCdn
         public AnyOf<bool, OutputMeta> OutputMeta { get; set; }
 
         /// <summary>
-        /// Initializes <c>/tlcdn/deliver</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/tlcdn-deliver/">/tlcdn/deliver</a> Robot.
         /// </summary>
         public TlcdnDeliverRobot()
         {

@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace Transloadit.Models.Robots.Documents
 {
     /// <summary>
-    /// Represents <c>/file/read</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/file-read/">/file/read</a> Robot.
     /// </summary>
     public class FileReadRobot : RobotBase
     {
@@ -15,7 +15,7 @@ namespace Transloadit.Models.Robots.Documents
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
-        /// Initializes <c>/file/read</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/file-read/">/file/read</a> Robot.
         /// </summary>
         public FileReadRobot()
         {

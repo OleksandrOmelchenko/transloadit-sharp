@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace Transloadit.Models.Robots.ImageManipulation
 {
     /// <summary>
-    /// Represents <c>/image/upscale</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/image-upscale/">/image/upscale</a> Robot.
     /// </summary>
     public class ImageUpscaleRobot : RobotBase
     {
@@ -39,7 +39,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         public bool? FaceEnhance { get; set; }
 
         /// <summary>
-        /// Initializes <c>/image/upscale</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/image-upscale/">/image/upscale</a> Robot.
         /// </summary>
         public ImageUpscaleRobot()
         {

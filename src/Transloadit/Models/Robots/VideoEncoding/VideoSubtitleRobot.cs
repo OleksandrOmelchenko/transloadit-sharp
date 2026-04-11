@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.VideoEncoding
 {
     /// <summary>
-    /// Represents <c>/video/subtitle</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/video-subtitle/">/video/subtitle</a> Robot.
     /// </summary>
     public class VideoSubtitleRobot : RobotBase
     {
@@ -98,7 +98,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         public Dictionary<string, object> Ffmpeg { get; set; }
 
         /// <summary>
-        /// Initializes <c>/video/subtitle</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/video-subtitle/">/video/subtitle</a> Robot.
         /// </summary>
         public VideoSubtitleRobot()
         {

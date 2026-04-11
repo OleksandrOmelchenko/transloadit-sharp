@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.FileCompressing
 {
     /// <summary>
-    /// Represents <c>/file/compress</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/file-compress/">/file/compress</a> Robot.
     /// </summary>
     public class FileCompressRobot : RobotBase
     {
@@ -54,7 +54,7 @@ namespace Transloadit.Models.Robots.FileCompressing
         public string FileLayout { get; set; }
 
         /// <summary>
-        /// Initializes <c>/file/compress</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/file-compress/">/file/compress</a> Robot.
         /// </summary>
         public FileCompressRobot()
         {

@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace Transloadit.Models.Robots.Code
 {
     /// <summary>
-    /// Represents <c>/script/run</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/script-run/">/script/run</a> Robot.
     /// </summary>
     public class ScriptRunRobot : RobotBase
     {
@@ -21,7 +21,7 @@ namespace Transloadit.Models.Robots.Code
         public string Script { get; set; }
 
         /// <summary>
-        /// Intializes <c>/script/run</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/script-run/">/script/run</a> Robot.
         /// </summary>
         public ScriptRunRobot()
         {

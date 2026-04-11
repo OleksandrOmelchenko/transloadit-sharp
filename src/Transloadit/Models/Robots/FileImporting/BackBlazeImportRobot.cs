@@ -3,7 +3,7 @@
 namespace Transloadit.Models.Robots.FileImporting
 {
     /// <summary>
-    /// Represents <c>/backblaze/import</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/backblaze-import/">/backblaze/import</a> Robot.
     /// </summary>
     public class BackBlazeImportRobot : ImportRobotBase
     {
@@ -46,7 +46,7 @@ namespace Transloadit.Models.Robots.FileImporting
         public string AppKey { get; set; }
 
         /// <summary>
-        /// Initializes <c>/backblaze/import</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/backblaze-import/">/backblaze/import</a> Robot.
         /// </summary>
         public BackBlazeImportRobot()
         {

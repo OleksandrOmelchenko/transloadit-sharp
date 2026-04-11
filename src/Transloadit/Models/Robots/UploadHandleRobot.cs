@@ -4,7 +4,7 @@ namespace Transloadit.Models.Robots
 
 {
     /// <summary>
-    /// Represents <c>/upload/handle</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/upload-handle/">/upload/handle</a> Robot.
     /// </summary>
     public class UploadHandleRobot : RobotBase
     {
@@ -18,7 +18,7 @@ namespace Transloadit.Models.Robots
         public AnyOf<bool, OutputMeta> OutputMeta { get; set; }
 
         /// <summary>
-        /// Initializes <c>/upload/handle</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/upload-handle/">/upload/handle</a> Robot.
         /// </summary>
         public UploadHandleRobot()
         {
@@ -26,3 +26,4 @@ namespace Transloadit.Models.Robots
         }
     }
 }
+

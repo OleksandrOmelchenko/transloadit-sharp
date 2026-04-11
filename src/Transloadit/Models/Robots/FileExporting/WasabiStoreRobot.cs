@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.FileExporting
 {
     /// <summary>
-    /// Represents <c>/wasabi/store</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/wasabi-store/">/wasabi/store</a> Robot.
     /// </summary>
     public class WasabiStoreRobot : StoreRobotBase
     {
@@ -49,7 +49,7 @@ namespace Transloadit.Models.Robots.FileExporting
         public string Password { get; set; }
 
         /// <summary>
-        /// Initializes <c>/wasabi/store</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/wasabi-store/">/wasabi/store</a> Robot.
         /// </summary>
         public WasabiStoreRobot()
         {

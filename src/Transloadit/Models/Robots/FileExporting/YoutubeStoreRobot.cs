@@ -4,21 +4,21 @@ using Newtonsoft.Json;
 namespace Transloadit.Models.Robots.FileExporting
 {
     /// <summary>
-    /// Represents <c>/youtube/store</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/youtube-store/">/youtube/store</a> Robot.
     /// </summary>
-    public class YoutubeStoreRobot : RobotBase
+    public class YoutubeStoreRobot : StoreRobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
         [JsonProperty("use")]
-        public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
+        public new AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
         /// Template credentials name.
         /// </summary>
         [JsonProperty("credentials")]
-        public string Credentials { get; set; }
+        public new string Credentials { get; set; }
 
         /// <summary>
         /// The title of the video to be displayed on YouTube. Note that since the YouTube API requires titles to be within 80 characters, 
@@ -52,7 +52,7 @@ namespace Transloadit.Models.Robots.FileExporting
         public string Visibility { get; set; }
 
         /// <summary>
-        /// Initializes <c>/youtube/store</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/youtube-store/">/youtube/store</a> Robot.
         /// </summary>
         public YoutubeStoreRobot()
         {

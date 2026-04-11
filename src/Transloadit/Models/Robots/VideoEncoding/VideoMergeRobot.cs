@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.VideoEncoding
 {
     /// <summary>
-    /// Represents <c>/video/merge</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/video-merge/">/video/merge</a> Robot.
     /// </summary>
     public class VideoMergeRobot : RobotBase
     {
@@ -133,7 +133,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         public Dictionary<string, object> Ffmpeg { get; set; }
 
         /// <summary>
-        /// Initializes <c>/video/merge</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/video-merge/">/video/merge</a> Robot.
         /// </summary>
         public VideoMergeRobot()
         {

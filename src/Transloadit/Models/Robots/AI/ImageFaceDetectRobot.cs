@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.AI
 {
     /// <summary>
-    /// Represents <c>/image/facedetect</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/image-facedetect/">/image/facedetect</a> Robot.
     /// </summary>
     public class ImageFaceDetectRobot : RobotBase
     {
@@ -69,7 +69,7 @@ namespace Transloadit.Models.Robots.AI
         public AnyOf<int, string> Faces { get; set; }
 
         /// <summary>
-        /// Initializes <c>/image/facedetect</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/image-facedetect/">/image/facedetect</a> Robot.
         /// </summary>
         public ImageFaceDetectRobot()
         {

@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace Transloadit.Models.Robots.VideoEncoding
 {
     /// <summary>
-    /// Represents <c>/video/ondemand</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/video-ondemand/">/video/ondemand</a> Robot.
     /// </summary>
     public class VideoOndemandRobot : RobotBase
     {
@@ -57,7 +57,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         public string AssetParamName { get; set; }
 
         /// <summary>
-        /// Initializes <c>/video/ondemand</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/video-ondemand/">/video/ondemand</a> Robot.
         /// </summary>
         public VideoOndemandRobot()
         {

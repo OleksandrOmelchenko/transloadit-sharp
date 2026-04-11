@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.MediaCataloging
 {
     /// <summary>
-    /// Represents <c>/meta/write</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/meta-write/">/meta/write</a> Robot.
     /// </summary>
     public class MetadataWriteRobot : RobotBase
     {
@@ -29,7 +29,7 @@ namespace Transloadit.Models.Robots.MediaCataloging
         public string FfmpegStack { get; set; }
 
         /// <summary>
-        /// Initializes <c>/meta/write</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/meta-write/">/meta/write</a> Robot.
         /// </summary>
         public MetadataWriteRobot()
         {

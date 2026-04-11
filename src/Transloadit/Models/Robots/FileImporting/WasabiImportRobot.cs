@@ -3,9 +3,9 @@
 namespace Transloadit.Models.Robots.FileImporting
 {
     /// <summary>
-    /// Represents <c>/wasabi/import</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/wasabi-import/">/wasabi/import</a> Robot.
     /// </summary>
-    public class WasabiImportRobot : PaginatedImportRobotBase
+    public class WasabiImportRobot : ImportRobotBase
     {
         /// <summary>
         /// Wasabi host.
@@ -26,7 +26,7 @@ namespace Transloadit.Models.Robots.FileImporting
         public string Password { get; set; }
 
         /// <summary>
-        /// Initializes <c>/wasabi/import</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/wasabi-import/">/wasabi/import</a> Robot.
         /// </summary>
         public WasabiImportRobot()
         {
