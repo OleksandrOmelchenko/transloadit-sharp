@@ -5,7 +5,7 @@ namespace Transloadit.Models.Robots.FileImporting
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/cloudfiles-import/">/cloudfiles/import</a> Robot.
     /// </summary>
-    public class RackSpaceCloudFilesImportRobot : ImportRobotBase
+    public class RackSpaceCloudFilesImportRobot : PaginatedImportRobotBase
     {
         /// <summary>
         /// Rackspace Cloud Files account type.

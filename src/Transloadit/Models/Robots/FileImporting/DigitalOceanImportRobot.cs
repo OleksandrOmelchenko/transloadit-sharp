@@ -5,7 +5,7 @@ namespace Transloadit.Models.Robots.FileImporting
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/digitalocean-import/">/digitalocean/import</a> Robot.
     /// </summary>
-    public class DigitalOceanImportRobot : ImportRobotBase
+    public class DigitalOceanImportRobot : PaginatedImportRobotBase
     {
         /// <summary>
         /// DigitalOcean space name.

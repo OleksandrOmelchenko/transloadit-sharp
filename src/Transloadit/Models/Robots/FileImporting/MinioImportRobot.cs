@@ -5,7 +5,7 @@ namespace Transloadit.Models.Robots.FileImporting
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/minio-import/">/minio/import</a> Robot.
     /// </summary>
-    public class MinioImportRobot : ImportRobotBase
+    public class MinioImportRobot : PaginatedImportRobotBase
     {
         /// <summary>
         /// MinIO bucket.

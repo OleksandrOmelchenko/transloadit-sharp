@@ -5,7 +5,7 @@ namespace Transloadit.Models.Robots.FileImporting
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/swift-import/">/swift/import</a> Robot.
     /// </summary>
-    public class SwiftImportRobot : ImportRobotBase
+    public class SwiftImportRobot : PaginatedImportRobotBase
     {
         /// <summary>
         /// Swift bucket.

@@ -6,19 +6,19 @@ namespace Transloadit.Models.Robots.FileExporting
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/youtube-store/">/youtube/store</a> Robot.
     /// </summary>
-    public class YoutubeStoreRobot : StoreRobotBase
+    public class YoutubeStoreRobot : RobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
         [JsonProperty("use")]
-        public new AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
+        public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
         /// Template credentials name.
         /// </summary>
         [JsonProperty("credentials")]
-        public new string Credentials { get; set; }
+        public string Credentials { get; set; }
 
         /// <summary>
         /// The title of the video to be displayed on YouTube. Note that since the YouTube API requires titles to be within 80 characters, 

@@ -11,6 +11,7 @@ Behavior
 - Make minimal changes necessary to achieve the goal
 - Avoid introducing new dependencies unless absolutely necessary
 - Follow the repository's target frameworks and language versions when applicable
+- When asked to update comments, do NOT ever edit code; only update comments and optionally suggest non-applied code fixes based on findings
 
 Tests and validation
 - Run the build and tests when making changes that affect compilation or behavior

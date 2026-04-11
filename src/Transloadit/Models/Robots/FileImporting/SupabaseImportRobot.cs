@@ -5,7 +5,7 @@ namespace Transloadit.Models.Robots.FileImporting
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/supabase-import/">/supabase/import</a> Robot.
     /// </summary>
-    public class SupabaseImportRobot : ImportRobotBase
+    public class SupabaseImportRobot : PaginatedImportRobotBase
     {
         /// <summary>
         /// Supabase bucket.

@@ -5,7 +5,7 @@ namespace Transloadit.Models.Robots.FileImporting
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/s3-import/">/s3/import</a> Robot.
     /// </summary>
-    public class S3ImportRobot : ImportRobotBase
+    public class S3ImportRobot : PaginatedImportRobotBase
     {
         /// <summary>
         /// S3 key.

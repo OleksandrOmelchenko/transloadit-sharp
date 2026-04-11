@@ -6,7 +6,7 @@ namespace Transloadit.Models.Robots.FileImporting
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/http-import/">/http/import</a> Robot.
     /// </summary>
-    public class HttpImportRobot : ImportRobotBase
+    public class HttpImportRobot : RobotBase
     {
         /// <summary>
         /// "Ignore errors" mode. Possible array members are <c>meta</c> and <c>import</c>. 
@@ -15,7 +15,7 @@ namespace Transloadit.Models.Robots.FileImporting
         /// Setting this parameter to <c>true</c> will set it to <c>["meta", "import"]</c> internally.
         /// </summary>
         [JsonProperty("ignore_errors")]
-        public new AnyOf<bool, List<string>> IgnoreErrors { get; set; }
+        public AnyOf<bool, List<string>> IgnoreErrors { get; set; }
 
         /// <summary>
         /// The URL from which the file to be imported can be retrieved. You can also specify an array of URLs or a string of <c>|</c> 

@@ -5,7 +5,7 @@ namespace Transloadit.Models.Robots.FileImporting
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/wasabi-import/">/wasabi/import</a> Robot.
     /// </summary>
-    public class WasabiImportRobot : ImportRobotBase
+    public class WasabiImportRobot : PaginatedImportRobotBase
     {
         /// <summary>
         /// Wasabi host.
