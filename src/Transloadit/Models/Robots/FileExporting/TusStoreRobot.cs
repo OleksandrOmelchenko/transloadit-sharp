@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.FileExporting
 {
     /// <summary>
-    /// Represents <c>/tus/store</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/tus-store/">/tus/store</a> Robot.
     /// </summary>
     public class TusStoreRobot : RobotBase
     {
@@ -52,7 +52,7 @@ namespace Transloadit.Models.Robots.FileExporting
         public string SslUrlTemplate { get; set; }
 
         /// <summary>
-        /// Initializes <c>/tus/store</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/tus-store/">/tus/store</a> Robot.
         /// </summary>
         public TusStoreRobot()
         {

@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace Transloadit.Models.Robots.MediaCataloging
 {
     /// <summary>
-    /// Represents <c>/file/hash</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/file-hash/">/file/hash</a> Robot.
     /// </summary>
     public class FileHashRobot : RobotBase
     {
@@ -22,7 +22,7 @@ namespace Transloadit.Models.Robots.MediaCataloging
         public string Algorithm { get; set; }
 
         /// <summary>
-        /// Initializes <c>/file/hash</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/file-hash/">/file/hash</a> Robot.
         /// </summary>
         public FileHashRobot()
         {

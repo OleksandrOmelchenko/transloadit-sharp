@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.FileFiltering
 {
     /// <summary>
-    /// Represents <c>/file/virusscan</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/file-virusscan/">/file/virusscan</a> Robot.
     /// </summary>
     public class FileVirusScanRobot : RobotBase
     {
@@ -29,7 +29,7 @@ namespace Transloadit.Models.Robots.FileFiltering
         public string ErrorMsg { get; set; }
 
         /// <summary>
-        /// Initializes <c>/file/virusscan</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/file-virusscan/">/file/virusscan</a> Robot.
         /// </summary>
         public FileVirusScanRobot()
         {

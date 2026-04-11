@@ -5,7 +5,7 @@ using Transloadit.Models.Robots.ImageManipulation;
 namespace Transloadit.Models.Robots.VideoEncoding
 {
     /// <summary>
-    /// Represents <c>/video/encode</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/video-encode/">/video/encode</a> Robot.
     /// </summary>
     public class VideoEncodeRobot : RobotBase
     {
@@ -152,7 +152,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         public Dictionary<string, object> Ffmpeg { get; set; }
 
         /// <summary>
-        /// Initializes <c>/video/encode</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/video-encode/">/video/encode</a> Robot.
         /// </summary>
         public VideoEncodeRobot()
         {

@@ -3,7 +3,7 @@
 namespace Transloadit.Models.Robots.FileImporting
 {
     /// <summary>
-    /// Represents <c>/tigris/import</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/tigris-import/">/tigris/import</a> Robot.
     /// </summary>
     public class TigrisImportRobot : PaginatedImportRobotBase
     {
@@ -41,7 +41,7 @@ namespace Transloadit.Models.Robots.FileImporting
         public string Secret { get; set; }
 
         /// <summary>
-        /// Initializes <c>/azure/import</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/tigris-import/">/tigris/import</a> Robot.
         /// </summary>
         public TigrisImportRobot()
         {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.AudioEncoding
 {
     /// <summary>
-    /// Represents <c>/audio/merge</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/audio-merge/">/audio/merge</a> Robot.
     /// </summary>
     public class AudioMergeRobot : RobotBase
     {
@@ -85,7 +85,7 @@ namespace Transloadit.Models.Robots.AudioEncoding
         public Dictionary<string, object> Ffmpeg { get; set; }
 
         /// <summary>
-        /// Initializes <c>/audio/merge</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/audio-merge/">/audio/merge</a> Robot.
         /// </summary>
         public AudioMergeRobot()
         {

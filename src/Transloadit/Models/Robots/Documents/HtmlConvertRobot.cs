@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.Documents
 {
     /// <summary>
-    /// Represents <c>/html/convert</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/html-convert/">/html/convert</a> Robot.
     /// </summary>
     public class HtmlConvertRobot : RobotBase
     {
@@ -72,7 +72,7 @@ namespace Transloadit.Models.Robots.Documents
         public Dictionary<string, string> Headers { get; set; }
 
         /// <summary>
-        /// Initializes <c>/html/convert</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/html-convert/">/html/convert</a> Robot.
         /// </summary>
         public HtmlConvertRobot()
         {

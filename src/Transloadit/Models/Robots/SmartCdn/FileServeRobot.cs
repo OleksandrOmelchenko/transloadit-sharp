@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace Transloadit.Models.Robots.SmartCdn
 {
     /// <summary>
-    /// Represents <c>/file/serve</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/file-serve/">/file/serve</a> Robot.
     /// </summary>
     public class FileServeRobot : RobotBase
     {
@@ -28,7 +28,7 @@ namespace Transloadit.Models.Robots.SmartCdn
         public Dictionary<string, string> Headers { get; set; }
 
         /// <summary>
-        /// Initializes <c>/file/serve</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/file-serve/">/file/serve</a> Robot.
         /// </summary>
         public FileServeRobot()
         {

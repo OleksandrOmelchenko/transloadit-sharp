@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.ImageManipulation
 {
     /// <summary>
-    /// Represents <c>/image/optimize</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/image-optimize/">/image/optimize</a> Robot.
     /// </summary>
     public class ImageOptimizeRobot : RobotBase
     {
@@ -50,7 +50,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         public bool? FixBreakingImages { get; set; }
 
         /// <summary>
-        /// Initializes <c>/image/optimize</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/image-optimize/">/image/optimize</a> Robot.
         /// </summary>
         public ImageOptimizeRobot()
         {

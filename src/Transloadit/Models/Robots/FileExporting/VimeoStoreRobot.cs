@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.FileExporting
 {
     /// <summary>
-    /// Represents <c>/vimeo/store</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/vimeo-store/">/vimeo/store</a> Robot.
     /// </summary>
     public class VimeoStoreRobot : RobotBase
     {
@@ -74,7 +74,7 @@ namespace Transloadit.Models.Robots.FileExporting
         public string FolderId { get; set; }
 
         /// <summary>
-        /// Initializes <c>/vimeo/store</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/vimeo-store/">/vimeo/store</a> Robot.
         /// </summary>
         public VimeoStoreRobot()
         {

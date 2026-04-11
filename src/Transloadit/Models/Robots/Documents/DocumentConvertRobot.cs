@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.Documents
 {
     /// <summary>
-    /// Represents <c>/document/convert</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/document-convert/">/document/convert</a> Robot.
     /// </summary>
     public class DocumentConvertRobot : RobotBase
     {
@@ -90,7 +90,7 @@ namespace Transloadit.Models.Robots.Documents
         public string PdfFooterTemplate { get; set; }
 
         /// <summary>
-        /// Initializes <c>/document/convert</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/document-convert/">/document/convert</a> Robot.
         /// </summary>
         public DocumentConvertRobot()
         {

@@ -3,7 +3,7 @@
 namespace Transloadit.Models.Robots.FileImporting
 {
     /// <summary>
-    /// Represents <c>/s3/import</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/s3-import/">/s3/import</a> Robot.
     /// </summary>
     public class S3ImportRobot : PaginatedImportRobotBase
     {
@@ -32,7 +32,7 @@ namespace Transloadit.Models.Robots.FileImporting
         public string BucketRegion { get; set; }
 
         /// <summary>
-        /// Initializes <c>/s3/import</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/s3-import/">/s3/import</a> Robot.
         /// </summary>
         public S3ImportRobot()
         {

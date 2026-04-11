@@ -3,7 +3,7 @@
 namespace Transloadit.Models.Robots.FileExporting
 {
     /// <summary>
-    /// Represents <c>/dropbox/store</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/dropbox-store/">/dropbox/store</a> Robot.
     /// </summary>
     public class DropboxStoreRobot : StoreRobotBase
     {
@@ -14,7 +14,7 @@ namespace Transloadit.Models.Robots.FileExporting
         public bool? CreateSharingLink { get; set; }
 
         /// <summary>
-        /// Initializes <c>/dropbox/store</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/dropbox-store/">/dropbox/store</a> Robot.
         /// </summary>
         public DropboxStoreRobot()
         {
@@ -22,3 +22,4 @@ namespace Transloadit.Models.Robots.FileExporting
         }
     }
 }
+

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.AI
 {
     /// <summary>
-    /// Represents <c>/image/describe</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/image-describe/">/image/describe</a> Robot.
     /// </summary>
     public class ImageDescribeRobot : RobotBase
     {
@@ -52,7 +52,7 @@ namespace Transloadit.Models.Robots.AI
         public bool? ExplicitDescriptions { get; set; }
 
         /// <summary>
-        /// Initializes <c>/image/describe</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/image-describe/">/image/describe</a> Robot.
         /// </summary>
         public ImageDescribeRobot()
         {

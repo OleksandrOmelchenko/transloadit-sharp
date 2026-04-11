@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.FileExporting
 {
     /// <summary>
-    /// Represents <c>/cloudflare/store</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/cloudflare-store/">/cloudflare/store</a> Robot.
     /// </summary>
     public class CloudFlareStoreRobot : StoreRobotBase
     {
@@ -48,7 +48,7 @@ namespace Transloadit.Models.Robots.FileExporting
         public string Secret { get; set; }
 
         /// <summary>
-        /// Initializes <c>/cloudflare/store</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/cloudflare-store/">/cloudflare/store</a> Robot.
         /// </summary>
         public CloudFlareStoreRobot()
         {

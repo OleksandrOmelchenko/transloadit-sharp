@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.MediaCataloging
 {
     /// <summary>
-    /// Represents <c>/file/preview</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/file-preview/">/file/preview</a> Robot.
     /// </summary>
     public class FilePreviewRobot : RobotBase
     {
@@ -192,7 +192,7 @@ namespace Transloadit.Models.Robots.MediaCataloging
         public bool? ClipLoop { get; set; }
 
         /// <summary>
-        /// Initializes <c>/file/preview</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/file-preview/">/file/preview</a> Robot.
         /// </summary>
         public FilePreviewRobot()
         {

@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace Transloadit.Models.Robots.FileExporting
 {
     /// <summary>
-    /// Represents <c>/youtube/store</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/youtube-store/">/youtube/store</a> Robot.
     /// </summary>
     public class YoutubeStoreRobot : RobotBase
     {
@@ -52,7 +52,7 @@ namespace Transloadit.Models.Robots.FileExporting
         public string Visibility { get; set; }
 
         /// <summary>
-        /// Initializes <c>/youtube/store</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/youtube-store/">/youtube/store</a> Robot.
         /// </summary>
         public YoutubeStoreRobot()
         {

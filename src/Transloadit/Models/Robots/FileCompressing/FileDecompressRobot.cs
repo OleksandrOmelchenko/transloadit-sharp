@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace Transloadit.Models.Robots.FileCompressing
 {
     /// <summary>
-    /// Represents <c>/file/decompress</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/file-decompress/">/file/decompress</a> Robot.
     /// </summary>
     public class FileDecompressRobot : RobotBase
     {
@@ -24,7 +24,7 @@ namespace Transloadit.Models.Robots.FileCompressing
         public AnyOf<bool, List<string>> IgnoreErrors { get; set; }
 
         /// <summary>
-        /// Initializes <c>/file/decompress</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/file-decompress/">/file/decompress</a> Robot.
         /// </summary>
         public FileDecompressRobot()
         {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.FileImporting
 {
     /// <summary>
-    /// Represents <c>/vimeo/import</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/vimeo-import/">/vimeo/import</a> Robot.
     /// </summary>
     public class VimeoImportRobot : ImportRobotBase
     {
@@ -33,7 +33,7 @@ namespace Transloadit.Models.Robots.FileImporting
         public string Rendition { get; set; }
 
         /// <summary>
-        /// Initializes <c>/vimeo/import</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/vimeo-import/">/vimeo/import</a> Robot.
         /// </summary>
         public VimeoImportRobot()
         {

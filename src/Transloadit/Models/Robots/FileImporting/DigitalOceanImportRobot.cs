@@ -3,7 +3,7 @@
 namespace Transloadit.Models.Robots.FileImporting
 {
     /// <summary>
-    /// Represents <c>/digitalocean/import</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/digitalocean-import/">/digitalocean/import</a> Robot.
     /// </summary>
     public class DigitalOceanImportRobot : PaginatedImportRobotBase
     {
@@ -32,7 +32,7 @@ namespace Transloadit.Models.Robots.FileImporting
         public string Secret { get; set; }
 
         /// <summary>
-        /// Initializes <c>/digitalocean/import</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/digitalocean-import/">/digitalocean/import</a> Robot.
         /// </summary>
         public DigitalOceanImportRobot()
         {

@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace Transloadit.Models.Robots.AI
 {
     /// <summary>
-    /// Represents <c>/ai/chat</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/ai-chat/">/ai/chat</a> Robot.
     /// </summary>
     public class AiChatRobot : RobotBase
     {
@@ -69,7 +69,7 @@ namespace Transloadit.Models.Robots.AI
         public List<AiChatMcpServer> McpServers { get; set; }
 
         /// <summary>
-        /// Initializes <c>/ai/chat</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/ai-chat/">/ai/chat</a> Robot.
         /// </summary>
         public AiChatRobot()
         {

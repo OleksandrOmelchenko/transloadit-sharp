@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.FileExporting
 {
     /// <summary>
-    /// Represents <c>/minio/store</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/minio-store/">/minio/store</a> Robot.
     /// </summary>
     public class MinioStoreRobot : StoreRobotBase
     {
@@ -54,7 +54,7 @@ namespace Transloadit.Models.Robots.FileExporting
         public string Host { get; set; }
 
         /// <summary>
-        /// Initializes <c>/minio/store</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/minio-store/">/minio/store</a> Robot.
         /// </summary>
         public MinioStoreRobot()
         {

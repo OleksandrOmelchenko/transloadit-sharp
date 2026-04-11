@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.FileExporting
 {
     /// <summary>
-    /// Represents <c>/swift/store</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/swift-store/">/swift/store</a> Robot.
     /// </summary>
     public class SwiftStoreRobot : StoreRobotBase
     {
@@ -55,7 +55,7 @@ namespace Transloadit.Models.Robots.FileExporting
         public string Secret { get; set; }
 
         /// <summary>
-        /// Initializes <c>/swift/store</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/swift-store/">/swift/store</a> Robot.
         /// </summary>
         public SwiftStoreRobot()
         {

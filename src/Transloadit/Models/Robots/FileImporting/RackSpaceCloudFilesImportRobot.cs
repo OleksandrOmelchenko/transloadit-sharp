@@ -3,7 +3,7 @@
 namespace Transloadit.Models.Robots.FileImporting
 {
     /// <summary>
-    /// Represents <c>/cloudfiles/import</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/cloudfiles-import/">/cloudfiles/import</a> Robot.
     /// </summary>
     public class RackSpaceCloudFilesImportRobot : PaginatedImportRobotBase
     {
@@ -38,7 +38,7 @@ namespace Transloadit.Models.Robots.FileImporting
         public string Key { get; set; }
 
         /// <summary>
-        /// Initializes <c>/cloudfiles/import</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/cloudfiles-import/">/cloudfiles/import</a> Robot.
         /// </summary>
         public RackSpaceCloudFilesImportRobot()
         {

@@ -3,7 +3,7 @@
 namespace Transloadit.Models.Robots.FileImporting
 {
     /// <summary>
-    /// Represents <c>/azure/import</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/azure-import/">/azure/import</a> Robot.
     /// </summary>
     public class AzureImportRobot : ImportRobotBase
     {
@@ -40,7 +40,7 @@ namespace Transloadit.Models.Robots.FileImporting
         public string Container { get; set; }
 
         /// <summary>
-        /// Initializes <c>/azure/import</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/azure-import/">/azure/import</a> Robot.
         /// </summary>
         public AzureImportRobot()
         {

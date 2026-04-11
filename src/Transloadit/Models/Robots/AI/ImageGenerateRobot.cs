@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.AI
 {
     /// <summary>
-    /// Represents <c>/image/generate</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/image-generate/">/image/generate</a> Robot.
     /// </summary>
     public class ImageGenerateRobot : RobotBase
     {
@@ -79,7 +79,7 @@ namespace Transloadit.Models.Robots.AI
         public string Style { get; set; }
 
         /// <summary>
-        /// Initializes <c>/image/generate</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/image-generate/">/image/generate</a> Robot.
         /// </summary>
         public ImageGenerateRobot()
         {

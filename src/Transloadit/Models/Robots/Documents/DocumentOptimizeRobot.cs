@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace Transloadit.Models.Robots.Documents
 {
     /// <summary>
-    /// Represents <c>/document/optimize</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/document-optimize/">/document/optimize</a> Robot.
     /// </summary>
     public class DocumentOptimizeRobot : RobotBase
     {
@@ -63,7 +63,7 @@ namespace Transloadit.Models.Robots.Documents
         public string Compatibility { get; set; }
 
         /// <summary>
-        /// Initializes <c>/document/optimize</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/document-optimize/">/document/optimize</a> Robot.
         /// </summary>
         public DocumentOptimizeRobot()
         {

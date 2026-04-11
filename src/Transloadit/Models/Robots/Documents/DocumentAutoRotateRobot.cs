@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace Transloadit.Models.Robots.Documents
 {
     /// <summary>
-    /// Represents <c>/document/autorotate</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/document-autorotate/">/document/autorotate</a> Robot.
     /// </summary>
     public class DocumentAutoRotateRobot : RobotBase
     {
@@ -15,7 +15,7 @@ namespace Transloadit.Models.Robots.Documents
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
-        /// Initializes <c>/document/autorotate</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/document-autorotate/">/document/autorotate</a> Robot.
         /// </summary>
         public DocumentAutoRotateRobot()
         {

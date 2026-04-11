@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace Transloadit.Models.Robots.VideoEncoding
 {
     /// <summary>
-    /// Represents <c>/video/split</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/video-split/">/video/split</a> Robot.
     /// </summary>
     public class VideoSplitRobot : RobotBase
     {
@@ -57,7 +57,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         public List<VideoSplitSegment> Segments { get; set; }
 
         /// <summary>
-        /// Initializes <c>/video/split</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/video-split/">/video/split</a> Robot.
         /// </summary>
         public VideoSplitRobot()
         {

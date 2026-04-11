@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.FileImporting
 {
     /// <summary>
-    /// Represents <c>/http/import</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/http-import/">/http/import</a> Robot.
     /// </summary>
     public class HttpImportRobot : RobotBase
     {
@@ -59,7 +59,7 @@ namespace Transloadit.Models.Robots.FileImporting
         public bool? FailFast { get; set; }
 
         /// <summary>
-        /// Initializes <c>/http/import</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/http-import/">/http/import</a> Robot.
         /// </summary>
         public HttpImportRobot()
         {

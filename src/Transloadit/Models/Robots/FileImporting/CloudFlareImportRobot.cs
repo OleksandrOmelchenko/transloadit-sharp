@@ -3,7 +3,7 @@
 namespace Transloadit.Models.Robots.FileImporting
 {
     /// <summary>
-    /// Represents <c>/cloudflare/import</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/cloudflare-import/">/cloudflare/import</a> Robot.
     /// </summary>
     public class CloudFlareImportRobot : PaginatedImportRobotBase
     {
@@ -32,7 +32,7 @@ namespace Transloadit.Models.Robots.FileImporting
         public string Secret { get; set; }
 
         /// <summary>
-        /// Initializes <c>/cloudflare/import</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/cloudflare-import/">/cloudflare/import</a> Robot.
         /// </summary>
         public CloudFlareImportRobot()
         {

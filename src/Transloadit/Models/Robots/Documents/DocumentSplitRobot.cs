@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace Transloadit.Models.Robots.Documents
 {
     /// <summary>
-    /// Represents <c>/document/split</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/document-split/">/document/split</a> Robot.
     /// </summary>
     public class DocumentSplitRobot : RobotBase
     {
@@ -22,7 +22,7 @@ namespace Transloadit.Models.Robots.Documents
         public AnyOf<string, List<string>> Pages { get; set; }
 
         /// <summary>
-        /// Initializes <c>/document/split</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/document-split/">/document/split</a> Robot.
         /// </summary>
         public DocumentSplitRobot()
         {

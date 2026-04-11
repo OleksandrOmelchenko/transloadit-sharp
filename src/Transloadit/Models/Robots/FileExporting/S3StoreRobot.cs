@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.FileExporting
 {
     /// <summary>
-    /// Represents <c>/s3/store</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/s3-store/">/s3/store</a> Robot.
     /// </summary>
     public class S3StoreRobot : StoreRobotBase
     {
@@ -93,7 +93,7 @@ namespace Transloadit.Models.Robots.FileExporting
         public string BucketRegion { get; set; }
 
         /// <summary>
-        /// Initializes <c>/s3/store</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/s3-store/">/s3/store</a> Robot.
         /// </summary>
         public S3StoreRobot()
         {

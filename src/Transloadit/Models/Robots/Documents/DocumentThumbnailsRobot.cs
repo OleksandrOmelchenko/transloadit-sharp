@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.Documents
 {
     /// <summary>
-    /// Represents <c>/document/thumbs</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/document-thumbs/">/document/thumbs</a> Robot.
     /// </summary>
     public class DocumentThumbnailsRobot : RobotBase
     {
@@ -129,7 +129,7 @@ namespace Transloadit.Models.Robots.Documents
         public string ImageMagickStack { get; set; }
 
         /// <summary>
-        /// Initializes <c>/document/thumbs</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/document-thumbs/">/document/thumbs</a> Robot.
         /// </summary>
         public DocumentThumbnailsRobot()
         {

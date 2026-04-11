@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.ImageManipulation
 {
     /// <summary>
-    /// Represents <c>/image/merge</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/image-merge/">/image/merge</a> Robot.
     /// </summary>
     public class ImageMergeRobot : RobotBase
     {
@@ -68,7 +68,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         public int? Quality { get; set; }
 
         /// <summary>
-        /// Initializes <c>/image/merge</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/image-merge/">/image/merge</a> Robot.
         /// </summary>
         public ImageMergeRobot()
         {

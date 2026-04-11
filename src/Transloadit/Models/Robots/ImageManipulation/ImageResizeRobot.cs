@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Transloadit.Models.Robots.ImageManipulation
 {
     /// <summary>
-    /// Represents <c>/image/resize</c> Robot.
+    /// Represents <a href="https://transloadit.com/docs/robots/image-resize/">/image/resize</a> Robot.
     /// </summary>
     public class ImageResizeRobot : RobotBase
     {
@@ -351,7 +351,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         public string WatermarkResizeStrategy { get; set; }
 
         /// <summary>
-        /// Initializes <c>/image/resize</c> Robot.
+        /// Initializes <a href="https://transloadit.com/docs/robots/image-resize/">/image/resize</a> Robot.
         /// </summary>
         public ImageResizeRobot()
         {
