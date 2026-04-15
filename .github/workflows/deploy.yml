@@ -93,6 +93,7 @@ jobs:
   publish:
     name: Publish
     needs: [tag]
+    environment: Release
     runs-on: ubuntu-latest
     permissions:
       contents: read
