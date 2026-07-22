@@ -12,7 +12,7 @@ Robots are strongly-typed step models under `src/Transloadit/Models/Robots/<Cate
 1. **Resolve slug + category.** From the robot path `/x/y`, derive the docs slug (`/image/resize` → `image-resize`) and map the Transloadit doc category to an existing folder:
    `AI`, `AudioEncoding`, `Code`, `Documents`, `FileCompressing`, `FileExporting`, `FileFiltering`, `FileImporting`, `ImageManipulation`, `MediaCataloging`, `SmartCdn`, `VideoEncoding`.
 
-2. **Fetch the parameter spec** using the `fetch-transloadit-docs` skill.
+2. **Fetch the parameter spec** using the `fetch-transloadit-docs` skill. That skill also covers the mandatory **existence/status check**: the `llms.txt`/`llms-full.txt` index can be stale (it lists robots that 404 or are removed), so before writing any code confirm the robot has a **published docs page** — check the `sitemap.xml` and the `curl` HTTP status + server-rendered `<title>` of `https://transloadit.com/docs/robots/<slug>/` (do **not** use `WebFetch` — it fabricates content for 404 pages). If the page is 404 / not in the sitemap / marked removed, **do not implement it** — report that to the user instead.
 
 3. **Open a sibling** in the same category folder and mirror it — it is the source of truth for idioms. Pick the base class from `src/Transloadit/Models/Robots/RobotBase.cs`:
    - `RobotBase` — default.
@@ -51,3 +51,5 @@ Robots are strongly-typed step models under `src/Transloadit/Models/Robots/<Cate
    dotnet test tests/Transloadit.Tests/Transloadit.Tests.csproj -f net8.0 --filter "FullyQualifiedName~NewRobotsTests"
    ```
    Optionally hand the diff to the `csharp-build-reviewer` agent.
+
+10. **Re-confirm existence (post-check).** As a final step, re-check each robot you added against the `sitemap.xml` and the `curl` HTTP status/`<title>` of its docs page — the LLM index that seeded the work may have been out of date. Drop any robot whose page 404s, is absent from the sitemap, or is marked removed.

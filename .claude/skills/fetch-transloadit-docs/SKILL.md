@@ -5,7 +5,27 @@ description: Fetch the authoritative parameter spec for a Transloadit Robot or A
 
 # Fetch Transloadit docs
 
-Pull the authoritative parameter list for a Robot or API endpoint so a C# model maps exactly. The reliable source is Transloadit's machine-readable **`llms-full.txt`**, which contains a **Zod schema** for every robot — exact keys, types, defaults, and descriptions. The rendered HTML pages and per-robot `.md` pages are JS stubs that omit parameters, so do **not** rely on `WebFetch` against them.
+Pull the authoritative parameter list for a Robot or API endpoint so a C# model maps exactly. The reliable source **for parameters** is Transloadit's machine-readable **`llms-full.txt`**, which contains a **Zod schema** for every robot — exact keys, types, defaults, and descriptions. The rendered HTML pages and per-robot `.md` pages are JS stubs that omit parameters, so do **not** rely on `WebFetch` against them for the parameter list.
+
+## ⚠️ The LLM index can be stale — verify against the live docs page
+
+`llms-full.txt` / `llms.txt` are **not authoritative for whether a robot exists or is current**. They lag behind the live docs and have listed robots (with full schemas) that either 404 (no published docs page — e.g. `/document/extract`, `/mega/import`, `/image/enhance`) or are marked removed (e.g. `/edgly/deliver`). So **before implementing** a robot and **after** (as a final check), verify it exists as a published docs page.
+
+**Use reliable, server-side signals — NOT `WebFetch`.** `WebFetch` renders/summarizes these JS SPA pages with a small model and has been observed to **fabricate plausible content (fake headings, fake "beta/ga" stages) for pages that actually 404** — do not trust it for existence/status. Instead:
+
+1. **Sitemap** (authoritative list of published pages):
+   ```sh
+   curl -sSL https://transloadit.com/sitemap.xml | grep -oE 'docs/robots/[a-z-]+' | sort -u
+   ```
+   If the robot's slug is **not** in the sitemap, its docs page is not published — treat it as not available.
+2. **HTTP status + server-rendered `<title>`** (the title is rendered server-side even on the SPA):
+   ```sh
+   curl -sS -o /dev/null -w '%{http_code}\n' -L "https://transloadit.com/docs/robots/<slug>/"
+   curl -sSL "https://transloadit.com/docs/robots/<slug>/" | grep -oiE '<title>[^<]*</title>'
+   ```
+   A real page returns `200` with `<title>/x/y | Transloadit</title>`; a missing one returns `404` with `<title>404 - Not Found | Transloadit</title>`.
+
+If the robot is **404 / not in the sitemap / removed → do not implement it** (and if it already exists in the repo, flag it for removal). Trust the sitemap + HTTP/title over the LLM index whenever they disagree.
 
 ## Slug mapping
 
