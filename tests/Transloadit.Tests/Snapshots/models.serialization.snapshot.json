@@ -2956,6 +2956,65 @@
     ]
   },
   {
+    "type": "Transloadit.Models.Robots.Code.HttpRequestRobot",
+    "properties": [
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "headers",
+        "type": "AnyOf<Dictionary<String, String>, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "max_response_size",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "max_result_file_size",
+        "type": "Nullable<Int64>"
+      },
+      {
+        "name": "max_result_files",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "method",
+        "type": "String"
+      },
+      {
+        "name": "payload",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "result_download_timeout",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "timeout",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "url",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
     "type": "Transloadit.Models.Robots.Code.ScriptRunRobot",
     "properties": [
       {
