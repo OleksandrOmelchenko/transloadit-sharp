@@ -1,0 +1,7231 @@
+[
+  {
+    "type": "Transloadit.Models.Assemblies.AssemblyCompactResponse",
+    "properties": [
+      {
+        "name": "account_id",
+        "type": "String"
+      },
+      {
+        "name": "created",
+        "type": "DateTimeOffset"
+      },
+      {
+        "name": "created_ts",
+        "type": "Int64"
+      },
+      {
+        "name": "error",
+        "type": "String"
+      },
+      {
+        "name": "execution_duration",
+        "type": "Double"
+      },
+      {
+        "name": "execution_start",
+        "type": "DateTimeOffset"
+      },
+      {
+        "name": "files",
+        "type": "String"
+      },
+      {
+        "name": "http_code",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "id",
+        "type": "String"
+      },
+      {
+        "name": "instance",
+        "type": "String"
+      },
+      {
+        "name": "message",
+        "type": "String"
+      },
+      {
+        "name": "notify_url",
+        "type": "String"
+      },
+      {
+        "name": "num_input_files",
+        "type": "Int32"
+      },
+      {
+        "name": "ok",
+        "type": "String"
+      },
+      {
+        "name": "parent_id",
+        "type": "String"
+      },
+      {
+        "name": "reason",
+        "type": "String"
+      },
+      {
+        "name": "redirect_url",
+        "type": "String"
+      },
+      {
+        "name": "region",
+        "type": "String"
+      },
+      {
+        "name": "template_id",
+        "type": "String"
+      },
+      {
+        "name": "template_name",
+        "type": "String"
+      },
+      {
+        "name": "warning_count",
+        "type": "Int32"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Assemblies.AssemblyListRequest",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "AuthParams"
+      },
+      {
+        "name": "fromdate",
+        "type": "Nullable<DateTime>",
+        "converter": "PaginationDateTimeConverter"
+      },
+      {
+        "name": "keywords",
+        "type": "List<String>"
+      },
+      {
+        "name": "page",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "pagesize",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "todate",
+        "type": "Nullable<DateTime>",
+        "converter": "PaginationDateTimeConverter"
+      },
+      {
+        "name": "type",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Assemblies.AssemblyRequest",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "AuthParams"
+      },
+      {
+        "name": "fields",
+        "type": "Dictionary<String, Object>"
+      },
+      {
+        "name": "notify_url",
+        "type": "String"
+      },
+      {
+        "name": "quiet",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "steps",
+        "type": "Dictionary<String, RobotBase>"
+      },
+      {
+        "name": "template_id",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Assemblies.AssemblyResponse",
+    "properties": [
+      {
+        "name": "account_id",
+        "type": "String"
+      },
+      {
+        "name": "account_name",
+        "type": "String"
+      },
+      {
+        "name": "account_slug",
+        "type": "String"
+      },
+      {
+        "name": "api_auth_key_id",
+        "type": "String"
+      },
+      {
+        "name": "assembly_id",
+        "type": "String"
+      },
+      {
+        "name": "assembly_ssl_url",
+        "type": "String"
+      },
+      {
+        "name": "assembly_url",
+        "type": "String"
+      },
+      {
+        "name": "build_id",
+        "type": "String"
+      },
+      {
+        "name": "bytes_expected",
+        "type": "Int64"
+      },
+      {
+        "name": "bytes_received",
+        "type": "Int64"
+      },
+      {
+        "name": "bytes_usage",
+        "type": "Int64"
+      },
+      {
+        "name": "client_agent",
+        "type": "String"
+      },
+      {
+        "name": "client_ip",
+        "type": "String"
+      },
+      {
+        "name": "client_referer",
+        "type": "String"
+      },
+      {
+        "name": "companion_url",
+        "type": "String"
+      },
+      {
+        "name": "error",
+        "type": "String"
+      },
+      {
+        "name": "executing_jobs",
+        "type": "List<String>"
+      },
+      {
+        "name": "execution_duration",
+        "type": "Double"
+      },
+      {
+        "name": "execution_start",
+        "type": "DateTimeOffset"
+      },
+      {
+        "name": "expected_tus_uploads",
+        "type": "Int32"
+      },
+      {
+        "name": "fields",
+        "type": "Dictionary<String, Object>"
+      },
+      {
+        "name": "finished_tus_uploads",
+        "type": "Int32"
+      },
+      {
+        "name": "has_dupe_jobs",
+        "type": "Boolean"
+      },
+      {
+        "name": "http_code",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "instance",
+        "type": "String"
+      },
+      {
+        "name": "is_infinite",
+        "type": "Boolean"
+      },
+      {
+        "name": "jobs_queue_duration",
+        "type": "Double"
+      },
+      {
+        "name": "last_job_completed",
+        "type": "Nullable<DateTimeOffset>"
+      },
+      {
+        "name": "merged_params",
+        "type": "String"
+      },
+      {
+        "name": "message",
+        "type": "String"
+      },
+      {
+        "name": "notify_duration",
+        "type": "Nullable<Double>"
+      },
+      {
+        "name": "notify_response_code",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "notify_response_data",
+        "type": "String"
+      },
+      {
+        "name": "notify_start",
+        "type": "Nullable<DateTimeOffset>"
+      },
+      {
+        "name": "notify_url",
+        "type": "String"
+      },
+      {
+        "name": "num_input_files",
+        "type": "Int32"
+      },
+      {
+        "name": "ok",
+        "type": "String"
+      },
+      {
+        "name": "params",
+        "type": "String"
+      },
+      {
+        "name": "parent_assembly_status",
+        "type": "Object"
+      },
+      {
+        "name": "parent_id",
+        "type": "String"
+      },
+      {
+        "name": "queue_duration",
+        "type": "Double"
+      },
+      {
+        "name": "reason",
+        "type": "String"
+      },
+      {
+        "name": "region",
+        "type": "String"
+      },
+      {
+        "name": "results",
+        "type": "Dictionary<String, List<FileResult>>"
+      },
+      {
+        "name": "running_jobs",
+        "type": "List<Object>"
+      },
+      {
+        "name": "start_date",
+        "type": "DateTimeOffset"
+      },
+      {
+        "name": "started_jobs",
+        "type": "List<String>"
+      },
+      {
+        "name": "started_tus_uploads",
+        "type": "Int32"
+      },
+      {
+        "name": "template",
+        "type": "String"
+      },
+      {
+        "name": "template_id",
+        "type": "String"
+      },
+      {
+        "name": "template_name",
+        "type": "String"
+      },
+      {
+        "name": "transloadit_client",
+        "type": "String"
+      },
+      {
+        "name": "tus_uploads",
+        "type": "List<TusUpload>"
+      },
+      {
+        "name": "tus_url",
+        "type": "String"
+      },
+      {
+        "name": "update_stream_url",
+        "type": "String"
+      },
+      {
+        "name": "upload_duration",
+        "type": "Double"
+      },
+      {
+        "name": "upload_meta_data_extracted",
+        "type": "Boolean"
+      },
+      {
+        "name": "uploads",
+        "type": "List<Upload>"
+      },
+      {
+        "name": "uppyserver_url",
+        "type": "String"
+      },
+      {
+        "name": "usage_tags",
+        "type": "String"
+      },
+      {
+        "name": "warnings",
+        "type": "List<AssemblyWarning>"
+      },
+      {
+        "name": "websocket_url",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Assemblies.AssemblyWarning",
+    "properties": [
+      {
+        "name": "level",
+        "type": "String"
+      },
+      {
+        "name": "msg",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Assemblies.FileResult",
+    "properties": [
+      {
+        "name": "as",
+        "type": "String"
+      },
+      {
+        "name": "basename",
+        "type": "String"
+      },
+      {
+        "name": "cost",
+        "type": "Int32"
+      },
+      {
+        "name": "exec_time",
+        "type": "Double"
+      },
+      {
+        "name": "ext",
+        "type": "String"
+      },
+      {
+        "name": "field",
+        "type": "String"
+      },
+      {
+        "name": "from_batch_import",
+        "type": "Boolean"
+      },
+      {
+        "name": "id",
+        "type": "String"
+      },
+      {
+        "name": "is_temp_url",
+        "type": "Boolean"
+      },
+      {
+        "name": "is_tus_file",
+        "type": "Boolean"
+      },
+      {
+        "name": "md5hash",
+        "type": "String"
+      },
+      {
+        "name": "meta",
+        "type": "Dictionary<String, Object>"
+      },
+      {
+        "name": "mime",
+        "type": "String"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "original_basename",
+        "type": "String"
+      },
+      {
+        "name": "original_id",
+        "type": "String"
+      },
+      {
+        "name": "original_md5hash",
+        "type": "String"
+      },
+      {
+        "name": "original_name",
+        "type": "String"
+      },
+      {
+        "name": "original_path",
+        "type": "String"
+      },
+      {
+        "name": "queue",
+        "type": "String"
+      },
+      {
+        "name": "queue_time",
+        "type": "Double"
+      },
+      {
+        "name": "size",
+        "type": "Int32"
+      },
+      {
+        "name": "ssl_url",
+        "type": "String"
+      },
+      {
+        "name": "tus_upload_url",
+        "type": "String"
+      },
+      {
+        "name": "type",
+        "type": "String"
+      },
+      {
+        "name": "url",
+        "type": "String"
+      },
+      {
+        "name": "user_meta",
+        "type": "Dictionary<String, Object>"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Assemblies.ReplayAssemblyRequest",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "AuthParams"
+      },
+      {
+        "name": "fields",
+        "type": "Dictionary<String, Object>"
+      },
+      {
+        "name": "notify_url",
+        "type": "String"
+      },
+      {
+        "name": "reparse_template",
+        "type": "Nullable<Boolean>",
+        "converter": "BooleanToIntConverter"
+      },
+      {
+        "name": "steps",
+        "type": "Dictionary<String, RobotBase>"
+      },
+      {
+        "name": "template_id",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Assemblies.ReplayAssemblyResponse",
+    "properties": [
+      {
+        "name": "assembly_id",
+        "type": "String"
+      },
+      {
+        "name": "assembly_ssl_url",
+        "type": "String"
+      },
+      {
+        "name": "assembly_url",
+        "type": "String"
+      },
+      {
+        "name": "error",
+        "type": "String"
+      },
+      {
+        "name": "http_code",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "message",
+        "type": "String"
+      },
+      {
+        "name": "notify_url",
+        "type": "String"
+      },
+      {
+        "name": "ok",
+        "type": "String"
+      },
+      {
+        "name": "reason",
+        "type": "String"
+      },
+      {
+        "name": "success",
+        "type": "Boolean"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Assemblies.TusUpload",
+    "properties": [
+      {
+        "name": "fieldname",
+        "type": "String"
+      },
+      {
+        "name": "filename",
+        "type": "String"
+      },
+      {
+        "name": "finished",
+        "type": "Boolean"
+      },
+      {
+        "name": "local_path",
+        "type": "String"
+      },
+      {
+        "name": "offset",
+        "type": "Int32"
+      },
+      {
+        "name": "size",
+        "type": "Int32"
+      },
+      {
+        "name": "upload_url",
+        "type": "String"
+      },
+      {
+        "name": "user_meta",
+        "type": "Dictionary<String, Object>"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Assemblies.Upload",
+    "properties": [
+      {
+        "name": "as",
+        "type": "String"
+      },
+      {
+        "name": "basename",
+        "type": "String"
+      },
+      {
+        "name": "exec_time",
+        "type": "Double"
+      },
+      {
+        "name": "ext",
+        "type": "String"
+      },
+      {
+        "name": "field",
+        "type": "String"
+      },
+      {
+        "name": "from_batch_import",
+        "type": "Boolean"
+      },
+      {
+        "name": "id",
+        "type": "String"
+      },
+      {
+        "name": "is_tus_file",
+        "type": "Boolean"
+      },
+      {
+        "name": "md5hash",
+        "type": "String"
+      },
+      {
+        "name": "meta",
+        "type": "Dictionary<String, Object>"
+      },
+      {
+        "name": "mime",
+        "type": "String"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "original_basename",
+        "type": "String"
+      },
+      {
+        "name": "original_id",
+        "type": "String"
+      },
+      {
+        "name": "original_md5hash",
+        "type": "String"
+      },
+      {
+        "name": "original_name",
+        "type": "String"
+      },
+      {
+        "name": "original_path",
+        "type": "String"
+      },
+      {
+        "name": "queue",
+        "type": "String"
+      },
+      {
+        "name": "queue_time",
+        "type": "Double"
+      },
+      {
+        "name": "size",
+        "type": "Int32"
+      },
+      {
+        "name": "ssl_url",
+        "type": "String"
+      },
+      {
+        "name": "tus_upload_url",
+        "type": "String"
+      },
+      {
+        "name": "type",
+        "type": "String"
+      },
+      {
+        "name": "url",
+        "type": "String"
+      },
+      {
+        "name": "user_meta",
+        "type": "Dictionary<String, Object>"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.AssemblyNotifications.ReplayNotificationRequest",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "AuthParams"
+      },
+      {
+        "name": "notify_url",
+        "type": "String"
+      },
+      {
+        "name": "wait",
+        "type": "Nullable<Boolean>"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.AssemblyNotifications.ReplayNotificationResponse",
+    "properties": [
+      {
+        "name": "error",
+        "type": "String"
+      },
+      {
+        "name": "http_code",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "message",
+        "type": "String"
+      },
+      {
+        "name": "ok",
+        "type": "String"
+      },
+      {
+        "name": "reason",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.AuthParams",
+    "properties": [
+      {
+        "name": "expires",
+        "type": "Nullable<DateTime>",
+        "converter": "AuthExpiresDateTimeConverter"
+      },
+      {
+        "name": "key",
+        "type": "String"
+      },
+      {
+        "name": "max_size",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "nonce",
+        "type": "String"
+      },
+      {
+        "name": "referer",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.BaseParams",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "AuthParams"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Billing.BillingPlan",
+    "properties": [
+      {
+        "name": "can_use_assembly_fields_search",
+        "type": "Int32"
+      },
+      {
+        "name": "can_use_image_turbo_mode",
+        "type": "Int32"
+      },
+      {
+        "name": "can_use_video_turbo_mode",
+        "type": "Int32"
+      },
+      {
+        "name": "comments",
+        "type": "String"
+      },
+      {
+        "name": "created",
+        "type": "DateTimeOffset"
+      },
+      {
+        "name": "currency",
+        "type": "String"
+      },
+      {
+        "name": "deleted",
+        "type": "Nullable<DateTimeOffset>"
+      },
+      {
+        "name": "file_size_limit_in_gb",
+        "type": "Nullable<Decimal>"
+      },
+      {
+        "name": "gb_included",
+        "type": "Decimal"
+      },
+      {
+        "name": "gb_limit",
+        "type": "Nullable<Decimal>"
+      },
+      {
+        "name": "has_lifetime_limit",
+        "type": "Int32"
+      },
+      {
+        "name": "id",
+        "type": "String"
+      },
+      {
+        "name": "max_jobs_simulteneous",
+        "type": "Int32"
+      },
+      {
+        "name": "modified",
+        "type": "DateTimeOffset"
+      },
+      {
+        "name": "num_concurrent_batch_job_slots",
+        "type": "Int32"
+      },
+      {
+        "name": "num_concurrent_priority_jobs",
+        "type": "Int32"
+      },
+      {
+        "name": "num_machines",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "num_seats",
+        "type": "Int32"
+      },
+      {
+        "name": "price_per_gb",
+        "type": "Decimal"
+      },
+      {
+        "name": "price_per_machine",
+        "type": "Nullable<Decimal>"
+      },
+      {
+        "name": "price_per_month",
+        "type": "Decimal"
+      },
+      {
+        "name": "published",
+        "type": "Int32"
+      },
+      {
+        "name": "should_watermark_transcoding_results",
+        "type": "Int32"
+      },
+      {
+        "name": "slug",
+        "type": "String"
+      },
+      {
+        "name": "tiers",
+        "type": "Object"
+      },
+      {
+        "name": "title",
+        "type": "String"
+      },
+      {
+        "name": "usd_exchange_rate",
+        "type": "Nullable<Decimal>"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Billing.BillingResponse",
+    "properties": [
+      {
+        "name": "additional_gb",
+        "type": "Decimal"
+      },
+      {
+        "name": "additional_gb_fee",
+        "type": "Decimal"
+      },
+      {
+        "name": "address_1",
+        "type": "String"
+      },
+      {
+        "name": "address_2",
+        "type": "String"
+      },
+      {
+        "name": "bill_limit",
+        "type": "Decimal"
+      },
+      {
+        "name": "city",
+        "type": "String"
+      },
+      {
+        "name": "company",
+        "type": "String"
+      },
+      {
+        "name": "country",
+        "type": "String"
+      },
+      {
+        "name": "country_id",
+        "type": "String"
+      },
+      {
+        "name": "coupon_discount",
+        "type": "Decimal"
+      },
+      {
+        "name": "coupon_discount_percent",
+        "type": "Decimal"
+      },
+      {
+        "name": "created",
+        "type": "DateTimeOffset"
+      },
+      {
+        "name": "credit",
+        "type": "Decimal"
+      },
+      {
+        "name": "currency",
+        "type": "String"
+      },
+      {
+        "name": "email",
+        "type": "String"
+      },
+      {
+        "name": "error",
+        "type": "String"
+      },
+      {
+        "name": "final_sub_total",
+        "type": "Decimal"
+      },
+      {
+        "name": "http_code",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "invoice_id",
+        "type": "String"
+      },
+      {
+        "name": "is_prorated",
+        "type": "Boolean"
+      },
+      {
+        "name": "message",
+        "type": "String"
+      },
+      {
+        "name": "month",
+        "type": "String"
+      },
+      {
+        "name": "ok",
+        "type": "String"
+      },
+      {
+        "name": "plan",
+        "type": "BillingPlan"
+      },
+      {
+        "name": "reason",
+        "type": "String"
+      },
+      {
+        "name": "reverse_charge_vat",
+        "type": "Boolean"
+      },
+      {
+        "name": "reward_discount",
+        "type": "Decimal"
+      },
+      {
+        "name": "reward_discount_percent",
+        "type": "Decimal"
+      },
+      {
+        "name": "robots",
+        "type": "Dictionary<String, RobotBilling>"
+      },
+      {
+        "name": "signup_discount",
+        "type": "Decimal"
+      },
+      {
+        "name": "signup_discount_percent",
+        "type": "Decimal"
+      },
+      {
+        "name": "state",
+        "type": "String"
+      },
+      {
+        "name": "sub_total",
+        "type": "Decimal"
+      },
+      {
+        "name": "to",
+        "type": "String"
+      },
+      {
+        "name": "to_contact_email_address",
+        "type": "String"
+      },
+      {
+        "name": "total",
+        "type": "Decimal"
+      },
+      {
+        "name": "used_gb",
+        "type": "Decimal"
+      },
+      {
+        "name": "vat",
+        "type": "Decimal"
+      },
+      {
+        "name": "vat_id",
+        "type": "String"
+      },
+      {
+        "name": "vat_rate",
+        "type": "Decimal"
+      },
+      {
+        "name": "zip",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Billing.RobotBilling",
+    "properties": [
+      {
+        "name": "by_region_and_factor",
+        "type": "List<RobotBillingByRegionAndFactor>"
+      },
+      {
+        "name": "discountedGb",
+        "type": "Decimal"
+      },
+      {
+        "name": "factor",
+        "type": "Decimal"
+      },
+      {
+        "name": "freeGb",
+        "type": "Decimal"
+      },
+      {
+        "name": "gb",
+        "type": "Decimal"
+      },
+      {
+        "name": "gbFactorApplied",
+        "type": "Decimal"
+      },
+      {
+        "name": "rawGb",
+        "type": "Decimal"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Billing.RobotBillingByRegionAndFactor",
+    "properties": [
+      {
+        "name": "factor",
+        "type": "Decimal"
+      },
+      {
+        "name": "freeGb",
+        "type": "Decimal"
+      },
+      {
+        "name": "gbFactorApplied",
+        "type": "Decimal"
+      },
+      {
+        "name": "rawGb",
+        "type": "Decimal"
+      },
+      {
+        "name": "region",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.AzureCredentialsContent",
+    "properties": [
+      {
+        "name": "account",
+        "type": "String"
+      },
+      {
+        "name": "container",
+        "type": "String"
+      },
+      {
+        "name": "key",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.AzureCredentialsRequest",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "AuthParams"
+      },
+      {
+        "name": "content",
+        "type": "AzureCredentialsContent"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "type",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.BackblazeCredentialsContent",
+    "properties": [
+      {
+        "name": "app_key",
+        "type": "String"
+      },
+      {
+        "name": "app_key_id",
+        "type": "String"
+      },
+      {
+        "name": "bucket",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.BackblazeCredentialsRequest",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "AuthParams"
+      },
+      {
+        "name": "content",
+        "type": "BackblazeCredentialsContent"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "type",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.CloudFlareCredentialsContent",
+    "properties": [
+      {
+        "name": "bucket",
+        "type": "String"
+      },
+      {
+        "name": "host",
+        "type": "String"
+      },
+      {
+        "name": "key",
+        "type": "String"
+      },
+      {
+        "name": "secret",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.CloudflareCredentialsRequest",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "AuthParams"
+      },
+      {
+        "name": "content",
+        "type": "CloudFlareCredentialsContent"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "type",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.Credential",
+    "properties": [
+      {
+        "name": "account_id",
+        "type": "String"
+      },
+      {
+        "name": "content",
+        "type": "Dictionary<String, String>"
+      },
+      {
+        "name": "created",
+        "type": "DateTimeOffset"
+      },
+      {
+        "name": "deleted",
+        "type": "Nullable<DateTimeOffset>"
+      },
+      {
+        "name": "id",
+        "type": "String"
+      },
+      {
+        "name": "modified",
+        "type": "DateTimeOffset"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "stringified",
+        "type": "String"
+      },
+      {
+        "name": "type",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.CredentialResponse",
+    "properties": [
+      {
+        "name": "credential",
+        "type": "Credential"
+      },
+      {
+        "name": "error",
+        "type": "String"
+      },
+      {
+        "name": "http_code",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "message",
+        "type": "String"
+      },
+      {
+        "name": "ok",
+        "type": "String"
+      },
+      {
+        "name": "reason",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.CredentialsListResponse",
+    "properties": [
+      {
+        "name": "credentials",
+        "type": "List<Credential>"
+      },
+      {
+        "name": "error",
+        "type": "String"
+      },
+      {
+        "name": "http_code",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "message",
+        "type": "String"
+      },
+      {
+        "name": "ok",
+        "type": "String"
+      },
+      {
+        "name": "reason",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.CredentialsRequestBase",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "AuthParams"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "type",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.DeleteCredentialsResponse",
+    "properties": [
+      {
+        "name": "error",
+        "type": "String"
+      },
+      {
+        "name": "http_code",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "message",
+        "type": "String"
+      },
+      {
+        "name": "ok",
+        "type": "String"
+      },
+      {
+        "name": "reason",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.DigitalOceanCredentialsContent",
+    "properties": [
+      {
+        "name": "key",
+        "type": "String"
+      },
+      {
+        "name": "region",
+        "type": "String"
+      },
+      {
+        "name": "secret",
+        "type": "String"
+      },
+      {
+        "name": "space",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.DigitalOceanCredentialsRequest",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "AuthParams"
+      },
+      {
+        "name": "content",
+        "type": "DigitalOceanCredentialsContent"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "type",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.FtpCredentialsContent",
+    "properties": [
+      {
+        "name": "host",
+        "type": "String"
+      },
+      {
+        "name": "password",
+        "type": "String"
+      },
+      {
+        "name": "user",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.FtpCredentialsRequest",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "AuthParams"
+      },
+      {
+        "name": "content",
+        "type": "FtpCredentialsContent"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "type",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.GenericCredentialsRequest",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "AuthParams"
+      },
+      {
+        "name": "content",
+        "type": "Dictionary<String, String>"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "type",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.HttpCredentialsContent",
+    "properties": [
+      {
+        "name": "headers",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.HttpCredentialsRequest",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "AuthParams"
+      },
+      {
+        "name": "content",
+        "type": "HttpCredentialsContent"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "type",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.MinioCredentialsContent",
+    "properties": [
+      {
+        "name": "bucket",
+        "type": "String"
+      },
+      {
+        "name": "host",
+        "type": "String"
+      },
+      {
+        "name": "key",
+        "type": "String"
+      },
+      {
+        "name": "secret",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.MinioCredentialsRequest",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "AuthParams"
+      },
+      {
+        "name": "content",
+        "type": "MinioCredentialsContent"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "type",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.OAuthCredentialsContent",
+    "properties": [
+      {
+        "name": "key",
+        "type": "String"
+      },
+      {
+        "name": "provider",
+        "type": "String"
+      },
+      {
+        "name": "secret",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.OAuthCredentialsRequest",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "AuthParams"
+      },
+      {
+        "name": "content",
+        "type": "OAuthCredentialsContent"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "type",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.RackSpaceCredentialsContent",
+    "properties": [
+      {
+        "name": "account_type",
+        "type": "String"
+      },
+      {
+        "name": "container",
+        "type": "String"
+      },
+      {
+        "name": "data_center",
+        "type": "String"
+      },
+      {
+        "name": "key",
+        "type": "String"
+      },
+      {
+        "name": "user",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.RackspaceCredentialsRequest",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "AuthParams"
+      },
+      {
+        "name": "content",
+        "type": "RackSpaceCredentialsContent"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "type",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.S3CredentialsContent",
+    "properties": [
+      {
+        "name": "bucket",
+        "type": "String"
+      },
+      {
+        "name": "bucket_region",
+        "type": "String"
+      },
+      {
+        "name": "key",
+        "type": "String"
+      },
+      {
+        "name": "secret",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.S3CredentialsRequest",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "AuthParams"
+      },
+      {
+        "name": "content",
+        "type": "S3CredentialsContent"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "type",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.SftpCredentialsContent",
+    "properties": [
+      {
+        "name": "host",
+        "type": "String"
+      },
+      {
+        "name": "port",
+        "type": "Int32"
+      },
+      {
+        "name": "public_key",
+        "type": "String"
+      },
+      {
+        "name": "user",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.SftpCredentialsRequest",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "AuthParams"
+      },
+      {
+        "name": "content",
+        "type": "SftpCredentialsContent"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "type",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.SupabaseCredentialsContent",
+    "properties": [
+      {
+        "name": "bucket",
+        "type": "String"
+      },
+      {
+        "name": "bucket_region",
+        "type": "String"
+      },
+      {
+        "name": "host",
+        "type": "String"
+      },
+      {
+        "name": "key",
+        "type": "String"
+      },
+      {
+        "name": "secret",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.SupabaseCredentialsRequest",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "AuthParams"
+      },
+      {
+        "name": "content",
+        "type": "SupabaseCredentialsContent"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "type",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.SwiftCredentialsContent",
+    "properties": [
+      {
+        "name": "bucket",
+        "type": "String"
+      },
+      {
+        "name": "host",
+        "type": "String"
+      },
+      {
+        "name": "key",
+        "type": "String"
+      },
+      {
+        "name": "secret",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.SwiftCredentialsRequest",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "AuthParams"
+      },
+      {
+        "name": "content",
+        "type": "SwiftCredentialsContent"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "type",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.TigrisCredentialsContent",
+    "properties": [
+      {
+        "name": "bucket",
+        "type": "String"
+      },
+      {
+        "name": "host",
+        "type": "String"
+      },
+      {
+        "name": "key",
+        "type": "String"
+      },
+      {
+        "name": "secret",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.TigrisCredentialsRequest",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "AuthParams"
+      },
+      {
+        "name": "content",
+        "type": "TigrisCredentialsContent"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "type",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.WasabiCredentialsContent",
+    "properties": [
+      {
+        "name": "host",
+        "type": "String"
+      },
+      {
+        "name": "password",
+        "type": "String"
+      },
+      {
+        "name": "user",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.WasabiCredentialsRequest",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "AuthParams"
+      },
+      {
+        "name": "content",
+        "type": "WasabiCredentialsContent"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "type",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.PaginationParams",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "AuthParams"
+      },
+      {
+        "name": "fromdate",
+        "type": "Nullable<DateTime>",
+        "converter": "PaginationDateTimeConverter"
+      },
+      {
+        "name": "keywords",
+        "type": "List<String>"
+      },
+      {
+        "name": "page",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "pagesize",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "todate",
+        "type": "Nullable<DateTime>",
+        "converter": "PaginationDateTimeConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Queues.PriorityJobSlots",
+    "properties": [
+      {
+        "name": "count",
+        "type": "Int32"
+      },
+      {
+        "name": "slots",
+        "type": "Dictionary<String, Dictionary<String, Dictionary<String, Int32>>>"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Queues.QueueResponse",
+    "properties": [
+      {
+        "name": "error",
+        "type": "String"
+      },
+      {
+        "name": "http_code",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "message",
+        "type": "String"
+      },
+      {
+        "name": "ok",
+        "type": "String"
+      },
+      {
+        "name": "priority_job_slots",
+        "type": "PriorityJobSlots"
+      },
+      {
+        "name": "reason",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.ResponseBase",
+    "properties": [
+      {
+        "name": "error",
+        "type": "String"
+      },
+      {
+        "name": "http_code",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "message",
+        "type": "String"
+      },
+      {
+        "name": "ok",
+        "type": "String"
+      },
+      {
+        "name": "reason",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.AI.AiChatMcpServer",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "String"
+      },
+      {
+        "name": "headers",
+        "type": "Dictionary<String, String>"
+      },
+      {
+        "name": "url",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.AI.AiChatMessage",
+    "properties": [
+      {
+        "name": "content",
+        "type": "String"
+      },
+      {
+        "name": "role",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.AI.AiChatRobot",
+    "properties": [
+      {
+        "name": "credentials",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "mcp_servers",
+        "type": "List<AiChatMcpServer>"
+      },
+      {
+        "name": "messages",
+        "type": "AnyOf<String, List<AiChatMessage>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "model",
+        "type": "String"
+      },
+      {
+        "name": "output_meta",
+        "type": "AnyOf<Boolean, OutputMeta>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "reasoning_effort",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "schema",
+        "type": "String"
+      },
+      {
+        "name": "system_message",
+        "type": "String"
+      },
+      {
+        "name": "test_credentials",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.AI.DocumentOcrRobot",
+    "properties": [
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "format",
+        "type": "String"
+      },
+      {
+        "name": "granularity",
+        "type": "String"
+      },
+      {
+        "name": "provider",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.AI.ImageDescribeRobot",
+    "properties": [
+      {
+        "name": "explicit_descriptions",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "format",
+        "type": "String"
+      },
+      {
+        "name": "granularity",
+        "type": "String"
+      },
+      {
+        "name": "provider",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.AI.ImageFaceDetectRobot",
+    "properties": [
+      {
+        "name": "crop",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "crop_padding",
+        "type": "String"
+      },
+      {
+        "name": "faces",
+        "type": "AnyOf<Int32, String>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "format",
+        "type": "String"
+      },
+      {
+        "name": "min_confidence",
+        "type": "Int32"
+      },
+      {
+        "name": "provider",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.AI.ImageGenerateRobot",
+    "properties": [
+      {
+        "name": "aspect_ratio",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "format",
+        "type": "String"
+      },
+      {
+        "name": "height",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "model",
+        "type": "String"
+      },
+      {
+        "name": "output_meta",
+        "type": "AnyOf<Boolean, OutputMeta>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "prompt",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "seed",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "style",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "width",
+        "type": "Nullable<Int32>"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.AI.ImageOcrRobot",
+    "properties": [
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "format",
+        "type": "String"
+      },
+      {
+        "name": "granularity",
+        "type": "String"
+      },
+      {
+        "name": "provider",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.AI.SpeechTranscribeRobot",
+    "properties": [
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "format",
+        "type": "String"
+      },
+      {
+        "name": "granularity",
+        "type": "String"
+      },
+      {
+        "name": "provider",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "source_language",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.AI.TextSpeakRobot",
+    "properties": [
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "prompt",
+        "type": "String"
+      },
+      {
+        "name": "provider",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "ssml",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "target_language",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "voice",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.AI.TextTranslateRobot",
+    "properties": [
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "provider",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "source_language",
+        "type": "String"
+      },
+      {
+        "name": "target_language",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.AI.VideoGenerateRobot",
+    "properties": [
+      {
+        "name": "aspect_ratio",
+        "type": "String"
+      },
+      {
+        "name": "camera_motion",
+        "type": "String"
+      },
+      {
+        "name": "duration",
+        "type": "AnyOf<Int32, String>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "format",
+        "type": "String"
+      },
+      {
+        "name": "fps",
+        "type": "AnyOf<Int32, String>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "height",
+        "type": "AnyOf<Int32, String>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "model",
+        "type": "String"
+      },
+      {
+        "name": "motion_amount",
+        "type": "AnyOf<Int32, String>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "negative_prompt",
+        "type": "String"
+      },
+      {
+        "name": "num_outputs",
+        "type": "AnyOf<Int32, String>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "output_meta",
+        "type": "AnyOf<Boolean, OutputMeta>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "prompt",
+        "type": "String"
+      },
+      {
+        "name": "provider",
+        "type": "String"
+      },
+      {
+        "name": "reference_strength",
+        "type": "AnyOf<Double, String>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "seed",
+        "type": "AnyOf<Int32, String>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "style",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "width",
+        "type": "AnyOf<Int32, String>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.AdvancedStep",
+    "properties": [
+      {
+        "name": "as",
+        "type": "String"
+      },
+      {
+        "name": "fields",
+        "type": "String"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.AdvancedUse",
+    "properties": [
+      {
+        "name": "bundle_steps",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "fields",
+        "type": "List<String>"
+      },
+      {
+        "name": "group_by_original",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "steps",
+        "type": "AnyOf<List<String>, List<AdvancedStep>>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.AudioEncoding.AudioArtworkRobot",
+    "properties": [
+      {
+        "name": "change_format_if_necessary",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "ffmpeg_stack",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "method",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.AudioEncoding.AudioConcatenateRobot",
+    "properties": [
+      {
+        "name": "audio_fade_seconds",
+        "type": "Nullable<Double>"
+      },
+      {
+        "name": "bitrate",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "ffmpeg",
+        "type": "Dictionary<String, Object>"
+      },
+      {
+        "name": "ffmpeg_stack",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "output_meta",
+        "type": "AnyOf<Boolean, OutputMeta>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "preset",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "sample_rate",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.AudioEncoding.AudioEncodeRobot",
+    "properties": [
+      {
+        "name": "bitrate",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "ffmpeg",
+        "type": "Dictionary<String, Object>"
+      },
+      {
+        "name": "ffmpeg_stack",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "output_meta",
+        "type": "AnyOf<Boolean, OutputMeta>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "preset",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "sample_rate",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.AudioEncoding.AudioLoopRobot",
+    "properties": [
+      {
+        "name": "bitrate",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "duration",
+        "type": "Nullable<Double>"
+      },
+      {
+        "name": "ffmpeg",
+        "type": "Dictionary<String, Object>"
+      },
+      {
+        "name": "ffmpeg_stack",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "output_meta",
+        "type": "AnyOf<Boolean, OutputMeta>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "preset",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "sample_rate",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.AudioEncoding.AudioMergeRobot",
+    "properties": [
+      {
+        "name": "bitrate",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "duration",
+        "type": "String"
+      },
+      {
+        "name": "ffmpeg",
+        "type": "Dictionary<String, Object>"
+      },
+      {
+        "name": "ffmpeg_stack",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "loop",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "output_meta",
+        "type": "AnyOf<Boolean, OutputMeta>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "preset",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "sample_rate",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "volume",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.AudioEncoding.AudioSplitRobot",
+    "properties": [
+      {
+        "name": "bitrate",
+        "type": "AnyOf<Int32, String>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "ffmpeg",
+        "type": "Dictionary<String, Object>"
+      },
+      {
+        "name": "ffmpeg_stack",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "output_meta",
+        "type": "AnyOf<Boolean, OutputMeta>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "preset",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "sample_rate",
+        "type": "AnyOf<Int32, String>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "segments",
+        "type": "List<AudioSplitSegment>"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.AudioEncoding.AudioSplitSegment",
+    "properties": [
+      {
+        "name": "from",
+        "type": "AnyOf<Int32, String>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "to",
+        "type": "AnyOf<Int32, String>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.AudioEncoding.AudioWaveformImageRobot",
+    "properties": [
+      {
+        "name": "antialiasing",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "background_color",
+        "type": "String"
+      },
+      {
+        "name": "center_color",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "format",
+        "type": "String"
+      },
+      {
+        "name": "height",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "outer_color",
+        "type": "String"
+      },
+      {
+        "name": "output_meta",
+        "type": "AnyOf<Boolean, OutputMeta>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "style",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "width",
+        "type": "Nullable<Int32>"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.Code.ScriptRunRobot",
+    "properties": [
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "script",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.Documents.DocumentAutoRotateRobot",
+    "properties": [
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.Documents.DocumentConvertRobot",
+    "properties": [
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "format",
+        "type": "String"
+      },
+      {
+        "name": "markdown_format",
+        "type": "String"
+      },
+      {
+        "name": "markdown_theme",
+        "type": "String"
+      },
+      {
+        "name": "pdf_display_header_footer",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "pdf_footer_template",
+        "type": "String"
+      },
+      {
+        "name": "pdf_format",
+        "type": "String"
+      },
+      {
+        "name": "pdf_header_template",
+        "type": "String"
+      },
+      {
+        "name": "pdf_margin",
+        "type": "String"
+      },
+      {
+        "name": "pdf_print_background",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.Documents.DocumentMergeRobot",
+    "properties": [
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "input_passwords",
+        "type": "List<String>"
+      },
+      {
+        "name": "output_password",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.Documents.DocumentOptimizeRobot",
+    "properties": [
+      {
+        "name": "compatibility",
+        "type": "String"
+      },
+      {
+        "name": "compress_fonts",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "image_dpi",
+        "type": "AnyOf<Int32, String>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "linearize",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "output_meta",
+        "type": "AnyOf<Boolean, OutputMeta>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "preset",
+        "type": "String"
+      },
+      {
+        "name": "remove_metadata",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "subset_fonts",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.Documents.DocumentSplitRobot",
+    "properties": [
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "pages",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.Documents.DocumentThumbnailsRobot",
+    "properties": [
+      {
+        "name": "alpha",
+        "type": "String"
+      },
+      {
+        "name": "antialiasing",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "background",
+        "type": "String"
+      },
+      {
+        "name": "colorspace",
+        "type": "String"
+      },
+      {
+        "name": "delay",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "density",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "format",
+        "type": "String"
+      },
+      {
+        "name": "height",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "imagemagick_stack",
+        "type": "String"
+      },
+      {
+        "name": "output_meta",
+        "type": "AnyOf<Boolean, OutputMeta>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "page",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "pdf_use_cropbox",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "resize_strategy",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "trim_whitespace",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "width",
+        "type": "Nullable<Int32>"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.Documents.FileReadRobot",
+    "properties": [
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.Documents.HtmlConvertRobot",
+    "properties": [
+      {
+        "name": "delay",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "format",
+        "type": "String"
+      },
+      {
+        "name": "fullpage",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "headers",
+        "type": "Dictionary<String, String>"
+      },
+      {
+        "name": "height",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "omit_background",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "url",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "width",
+        "type": "Nullable<Int32>"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileCompressing.FileCompressRobot",
+    "properties": [
+      {
+        "name": "compression_level",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "file_layout",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "format",
+        "type": "String"
+      },
+      {
+        "name": "gzip",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "password",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileCompressing.FileDecompressRobot",
+    "properties": [
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "ignore_errors",
+        "type": "AnyOf<Boolean, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileExporting.AzureStoreRobot",
+    "properties": [
+      {
+        "name": "account",
+        "type": "String"
+      },
+      {
+        "name": "cache_control",
+        "type": "String"
+      },
+      {
+        "name": "container",
+        "type": "String"
+      },
+      {
+        "name": "content_encoding",
+        "type": "String"
+      },
+      {
+        "name": "content_language",
+        "type": "String"
+      },
+      {
+        "name": "content_type",
+        "type": "String"
+      },
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "key",
+        "type": "String"
+      },
+      {
+        "name": "metadata",
+        "type": "Dictionary<String, Object>"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "sas_expires_in",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "sas_permissions",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileExporting.BackBlazeStoreRobot",
+    "properties": [
+      {
+        "name": "app_key",
+        "type": "String"
+      },
+      {
+        "name": "app_key_id",
+        "type": "String"
+      },
+      {
+        "name": "bucket",
+        "type": "String"
+      },
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "headers",
+        "type": "Dictionary<String, String>"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileExporting.BoxStoreRobot",
+    "properties": [
+      {
+        "name": "create_sharing_link",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileExporting.CloudFlareStoreRobot",
+    "properties": [
+      {
+        "name": "bucket",
+        "type": "String"
+      },
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "headers",
+        "type": "Dictionary<String, String>"
+      },
+      {
+        "name": "host",
+        "type": "String"
+      },
+      {
+        "name": "key",
+        "type": "String"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "secret",
+        "type": "String"
+      },
+      {
+        "name": "sign_urls_for",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileExporting.DigitalOceanStoreRobot",
+    "properties": [
+      {
+        "name": "acl",
+        "type": "String"
+      },
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "headers",
+        "type": "Dictionary<String, String>"
+      },
+      {
+        "name": "key",
+        "type": "String"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "region",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "secret",
+        "type": "String"
+      },
+      {
+        "name": "sign_urls_for",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "space",
+        "type": "String"
+      },
+      {
+        "name": "url_prefix",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileExporting.DropboxStoreRobot",
+    "properties": [
+      {
+        "name": "create_sharing_link",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileExporting.FtpStoreRobot",
+    "properties": [
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "host",
+        "type": "String"
+      },
+      {
+        "name": "password",
+        "type": "String"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "port",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "secure",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "ssl_url_template",
+        "type": "String"
+      },
+      {
+        "name": "url_template",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "user",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileExporting.GoogleStorageStoreRobot",
+    "properties": [
+      {
+        "name": "acl",
+        "type": "String"
+      },
+      {
+        "name": "cache_control",
+        "type": "String"
+      },
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "ssl_url_template",
+        "type": "String"
+      },
+      {
+        "name": "url_template",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileExporting.MinioStoreRobot",
+    "properties": [
+      {
+        "name": "acl",
+        "type": "String"
+      },
+      {
+        "name": "bucket",
+        "type": "String"
+      },
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "headers",
+        "type": "Dictionary<String, String>"
+      },
+      {
+        "name": "host",
+        "type": "String"
+      },
+      {
+        "name": "key",
+        "type": "String"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "secret",
+        "type": "String"
+      },
+      {
+        "name": "sign_urls_for",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileExporting.RackSpaceCloudFilesStoreRobot",
+    "properties": [
+      {
+        "name": "account_type",
+        "type": "String"
+      },
+      {
+        "name": "container",
+        "type": "String"
+      },
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "data_center",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "key",
+        "type": "String"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "user",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileExporting.S3StoreRobot",
+    "properties": [
+      {
+        "name": "acl",
+        "type": "String"
+      },
+      {
+        "name": "bucket",
+        "type": "String"
+      },
+      {
+        "name": "bucket_region",
+        "type": "String"
+      },
+      {
+        "name": "check_integrity",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "headers",
+        "type": "Dictionary<String, String>"
+      },
+      {
+        "name": "host",
+        "type": "String"
+      },
+      {
+        "name": "key",
+        "type": "String"
+      },
+      {
+        "name": "no_vhost",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "secret",
+        "type": "String"
+      },
+      {
+        "name": "sign_urls_for",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "tags",
+        "type": "Dictionary<String, Object>"
+      },
+      {
+        "name": "url_prefix",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileExporting.SftpStoreRobot",
+    "properties": [
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "file_chmod",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "host",
+        "type": "String"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "port",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "public_key",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "ssl_url_template",
+        "type": "String"
+      },
+      {
+        "name": "url_template",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "user",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileExporting.SupabaseStoreRobot",
+    "properties": [
+      {
+        "name": "bucket",
+        "type": "String"
+      },
+      {
+        "name": "bucket_region",
+        "type": "String"
+      },
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "headers",
+        "type": "Dictionary<String, String>"
+      },
+      {
+        "name": "host",
+        "type": "String"
+      },
+      {
+        "name": "key",
+        "type": "String"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "secret",
+        "type": "String"
+      },
+      {
+        "name": "sign_urls_for",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileExporting.SwiftStoreRobot",
+    "properties": [
+      {
+        "name": "acl",
+        "type": "String"
+      },
+      {
+        "name": "bucket",
+        "type": "String"
+      },
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "headers",
+        "type": "Dictionary<String, String>"
+      },
+      {
+        "name": "host",
+        "type": "String"
+      },
+      {
+        "name": "key",
+        "type": "String"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "secret",
+        "type": "String"
+      },
+      {
+        "name": "sign_urls_for",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileExporting.TigrisStoreRobot",
+    "properties": [
+      {
+        "name": "acl",
+        "type": "String"
+      },
+      {
+        "name": "bucket",
+        "type": "String"
+      },
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "headers",
+        "type": "Dictionary<String, String>"
+      },
+      {
+        "name": "host",
+        "type": "String"
+      },
+      {
+        "name": "key",
+        "type": "String"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "secret",
+        "type": "String"
+      },
+      {
+        "name": "sign_urls_for",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileExporting.TusStoreRobot",
+    "properties": [
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "endpoint",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "headers",
+        "type": "Dictionary<String, String>"
+      },
+      {
+        "name": "metadata",
+        "type": "Dictionary<String, String>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "ssl_url_template",
+        "type": "String"
+      },
+      {
+        "name": "url_template",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileExporting.VimeoStoreRobot",
+    "properties": [
+      {
+        "name": "acl",
+        "type": "String"
+      },
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "description",
+        "type": "String"
+      },
+      {
+        "name": "downloadable",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "folder_id",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "password",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "showcases",
+        "type": "List<String>"
+      },
+      {
+        "name": "title",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileExporting.WasabiStoreRobot",
+    "properties": [
+      {
+        "name": "acl",
+        "type": "String"
+      },
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "headers",
+        "type": "Dictionary<String, String>"
+      },
+      {
+        "name": "host",
+        "type": "String"
+      },
+      {
+        "name": "password",
+        "type": "String"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "sign_urls_for",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "user",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileExporting.YoutubeStoreRobot",
+    "properties": [
+      {
+        "name": "category",
+        "type": "String"
+      },
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "description",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "keywords",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "title",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "visibility",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileFiltering.FileFilterRobot",
+    "properties": [
+      {
+        "name": "accepts",
+        "type": "AnyOf<String, List<List<String>>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "condition_type",
+        "type": "String"
+      },
+      {
+        "name": "declines",
+        "type": "AnyOf<String, List<List<String>>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "error_msg",
+        "type": "String"
+      },
+      {
+        "name": "error_on_decline",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileFiltering.FileVerifyRobot",
+    "properties": [
+      {
+        "name": "error_msg",
+        "type": "String"
+      },
+      {
+        "name": "error_on_decline",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "verify_to_be",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileFiltering.FileVirusScanRobot",
+    "properties": [
+      {
+        "name": "error_msg",
+        "type": "String"
+      },
+      {
+        "name": "error_on_decline",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileImporting.AzureImportRobot",
+    "properties": [
+      {
+        "name": "account",
+        "type": "String"
+      },
+      {
+        "name": "container",
+        "type": "String"
+      },
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "files_per_page",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "ignore_errors",
+        "type": "AnyOf<Boolean, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "key",
+        "type": "String"
+      },
+      {
+        "name": "next_page_token",
+        "type": "String"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileImporting.BackBlazeImportRobot",
+    "properties": [
+      {
+        "name": "app_key",
+        "type": "String"
+      },
+      {
+        "name": "app_key_id",
+        "type": "String"
+      },
+      {
+        "name": "bucket",
+        "type": "String"
+      },
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "files_per_page",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "ignore_errors",
+        "type": "AnyOf<Boolean, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "recursive",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "start_file_name",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileImporting.BoxImportRobot",
+    "properties": [
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "force_name",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "ignore_errors",
+        "type": "AnyOf<Boolean, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileImporting.CloudFlareImportRobot",
+    "properties": [
+      {
+        "name": "bucket",
+        "type": "String"
+      },
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "files_per_page",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "host",
+        "type": "String"
+      },
+      {
+        "name": "ignore_errors",
+        "type": "AnyOf<Boolean, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "key",
+        "type": "String"
+      },
+      {
+        "name": "page_number",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "recursive",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "secret",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileImporting.DigitalOceanImportRobot",
+    "properties": [
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "files_per_page",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "ignore_errors",
+        "type": "AnyOf<Boolean, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "key",
+        "type": "String"
+      },
+      {
+        "name": "page_number",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "recursive",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "region",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "secret",
+        "type": "String"
+      },
+      {
+        "name": "space",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileImporting.DropboxImportRobot",
+    "properties": [
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "ignore_errors",
+        "type": "AnyOf<Boolean, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileImporting.FtpImportRobot",
+    "properties": [
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "host",
+        "type": "String"
+      },
+      {
+        "name": "ignore_errors",
+        "type": "AnyOf<Boolean, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "passive_mode",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "password",
+        "type": "String"
+      },
+      {
+        "name": "path",
+        "type": "String"
+      },
+      {
+        "name": "port",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "user",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileImporting.GoogleStorageImportRobot",
+    "properties": [
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "files_per_page",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "ignore_errors",
+        "type": "AnyOf<Boolean, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "next_page_token",
+        "type": "String"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "recursive",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileImporting.HttpImportRobot",
+    "properties": [
+      {
+        "name": "fail_fast",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "force_name",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "headers",
+        "type": "List<String>"
+      },
+      {
+        "name": "ignore_errors",
+        "type": "AnyOf<Boolean, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "import_on_errors",
+        "type": "List<String>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "url",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "url_delimiter",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileImporting.MinioImportRobot",
+    "properties": [
+      {
+        "name": "bucket",
+        "type": "String"
+      },
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "files_per_page",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "host",
+        "type": "String"
+      },
+      {
+        "name": "ignore_errors",
+        "type": "AnyOf<Boolean, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "key",
+        "type": "String"
+      },
+      {
+        "name": "page_number",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "recursive",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "secret",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileImporting.RackSpaceCloudFilesImportRobot",
+    "properties": [
+      {
+        "name": "account_type",
+        "type": "String"
+      },
+      {
+        "name": "container",
+        "type": "String"
+      },
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "data_center",
+        "type": "String"
+      },
+      {
+        "name": "files_per_page",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "ignore_errors",
+        "type": "AnyOf<Boolean, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "key",
+        "type": "String"
+      },
+      {
+        "name": "page_number",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "recursive",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "user",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileImporting.S3ImportRobot",
+    "properties": [
+      {
+        "name": "bucket",
+        "type": "String"
+      },
+      {
+        "name": "bucket_region",
+        "type": "String"
+      },
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "files_per_page",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "ignore_errors",
+        "type": "AnyOf<Boolean, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "key",
+        "type": "String"
+      },
+      {
+        "name": "page_number",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "recursive",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "secret",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileImporting.SftpImportRobot",
+    "properties": [
+      {
+        "name": "bucket",
+        "type": "String"
+      },
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "host",
+        "type": "String"
+      },
+      {
+        "name": "ignore_errors",
+        "type": "AnyOf<Boolean, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "key",
+        "type": "String"
+      },
+      {
+        "name": "path",
+        "type": "String"
+      },
+      {
+        "name": "port",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "secret",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileImporting.SupabaseImportRobot",
+    "properties": [
+      {
+        "name": "bucket",
+        "type": "String"
+      },
+      {
+        "name": "bucket_region",
+        "type": "String"
+      },
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "files_per_page",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "host",
+        "type": "String"
+      },
+      {
+        "name": "ignore_errors",
+        "type": "AnyOf<Boolean, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "key",
+        "type": "String"
+      },
+      {
+        "name": "page_number",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "recursive",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "secret",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileImporting.SwiftImportRobot",
+    "properties": [
+      {
+        "name": "bucket",
+        "type": "String"
+      },
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "files_per_page",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "host",
+        "type": "String"
+      },
+      {
+        "name": "ignore_errors",
+        "type": "AnyOf<Boolean, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "key",
+        "type": "String"
+      },
+      {
+        "name": "page_number",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "recursive",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "secret",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileImporting.TigrisImportRobot",
+    "properties": [
+      {
+        "name": "bucket",
+        "type": "String"
+      },
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "files_per_page",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "host",
+        "type": "String"
+      },
+      {
+        "name": "ignore_errors",
+        "type": "AnyOf<Boolean, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "key",
+        "type": "String"
+      },
+      {
+        "name": "page_number",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "recursive",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "return_file_stubs",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "secret",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileImporting.VimeoImportRobot",
+    "properties": [
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "files_per_page",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "force_name",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "ignore_errors",
+        "type": "AnyOf<Boolean, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "page_number",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "rendition",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.FileImporting.WasabiImportRobot",
+    "properties": [
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "files_per_page",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "host",
+        "type": "String"
+      },
+      {
+        "name": "ignore_errors",
+        "type": "AnyOf<Boolean, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "page_number",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "password",
+        "type": "String"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "recursive",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "user",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.ImageManipulation.BlurRegion",
+    "properties": [
+      {
+        "name": "height",
+        "type": "Int32"
+      },
+      {
+        "name": "width",
+        "type": "Int32"
+      },
+      {
+        "name": "x",
+        "type": "Int32"
+      },
+      {
+        "name": "y",
+        "type": "Int32"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.ImageManipulation.Crop",
+    "properties": [
+      {
+        "name": "x1",
+        "type": "AnyOf<Int32, String>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "x2",
+        "type": "AnyOf<Int32, String>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "y1",
+        "type": "AnyOf<Int32, String>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "y2",
+        "type": "AnyOf<Int32, String>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.ImageManipulation.ImageBackgroundRemove",
+    "properties": [
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "format",
+        "type": "String"
+      },
+      {
+        "name": "output_meta",
+        "type": "AnyOf<Boolean, OutputMeta>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.ImageManipulation.ImageMergeRobot",
+    "properties": [
+      {
+        "name": "adaptive_filtering",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "background",
+        "type": "String"
+      },
+      {
+        "name": "border",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "direction",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "format",
+        "type": "String"
+      },
+      {
+        "name": "output_meta",
+        "type": "AnyOf<Boolean, OutputMeta>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "quality",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.ImageManipulation.ImageOptimizeRobot",
+    "properties": [
+      {
+        "name": "fix_breaking_images",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "preserve_meta_data",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "priority",
+        "type": "String"
+      },
+      {
+        "name": "progressive",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.ImageManipulation.ImageResizeRobot",
+    "properties": [
+      {
+        "name": "adaptive_filtering",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "alpha",
+        "type": "String"
+      },
+      {
+        "name": "background",
+        "type": "String"
+      },
+      {
+        "name": "blur",
+        "type": "String"
+      },
+      {
+        "name": "blur_regions",
+        "type": "List<BlurRegion>"
+      },
+      {
+        "name": "brightness",
+        "type": "Nullable<Double>"
+      },
+      {
+        "name": "clip",
+        "type": "AnyOf<Boolean, String>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "colorspace",
+        "type": "String"
+      },
+      {
+        "name": "compress",
+        "type": "String"
+      },
+      {
+        "name": "correct_gamma",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "crop",
+        "type": "AnyOf<String, Crop>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "density",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "flatten",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "format",
+        "type": "String"
+      },
+      {
+        "name": "frame",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "gravity",
+        "type": "String"
+      },
+      {
+        "name": "height",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "hue",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "imagemagick_stack",
+        "type": "String"
+      },
+      {
+        "name": "negate",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "output_meta",
+        "type": "AnyOf<Boolean, OutputMeta>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "preclip_alpha",
+        "type": "String"
+      },
+      {
+        "name": "progressive",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "quality",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "resize_strategy",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "rotation",
+        "type": "AnyOf<Boolean, Int32>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "saturation",
+        "type": "Nullable<Double>"
+      },
+      {
+        "name": "sepia",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "strip",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "text",
+        "type": "List<TextData>"
+      },
+      {
+        "name": "transparent",
+        "type": "String"
+      },
+      {
+        "name": "trim_whitespace",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "type",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "watermark_position",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "watermark_resize_strategy",
+        "type": "String"
+      },
+      {
+        "name": "watermark_size",
+        "type": "String"
+      },
+      {
+        "name": "watermark_url",
+        "type": "String"
+      },
+      {
+        "name": "watermark_x_offset",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "watermark_y_offset",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "width",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "zoom",
+        "type": "Nullable<Boolean>"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.ImageManipulation.ImageUpscaleRobot",
+    "properties": [
+      {
+        "name": "face_enhance",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "model",
+        "type": "String"
+      },
+      {
+        "name": "output_meta",
+        "type": "AnyOf<Boolean, OutputMeta>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "scale",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.ImageManipulation.TextData",
+    "properties": [
+      {
+        "name": "align",
+        "type": "String"
+      },
+      {
+        "name": "background_color",
+        "type": "String"
+      },
+      {
+        "name": "color",
+        "type": "String"
+      },
+      {
+        "name": "font",
+        "type": "String"
+      },
+      {
+        "name": "rotate",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "size",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "stroke_color",
+        "type": "String"
+      },
+      {
+        "name": "stroke_width",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "text",
+        "type": "String"
+      },
+      {
+        "name": "valign",
+        "type": "String"
+      },
+      {
+        "name": "x_offset",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "y_offset",
+        "type": "Nullable<Int32>"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.ImportRobotBase",
+    "properties": [
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "ignore_errors",
+        "type": "AnyOf<Boolean, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.MediaCataloging.FileHashRobot",
+    "properties": [
+      {
+        "name": "algorithm",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.MediaCataloging.FilePreviewRobot",
+    "properties": [
+      {
+        "name": "background",
+        "type": "String"
+      },
+      {
+        "name": "clip_duration",
+        "type": "Nullable<Double>"
+      },
+      {
+        "name": "clip_format",
+        "type": "String"
+      },
+      {
+        "name": "clip_framerate",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "clip_loop",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "clip_offset",
+        "type": "Nullable<Double>"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "format",
+        "type": "String"
+      },
+      {
+        "name": "height",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "icon_style",
+        "type": "String"
+      },
+      {
+        "name": "icon_text_color",
+        "type": "String"
+      },
+      {
+        "name": "icon_text_content",
+        "type": "String"
+      },
+      {
+        "name": "icon_text_font",
+        "type": "String"
+      },
+      {
+        "name": "optimize",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "optimize_priority",
+        "type": "String"
+      },
+      {
+        "name": "optimize_progressive",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "resize_strategy",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "strategy",
+        "type": "PreviewStrategy"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "waveform_center_color",
+        "type": "String"
+      },
+      {
+        "name": "waveform_height",
+        "type": "String"
+      },
+      {
+        "name": "waveform_outer_color",
+        "type": "String"
+      },
+      {
+        "name": "waveform_width",
+        "type": "String"
+      },
+      {
+        "name": "width",
+        "type": "Nullable<Int32>"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.MediaCataloging.MetadataWriteRobot",
+    "properties": [
+      {
+        "name": "data_to_write",
+        "type": "Dictionary<String, Object>"
+      },
+      {
+        "name": "ffmpeg_stack",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.MediaCataloging.PreviewStrategy",
+    "properties": [
+      {
+        "name": "archive",
+        "type": "List<String>"
+      },
+      {
+        "name": "audio",
+        "type": "List<String>"
+      },
+      {
+        "name": "document",
+        "type": "List<String>"
+      },
+      {
+        "name": "image",
+        "type": "List<String>"
+      },
+      {
+        "name": "unknown",
+        "type": "List<String>"
+      },
+      {
+        "name": "video",
+        "type": "List<String>"
+      },
+      {
+        "name": "webpage",
+        "type": "List<String>"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.OutputMeta",
+    "properties": [
+      {
+        "name": "colorspace",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "dominant_colors",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "has_transparency",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "mean_volume",
+        "type": "Nullable<Boolean>"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.PaginatedImportRobotBase",
+    "properties": [
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "files_per_page",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "ignore_errors",
+        "type": "AnyOf<Boolean, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "page_number",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "recursive",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.RobotBase",
+    "properties": [
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.SmartCdn.FileServeRobot",
+    "properties": [
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "headers",
+        "type": "Dictionary<String, String>"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.SmartCdn.TlcdnDeliverRobot",
+    "properties": [
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "output_meta",
+        "type": "AnyOf<Boolean, OutputMeta>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.StoreRobotBase",
+    "properties": [
+      {
+        "name": "credentials",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "path",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.UploadHandleRobot",
+    "properties": [
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "output_meta",
+        "type": "AnyOf<Boolean, OutputMeta>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.VideoEncoding.VideoAdaptiveRobot",
+    "properties": [
+      {
+        "name": "closed_captions",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "playlist_name",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "segment_duration",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "technique",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.VideoEncoding.VideoArtworkRobot",
+    "properties": [
+      {
+        "name": "ffmpeg",
+        "type": "Dictionary<String, Object>"
+      },
+      {
+        "name": "ffmpeg_stack",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "method",
+        "type": "String"
+      },
+      {
+        "name": "output_meta",
+        "type": "AnyOf<Boolean, OutputMeta>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "preset",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.VideoEncoding.VideoConcatenateRobot",
+    "properties": [
+      {
+        "name": "audio_fade_seconds",
+        "type": "Nullable<Double>"
+      },
+      {
+        "name": "ffmpeg",
+        "type": "Dictionary<String, Object>"
+      },
+      {
+        "name": "ffmpeg_stack",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "output_meta",
+        "type": "AnyOf<Boolean, OutputMeta>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "preset",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "video_fade_seconds",
+        "type": "Nullable<Double>"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.VideoEncoding.VideoEncodeRobot",
+    "properties": [
+      {
+        "name": "background",
+        "type": "String"
+      },
+      {
+        "name": "chunk_duration",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "crop",
+        "type": "AnyOf<String, Crop>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "ffmpeg",
+        "type": "Dictionary<String, Object>"
+      },
+      {
+        "name": "ffmpeg_stack",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "freeze_detect",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "height",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "hint",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "output_meta",
+        "type": "AnyOf<Boolean, OutputMeta>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "preset",
+        "type": "String"
+      },
+      {
+        "name": "resize_strategy",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "rotate",
+        "type": "AnyOf<Boolean, Int32>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "turbo",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "width",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "zoom",
+        "type": "Nullable<Boolean>"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.VideoEncoding.VideoMergeRobot",
+    "properties": [
+      {
+        "name": "audio_delay",
+        "type": "Nullable<Double>"
+      },
+      {
+        "name": "background",
+        "type": "String"
+      },
+      {
+        "name": "duration",
+        "type": "Nullable<Double>"
+      },
+      {
+        "name": "ffmpeg",
+        "type": "Dictionary<String, Object>"
+      },
+      {
+        "name": "ffmpeg_stack",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "framerate",
+        "type": "String"
+      },
+      {
+        "name": "height",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "image_durations",
+        "type": "List<Double>"
+      },
+      {
+        "name": "output_meta",
+        "type": "AnyOf<Boolean, OutputMeta>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "preset",
+        "type": "String"
+      },
+      {
+        "name": "replace_audio",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "resize_strategy",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "vstack",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "width",
+        "type": "Nullable<Int32>"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.VideoEncoding.VideoOndemandRobot",
+    "properties": [
+      {
+        "name": "asset",
+        "type": "String"
+      },
+      {
+        "name": "asset_param_name",
+        "type": "String"
+      },
+      {
+        "name": "enabled_variants",
+        "type": "AnyOf<String, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "output_meta",
+        "type": "AnyOf<Boolean, OutputMeta>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "segment_duration",
+        "type": "AnyOf<Int32, String>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "sign_urls_for",
+        "type": "AnyOf<Int32, String>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "variants",
+        "type": "Dictionary<String, VideoOndemandVariant>"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.VideoEncoding.VideoOndemandVariant",
+    "properties": [
+      {
+        "name": "ffmpeg",
+        "type": "Dictionary<String, Object>"
+      },
+      {
+        "name": "ffmpeg_stack",
+        "type": "String"
+      },
+      {
+        "name": "height",
+        "type": "AnyOf<Int32, String>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "preset",
+        "type": "String"
+      },
+      {
+        "name": "width",
+        "type": "AnyOf<Int32, String>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.VideoEncoding.VideoSplitRobot",
+    "properties": [
+      {
+        "name": "ffmpeg",
+        "type": "Dictionary<String, Object>"
+      },
+      {
+        "name": "ffmpeg_stack",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "height",
+        "type": "AnyOf<Int32, String>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "output_meta",
+        "type": "AnyOf<Boolean, OutputMeta>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "preset",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "segments",
+        "type": "List<VideoSplitSegment>"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "width",
+        "type": "AnyOf<Int32, String>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.VideoEncoding.VideoSplitSegment",
+    "properties": [
+      {
+        "name": "from",
+        "type": "AnyOf<Int32, String>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "to",
+        "type": "AnyOf<Int32, String>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.VideoEncoding.VideoSubtitleRobot",
+    "properties": [
+      {
+        "name": "border_color",
+        "type": "String"
+      },
+      {
+        "name": "border_style",
+        "type": "String"
+      },
+      {
+        "name": "ffmpeg",
+        "type": "Dictionary<String, Object>"
+      },
+      {
+        "name": "ffmpeg_stack",
+        "type": "String"
+      },
+      {
+        "name": "font",
+        "type": "String"
+      },
+      {
+        "name": "font_color",
+        "type": "String"
+      },
+      {
+        "name": "font_size",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "output_meta",
+        "type": "AnyOf<Boolean, OutputMeta>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "position",
+        "type": "String"
+      },
+      {
+        "name": "preset",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "subtitles_type",
+        "type": "String"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Robots.VideoEncoding.VideoThumbnailsRobot",
+    "properties": [
+      {
+        "name": "background",
+        "type": "String"
+      },
+      {
+        "name": "count",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "ffmpeg_stack",
+        "type": "String"
+      },
+      {
+        "name": "force_accept",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "format",
+        "type": "String"
+      },
+      {
+        "name": "height",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "offsets",
+        "type": "AnyOf<List<Int32>, List<String>>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "output_meta",
+        "type": "AnyOf<Boolean, OutputMeta>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "resize_strategy",
+        "type": "String"
+      },
+      {
+        "name": "result",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "robot",
+        "type": "String"
+      },
+      {
+        "name": "rotate",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "use",
+        "type": "AnyOf<String, List<String>, AdvancedUse>",
+        "converter": "AnyOfConverter"
+      },
+      {
+        "name": "width",
+        "type": "Nullable<Int32>"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Templates.DeleteTemplateResponse",
+    "properties": [
+      {
+        "name": "error",
+        "type": "String"
+      },
+      {
+        "name": "http_code",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "message",
+        "type": "String"
+      },
+      {
+        "name": "ok",
+        "type": "String"
+      },
+      {
+        "name": "reason",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Templates.TemplateContent",
+    "properties": [
+      {
+        "name": "steps",
+        "type": "Dictionary<String, Dictionary<String, Object>>"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Templates.TemplateListRequest",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "AuthParams"
+      },
+      {
+        "name": "fromdate",
+        "type": "Nullable<DateTime>",
+        "converter": "PaginationDateTimeConverter"
+      },
+      {
+        "name": "keywords",
+        "type": "List<String>"
+      },
+      {
+        "name": "order",
+        "type": "String"
+      },
+      {
+        "name": "page",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "pagesize",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "sort",
+        "type": "String"
+      },
+      {
+        "name": "todate",
+        "type": "Nullable<DateTime>",
+        "converter": "PaginationDateTimeConverter"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Templates.TemplateModel",
+    "properties": [
+      {
+        "name": "assembly_status_expiry",
+        "type": "String"
+      },
+      {
+        "name": "content",
+        "type": "TemplateContent"
+      },
+      {
+        "name": "created",
+        "type": "DateTimeOffset"
+      },
+      {
+        "name": "encryption_version",
+        "type": "Int32"
+      },
+      {
+        "name": "id",
+        "type": "String"
+      },
+      {
+        "name": "last_used",
+        "type": "Nullable<DateTimeOffset>"
+      },
+      {
+        "name": "modified",
+        "type": "DateTimeOffset"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "require_signature_auth",
+        "type": "Boolean",
+        "converter": "BooleanToIntConverter"
+      },
+      {
+        "name": "transcoding_result_expiry",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Templates.TemplateRequest",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "AuthParams"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "require_signature_auth",
+        "type": "Boolean",
+        "converter": "BooleanToIntConverter"
+      },
+      {
+        "name": "template",
+        "type": "TemplateRequestContent"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Templates.TemplateRequestContent",
+    "properties": [
+      {
+        "name": "allow_steps_override",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "fields",
+        "type": "Dictionary<String, Object>"
+      },
+      {
+        "name": "notify_url",
+        "type": "String"
+      },
+      {
+        "name": "quiet",
+        "type": "Nullable<Boolean>"
+      },
+      {
+        "name": "steps",
+        "type": "Dictionary<String, RobotBase>"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Templates.TemplateResponse",
+    "properties": [
+      {
+        "name": "assembly_status_expiry",
+        "type": "String"
+      },
+      {
+        "name": "content",
+        "type": "TemplateContent"
+      },
+      {
+        "name": "error",
+        "type": "String"
+      },
+      {
+        "name": "http_code",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "id",
+        "type": "String"
+      },
+      {
+        "name": "message",
+        "type": "String"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "ok",
+        "type": "String"
+      },
+      {
+        "name": "reason",
+        "type": "String"
+      },
+      {
+        "name": "require_signature_auth",
+        "type": "Boolean",
+        "converter": "BooleanToIntConverter"
+      },
+      {
+        "name": "transcoding_result_expiry",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Tokens.TokenRequest",
+    "properties": [
+      {
+        "name": "aud",
+        "type": "String"
+      },
+      {
+        "name": "grant_type",
+        "type": "String"
+      },
+      {
+        "name": "scope",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Tokens.TokenResponse",
+    "properties": [
+      {
+        "name": "access_token",
+        "type": "String"
+      },
+      {
+        "name": "error",
+        "type": "String"
+      },
+      {
+        "name": "expires_in",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "http_code",
+        "type": "Nullable<Int32>"
+      },
+      {
+        "name": "message",
+        "type": "String"
+      },
+      {
+        "name": "ok",
+        "type": "String"
+      },
+      {
+        "name": "reason",
+        "type": "String"
+      },
+      {
+        "name": "scope",
+        "type": "String"
+      },
+      {
+        "name": "token_type",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.TransloaditResponse",
+    "properties": [
+      {
+        "name": "content",
+        "type": "String"
+      },
+      {
+        "name": "headers",
+        "type": "HttpResponseHeaders"
+      },
+      {
+        "name": "status_code",
+        "type": "HttpStatusCode"
+      }
+    ]
+  }
+]
