@@ -5,6 +5,8 @@ using Transloadit.Models;
 using Transloadit.Serialization;
 using Xunit;
 
+using Transloadit.Tests.Infrastructure;
+
 namespace Transloadit.Tests.Tests.Unit
 {
     public class ResponseBaseTests
@@ -56,8 +58,7 @@ namespace Transloadit.Tests.Tests.Unit
         public void PaginatedListResponse_DeserializesCountAndItems()
         {
             const string json = "{\"ok\":\"OK\",\"count\":2,\"items\":[1,2]}";
-            var response = JsonConvert.DeserializeObject<PaginatedListResponse<int>>(
-                json, TransloaditSerializerSettings.CreateDefault());
+            var response = TestSerializer.Default.Deserialize<PaginatedListResponse<int>>(json);
 
             Assert.Equal(2, response.Count);
             Assert.Equal(new[] { 1, 2 }, response.Items);

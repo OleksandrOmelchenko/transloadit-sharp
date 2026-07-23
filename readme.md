@@ -17,23 +17,30 @@ var clientNoAuth = new TransloaditClient("<auth key>");
 var client = new TransloaditClient("<auth key>", "<auth secret>");
 ```
 
-With custom JSON serializer settings
+### Choosing / customizing the JSON serializer
+
+Serialization is abstracted behind `ITransloaditSerializer`. By default the client uses **System.Text.Json**
+(and **Newtonsoft.Json** on `net452`/`net461`, where System.Text.Json is not available). Provide your own
+serializer — or customize the default one with extra converters — via `TransloaditClientOptions.Serializer`.
 
 ```csharp
+using System.Text.Json.Serialization;
 using Transloadit;
 using Transloadit.Serialization;
 
-var settings = TransloaditSerializerSettings.CreateDefault();
-settings.Converters.Add(new MyCustomConverter());
+// customize the default System.Text.Json serializer (e.g. register an additional converter)
+var serializer = new SystemTextJsonSerializer(options => options.Converters.Add(new MyCustomConverter()));
 
 var options = new TransloaditClientOptions
 {
-    RequestSerializerSettings = settings,
-    ResponseSerializerSettings = settings,
+    Serializer = serializer,
 };
 
 var client = new TransloaditClient("<auth key>", "<auth secret>", options);
 ```
+
+To keep using Newtonsoft.Json on a modern framework, pass `new NewtonsoftJsonSerializer()` instead
+(available on `net452`/`net461`), or implement `ITransloaditSerializer` for a fully custom engine.
 
 ### Create an Assembly
 

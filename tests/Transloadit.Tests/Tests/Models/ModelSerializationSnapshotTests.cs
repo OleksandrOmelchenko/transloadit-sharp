@@ -2,19 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using Transloadit.Models;
-using Transloadit.Serialization;
+using Transloadit.Serialization.Attributes;
 using Xunit;
 
 namespace Transloadit.Tests.Tests.Models
 {
     // characterization (golden-snapshot) test that pins the serialization contract shape of
-    // every class under Models to a committed file. any future change that alters how a class
-    // serializes (renamed/added/removed property, changed type, added/removed converter) fails
-    // this test until the snapshot is intentionally regenerated with UPDATE_SNAPSHOTS=1.
+    // every class under Models to a committed file. the shape is derived from the provider-neutral
+    // Transloadit serialization attributes (not a specific JSON engine), so it is stable across
+    // System.Text.Json and Newtonsoft. any change that alters how a class serializes (renamed/added/
+    // removed property, changed type, added/removed converter) fails until regenerated with UPDATE_SNAPSHOTS=1.
     public class ModelSerializationSnapshotTests
     {
         [Fact]
@@ -44,9 +45,6 @@ namespace Transloadit.Tests.Tests.Models
 
         private static string BuildSnapshot(out int typeCount)
         {
-            var settings = TransloaditSerializerSettings.CreateDefault();
-            var resolver = (DefaultContractResolver)settings.ContractResolver;
-
             var types = typeof(TransloaditClient).Assembly
                 .GetTypes()
                 .Where(IsSnapshotType)
@@ -59,27 +57,50 @@ namespace Transloadit.Tests.Tests.Models
             foreach (var type in types)
             {
                 var properties = new List<PropertyContract>();
-                if (resolver.ResolveContract(type) is JsonObjectContract objectContract)
+                var seen = new HashSet<string>();
+
+                for (var current = type; current != null && current != typeof(object); current = current.BaseType)
                 {
-                    foreach (var property in objectContract.Properties)
+                    foreach (var property in current.GetProperties(
+                        BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly))
                     {
-                        if (property.Ignored)
+                        if (property.GetIndexParameters().Length > 0 || property.GetMethod == null)
+                        {
+                            continue;
+                        }
+
+                        if (property.GetCustomAttribute<TransloaditJsonIgnoreAttribute>() != null)
+                        {
+                            continue;
+                        }
+
+                        var nameAttribute = property.GetCustomAttribute<TransloaditJsonNameAttribute>();
+
+                        // public members are always serialized; non-public members only when they carry a neutral name
+                        if (!property.GetMethod.IsPublic && nameAttribute == null)
+                        {
+                            continue;
+                        }
+
+                        if (!seen.Add(property.DeclaringType.FullName + "." + property.Name))
                         {
                             continue;
                         }
 
                         properties.Add(new PropertyContract
                         {
-                            Name = property.PropertyName,
+                            Name = nameAttribute != null ? nameAttribute.Name : ToSnakeCase(property.Name),
                             Type = FriendlyTypeName(property.PropertyType),
-                            Converter = EffectiveConverter(property, settings.Converters),
+                            Converter = NeutralConverter(property),
                         });
                     }
-
-                    properties = properties.OrderBy(p => p.Name, StringComparer.Ordinal).ToList();
                 }
 
-                models.Add(new ModelContract { Type = type.FullName, Properties = properties });
+                models.Add(new ModelContract
+                {
+                    Type = type.FullName,
+                    Properties = properties.OrderBy(p => p.Name, StringComparer.Ordinal).ToList(),
+                });
             }
 
             var snapshotSettings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
@@ -92,28 +113,52 @@ namespace Transloadit.Tests.Tests.Models
                 && !type.IsGenericTypeDefinition
                 && (type.Namespace == "Transloadit.Models"
                     || (type.Namespace != null && type.Namespace.StartsWith("Transloadit.Models.")))
-                // AnyOf unions serialize via the settings-level AnyOfConverter, not an object contract
                 && !typeof(AnyOf).IsAssignableFrom(type)
-                // skip compiler-generated closures/state machines
                 && !type.Name.Contains("<");
         }
 
-        private static string EffectiveConverter(JsonProperty property, IList<JsonConverter> settingsConverters)
+        private static string NeutralConverter(PropertyInfo property)
         {
-            if (property.Converter != null)
+            if (property.GetCustomAttribute<TransloaditBooleanToIntAttribute>() != null)
             {
-                return property.Converter.GetType().Name;
+                return "BooleanToInt";
             }
 
-            foreach (var converter in settingsConverters)
+            if (property.GetCustomAttribute<TransloaditDateFormatAttribute>() != null)
             {
-                if (converter.CanConvert(property.PropertyType))
-                {
-                    return converter.GetType().Name;
-                }
+                return "DateFormat";
+            }
+
+            if (typeof(AnyOf).IsAssignableFrom(property.PropertyType))
+            {
+                return "AnyOf";
             }
 
             return null;
+        }
+
+        private static string ToSnakeCase(string name)
+        {
+            var builder = new System.Text.StringBuilder();
+            for (var i = 0; i < name.Length; i++)
+            {
+                var c = name[i];
+                if (char.IsUpper(c))
+                {
+                    if (i > 0)
+                    {
+                        builder.Append('_');
+                    }
+
+                    builder.Append(char.ToLowerInvariant(c));
+                }
+                else
+                {
+                    builder.Append(c);
+                }
+            }
+
+            return builder.ToString();
         }
 
         private static string FriendlyTypeName(Type type)
@@ -150,8 +195,6 @@ namespace Transloadit.Tests.Tests.Models
 
         private static string SnapshotPath([CallerFilePath] string thisFile = null)
         {
-            // this file lives in tests/Transloadit.Tests/Tests/Models; the snapshot lives in
-            // tests/Transloadit.Tests/Snapshots (two directories up).
             var dir = Path.GetDirectoryName(thisFile);
             return Path.GetFullPath(Path.Combine(dir, "..", "..", "Snapshots", "models.serialization.snapshot.json"));
         }

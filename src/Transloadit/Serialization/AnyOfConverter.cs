@@ -1,3 +1,4 @@
+#if TRANSLOADIT_NEWTONSOFT
 ﻿using System;
 using System.Reflection;
 using Newtonsoft.Json;
@@ -42,3 +43,4 @@ namespace Transloadit.Serialization
         }
     }
 }
+#endif

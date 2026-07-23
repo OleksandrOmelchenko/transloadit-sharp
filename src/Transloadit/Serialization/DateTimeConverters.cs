@@ -1,3 +1,4 @@
+#if TRANSLOADIT_NEWTONSOFT
 ﻿using Newtonsoft.Json.Converters;
 
 namespace Transloadit.Serialization
@@ -30,3 +31,4 @@ namespace Transloadit.Serialization
         }
     }
 }
+#endif

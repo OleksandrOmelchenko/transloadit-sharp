@@ -2,6 +2,6 @@
 {
     internal static class ClientVersion
     {
-        public const string Current = "0.9.4";
+        public const string Current = "0.10.0";
     }
 }

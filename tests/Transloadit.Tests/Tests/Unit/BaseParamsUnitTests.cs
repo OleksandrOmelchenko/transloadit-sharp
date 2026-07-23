@@ -6,6 +6,8 @@ using Transloadit.Models;
 using Transloadit.Serialization;
 using Xunit;
 
+using Transloadit.Tests.Infrastructure;
+
 namespace Transloadit.Tests.Tests.Unit
 {
     public class BaseParamsUnitTests
@@ -46,7 +48,7 @@ namespace Transloadit.Tests.Tests.Unit
                 MaxSize = 100,
             };
 
-            var json = JsonConvert.SerializeObject(auth, TransloaditSerializerSettings.CreateDefault());
+            var json = TestSerializer.Default.Serialize(auth);
             var parsed = JObject.Parse(json);
 
             Assert.Equal("k", (string)parsed["key"]);
@@ -68,7 +70,7 @@ namespace Transloadit.Tests.Tests.Unit
                 Keywords = new List<string> { "alpha" },
             };
 
-            var json = JsonConvert.SerializeObject(pagination, TransloaditSerializerSettings.CreateDefault());
+            var json = TestSerializer.Default.Serialize(pagination);
             var parsed = JObject.Parse(json);
 
             Assert.Equal(2, (int)parsed["page"]);

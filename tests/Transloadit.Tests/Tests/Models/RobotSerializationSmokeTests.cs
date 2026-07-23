@@ -7,6 +7,8 @@ using Transloadit.Models.Robots;
 using Transloadit.Serialization;
 using Xunit;
 
+using Transloadit.Tests.Infrastructure;
+
 namespace Transloadit.Tests.Tests.Models
 {
     // reflection-driven coverage over every concrete robot in the library assembly:
@@ -26,7 +28,7 @@ namespace Transloadit.Tests.Tests.Models
             var type = typeof(TransloaditClient).Assembly.GetType(typeName, throwOnError: true);
             var robot = (RobotBase)Activator.CreateInstance(type);
 
-            var json = JsonConvert.SerializeObject(robot, TransloaditSerializerSettings.CreateDefault());
+            var json = TestSerializer.Default.Serialize(robot);
             var parsed = JObject.Parse(json);
 
             Assert.Equal(robot.Robot, (string)parsed["robot"]);

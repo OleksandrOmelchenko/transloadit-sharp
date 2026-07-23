@@ -1,3 +1,4 @@
+#if TRANSLOADIT_NEWTONSOFT
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -67,3 +68,4 @@ namespace Transloadit.Tests.Tests.Unit.Serialization
         }
     }
 }
+#endif

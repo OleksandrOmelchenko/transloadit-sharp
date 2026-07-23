@@ -116,8 +116,7 @@ namespace Transloadit
 
         private static ITransloaditSerializer CreateDefaultSerializer()
         {
-            // TODO(phase2): return SystemTextJsonSerializer on non-net452 targets.
-            return new NewtonsoftJsonSerializer();
+            return TransloaditSerializerFactory.CreateDefault();
         }
 
         /// <summary>

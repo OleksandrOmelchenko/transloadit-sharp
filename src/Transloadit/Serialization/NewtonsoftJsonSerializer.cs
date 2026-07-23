@@ -1,3 +1,4 @@
+#if TRANSLOADIT_NEWTONSOFT
 using System;
 using Newtonsoft.Json;
 
@@ -44,3 +45,4 @@ namespace Transloadit.Serialization
             => JsonConvert.DeserializeObject<T>(json, _settings);
     }
 }
+#endif
