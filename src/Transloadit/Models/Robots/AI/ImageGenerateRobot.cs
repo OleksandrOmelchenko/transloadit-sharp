@@ -6,22 +6,13 @@ namespace Transloadit.Models.Robots.AI
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/image-generate/">/image/generate</a> Robot.
     /// </summary>
-    public class ImageGenerateRobot : RobotBase
+    public class ImageGenerateRobot : ProcessingRobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
         [JsonProperty("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
-
-        /// <summary>
-        /// Allows to specify a set of metadata that is more expensive on CPU power to calculate, 
-        /// and thus is disabled by default to keep your Assemblies processing fast.
-        /// This can be set to <c>false</c> to skip metadata extraction and speed up transcoding.
-        /// <para>Default: <c>{}</c>.</para>
-        /// </summary>
-        [JsonProperty("output_meta")]
-        public AnyOf<bool, OutputMeta> OutputMeta { get; set; }
 
         /// <summary>
         /// The AI model to use for image generation. Please see the 

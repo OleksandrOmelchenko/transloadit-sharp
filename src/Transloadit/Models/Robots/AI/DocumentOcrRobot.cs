@@ -6,7 +6,7 @@ namespace Transloadit.Models.Robots.AI
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/document-ocr/">/document/ocr</a> Robot.
     /// </summary>
-    public class DocumentOcrRobot : RobotBase
+    public class DocumentOcrRobot : ProcessingRobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.

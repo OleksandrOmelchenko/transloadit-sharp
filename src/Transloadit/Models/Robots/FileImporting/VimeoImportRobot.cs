@@ -9,12 +9,6 @@ namespace Transloadit.Models.Robots.FileImporting
     public class VimeoImportRobot : ImportRobotBase
     {
         /// <summary>
-        /// Custom name for imported files.
-        /// </summary>
-        [JsonProperty("force_name")]
-        public AnyOf<string, List<string>> ForceName { get; set; }
-
-        /// <summary>
         /// Page number for paginated imports.
         /// </summary>
         [JsonProperty("page_number")]

@@ -6,7 +6,7 @@ namespace Transloadit.Models.Robots.FileExporting
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/tus-store/">/tus/store</a> Robot.
     /// </summary>
-    public class TusStoreRobot : RobotBase
+    public class TusStoreRobot : ProcessingRobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.

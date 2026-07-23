@@ -9,12 +9,6 @@ namespace Transloadit.Models.Robots.FileImporting
     public class BoxImportRobot : ImportRobotBase
     {
         /// <summary>
-        /// Custom name for imported files.
-        /// </summary>
-        [JsonProperty("force_name")]
-        public AnyOf<string, List<string>> ForceName { get; set; }
-
-        /// <summary>
         /// Initializes <a href="https://transloadit.com/docs/robots/box-import/">/box/import</a> Robot.
         /// </summary>
         public BoxImportRobot()

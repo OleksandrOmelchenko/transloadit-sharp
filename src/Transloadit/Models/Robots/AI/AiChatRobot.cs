@@ -6,19 +6,13 @@ namespace Transloadit.Models.Robots.AI
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/ai-chat/">/ai/chat</a> Robot.
     /// </summary>
-    public class AiChatRobot : RobotBase
+    public class AiChatRobot : ProcessingRobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
         [JsonProperty("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
-
-        /// <summary>
-        /// Optional expensive metadata extraction settings.
-        /// </summary>
-        [JsonProperty("output_meta")]
-        public AnyOf<bool, OutputMeta> OutputMeta { get; set; }
 
         /// <summary>
         /// The model to use. Set to <c>auto</c> to let Transloadit choose.

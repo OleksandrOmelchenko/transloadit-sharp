@@ -6,22 +6,13 @@ namespace Transloadit.Models.Robots.AudioEncoding
     /// <summary>
     /// Represents <c>"/audio/waveform</c> Robot.
     /// </summary>
-    public class AudioWaveformImageRobot : RobotBase
+    public class AudioWaveformImageRobot : ProcessingRobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
         [JsonProperty("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
-
-        /// <summary>
-        /// Allows to specify a set of metadata that is more expensive on CPU power to calculate, 
-        /// and thus is disabled by default to keep your Assemblies processing fast.
-        /// This can be set to <c>false</c> to skip metadata extraction and speed up transcoding.
-        /// <para>Default: <c>{}</c>.</para>
-        /// </summary>
-        [JsonProperty("output_meta")]
-        public AnyOf<bool, OutputMeta> OutputMeta { get; set; }
 
         /// <summary>
         /// The format of the result file. Can be <c>image</c> or <c>json</c>. If <c>image</c> is supplied, a PNG image will be created, 

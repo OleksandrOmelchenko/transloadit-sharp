@@ -27,6 +27,39 @@ namespace Transloadit.Models.Robots
         /// </summary>
         [JsonProperty("force_accept")]
         public bool? ForceAccept { get; set; }
+
+        /// <summary>
+        /// Optional expensive metadata extraction settings.
+        /// </summary>
+        [JsonProperty("output_meta")]
+        public AnyOf<bool, OutputMeta> OutputMeta { get; set; }
+
+        /// <summary>
+        /// Controls whether Assembly Variables are interpolated for individual instruction fields.
+        /// Set this to <c>false</c> to treat every instruction field as literal text, or set individual field paths (such as <c>path</c>, or a dotted path like <c>ffmpeg.vf</c> for nested objects) to <c>false</c> to treat only those fields as literal text.
+        /// </summary>
+        [JsonProperty("interpolate")]
+        public AnyOf<bool, Dictionary<string, object>> Interpolate { get; set; }
+
+        /// <summary>
+        /// Setting the queue to <c>batch</c> manually downgrades the priority of jobs for this Step, to avoid consuming Priority job slots for jobs that don't need zero queue waiting times.
+        /// </summary>
+        [JsonProperty("queue")]
+        public string Queue { get; set; }
+    }
+
+    /// <summary>
+    /// Represents base class for non-import Robots, which support the <c>ignore_errors</c> parameter.
+    /// </summary>
+    public abstract class ProcessingRobotBase : RobotBase
+    {
+        /// <summary>
+        /// "Ignore errors" mode. Possible array members are <c>meta</c> and <c>convert</c>.
+        /// You might see an error when trying to extract metadata from your files. This happens, for example, for files with a size of zero bytes. Including <c>"meta"</c> in the array will cause the Robot to not stop (and the entire Assembly) when that happens.
+        /// Setting this parameter to <c>true</c> will ignore all errors.
+        /// </summary>
+        [JsonProperty("ignore_errors")]
+        public AnyOf<bool, List<string>> IgnoreErrors { get; set; }
     }
 
     /// <summary>
@@ -34,15 +67,6 @@ namespace Transloadit.Models.Robots
     /// </summary>
     public abstract class ImportRobotBase : RobotBase
     {
-        /// <summary>
-        /// "Ignore errors" mode. Possible array members are <c>meta</c> and <c>import</c>. 
-        /// You might see an error when trying to extract metadata from your imported files. This happens, for example, for files with a size of zero bytes. Including <c>"meta"</c> in the array will cause the Robot to not stop the import (and the entire Assembly) when that happens.
-        /// Including <c>"import"</c> in the array will ensure the Robot does not cease to function on any import errors either.
-        /// Setting this parameter to <c>true</c> will set it to <c>["meta", "import"]</c> internally.
-        /// </summary>
-        [JsonProperty("ignore_errors")]
-        public AnyOf<bool, List<string>> IgnoreErrors { get; set; }
-
         /// <summary>
         /// Template credentials name.
         /// </summary>
@@ -54,12 +78,25 @@ namespace Transloadit.Models.Robots
         /// </summary>
         [JsonProperty("path")]
         public AnyOf<string, List<string>> Path { get; set; }
+
+        /// <summary>
+        /// Custom name for the imported file(s). By default file names are derived from the source.
+        /// </summary>
+        [JsonProperty("force_name")]
+        public AnyOf<string, List<string>> ForceName { get; set; }
+
+        /// <summary>
+        /// Setting this to <c>["meta"]</c> will still import the file on metadata extraction errors.
+        /// This is similar to <c>ignore_errors</c>, which also ignores the error and makes sure the Robot doesn't stop, but unlike this parameter it does not import the file.
+        /// </summary>
+        [JsonProperty("import_on_errors")]
+        public List<string> ImportOnErrors { get; set; }
     }
 
     /// <summary>
     /// Represents base class for store Robots.
     /// </summary>
-    public abstract class StoreRobotBase : RobotBase
+    public abstract class StoreRobotBase : ProcessingRobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.

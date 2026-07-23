@@ -6,22 +6,13 @@ namespace Transloadit.Models.Robots.VideoEncoding
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/video-subtitle/">/video/subtitle</a> Robot.
     /// </summary>
-    public class VideoSubtitleRobot : RobotBase
+    public class VideoSubtitleRobot : ProcessingRobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
         [JsonProperty("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
-
-        /// <summary>
-        /// Allows to specify a set of metadata that is more expensive on CPU power to calculate, 
-        /// and thus is disabled by default to keep your Assemblies processing fast.
-        /// This can be set to <c>false</c> to skip metadata extraction and speed up transcoding.
-        /// <para>Default: <c>{}</c>.</para>
-        /// </summary>
-        [JsonProperty("output_meta")]
-        public AnyOf<bool, OutputMeta> OutputMeta { get; set; }
 
         /// <summary>
         /// Performs conversion using pre-configured settings. By default, no settings are applied and the original settings of the video are preserved.

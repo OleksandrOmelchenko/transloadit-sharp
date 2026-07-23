@@ -32,6 +32,14 @@ namespace Transloadit.Models.Robots.FileImporting
         public string BucketRegion { get; set; }
 
         /// <summary>
+        /// If set to <c>true</c>, the Robot will not import the actual files yet, but instead returns an empty file stub that includes a URL from where the file can be imported by subsequent Robots.
+        /// This should only be set if all subsequent Steps use Robots that support file stubs.
+        /// <para>Default: <c>false</c>.</para>
+        /// </summary>
+        [JsonProperty("return_file_stubs")]
+        public bool? ReturnFileStubs { get; set; }
+
+        /// <summary>
         /// Initializes <a href="https://transloadit.com/docs/robots/s3-import/">/s3/import</a> Robot.
         /// </summary>
         public S3ImportRobot()

@@ -6,7 +6,7 @@ namespace Transloadit.Models.Robots.AI
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/image-facedetect/">/image/facedetect</a> Robot.
     /// </summary>
-    public class ImageFaceDetectRobot : RobotBase
+    public class ImageFaceDetectRobot : ProcessingRobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.

@@ -6,19 +6,13 @@ namespace Transloadit.Models.Robots.Documents
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/document-optimize/">/document/optimize</a> Robot.
     /// </summary>
-    public class DocumentOptimizeRobot : RobotBase
+    public class DocumentOptimizeRobot : ProcessingRobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
         [JsonProperty("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
-
-        /// <summary>
-        /// Optional expensive metadata extraction settings.
-        /// </summary>
-        [JsonProperty("output_meta")]
-        public AnyOf<bool, OutputMeta> OutputMeta { get; set; }
 
         /// <summary>
         /// Quality preset. One of <see cref="Constants.DocumentOptimizePresets"/>.

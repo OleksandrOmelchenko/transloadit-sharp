@@ -6,22 +6,13 @@ namespace Transloadit.Models.Robots.VideoEncoding
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/video-thumbs/">/video/thumbs</a> Robot.
     /// </summary>
-    public class VideoThumbnailsRobot : RobotBase
+    public class VideoThumbnailsRobot : ProcessingRobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
         [JsonProperty("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
-
-        /// <summary>
-        /// Allows to specify a set of metadata that is more expensive on CPU power to calculate, 
-        /// and thus is disabled by default to keep your Assemblies processing fast.
-        /// This can be set to <c>false</c> to skip metadata extraction and speed up transcoding.
-        /// <para>Default: <c>{}</c>.</para>
-        /// </summary>
-        [JsonProperty("output_meta")]
-        public AnyOf<bool, OutputMeta> OutputMeta { get; set; }
 
         /// <summary>
         /// The number of thumbnails to be extracted. As some videos have incorrect durations, the actual number of thumbnails generated may be less 

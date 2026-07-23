@@ -6,19 +6,13 @@ namespace Transloadit.Models.Robots.AudioEncoding
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/audio-split/">/audio/split</a> Robot.
     /// </summary>
-    public class AudioSplitRobot : RobotBase
+    public class AudioSplitRobot : ProcessingRobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
         [JsonProperty("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
-
-        /// <summary>
-        /// Optional expensive metadata extraction settings.
-        /// </summary>
-        [JsonProperty("output_meta")]
-        public AnyOf<bool, OutputMeta> OutputMeta { get; set; }
 
         /// <summary>
         /// FFmpeg options merged over preset options.

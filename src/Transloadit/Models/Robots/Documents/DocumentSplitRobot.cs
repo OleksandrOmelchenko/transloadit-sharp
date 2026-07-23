@@ -6,7 +6,7 @@ namespace Transloadit.Models.Robots.Documents
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/document-split/">/document/split</a> Robot.
     /// </summary>
-    public class DocumentSplitRobot : RobotBase
+    public class DocumentSplitRobot : ProcessingRobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.

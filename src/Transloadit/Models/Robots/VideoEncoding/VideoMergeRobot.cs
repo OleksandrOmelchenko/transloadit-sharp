@@ -6,22 +6,13 @@ namespace Transloadit.Models.Robots.VideoEncoding
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/video-merge/">/video/merge</a> Robot.
     /// </summary>
-    public class VideoMergeRobot : RobotBase
+    public class VideoMergeRobot : ProcessingRobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
         [JsonProperty("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
-
-        /// <summary>
-        /// Allows to specify a set of metadata that is more expensive on CPU power to calculate, 
-        /// and thus is disabled by default to keep your Assemblies processing fast.
-        /// This can be set to <c>false</c> to skip metadata extraction and speed up transcoding.
-        /// <para>Default: <c>{}</c>.</para>
-        /// </summary>
-        [JsonProperty("output_meta")]
-        public AnyOf<bool, OutputMeta> OutputMeta { get; set; }
 
         /// <summary>
         /// Generates the video according to pre-configured video presets. If you specify your own FFmpeg parameters using the Robot's <c>ffmpeg</c> 

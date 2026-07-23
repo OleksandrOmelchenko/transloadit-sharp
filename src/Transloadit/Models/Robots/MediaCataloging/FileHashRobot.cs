@@ -6,7 +6,7 @@ namespace Transloadit.Models.Robots.MediaCataloging
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/file-hash/">/file/hash</a> Robot.
     /// </summary>
-    public class FileHashRobot : RobotBase
+    public class FileHashRobot : ProcessingRobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.

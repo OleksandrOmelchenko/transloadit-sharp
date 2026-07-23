@@ -6,7 +6,7 @@ namespace Transloadit.Models.Robots.Code
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/script-run/">/script/run</a> Robot.
     /// </summary>
-    public class ScriptRunRobot : RobotBase
+    public class ScriptRunRobot : ProcessingRobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.

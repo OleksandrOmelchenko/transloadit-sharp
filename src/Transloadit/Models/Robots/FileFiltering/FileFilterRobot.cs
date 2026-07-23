@@ -6,7 +6,7 @@ namespace Transloadit.Models.Robots.FileFiltering
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/file-filter/">/file/filter</a> Robot.
     /// </summary>
-    public class FileFilterRobot : RobotBase
+    public class FileFilterRobot : ProcessingRobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.

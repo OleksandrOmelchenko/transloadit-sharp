@@ -6,7 +6,7 @@ namespace Transloadit.Models.Robots.SmartCdn
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/file-serve/">/file/serve</a> Robot.
     /// </summary>
-    public class FileServeRobot : RobotBase
+    public class FileServeRobot : ProcessingRobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.

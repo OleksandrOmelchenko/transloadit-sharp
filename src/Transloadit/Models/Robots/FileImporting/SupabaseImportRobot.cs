@@ -38,6 +38,14 @@ namespace Transloadit.Models.Robots.FileImporting
         public string Secret { get; set; }
 
         /// <summary>
+        /// If set to <c>true</c>, the Robot will not import the actual files yet, but instead returns an empty file stub that includes a URL from where the file can be imported by subsequent Robots.
+        /// This should only be set if all subsequent Steps use Robots that support file stubs.
+        /// <para>Default: <c>false</c>.</para>
+        /// </summary>
+        [JsonProperty("return_file_stubs")]
+        public bool? ReturnFileStubs { get; set; }
+
+        /// <summary>
         /// Initializes <a href="https://transloadit.com/docs/robots/supabase-import/">/supabase/import</a> Robot.
         /// </summary>
         public SupabaseImportRobot()

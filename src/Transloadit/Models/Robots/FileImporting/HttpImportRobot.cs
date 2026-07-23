@@ -9,15 +9,6 @@ namespace Transloadit.Models.Robots.FileImporting
     public class HttpImportRobot : RobotBase
     {
         /// <summary>
-        /// "Ignore errors" mode. Possible array members are <c>meta</c> and <c>import</c>. 
-        /// You might see an error when trying to extract metadata from your imported files. This happens, for example, for files with a size of zero bytes. Including <c>"meta"</c> in the array will cause the Robot to not stop the import (and the entire Assembly) when that happens.
-        /// Including <c>"import"</c> in the array will ensure the Robot does not cease to function on any import errors either.
-        /// Setting this parameter to <c>true</c> will set it to <c>["meta", "import"]</c> internally.
-        /// </summary>
-        [JsonProperty("ignore_errors")]
-        public AnyOf<bool, List<string>> IgnoreErrors { get; set; }
-
-        /// <summary>
         /// The URL from which the file to be imported can be retrieved. You can also specify an array of URLs or a string of <c>|</c> 
         /// delimited URLs to import several files at once. Please also check the <c>url_delimiter</c> parameter for that.
         /// </summary>
@@ -57,6 +48,14 @@ namespace Transloadit.Models.Robots.FileImporting
         /// </summary>
         [JsonProperty("fail_fast")]
         public bool? FailFast { get; set; }
+
+        /// <summary>
+        /// If set to <c>true</c>, the Robot will not import the actual files yet, but instead returns an empty file stub that includes a URL from where the file can be imported by subsequent Robots.
+        /// This should only be set if all subsequent Steps use Robots that support file stubs.
+        /// <para>Default: <c>false</c>.</para>
+        /// </summary>
+        [JsonProperty("return_file_stubs")]
+        public bool? ReturnFileStubs { get; set; }
 
         /// <summary>
         /// Initializes <a href="https://transloadit.com/docs/robots/http-import/">/http/import</a> Robot.

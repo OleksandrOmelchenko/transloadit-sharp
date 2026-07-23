@@ -6,7 +6,7 @@ namespace Transloadit.Models.Robots.FileExporting
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/vimeo-store/">/vimeo/store</a> Robot.
     /// </summary>
-    public class VimeoStoreRobot : RobotBase
+    public class VimeoStoreRobot : ProcessingRobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.

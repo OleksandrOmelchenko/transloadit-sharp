@@ -6,19 +6,13 @@ namespace Transloadit.Models.Robots.ImageManipulation
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/image-upscale/">/image/upscale</a> Robot.
     /// </summary>
-    public class ImageUpscaleRobot : RobotBase
+    public class ImageUpscaleRobot : ProcessingRobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
         [JsonProperty("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
-
-        /// <summary>
-        /// Optional expensive metadata extraction settings.
-        /// </summary>
-        [JsonProperty("output_meta")]
-        public AnyOf<bool, OutputMeta> OutputMeta { get; set; }
 
         /// <summary>
         /// AI model used for upscaling. One of <see cref="Constants.ImageUpscaleModels"/>.
