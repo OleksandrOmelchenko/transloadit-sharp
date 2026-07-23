@@ -36,6 +36,8 @@ namespace Transloadit.Serialization
             _options = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
+                // match Newtonsoft's DefaultContractResolver, which resolves property names case-insensitively
+                PropertyNameCaseInsensitive = true,
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
                 TypeInfoResolver = new DefaultJsonTypeInfoResolver
                 {

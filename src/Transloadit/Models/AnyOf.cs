@@ -99,13 +99,13 @@ namespace Transloadit.Models
         /// Converts the <see cref="AnyOf{T1, T2}"/> to <typeparamref name="T1"/>.
         /// </summary>
         /// <param name="anyOf">The union.</param>
-        public static implicit operator T1(AnyOf<T1, T2> anyOf) => anyOf._value1;
+        public static implicit operator T1(AnyOf<T1, T2> anyOf) => anyOf is null ? default : anyOf._value1;
 
         /// <summary>
         /// Converts the <see cref="AnyOf{T1, T2}"/> to <typeparamref name="T2"/>.
         /// </summary>
         /// <param name="anyOf">The union.</param>
-        public static implicit operator T2(AnyOf<T1, T2> anyOf) => anyOf._value2;
+        public static implicit operator T2(AnyOf<T1, T2> anyOf) => anyOf is null ? default : anyOf._value2;
     }
 
     /// <summary>
@@ -210,18 +210,18 @@ namespace Transloadit.Models
         /// Converts the <see cref="AnyOf{T1, T2}"/> to <typeparamref name="T1"/>.
         /// </summary>
         /// <param name="anyOf">The union.</param>
-        public static implicit operator T1(AnyOf<T1, T2, T3> anyOf) => anyOf._firstValue;
+        public static implicit operator T1(AnyOf<T1, T2, T3> anyOf) => anyOf is null ? default : anyOf._firstValue;
 
         /// <summary>
         /// Converts the <see cref="AnyOf{T1, T2}"/> to <typeparamref name="T2"/>.
         /// </summary>
         /// <param name="anyOf">The union.</param>
-        public static implicit operator T2(AnyOf<T1, T2, T3> anyOf) => anyOf._secondValue;
+        public static implicit operator T2(AnyOf<T1, T2, T3> anyOf) => anyOf is null ? default : anyOf._secondValue;
 
         /// <summary>
         /// Converts the <see cref="AnyOf{T1, T2}"/> to <typeparamref name="T3"/>.
         /// </summary>
         /// <param name="anyOf">The union.</param>
-        public static implicit operator T3(AnyOf<T1, T2, T3> anyOf) => anyOf._thirdValue;
+        public static implicit operator T3(AnyOf<T1, T2, T3> anyOf) => anyOf is null ? default : anyOf._thirdValue;
     }
 }

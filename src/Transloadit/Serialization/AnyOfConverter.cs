@@ -39,7 +39,8 @@ namespace Transloadit.Serialization
         /// <inheritdoc />
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            throw new NotImplementedException();
+            // AnyOf<> is serialize-only on both providers; keep the failure identical to the System.Text.Json path
+            throw new NotSupportedException("Deserializing AnyOf<> values is not supported.");
         }
     }
 }

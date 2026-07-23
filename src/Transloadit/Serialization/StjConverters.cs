@@ -16,11 +16,29 @@ namespace Transloadit.Serialization
     {
         /// <inheritdoc />
         public override bool Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            => reader.TokenType == JsonTokenType.Number ? reader.GetInt32() != 0 : reader.GetBoolean();
+            => ReadBoolean(ref reader);
 
         /// <inheritdoc />
         public override void Write(Utf8JsonWriter writer, bool value, JsonSerializerOptions options)
             => writer.WriteNumberValue(value ? 1 : 0);
+
+        // coerce number/string/bool tokens the way Newtonsoft's Convert.ToInt32-based reader does, rather than
+        // throwing when the API sends the field in an unexpected but interpretable shape
+        internal static bool ReadBoolean(ref Utf8JsonReader reader)
+        {
+            switch (reader.TokenType)
+            {
+                case JsonTokenType.Number:
+                    return reader.GetInt32() != 0;
+                case JsonTokenType.String:
+                    var text = reader.GetString();
+                    return !string.IsNullOrEmpty(text)
+                        && !string.Equals(text, "0", StringComparison.Ordinal)
+                        && !string.Equals(text, "false", StringComparison.OrdinalIgnoreCase);
+                default:
+                    return reader.GetBoolean();
+            }
+        }
     }
 
     /// <summary>
@@ -36,7 +54,7 @@ namespace Transloadit.Serialization
                 return null;
             }
 
-            return reader.TokenType == JsonTokenType.Number ? reader.GetInt32() != 0 : reader.GetBoolean();
+            return StjBooleanToIntConverter.ReadBoolean(ref reader);
         }
 
         /// <inheritdoc />

@@ -63,7 +63,7 @@ namespace Transloadit.Tests.Tests.Unit.Serialization
         public void ReadJson_IsNotSupported()
         {
             var converter = new AnyOfConverter();
-            Assert.Throws<NotImplementedException>(
+            Assert.Throws<NotSupportedException>(
                 () => converter.ReadJson(null, typeof(AnyOf<string, List<string>>), null, JsonSerializer.CreateDefault()));
         }
     }

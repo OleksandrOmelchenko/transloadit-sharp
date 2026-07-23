@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using Transloadit.Models;
 using Transloadit.Models.Assemblies;
 using Transloadit.Models.Billing;
+using Transloadit.Models.Templates;
 using Transloadit.Models.Tokens;
 using Transloadit.Tests.Infrastructure;
 using Xunit;
@@ -70,6 +72,32 @@ namespace Transloadit.Tests.Tests.Unit
             {
                 Assert.DoesNotContain("JsonElement", response.Fields[key].GetType().FullName);
             }
+        }
+
+        [Theory]
+        [InlineData("1", true)]
+        [InlineData("0", false)]
+        [InlineData("\"1\"", true)]
+        [InlineData("\"0\"", false)]
+        [InlineData("true", true)]
+        [InlineData("false", false)]
+        public void BooleanToInt_ReadsNumberStringAndBoolTokens(string rawValue, bool expected)
+        {
+            // both engines must coerce number/string/bool shapes without throwing
+            var response = TestSerializer.Default.Deserialize<TemplateResponse>(
+                "{\"require_signature_auth\":" + rawValue + "}");
+
+            Assert.Equal(expected, response.RequireSignatureAuth);
+        }
+
+        [Fact]
+        public void Deserialization_IsCaseInsensitive()
+        {
+            // Newtonsoft matches property names case-insensitively; System.Text.Json must too
+            var response = TestSerializer.Default.Deserialize<ResponseBase>("{\"OK\":\"DONE\",\"HTTP_CODE\":200}");
+
+            Assert.Equal("DONE", response.Base.Ok);
+            Assert.Equal(200, response.Base.HttpCode);
         }
 
         [Fact]
