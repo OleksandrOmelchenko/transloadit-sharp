@@ -6,7 +6,7 @@ namespace Transloadit.Models.Robots.FileCompressing
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/file-compress/">/file/compress</a> Robot.
     /// </summary>
-    public class FileCompressRobot : RobotBase
+    public class FileCompressRobot : ProcessingRobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.

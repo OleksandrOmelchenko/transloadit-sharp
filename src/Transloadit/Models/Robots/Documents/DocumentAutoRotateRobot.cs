@@ -6,7 +6,7 @@ namespace Transloadit.Models.Robots.Documents
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/document-autorotate/">/document/autorotate</a> Robot.
     /// </summary>
-    public class DocumentAutoRotateRobot : RobotBase
+    public class DocumentAutoRotateRobot : ProcessingRobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.

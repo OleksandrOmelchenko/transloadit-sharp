@@ -6,7 +6,7 @@ namespace Transloadit.Models.Robots.AI
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/text-speak/">/text/speak</a> Robot.
     /// </summary>
-    public class TextSpeakRobot : RobotBase
+    public class TextSpeakRobot : ProcessingRobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.

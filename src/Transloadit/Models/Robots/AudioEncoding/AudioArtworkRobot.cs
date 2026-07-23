@@ -6,7 +6,7 @@ namespace Transloadit.Models.Robots.AudioEncoding
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/audio-artwork/">/audio/artwork</a> Robot.
     /// </summary>
-    public class AudioArtworkRobot : RobotBase
+    public class AudioArtworkRobot : ProcessingRobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.

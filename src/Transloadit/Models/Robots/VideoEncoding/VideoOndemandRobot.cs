@@ -6,19 +6,13 @@ namespace Transloadit.Models.Robots.VideoEncoding
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/video-ondemand/">/video/ondemand</a> Robot.
     /// </summary>
-    public class VideoOndemandRobot : RobotBase
+    public class VideoOndemandRobot : ProcessingRobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
         [JsonProperty("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
-
-        /// <summary>
-        /// Optional expensive metadata extraction settings.
-        /// </summary>
-        [JsonProperty("output_meta")]
-        public AnyOf<bool, OutputMeta> OutputMeta { get; set; }
 
         /// <summary>
         /// Variant definitions indexed by output name.

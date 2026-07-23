@@ -6,7 +6,7 @@ namespace Transloadit.Models.Robots.Documents
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/document-merge/">/document/merge</a> Robot.
     /// </summary>
-    public class DocumentMergeRobot : RobotBase
+    public class DocumentMergeRobot : ProcessingRobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.

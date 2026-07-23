@@ -6,7 +6,7 @@ namespace Transloadit.Models.Robots.MediaCataloging
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/meta-write/">/meta/write</a> Robot.
     /// </summary>
-    public class MetadataWriteRobot : RobotBase
+    public class MetadataWriteRobot : ProcessingRobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.

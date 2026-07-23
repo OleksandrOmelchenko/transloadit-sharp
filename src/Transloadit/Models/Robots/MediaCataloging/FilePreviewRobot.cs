@@ -6,7 +6,7 @@ namespace Transloadit.Models.Robots.MediaCataloging
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/file-preview/">/file/preview</a> Robot.
     /// </summary>
-    public class FilePreviewRobot : RobotBase
+    public class FilePreviewRobot : ProcessingRobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.

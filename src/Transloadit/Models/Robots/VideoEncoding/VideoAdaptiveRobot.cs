@@ -6,7 +6,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/video-adaptive/">/video/adaptive</a> Robot.
     /// </summary>
-    public class VideoAdaptiveRobot : RobotBase
+    public class VideoAdaptiveRobot : ProcessingRobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.

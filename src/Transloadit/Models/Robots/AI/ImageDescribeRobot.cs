@@ -6,7 +6,7 @@ namespace Transloadit.Models.Robots.AI
     /// <summary>
     /// Represents <a href="https://transloadit.com/docs/robots/image-describe/">/image/describe</a> Robot.
     /// </summary>
-    public class ImageDescribeRobot : RobotBase
+    public class ImageDescribeRobot : ProcessingRobotBase
     {
         /// <summary>
         /// Specifies which Step(s) to use as input.
