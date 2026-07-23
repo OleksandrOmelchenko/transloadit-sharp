@@ -2,6 +2,7 @@ using Transloadit.Constants;
 using Transloadit.Models.Robots;
 using Transloadit.Models.Robots.AI;
 using Transloadit.Models.Robots.AudioEncoding;
+using Transloadit.Models.Robots.Code;
 using Transloadit.Models.Robots.Documents;
 using Transloadit.Models.Robots.FileExporting;
 using Transloadit.Models.Robots.FileImporting;
@@ -29,6 +30,8 @@ namespace Transloadit.Tests.Tests
             Assert.Equal("/video/artwork", new VideoArtworkRobot().Robot);
             Assert.Equal("/video/ondemand", new VideoOndemandRobot().Robot);
             Assert.Equal("/video/split", new VideoSplitRobot().Robot);
+
+            Assert.Equal("/http/request", new HttpRequestRobot().Robot);
         }
 
         [Fact]

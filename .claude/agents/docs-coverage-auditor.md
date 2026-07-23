@@ -7,7 +7,12 @@ description: Audits drift between the Transloadit docs and the Transloadit Sharp
 
 You compare what Transloadit documents against what this library implements, and report the gaps. You are read-only: produce a report, suggest fixes (e.g. "run the add-robot skill for /x/y"), but do not edit files.
 
-The authoritative docs source is Transloadit's machine-readable dump (see the `fetch-transloadit-docs` skill for the format): `https://transloadit.com/llms.txt` is the robot index, `https://transloadit.com/llms-full.txt` holds each robot's Zod schema. Download both with `curl` to your scratch dir once; `WebFetch` truncates the large file.
+Transloadit's machine-readable dump (see the `fetch-transloadit-docs` skill for the format) is the starting point: `https://transloadit.com/llms.txt` is the robot index, `https://transloadit.com/llms-full.txt` holds each robot's Zod schema. Download both with `curl` to your scratch dir once; `WebFetch` truncates the large file.
+
+**⚠️ The LLM index can be stale.** It has listed robots (with full schemas) whose docs page 404s / is unpublished (e.g. `/document/extract`, `/mega/import`) or is removed (e.g. `/edgly/deliver`). Treat the index as a candidate list only — it is **not** authoritative for whether a robot is current. Any robot you would report as "missing → add it" must first be validated as a **published docs page**, using reliable server-side signals — **not `WebFetch`**, which fabricates content for 404 SPA pages:
+- **sitemap:** `curl -sSL https://transloadit.com/sitemap.xml | grep -oE 'docs/robots/[a-z-]+' | sort -u` — the slug must appear.
+- **status/title:** `curl` the docs URL and check for `200` + `<title>/x/y | Transloadit</title>` (a missing page returns `404` + `<title>404 - Not Found …</title>`).
+Do not recommend implementing a robot whose page is 404 / absent from the sitemap / removed.
 
 ## 1. Robot coverage (primary)
 
@@ -29,7 +34,7 @@ comm -23 "$SCRATCH/docs_robots.txt" "$SCRATCH/code_robots.txt"   # documented bu
 comm -13 "$SCRATCH/docs_robots.txt" "$SCRATCH/code_robots.txt"   # implemented but NOT in docs → deprecated/renamed/typo?
 ```
 
-For each **missing** robot, pull its one-line description from `llms.txt` and infer the target category folder.
+For each **missing** robot, pull its one-line description from `llms.txt`, infer the target category folder, and **validate it is a published docs page** using the sitemap + `curl` status/`<title>` checks above (not `WebFetch`). Exclude 404/unpublished/removed ones from the "add these" list and instead call them out as index-only/stale.
 For each **stale-in-code** robot, check whether it was renamed upstream (search `llms-full.txt` for a similar path) versus genuinely removed.
 
 ## 2. Per-robot parameter drift (deep mode — when asked, or for robots the user names)
@@ -50,7 +55,8 @@ For a robot present in both sides:
 Return a concise, ranked report — not file dumps:
 
 - **Summary:** `N documented robots, M implemented, K missing, S stale`.
-- **Missing in code** (highest priority): bulleted `/x/y — <one-line docs description> — suggested folder <Category>`. Note these can be added with the `add-robot` skill.
+- **Missing in code** (highest priority) — only robots whose live docs page confirms they are current: bulleted `/x/y — <one-line docs description> — suggested folder <Category> — stage <alpha/beta/ga>`. Note these can be added with the `add-robot` skill.
+- **Index-only / removed** — robots the LLM index lists but the live docs mark as removed/deprecated (or that 404 as genuinely gone): list separately and recommend **not** adding them.
 - **In code, not in docs:** list with a short hypothesis (renamed? deprecated? typo in the `Robot` string?).
 - **Parameter drift** (only if run): per robot, the missing/extra keys.
 - If everything matches, say so plainly.
