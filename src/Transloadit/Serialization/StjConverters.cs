@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Transloadit.Models;
+using Transloadit.Models.Robots;
 
 namespace Transloadit.Serialization
 {
@@ -145,6 +146,50 @@ namespace Transloadit.Serialization
         /// <inheritdoc />
         public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
             => JsonSerializer.Serialize(writer, value.Value, options);
+    }
+
+    /// <summary>
+    /// System.Text.Json converter factory that serializes robot step values by their runtime type. Steps are declared
+    /// as the abstract <see cref="RobotBase"/> (e.g. <c>Dictionary&lt;string, RobotBase&gt;</c>); without this, System.Text.Json
+    /// would serialize only the base-class members, dropping every robot-specific parameter (Newtonsoft serializes by
+    /// runtime type by default).
+    /// </summary>
+    internal sealed class StjPolymorphicRobotConverterFactory : JsonConverterFactory
+    {
+        /// <inheritdoc />
+        public override bool CanConvert(Type typeToConvert)
+            => typeof(RobotBase).IsAssignableFrom(typeToConvert) && typeToConvert.IsAbstract;
+
+        /// <inheritdoc />
+        public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
+            => (JsonConverter)Activator.CreateInstance(typeof(StjPolymorphicRobotConverter<>).MakeGenericType(typeToConvert));
+    }
+
+    /// <summary>
+    /// System.Text.Json converter that writes a robot step value using its concrete runtime type. Reading is not
+    /// supported (robot steps are serialize-only; assembly/template responses model steps as untyped dictionaries).
+    /// </summary>
+    /// <typeparam name="T">The declared (abstract) robot base type.</typeparam>
+    internal sealed class StjPolymorphicRobotConverter<T> : JsonConverter<T>
+        where T : RobotBase
+    {
+        /// <inheritdoc />
+        public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            => throw new NotSupportedException("Deserializing robot step values is not supported.");
+
+        /// <inheritdoc />
+        public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
+        {
+            if (value == null)
+            {
+                writer.WriteNullValue();
+                return;
+            }
+
+            // re-dispatch to the concrete type; the concrete type is not abstract, so CanConvert returns false for it
+            // and System.Text.Json serializes it through the normal contract (no recursion).
+            JsonSerializer.Serialize(writer, value, value.GetType(), options);
+        }
     }
 }
 #endif

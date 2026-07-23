@@ -43,6 +43,7 @@ namespace Transloadit.Serialization
                 },
             };
             _options.Converters.Add(new StjAnyOfConverterFactory());
+            _options.Converters.Add(new StjPolymorphicRobotConverterFactory());
             configure?.Invoke(_options);
         }
 
