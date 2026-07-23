@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 
 namespace Transloadit.Models.Credentials
 {
@@ -18,7 +18,7 @@ namespace Transloadit.Models.Credentials
         /// <summary>
         /// OAuth (companion) credentials content.
         /// </summary>
-        [JsonProperty("content")]
+        [TransloaditJsonName("content")]
         public OAuthCredentialsContent Content { get; set; }
     }
 
@@ -30,19 +30,19 @@ namespace Transloadit.Models.Credentials
         /// <summary>
         /// OAuth provider.
         /// </summary>
-        [JsonProperty("provider")]
+        [TransloaditJsonName("provider")]
         public string Provider { get; set; }
 
         /// <summary>
         /// OAuth key.
         /// </summary>
-        [JsonProperty("key")]
+        [TransloaditJsonName("key")]
         public string Key { get; set; }
 
         /// <summary>
         /// OAuth secret.
         /// </summary>
-        [JsonProperty("secret")]
+        [TransloaditJsonName("secret")]
         public string Secret { get; set; }
     }
 }

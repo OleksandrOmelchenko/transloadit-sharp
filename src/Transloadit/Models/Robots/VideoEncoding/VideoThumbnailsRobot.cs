@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 using System.Collections.Generic;
 
 namespace Transloadit.Models.Robots.VideoEncoding
@@ -11,7 +11,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
-        [JsonProperty("use")]
+        [TransloaditJsonName("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// Value 1-999.
         /// <para>Default: <c>8</c>.</para>
         /// </summary>
-        [JsonProperty("count")]
+        [TransloaditJsonName("count")]
         public int? Count { get; set; }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// <para>This option cannot be used with the count parameter, and takes precedence if both are specified. Out-of-range offsets 
         /// are silently ignored.</para>
         /// </summary>
-        [JsonProperty("offsets")]
+        [TransloaditJsonName("offsets")]
         public AnyOf<List<int>, List<string>> Offsets { get; set; }
 
         /// <summary>
@@ -41,21 +41,21 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// to be <c>jpeg</c> the resulting thumbnails will have a <c>jpg</c> file extension.
         /// <para>Default: <c>jpeg</c>.</para>
         /// </summary>
-        [JsonProperty("format")]
+        [TransloaditJsonName("format")]
         public string Format { get; set; }
 
         /// <summary>
         /// The width of the thumbnail, in pixels. Value 1-1920.
         /// <para>Default: Width of the video.</para>
         /// </summary>
-        [JsonProperty("width")]
+        [TransloaditJsonName("width")]
         public int? Width { get; set; }
 
         /// <summary>
         /// The height of the thumbnail, in pixels. Value 1-1080.
         /// <para>Default: Height of the video.</para>
         /// </summary>
-        [JsonProperty("height")]
+        [TransloaditJsonName("height")]
         public int? Height { get; set; }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// <c>pad</c>, <c>stretch</c> and <c>crop</c>.
         /// <para>Default: <c>pad</c>.</para>
         /// </summary>
-        [JsonProperty("resize_strategy")]
+        [TransloaditJsonName("resize_strategy")]
         public string ResizeStrategy { get; set; }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// The default color is black.
         /// <para>Default: <c>00000000</c>.</para>
         /// </summary>
-        [JsonProperty("background")]
+        [TransloaditJsonName("background")]
         public string Background { get; set; }
 
         /// <summary>
@@ -80,14 +80,14 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// requiring rotation because it was not detected by the camera.
         /// <para>Default: auto.</para>
         /// </summary>
-        [JsonProperty("rotate")]
+        [TransloaditJsonName("rotate")]
         public int? Rotate { get; set; }
 
         /// <summary>
         /// FFmpeg stack version. One of <see cref="Constants.FFMpegStack"/>: <c>v5.0.0</c> or <c>v6.0.0</c>.
         /// <para>Default: <c>v5.0.0</c>.</para>
         /// </summary>
-        [JsonProperty("ffmpeg_stack")]
+        [TransloaditJsonName("ffmpeg_stack")]
         public string FfmpegStack { get; set; }
 
         /// <summary>

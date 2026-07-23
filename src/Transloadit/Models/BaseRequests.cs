@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 using Transloadit.Serialization;
@@ -10,10 +10,10 @@ namespace Transloadit.Models
     /// </summary>
     public class BaseParams
     {
-        [JsonProperty("auth")]
+        [TransloaditJsonName("auth")]
         internal AuthParams Auth { get; set; }
 
-        [JsonIgnore]
+        [TransloaditJsonIgnore]
         internal bool EnableSignatureAuth { get; set; } = true;
 
         /// <summary>
@@ -39,32 +39,32 @@ namespace Transloadit.Models
         /// <summary>
         /// Transloadit auth key.
         /// </summary>
-        [JsonProperty("key")]
+        [TransloaditJsonName("key")]
         public string Key { get; set; }
 
         /// <summary>
         /// Signature expiration date.
         /// </summary>
-        [JsonProperty("expires")]
-        [JsonConverter(typeof(AuthExpiresDateTimeConverter))]
+        [TransloaditJsonName("expires")]
+        [TransloaditDateFormat("yyyy'/'MM'/'dd HH:mm:ss+00:00")]
         public DateTime? Expires { get; set; }
 
         /// <summary>
         /// A value (better randomly generated) which helps preventing signature re-use and defend against replay attacks.
         /// </summary>
-        [JsonProperty("nonce")]
+        [TransloaditJsonName("nonce")]
         public string Nonce { get; set; }
 
         /// <summary>
         /// A regular expression to match against the HTTP referer of this upload.
         /// </summary>
-        [JsonProperty("referer")]
+        [TransloaditJsonName("referer")]
         public string Referer { get; set; }
 
         /// <summary>
         /// Maximum size that an upload can have in bytes.
         /// </summary>
-        [JsonProperty("max_size")]
+        [TransloaditJsonName("max_size")]
         public int? MaxSize { get; set; }
     }
 
@@ -76,33 +76,33 @@ namespace Transloadit.Models
         /// <summary>
         /// Page number.
         /// </summary>
-        [JsonProperty("page")]
+        [TransloaditJsonName("page")]
         public int? Page { get; set; }
 
         /// <summary>
         /// Page size.
         /// </summary>
-        [JsonProperty("pagesize")]
+        [TransloaditJsonName("pagesize")]
         public int? PageSize { get; set; }
 
         /// <summary>
         /// The minimum entity creation date.
         /// </summary>
-        [JsonProperty("fromdate")]
-        [JsonConverter(typeof(PaginationDateTimeConverter))]
+        [TransloaditJsonName("fromdate")]
+        [TransloaditDateFormat("yyyy-MM-dd HH:mm:ss")]
         public DateTime? FromDate { get; set; }
 
         /// <summary>
         /// The maximum entity creation date.
         /// </summary>
-        [JsonProperty("todate")]
-        [JsonConverter(typeof(PaginationDateTimeConverter))]
+        [TransloaditJsonName("todate")]
+        [TransloaditDateFormat("yyyy-MM-dd HH:mm:ss")]
         public DateTime? ToDate { get; set; }
 
         /// <summary>
         /// Keywords to be matched against certain fields.
         /// </summary>
-        [JsonProperty("keywords")]
+        [TransloaditJsonName("keywords")]
         public List<string> Keywords { get; set; }
     }
 }

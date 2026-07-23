@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 
 namespace Transloadit.Models.Robots.FileImporting
 {
@@ -10,25 +10,25 @@ namespace Transloadit.Models.Robots.FileImporting
         /// <summary>
         /// S3 key.
         /// </summary>
-        [JsonProperty("key")]
+        [TransloaditJsonName("key")]
         public string Key { get; set; }
 
         /// <summary>
         /// S3 secret.
         /// </summary>
-        [JsonProperty("secret")]
+        [TransloaditJsonName("secret")]
         public string Secret { get; set; }
 
         /// <summary>
         /// S3 bucket name.
         /// </summary>
-        [JsonProperty("bucket")]
+        [TransloaditJsonName("bucket")]
         public string Bucket { get; set; }
 
         /// <summary>
         /// S3 bucket region.
         /// </summary>
-        [JsonProperty("bucket_region")]
+        [TransloaditJsonName("bucket_region")]
         public string BucketRegion { get; set; }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Transloadit.Models.Robots.FileImporting
         /// This should only be set if all subsequent Steps use Robots that support file stubs.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
-        [JsonProperty("return_file_stubs")]
+        [TransloaditJsonName("return_file_stubs")]
         public bool? ReturnFileStubs { get; set; }
 
         /// <summary>

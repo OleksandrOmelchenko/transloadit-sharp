@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 using System.Collections.Generic;
 
 namespace Transloadit.Models.Robots.FileExporting
@@ -12,14 +12,14 @@ namespace Transloadit.Models.Robots.FileExporting
         /// The URL prefix used for the returned URL, such as <c>http://my.cdn.com/some/path/</c>.
         /// <para>Default: <c>http://{bucket}.s3.amazonaws.com/</c>.</para>
         /// </summary>
-        [JsonProperty("url_prefix")]
+        [TransloaditJsonName("url_prefix")]
         public string UrlPrefix { get; set; }
 
         /// <summary>
         /// The permissions used for this file.
         /// <para>Default: <c>public-read</c>.</para>
         /// </summary>
-        [JsonProperty("acl")]
+        [TransloaditJsonName("acl")]
         public string Acl { get; set; }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Transloadit.Models.Robots.FileExporting
         /// especially for larger files.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
-        [JsonProperty("check_integrity")]
+        [TransloaditJsonName("check_integrity")]
         public bool? CheckIntegrity { get; set; }
 
         /// <summary>
@@ -36,13 +36,13 @@ namespace Transloadit.Models.Robots.FileExporting
         /// This can also include any available <a href="https://transloadit.com/docs/topics/assembly-instructions/#assembly-variables">Assembly variables</a>.
         /// Object Metadata can be specified using <c>x-amz-meta-*</c> headers.
         /// </summary>
-        [JsonProperty("headers")]
+        [TransloaditJsonName("headers")]
         public Dictionary<string, string> Headers { get; set; }
 
         /// <summary>
         /// Object tagging allows you to categorize storage. You can associate up to 10 tags with an object. Tags that are associated with an object must have unique tag keys.
         /// </summary>
-        [JsonProperty("tags")]
+        [TransloaditJsonName("tags")]
         public Dictionary<string, object> Tags { get; set; }
 
         /// <summary>
@@ -51,45 +51,45 @@ namespace Transloadit.Models.Robots.FileExporting
         /// For example, prefix the host with <c>https://</c> or <c>s3://</c> to use either respective protocol.
         /// <para>Default: <c>s3.amazonaws.com</c>.</para>
         /// </summary>
-        [JsonProperty("host")]
+        [TransloaditJsonName("host")]
         public string Host { get; set; }
 
         /// <summary>
         /// Set to <c>true</c> if you use a custom host and run into access denied errors.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
-        [JsonProperty("no_vhost")]
+        [TransloaditJsonName("no_vhost")]
         public bool? NoVhost { get; set; }
 
         /// <summary>
         /// This parameter provides signed URLs in the result JSON (in the <c>signed_url</c> and <c>signed_ssl_url</c> properties). 
         /// The number that you set this parameter to is the URL expiry time in seconds. If this parameter is not used, no URL signing is done.
         /// </summary>
-        [JsonProperty("sign_urls_for")]
+        [TransloaditJsonName("sign_urls_for")]
         public int? SignUrlsFor { get; set; }
 
         /// <summary>
         /// S3 key.
         /// </summary>
-        [JsonProperty("key")]
+        [TransloaditJsonName("key")]
         public string Key { get; set; }
 
         /// <summary>
         /// S3 secret.
         /// </summary>
-        [JsonProperty("secret")]
+        [TransloaditJsonName("secret")]
         public string Secret { get; set; }
 
         /// <summary>
         /// S3 bucket name.
         /// </summary>
-        [JsonProperty("bucket")]
+        [TransloaditJsonName("bucket")]
         public string Bucket { get; set; }
 
         /// <summary>
         /// S3 bucket region.
         /// </summary>
-        [JsonProperty("bucket_region")]
+        [TransloaditJsonName("bucket_region")]
         public string BucketRegion { get; set; }
 
         /// <summary>

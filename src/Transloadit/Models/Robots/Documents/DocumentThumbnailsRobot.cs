@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 using System.Collections.Generic;
 
 namespace Transloadit.Models.Robots.Documents
@@ -11,20 +11,20 @@ namespace Transloadit.Models.Robots.Documents
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
-        [JsonProperty("use")]
+        [TransloaditJsonName("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
         /// The PDF page that you want to convert to an image. By default the value is <c>null</c> which means that all pages will be converted into images.
         /// </summary>
-        [JsonProperty("page")]
+        [TransloaditJsonName("page")]
         public int? Page { get; set; }
 
         /// <summary>
         /// The format of the extracted image(s). If you specify the value <c>gif</c>, then an animated gif cycling through all pages is created.
         /// <para>Default: <c>png</c>.</para>
         /// </summary>
-        [JsonProperty("format")]
+        [TransloaditJsonName("format")]
         public string Format { get; set; }
 
         /// <summary>
@@ -32,19 +32,19 @@ namespace Transloadit.Models.Robots.Documents
         /// in the animation. Set this to <c>100</c> for example to allow 1 second to pass between the frames of the animated gif. 
         /// If your output format is not <c>gif</c>, then this parameter does not have any effect.
         /// </summary>
-        [JsonProperty("delay")]
+        [TransloaditJsonName("delay")]
         public int? Delay { get; set; }
 
         /// <summary>
         /// Width of the new image, in pixels. If not specified, will default to the width of the input image
         /// </summary>
-        [JsonProperty("width")]
+        [TransloaditJsonName("width")]
         public int? Width { get; set; }
 
         /// <summary>
         /// Height of the new image, in pixels. If not specified, will default to the height of the input image
         /// </summary>
-        [JsonProperty("height")]
+        [TransloaditJsonName("height")]
         public int? Height { get; set; }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Transloadit.Models.Robots.Documents
         /// <c>pad</c>, <c>stretch</c> and <c>crop</c>.
         /// <para>Default: <c>pad</c>.</para>
         /// </summary>
-        [JsonProperty("resize_strategy")]
+        [TransloaditJsonName("resize_strategy")]
         public string ResizeStrategy { get; set; }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Transloadit.Models.Robots.Documents
         /// the background (only used for the <c>pad</c> resize strategy).
         /// <para>Default: <c>#FFFFFF</c>.</para>
         /// </summary>
-        [JsonProperty("background")]
+        [TransloaditJsonName("background")]
         public string Background { get; set; }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Transloadit.Models.Robots.Documents
         /// and <c>Remove</c> to remove transparency. For a list of all valid values please check the ImageMagick documentation 
         /// <a href="http://www.imagemagick.org/script/command-line-options.php?#alpha">here</a>.
         /// </summary>
-        [JsonProperty("alpha")]
+        [TransloaditJsonName("alpha")]
         public string Alpha { get; set; }
 
         /// <summary>
@@ -77,21 +77,21 @@ namespace Transloadit.Models.Robots.Documents
         /// the individual pixels are. It defines the size of the image in real world terms when displayed on devices or printed.
         /// You can set this value to a specific <c>width</c> or in the format <c>widthxheight</c>.
         /// </summary>
-        [JsonProperty("density")]
+        [TransloaditJsonName("density")]
         public string Density { get; set; }
 
         /// <summary>
         /// Controls whether or not antialiasing is used to remove jagged edges from text or images in a document.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
-        [JsonProperty("antialiasing")]
+        [TransloaditJsonName("antialiasing")]
         public bool? Antialiasing { get; set; }
 
         /// <summary>
         /// Sets the image colorspace. For details about the available values, see the 
         /// <a href="https://www.imagemagick.org/script/command-line-options.php#colorspace">ImageMagick documentation</a>.
         /// </summary>
-        [JsonProperty("colorspace")]
+        [TransloaditJsonName("colorspace")]
         public string Colorspace { get; set; }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Transloadit.Models.Robots.Documents
         /// in your image, it is generally a good idea to set this to <c>false</c>.
         /// <para>Default: <c>true</c>.</para>
         /// </summary>
-        [JsonProperty("trim_whitespace")]
+        [TransloaditJsonName("trim_whitespace")]
         public bool? TrimWhitespace { get; set; }
 
         /// <summary>
@@ -109,14 +109,14 @@ namespace Transloadit.Models.Robots.Documents
         /// the cropbox is leading in determining the dimensions of the resulting thumbnails.
         /// <para>Default: <c>true</c>.</para>
         /// </summary>
-        [JsonProperty("pdf_use_cropbox")]
+        [TransloaditJsonName("pdf_use_cropbox")]
         public bool? PdfUseCropbox { get; set; }
 
         /// <summary>
         /// ImageMagick stack version. One of <see cref="Constants.ImageMagickStack"/>: <c>v2.0.10</c> or <c>v3.0.1</c>.
         /// <para>Default: <c>v2.0.10</c>.</para>
         /// </summary>
-        [JsonProperty("imagemagick_stack")]
+        [TransloaditJsonName("imagemagick_stack")]
         public string ImageMagickStack { get; set; }
 
         /// <summary>

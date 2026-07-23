@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 
 namespace Transloadit.Models.Robots.FileImporting
 {
@@ -10,25 +10,25 @@ namespace Transloadit.Models.Robots.FileImporting
         /// <summary>
         /// The name of the bucket to which the file is exported.
         /// </summary>
-        [JsonProperty("bucket")]
+        [TransloaditJsonName("bucket")]
         public string Bucket { get; set; }
 
         /// <summary>
         /// The custom domain for Tigris bucket location.
         /// </summary>
-        [JsonProperty("host")]
+        [TransloaditJsonName("host")]
         public string Host { get; set; }
 
         /// <summary>
         /// Tigris access key ID.
         /// </summary>
-        [JsonProperty("key")]
+        [TransloaditJsonName("key")]
         public string Key { get; set; }
 
         /// <summary>
         /// Tigris secret access Key.
         /// </summary>
-        [JsonProperty("secret")]
+        [TransloaditJsonName("secret")]
         public string Secret { get; set; }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Transloadit.Models.Robots.FileImporting
         /// This should only be set if all subsequent Steps use Robots that support file stubs.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
-        [JsonProperty("return_file_stubs")]
+        [TransloaditJsonName("return_file_stubs")]
         public bool? ReturnFileStubs { get; set; }
 
         /// <summary>

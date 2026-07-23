@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 using System.Collections.Generic;
 
 namespace Transloadit.Models.Robots.FileExporting
@@ -12,25 +12,25 @@ namespace Transloadit.Models.Robots.FileExporting
         /// A JavaScript object containing a list of metadata to be set for this file on backblaze, such as <c>{ FileURL: "${file.url_name}" }</c>. 
         /// This can also include any available <a href="https://transloadit.com/docs/topics/assembly-instructions/#assembly-variables">Assembly variables</a>.
         /// </summary>
-        [JsonProperty("headers")]
+        [TransloaditJsonName("headers")]
         public Dictionary<string, string> Headers { get; set; }
 
         /// <summary>
         /// Backblaze bucket name.
         /// </summary>
-        [JsonProperty("bucket")]
+        [TransloaditJsonName("bucket")]
         public string Bucket { get; set; }
 
         /// <summary>
         /// Backblaze App Key ID.
         /// </summary>
-        [JsonProperty("app_key_id")]
+        [TransloaditJsonName("app_key_id")]
         public string AppKeyId { get; set; }
 
         /// <summary>
         /// Backblaze App Key.
         /// </summary>
-        [JsonProperty("app_key")]
+        [TransloaditJsonName("app_key")]
         public string AppKey { get; set; }
 
         /// <summary>

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 using System.Collections.Generic;
 
 namespace Transloadit.Models.Robots.AI
@@ -11,13 +11,13 @@ namespace Transloadit.Models.Robots.AI
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
-        [JsonProperty("use")]
+        [TransloaditJsonName("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
         /// Which AI provider to leverage. One of <see cref="Constants.AIProviders"/>: <c>aws</c> and <c>gcp</c>.
         /// </summary>
-        [JsonProperty("provider")]
+        [TransloaditJsonName("provider")]
         public string Provider { get; set; }
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace Transloadit.Models.Robots.AI
         /// This parameter has no effect if the format parameter is set to <c>text</c>.
         /// <para>Default: <c>full</c>.</para>
         /// </summary>
-        [JsonProperty("granularity")]
+        [TransloaditJsonName("granularity")]
         public string Granularity { get; set; }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Transloadit.Models.Robots.AI
         /// <item><c>text</c> returns the recognized text as a plain UTF-8 encoded text file.</item>
         /// </list>
         /// </summary>
-        [JsonProperty("format")]
+        [TransloaditJsonName("format")]
         public string Format { get; set; }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Transloadit.Models.Robots.AI
         /// If set to <c>true</c>, only explicit descriptions will be returned.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
-        [JsonProperty("explicit_descriptions")]
+        [TransloaditJsonName("explicit_descriptions")]
         public bool? ExplicitDescriptions { get; set; }
 
         /// <summary>

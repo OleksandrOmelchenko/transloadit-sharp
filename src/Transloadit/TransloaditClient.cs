@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using Transloadit.Constants;
 using Transloadit.Models;
 using Transloadit.Models.Tokens;
@@ -111,9 +110,14 @@ namespace Transloadit
             {
                 ApiBase = options?.ApiBase ?? new Uri(ApiBase),
                 HttpClient = httpClient,
-                RequestSerializerSettings = options?.RequestSerializerSettings ?? TransloaditSerializerSettings.CreateDefault(),
-                ResponseSerializerSettings = options?.ResponseSerializerSettings ?? TransloaditSerializerSettings.CreateDefault(),
+                Serializer = options?.Serializer ?? CreateDefaultSerializer(),
             };
+        }
+
+        private static ITransloaditSerializer CreateDefaultSerializer()
+        {
+            // TODO(phase2): return SystemTextJsonSerializer on non-net452 targets.
+            return new NewtonsoftJsonSerializer();
         }
 
         /// <summary>
@@ -155,7 +159,7 @@ namespace Transloadit
 
             var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            var parsed = JsonConvert.DeserializeObject<T>(content, _options.ResponseSerializerSettings);
+            var parsed = _options.Serializer.Deserialize<T>(content);
             parsed.TransloaditResponse = new TransloaditResponse(response.StatusCode, response.Headers, content);
             return parsed;
         }
@@ -197,7 +201,7 @@ namespace Transloadit
             var response = await _options.HttpClient.SendAsync(message).ConfigureAwait(false);
             var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            var parsed = JsonConvert.DeserializeObject<TokenResponse>(content, _options.ResponseSerializerSettings) ?? new TokenResponse();
+            var parsed = _options.Serializer.Deserialize<TokenResponse>(content) ?? new TokenResponse();
             parsed.TransloaditResponse = new TransloaditResponse(response.StatusCode, response.Headers, content);
             return parsed;
         }
@@ -223,7 +227,7 @@ namespace Transloadit
                 parameters.Auth.Expires ??= DateTime.UtcNow.AddMinutes(30);
             }
 
-            var paramsJson = JsonConvert.SerializeObject(parameters, _options.RequestSerializerSettings);
+            var paramsJson = _options.Serializer.Serialize(parameters);
             var signature = enableSignatureAuth
                 ? SignatureUtilities.CalculateSignature(paramsJson, _secret)
                 : null;

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+using Transloadit.Serialization.Attributes;
 
 namespace Transloadit.Models.Robots.MediaCataloging
 {
@@ -11,14 +11,14 @@ namespace Transloadit.Models.Robots.MediaCataloging
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
-        [JsonProperty("use")]
+        [TransloaditJsonName("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
         /// The hashing algorithm to use. One of <see cref="Constants.FileHashingAlgorithms"/>: <c>b2</c>, <c>md5</c>, <c>sha1</c>, 
         /// <c>sha224</c>, <c>sha256</c>, <c>sha384</c> and <c>sha512</c>.
         /// </summary>
-        [JsonProperty("algorithm")]
+        [TransloaditJsonName("algorithm")]
         public string Algorithm { get; set; }
 
         /// <summary>

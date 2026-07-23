@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 using System.Collections.Generic;
 
 namespace Transloadit.Models.Robots.VideoEncoding
@@ -11,7 +11,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
-        [JsonProperty("use")]
+        [TransloaditJsonName("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
@@ -19,7 +19,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// One of <see cref="Constants.VideoEncodingPresetsV5"/> or <see cref="Constants.VideoEncodingPresetsV6"/>.
         /// <para>Default: <c>empty</c>.</para>
         /// </summary>
-        [JsonProperty("preset")]
+        [TransloaditJsonName("preset")]
         public string Preset { get; set; }
 
         /// <summary>
@@ -27,42 +27,42 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// video player, or if they should be burned directly into the video (value <c>burn</c>) so that they become part of the video stream.
         /// <para>Default: <c>external</c>.</para>
         /// </summary>
-        [JsonProperty("subtitles_type")]
+        [TransloaditJsonName("subtitles_type")]
         public string SubtitlesType { get; set; }
 
         /// <summary>
         /// Specifies the style of the subtitle. Use the <c>border_color</c> parameter to specify the color of the border.
         /// <para>Default: <c>outline</c>.</para>
         /// </summary>
-        [JsonProperty("border_style")]
+        [TransloaditJsonName("border_style")]
         public string BorderStyle { get; set; }
 
         /// <summary>
         /// The color for the subtitle border. The first two hex digits specify the alpha value of the color.
         /// <para>Default: <c>40000000</c>.</para>
         /// </summary>
-        [JsonProperty("border_color")]
+        [TransloaditJsonName("border_color")]
         public string BorderColor { get; set; }
 
         /// <summary>
         /// The font family to use. Also includes boldness and style of the font. One of <see cref="Constants.Fonts"/>.
         /// <para>Default: <c>Arial</c>.</para>
         /// </summary>
-        [JsonProperty("font")]
+        [TransloaditJsonName("font")]
         public string Font { get; set; }
 
         /// <summary>
         /// The color of the subtitle text. The first two hex digits specify the alpha value of the color.
         /// <para>Default: <c>00FFFFFF</c>.</para>
         /// </summary>
-        [JsonProperty("font_color")]
+        [TransloaditJsonName("font_color")]
         public string FontColor { get; set; }
 
         /// <summary>
         /// Specifies the size of the text.
         /// <para>Default: <c>16</c>.</para>
         /// </summary>
-        [JsonProperty("font_size")]
+        [TransloaditJsonName("font_size")]
         public int? FontSize { get; set; }
 
         /// <summary>
@@ -70,14 +70,14 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// <c>right</c>. You can also combine options, such as <c>bottom-right</c>.
         /// <para>Default: <c>bottom</c>.</para>
         /// </summary>
-        [JsonProperty("position")]
+        [TransloaditJsonName("position")]
         public string Position { get; set; }
 
         /// <summary>
         /// FFmpeg stack version. One of <see cref="Constants.FFMpegStack"/>: <c>v5.0.0</c> or <c>v6.0.0</c>.
         /// <para>Default: <c>v5.0.0</c>.</para>
         /// </summary>
-        [JsonProperty("ffmpeg_stack")]
+        [TransloaditJsonName("ffmpeg_stack")]
         public string FfmpegStack { get; set; }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// For available options, see the <a href="https://ffmpeg.org/ffmpeg-doc.html">FFmpeg documentation</a>. 
         /// Options specified here take precedence over the preset options.
         /// </summary>
-        [JsonProperty("ffmpeg")]
+        [TransloaditJsonName("ffmpeg")]
         public Dictionary<string, object> Ffmpeg { get; set; }
 
         /// <summary>

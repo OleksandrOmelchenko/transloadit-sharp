@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using Transloadit.Serialization.Attributes;
 
 namespace Transloadit.Models.Robots.AI
 {
@@ -11,55 +11,55 @@ namespace Transloadit.Models.Robots.AI
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
-        [JsonProperty("use")]
+        [TransloaditJsonName("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
         /// The model to use. Set to <c>auto</c> to let Transloadit choose.
         /// </summary>
-        [JsonProperty("model")]
+        [TransloaditJsonName("model")]
         public string Model { get; set; }
 
         /// <summary>
         /// Optional JSON Schema expected from the model output.
         /// </summary>
-        [JsonProperty("schema")]
+        [TransloaditJsonName("schema")]
         public string Schema { get; set; }
 
         /// <summary>
         /// Prompt or message history to send.
         /// </summary>
-        [JsonProperty("messages")]
+        [TransloaditJsonName("messages")]
         public AnyOf<string, List<AiChatMessage>> Messages { get; set; }
 
         /// <summary>
         /// Optional system prompt.
         /// </summary>
-        [JsonProperty("system_message")]
+        [TransloaditJsonName("system_message")]
         public string SystemMessage { get; set; }
 
         /// <summary>
         /// Reasoning effort level.
         /// </summary>
-        [JsonProperty("reasoning_effort")]
+        [TransloaditJsonName("reasoning_effort")]
         public string ReasoningEffort { get; set; }
 
         /// <summary>
         /// Template credential names used by the robot.
         /// </summary>
-        [JsonProperty("credentials")]
+        [TransloaditJsonName("credentials")]
         public AnyOf<string, List<string>> Credentials { get; set; }
 
         /// <summary>
         /// Uses Transloadit test credentials.
         /// </summary>
-        [JsonProperty("test_credentials")]
+        [TransloaditJsonName("test_credentials")]
         public bool? TestCredentials { get; set; }
 
         /// <summary>
         /// MCP servers available for tool calls.
         /// </summary>
-        [JsonProperty("mcp_servers")]
+        [TransloaditJsonName("mcp_servers")]
         public List<AiChatMcpServer> McpServers { get; set; }
 
         /// <summary>
@@ -79,13 +79,13 @@ namespace Transloadit.Models.Robots.AI
         /// <summary>
         /// Message role.
         /// </summary>
-        [JsonProperty("role")]
+        [TransloaditJsonName("role")]
         public string Role { get; set; }
 
         /// <summary>
         /// Message content.
         /// </summary>
-        [JsonProperty("content")]
+        [TransloaditJsonName("content")]
         public string Content { get; set; }
     }
 
@@ -97,19 +97,19 @@ namespace Transloadit.Models.Robots.AI
         /// <summary>
         /// Server URL.
         /// </summary>
-        [JsonProperty("url")]
+        [TransloaditJsonName("url")]
         public string Url { get; set; }
 
         /// <summary>
         /// Optional auth mode.
         /// </summary>
-        [JsonProperty("auth")]
+        [TransloaditJsonName("auth")]
         public string Auth { get; set; }
 
         /// <summary>
         /// Optional request headers.
         /// </summary>
-        [JsonProperty("headers")]
+        [TransloaditJsonName("headers")]
         public Dictionary<string, string> Headers { get; set; }
     }
 }

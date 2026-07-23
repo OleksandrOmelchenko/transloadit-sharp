@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using Transloadit.Serialization.Attributes;
 
 namespace Transloadit.Models.Robots.Documents
 {
@@ -11,49 +11,49 @@ namespace Transloadit.Models.Robots.Documents
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
-        [JsonProperty("use")]
+        [TransloaditJsonName("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
         /// Quality preset. One of <see cref="Constants.DocumentOptimizePresets"/>.
         /// </summary>
-        [JsonProperty("preset")]
+        [TransloaditJsonName("preset")]
         public string Preset { get; set; }
 
         /// <summary>
         /// Target image DPI.
         /// </summary>
-        [JsonProperty("image_dpi")]
+        [TransloaditJsonName("image_dpi")]
         public AnyOf<int, string> ImageDpi { get; set; }
 
         /// <summary>
         /// Compresses embedded fonts.
         /// </summary>
-        [JsonProperty("compress_fonts")]
+        [TransloaditJsonName("compress_fonts")]
         public bool? CompressFonts { get; set; }
 
         /// <summary>
         /// Subsets embedded fonts to used glyphs.
         /// </summary>
-        [JsonProperty("subset_fonts")]
+        [TransloaditJsonName("subset_fonts")]
         public bool? SubsetFonts { get; set; }
 
         /// <summary>
         /// Removes document metadata.
         /// </summary>
-        [JsonProperty("remove_metadata")]
+        [TransloaditJsonName("remove_metadata")]
         public bool? RemoveMetadata { get; set; }
 
         /// <summary>
         /// Enables linearized PDF output.
         /// </summary>
-        [JsonProperty("linearize")]
+        [TransloaditJsonName("linearize")]
         public bool? Linearize { get; set; }
 
         /// <summary>
         /// PDF compatibility level.
         /// </summary>
-        [JsonProperty("compatibility")]
+        [TransloaditJsonName("compatibility")]
         public string Compatibility { get; set; }
 
         /// <summary>

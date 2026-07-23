@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using Transloadit.Serialization.Attributes;
 
 namespace Transloadit.Models.Tokens
 {
@@ -10,25 +10,25 @@ namespace Transloadit.Models.Tokens
         /// <summary>
         /// Access token value.
         /// </summary>
-        [JsonProperty("access_token")]
+        [TransloaditJsonName("access_token")]
         public string AccessToken { get; set; }
 
         /// <summary>
         /// Token type.
         /// </summary>
-        [JsonProperty("token_type")]
+        [TransloaditJsonName("token_type")]
         public string TokenType { get; set; }
 
         /// <summary>
         /// Token lifetime in seconds.
         /// </summary>
-        [JsonProperty("expires_in")]
+        [TransloaditJsonName("expires_in")]
         public int? ExpiresIn { get; set; }
 
         /// <summary>
         /// Granted scope list.
         /// </summary>
-        [JsonProperty("scope")]
+        [TransloaditJsonName("scope")]
         public string Scope { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 using System.Collections.Generic;
 using Transloadit.Models.Robots.ImageManipulation;
 
@@ -12,7 +12,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
-        [JsonProperty("use")]
+        [TransloaditJsonName("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
@@ -21,21 +21,21 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// One of <see cref="Constants.VideoEncodingPresetsV5"/> or <see cref="Constants.VideoEncodingPresetsV6"/>.
         /// <para>Default: <c>flash</c>.</para>
         /// </summary>
-        [JsonProperty("preset")]
+        [TransloaditJsonName("preset")]
         public string Preset { get; set; }
 
         /// <summary>
         /// Width of the new video, in pixels. Value 1-1920. If the value is not specified and the preset parameter is available, the preset's supplied width will be implemented.
         /// <para>Default: Width of the input video .</para>
         /// </summary>
-        [JsonProperty("width")]
+        [TransloaditJsonName("width")]
         public int? Width { get; set; }
 
         /// <summary>
         /// Height of the new video, in pixels. Value 1-1080. If the value is not specified and the preset parameter is available, the preset's supplied height will be implemented.
         /// <para>Default: Height of the input video.</para>
         /// </summary>
-        [JsonProperty("height")]
+        [TransloaditJsonName("height")]
         public int? Height { get; set; }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// <c>pad</c>, <c>stretch</c> and <c>crop</c>.
         /// <para>Default: <c>pad</c>.</para>
         /// </summary>
-        [JsonProperty("resize_strategy")]
+        [TransloaditJsonName("resize_strategy")]
         public string ResizeStrategy { get; set; }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// <a href="https://transloadit.com/docs/transcoding/image-manipulation/image-resize/#resize-strategies">resize strategies</a>.
         /// <para>Default: <c>true</c>.</para>
         /// </summary>
-        [JsonProperty("zoom")]
+        [TransloaditJsonName("zoom")]
         public bool? Zoom { get; set; }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// <c>{ \"x1\": int, \"y1\": int, \"x2\": int, \"y2\": int }</c></para>
         /// <para>Default: <c>null</c>.</para>
         /// </summary>
-        [JsonProperty("crop")]
+        [TransloaditJsonName("crop")]
         public AnyOf<string, Crop> Crop { get; set; }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// The default color is black.
         /// <para>Default: <c>00000000</c>.</para>
         /// </summary>
-        [JsonProperty("background")]
+        [TransloaditJsonName("background")]
         public string Background { get; set; }
 
         /// <summary>
@@ -91,14 +91,14 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// if the metadata contains such instructions. Values <c>0</c>, <c>90</c>, <c>180</c>, <c>270</c>, <c>360</c>.
         /// <para>Default: auto.</para>
         /// </summary>
-        [JsonProperty("rotate")]
+        [TransloaditJsonName("rotate")]
         public AnyOf<bool, int> Rotate { get; set; }
 
         /// <summary>
         /// Enables hinting for mp4 files, for RTP/RTSP streaming.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
-        [JsonProperty("hint")]
+        [TransloaditJsonName("hint")]
         public bool? Hint { get; set; }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// for very small video files.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
-        [JsonProperty("turbo")]
+        [TransloaditJsonName("turbo")]
         public bool? Turbo { get; set; }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// feature while using fewer Priority Job Slots. For instance, the longer each chunk is, the fewer Encoding Jobs will need to be used.
         /// <para>Default: auto.</para>
         /// </summary>
-        [JsonProperty("chunk_duration")]
+        [TransloaditJsonName("chunk_duration")]
         public int? ChunkDuration { get; set; }
 
         /// <summary>
@@ -124,14 +124,14 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// without turbo mode.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
-        [JsonProperty("freeze_detect")]
+        [TransloaditJsonName("freeze_detect")]
         public bool? FreezeDetect { get; set; }
 
         /// <summary>
         /// FFmpeg stack version. One of <see cref="Constants.FFMpegStack"/>: <c>v5.0.0</c> or <c>v6.0.0</c>.
         /// <para>Default: <c>v5.0.0</c>.</para>
         /// </summary>
-        [JsonProperty("ffmpeg_stack")]
+        [TransloaditJsonName("ffmpeg_stack")]
         public string FfmpegStack { get; set; }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// For available options, see the <a href="https://ffmpeg.org/ffmpeg-doc.html">FFmpeg documentation</a>. 
         /// Options specified here take precedence over the preset options.
         /// </summary>
-        [JsonProperty("ffmpeg")]
+        [TransloaditJsonName("ffmpeg")]
         public Dictionary<string, object> Ffmpeg { get; set; }
 
         /// <summary>

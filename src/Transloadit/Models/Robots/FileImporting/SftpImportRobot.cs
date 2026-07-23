@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+using Transloadit.Serialization.Attributes;
 
 namespace Transloadit.Models.Robots.FileImporting
 {
@@ -11,44 +11,44 @@ namespace Transloadit.Models.Robots.FileImporting
         /// <summary>
         /// Template credentials name.
         /// </summary>
-        [JsonProperty("credentials")]
+        [TransloaditJsonName("credentials")]
         public string Credentials { get; set; }
 
         /// <summary>
         /// The path on your SFTP server where to search for files.
         /// </summary>
-        [JsonProperty("path")]
+        [TransloaditJsonName("path")]
         public string Path { get; set; }
 
         /// <summary>
         /// The port to use for the connection.
         /// <para>Default: <c>22</c>.</para>
         /// </summary>
-        [JsonProperty("port")]
+        [TransloaditJsonName("port")]
         public int? Port { get; set; }
 
         /// <summary>
         /// The directory on the SFTP server to import files from.
         /// </summary>
-        [JsonProperty("bucket")]
+        [TransloaditJsonName("bucket")]
         public string Bucket { get; set; }
 
         /// <summary>
         /// The hostname or IP address of the SFTP server.
         /// </summary>
-        [JsonProperty("host")]
+        [TransloaditJsonName("host")]
         public string Host { get; set; }
 
         /// <summary>
         /// The authentication key used to connect to the SFTP server.
         /// </summary>
-        [JsonProperty("key")]
+        [TransloaditJsonName("key")]
         public string Key { get; set; }
 
         /// <summary>
         /// The authentication secret used to connect to the SFTP server.
         /// </summary>
-        [JsonProperty("secret")]
+        [TransloaditJsonName("secret")]
         public string Secret { get; set; }
 
         /// <summary>

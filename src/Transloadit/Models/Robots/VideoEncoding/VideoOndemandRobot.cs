@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using Transloadit.Serialization.Attributes;
 
 namespace Transloadit.Models.Robots.VideoEncoding
 {
@@ -11,43 +11,43 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
-        [JsonProperty("use")]
+        [TransloaditJsonName("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
         /// Variant definitions indexed by output name.
         /// </summary>
-        [JsonProperty("variants")]
+        [TransloaditJsonName("variants")]
         public Dictionary<string, VideoOndemandVariant> Variants { get; set; }
 
         /// <summary>
         /// Enabled variants from <c>variants</c>.
         /// </summary>
-        [JsonProperty("enabled_variants")]
+        [TransloaditJsonName("enabled_variants")]
         public AnyOf<string, List<string>> EnabledVariants { get; set; }
 
         /// <summary>
         /// Segment duration in seconds.
         /// </summary>
-        [JsonProperty("segment_duration")]
+        [TransloaditJsonName("segment_duration")]
         public AnyOf<int, string> SegmentDuration { get; set; }
 
         /// <summary>
         /// Signed URL expiration in seconds.
         /// </summary>
-        [JsonProperty("sign_urls_for")]
+        [TransloaditJsonName("sign_urls_for")]
         public AnyOf<int, string> SignUrlsFor { get; set; }
 
         /// <summary>
         /// Asset selector value.
         /// </summary>
-        [JsonProperty("asset")]
+        [TransloaditJsonName("asset")]
         public string Asset { get; set; }
 
         /// <summary>
         /// Name of URL param carrying <c>asset</c>.
         /// </summary>
-        [JsonProperty("asset_param_name")]
+        [TransloaditJsonName("asset_param_name")]
         public string AssetParamName { get; set; }
 
         /// <summary>
@@ -67,31 +67,31 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// <summary>
         /// Variant preset.
         /// </summary>
-        [JsonProperty("preset")]
+        [TransloaditJsonName("preset")]
         public string Preset { get; set; }
 
         /// <summary>
         /// FFmpeg options merged over preset options.
         /// </summary>
-        [JsonProperty("ffmpeg")]
+        [TransloaditJsonName("ffmpeg")]
         public Dictionary<string, object> Ffmpeg { get; set; }
 
         /// <summary>
         /// FFmpeg stack version.
         /// </summary>
-        [JsonProperty("ffmpeg_stack")]
+        [TransloaditJsonName("ffmpeg_stack")]
         public string FfmpegStack { get; set; }
 
         /// <summary>
         /// Variant width in pixels.
         /// </summary>
-        [JsonProperty("width")]
+        [TransloaditJsonName("width")]
         public AnyOf<int, string> Width { get; set; }
 
         /// <summary>
         /// Variant height in pixels.
         /// </summary>
-        [JsonProperty("height")]
+        [TransloaditJsonName("height")]
         public AnyOf<int, string> Height { get; set; }
     }
 }

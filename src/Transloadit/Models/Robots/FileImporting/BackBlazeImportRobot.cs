@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 
 namespace Transloadit.Models.Robots.FileImporting
 {
@@ -10,13 +10,13 @@ namespace Transloadit.Models.Robots.FileImporting
         /// <summary>
         /// Setting this to <c>true</c> will enable importing files from subdirectories and sub-subdirectories (etc.) of the given path.
         /// </summary>
-        [JsonProperty("recursive")]
+        [TransloaditJsonName("recursive")]
         public bool? Recursive { get; set; }
 
         /// <summary>
         /// The name of the last file from the previous paging call. This tells the Robot to ignore all files up to and including this file.
         /// </summary>
-        [JsonProperty("start_file_name")]
+        [TransloaditJsonName("start_file_name")]
         public string StartFileName { get; set; }
 
         /// <summary>
@@ -24,25 +24,25 @@ namespace Transloadit.Models.Robots.FileImporting
         /// compatibility in non-recursive imports.
         /// <para>Default: <c>1000</c>.</para>
         /// </summary>
-        [JsonProperty("files_per_page")]
+        [TransloaditJsonName("files_per_page")]
         public int? FilesPerPage { get; set; }
 
         /// <summary>
         /// Backblaze bucket name.
         /// </summary>
-        [JsonProperty("bucket")]
+        [TransloaditJsonName("bucket")]
         public string Bucket { get; set; }
 
         /// <summary>
         /// Backblaze App Key ID.
         /// </summary>
-        [JsonProperty("app_key_id")]
+        [TransloaditJsonName("app_key_id")]
         public string AppKeyId { get; set; }
 
         /// <summary>
         /// Backblaze App Key.
         /// </summary>
-        [JsonProperty("app_key")]
+        [TransloaditJsonName("app_key")]
         public string AppKey { get; set; }
 
         /// <summary>

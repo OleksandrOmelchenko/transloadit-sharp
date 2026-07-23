@@ -98,7 +98,7 @@
       {
         "name": "fromdate",
         "type": "Nullable<DateTime>",
-        "converter": "PaginationDateTimeConverter"
+        "converter": "IsoDateTimeConverter"
       },
       {
         "name": "keywords",
@@ -115,7 +115,7 @@
       {
         "name": "todate",
         "type": "Nullable<DateTime>",
-        "converter": "PaginationDateTimeConverter"
+        "converter": "IsoDateTimeConverter"
       },
       {
         "name": "type",
@@ -796,7 +796,7 @@
       {
         "name": "expires",
         "type": "Nullable<DateTime>",
-        "converter": "AuthExpiresDateTimeConverter"
+        "converter": "IsoDateTimeConverter"
       },
       {
         "name": "key",
@@ -1943,7 +1943,7 @@
       {
         "name": "fromdate",
         "type": "Nullable<DateTime>",
-        "converter": "PaginationDateTimeConverter"
+        "converter": "IsoDateTimeConverter"
       },
       {
         "name": "keywords",
@@ -1960,7 +1960,7 @@
       {
         "name": "todate",
         "type": "Nullable<DateTime>",
-        "converter": "PaginationDateTimeConverter"
+        "converter": "IsoDateTimeConverter"
       }
     ]
   },
@@ -3246,6 +3246,11 @@
         "converter": "AnyOfConverter"
       },
       {
+        "name": "interpolate",
+        "type": "AnyOf<Boolean, Dictionary<String, Object>>",
+        "converter": "AnyOfConverter"
+      },
+      {
         "name": "max_response_size",
         "type": "Nullable<Int32>"
       },
@@ -3262,7 +3267,16 @@
         "type": "String"
       },
       {
+        "name": "output_meta",
+        "type": "AnyOf<Boolean, OutputMeta>",
+        "converter": "AnyOfConverter"
+      },
+      {
         "name": "payload",
+        "type": "String"
+      },
+      {
+        "name": "queue",
         "type": "String"
       },
       {
@@ -8659,7 +8673,7 @@
       {
         "name": "fromdate",
         "type": "Nullable<DateTime>",
-        "converter": "PaginationDateTimeConverter"
+        "converter": "IsoDateTimeConverter"
       },
       {
         "name": "keywords",
@@ -8684,7 +8698,7 @@
       {
         "name": "todate",
         "type": "Nullable<DateTime>",
-        "converter": "PaginationDateTimeConverter"
+        "converter": "IsoDateTimeConverter"
       }
     ]
   },

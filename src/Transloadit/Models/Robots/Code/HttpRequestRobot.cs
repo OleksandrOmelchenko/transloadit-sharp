@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using Transloadit.Serialization.Attributes;
 using System.Collections.Generic;
 
 namespace Transloadit.Models.Robots.Code
@@ -13,20 +13,20 @@ namespace Transloadit.Models.Robots.Code
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
-        [JsonProperty("use")]
+        [TransloaditJsonName("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
         /// The HTTP or HTTPS endpoint to call.
         /// </summary>
-        [JsonProperty("url")]
+        [TransloaditJsonName("url")]
         public string Url { get; set; }
 
         /// <summary>
         /// HTTP method to use for the request. One of <c>DELETE</c>, <c>GET</c>, <c>PATCH</c>, <c>POST</c>, or <c>PUT</c>.
         /// <para>Default: <c>POST</c>.</para>
         /// </summary>
-        [JsonProperty("method")]
+        [TransloaditJsonName("method")]
         public string Method { get; set; }
 
         /// <summary>
@@ -39,14 +39,14 @@ namespace Transloadit.Models.Robots.Code
         /// </list>
         /// <para>Default: <c>none</c>.</para>
         /// </summary>
-        [JsonProperty("payload")]
+        [TransloaditJsonName("payload")]
         public string Payload { get; set; }
 
         /// <summary>
         /// Custom request headers. Can be specified as an object map of header names to values, or an array of strings
         /// in the format <c>"Header-Name: value"</c>.
         /// </summary>
-        [JsonProperty("headers")]
+        [TransloaditJsonName("headers")]
         public AnyOf<Dictionary<string, string>, List<string>> Headers { get; set; }
 
         /// <summary>
@@ -54,35 +54,35 @@ namespace Transloadit.Models.Robots.Code
         /// Transloadit's server-side cap.
         /// <para>Default: <c>60</c>.</para>
         /// </summary>
-        [JsonProperty("timeout")]
+        [TransloaditJsonName("timeout")]
         public int? Timeout { get; set; }
 
         /// <summary>
         /// Maximum accepted response size in bytes. The response should normally be a small JSON document.
         /// <para>Default: <c>1048576</c>.</para>
         /// </summary>
-        [JsonProperty("max_response_size")]
+        [TransloaditJsonName("max_response_size")]
         public int? MaxResponseSize { get; set; }
 
         /// <summary>
         /// Maximum number of files that the endpoint may return.
         /// <para>Default: <c>10</c>.</para>
         /// </summary>
-        [JsonProperty("max_result_files")]
+        [TransloaditJsonName("max_result_files")]
         public int? MaxResultFiles { get; set; }
 
         /// <summary>
         /// Maximum allowed size in bytes for each result file returned by URL.
         /// <para>Default: <c>104857600</c>.</para>
         /// </summary>
-        [JsonProperty("max_result_file_size")]
+        [TransloaditJsonName("max_result_file_size")]
         public long? MaxResultFileSize { get; set; }
 
         /// <summary>
         /// Maximum number of seconds to spend downloading each result file returned by URL.
         /// <para>Default: <c>120</c>.</para>
         /// </summary>
-        [JsonProperty("result_download_timeout")]
+        [TransloaditJsonName("result_download_timeout")]
         public int? ResultDownloadTimeout { get; set; }
 
         /// <summary>

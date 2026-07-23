@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 using System.Collections.Generic;
 
 namespace Transloadit.Models.Robots.ImageManipulation
@@ -11,7 +11,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
-        [JsonProperty("use")]
+        [TransloaditJsonName("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
@@ -21,21 +21,21 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// If <c>null</c> (default), then the input image's format will be used as the output format.
         /// <para>Default: <c>null</c>.</para>
         /// </summary>
-        [JsonProperty("format")]
+        [TransloaditJsonName("format")]
         public string Format { get; set; }
 
         /// <summary>
         /// Width of the new image, in pixels. If not specified, will default to the width of the input image. Value 1-5000.
         /// <para>Default: auto.</para>
         /// </summary>
-        [JsonProperty("width")]
+        [TransloaditJsonName("width")]
         public int? Width { get; set; }
 
         /// <summary>
         /// Height of the new image, in pixels. If not specified, will default to the height of the input image. Value 1-5000.
         /// <para>Default: auto.</para>
         /// </summary>
-        [JsonProperty("height")]
+        [TransloaditJsonName("height")]
         public int? Height { get; set; }
 
         /// <summary>
@@ -43,13 +43,13 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// <c>pad</c>, <c>stretch</c> and <c>crop</c>.
         /// <para>Default: <c>pad</c>.</para>
         /// </summary>
-        [JsonProperty("resize_strategy")]
+        [TransloaditJsonName("resize_strategy")]
         public string ResizeStrategy { get; set; }
 
         /// <summary>
         /// If this is set to false, smaller images will not be stretched to the desired width and height.
         /// </summary>
-        [JsonProperty("zoom")]
+        [TransloaditJsonName("zoom")]
         public bool? Zoom { get; set; }
 
         /// <summary>
@@ -70,33 +70,33 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// <c>{ \"x1\": int, \"y1\": int, \"x2\": int, \"y2\": int }</c></para>
         /// <para>Default: <c>null</c>.</para>
         /// </summary>
-        [JsonProperty("crop")]
+        [TransloaditJsonName("crop")]
         public AnyOf<string, Crop> Crop { get; set; }
 
         /// <summary>
         /// The direction from which the image is to be cropped, when "resize_strategy" is set to "crop", but no crop coordinates are defined.
         /// <para>Default: <c>center</c>.</para>
         /// </summary>
-        [JsonProperty("gravity")]
+        [TransloaditJsonName("gravity")]
         public string Gravity { get; set; }
 
         /// <summary>
         /// Strips all metadata from the image. This is useful to keep thumbnails as small as possible.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
-        [JsonProperty("strip")]
+        [TransloaditJsonName("strip")]
         public bool? Strip { get; set; }
 
         /// <summary>
         /// Gives control of the alpha/matte channel of an image. Valid options are "Activate", "Background", "Copy", "Deactivate", "Extract", "Off", "On", "Opaque", "Remove", "Set", "Shape", "Transparent".
         /// </summary>
-        [JsonProperty("alpha")]
+        [TransloaditJsonName("alpha")]
         public string Alpha { get; set; }
 
         /// <summary>
         /// Gives control of the alpha/matte channel of an image before applying the clipping path via clip: true. Valid options are "Activate", "Background", "Copy", "Deactivate", "Extract", "Off", "On", "Opaque", "Remove", "Set", "Shape", "Transparent".
         /// </summary>
-        [JsonProperty("preclip_alpha")]
+        [TransloaditJsonName("preclip_alpha")]
         public string PreclipAlpha { get; set; }
 
         /// <summary>
@@ -105,21 +105,21 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// GIF files are not flattened when this is set to <c>true</c>. To flatten GIF animations, use the <c>frame</c> parameter.
         /// <para>Default: <c>true</c>.</para>
         /// </summary>
-        [JsonProperty("flatten")]
+        [TransloaditJsonName("flatten")]
         public bool? Flatten { get; set; }
 
         /// <summary>
         /// Prevents gamma errors common in many image scaling algorithms.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
-        [JsonProperty("correct_gamma")]
+        [TransloaditJsonName("correct_gamma")]
         public bool? CorrectGamma { get; set; }
 
         /// <summary>
         /// Controls the image compression for JPG and PNG images. Value 1-100.
         /// <para>Default: auto.</para>
         /// </summary>
-        [JsonProperty("quality")]
+        [TransloaditJsonName("quality")]
         public int? Quality { get; set; }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// It is encouraged to keep this option disabled.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
-        [JsonProperty("adaptive_filtering")]
+        [TransloaditJsonName("adaptive_filtering")]
         public bool? AdaptiveFiltering { get; set; }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// the background (only used for the <c>pad</c> resize strategy).
         /// <para>Default: <c>#FFFFFF</c>.</para>
         /// </summary>
-        [JsonProperty("background")]
+        [TransloaditJsonName("background")]
         public string Background { get; set; }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// to use the first frame, <c>2</c> to use the second, and so on. <c>null</c> means all frames.
         /// <para>Default: <c>null</c>.</para>
         /// </summary>
-        [JsonProperty("frame")]
+        [TransloaditJsonName("frame")]
         public int? Frame { get; set; }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// might try to find the most efficient colorspace based on the color of an image, and default to e.g. "Gray". 
         /// To force colors, you might have to use this parameter in combination with <c>type: "TrueColor"</c>.
         /// </summary>
-        [JsonProperty("colorspace")]
+        [TransloaditJsonName("colorspace")]
         public string Colorspace { get; set; }
 
         /// <summary>
@@ -161,13 +161,13 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// colorspace, ImageMagick might try to find the most efficient based on the color of an image, and default to e.g. "Gray". 
         /// To force colors, you could e.g. set this parameter to "TrueColor".
         /// </summary>
-        [JsonProperty("type")]
+        [TransloaditJsonName("type")]
         public string Type { get; set; }
 
         /// <summary>
         /// Applies a sepia tone effect in percent. Value 0-99.
         /// </summary>
-        [JsonProperty("sepia")]
+        [TransloaditJsonName("sepia")]
         public int? Sepia { get; set; }
 
         /// <summary>
@@ -176,13 +176,13 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// use <c>false</c> to disable auto-fixing altogether.
         /// <para>Default: <c>true</c>.</para>
         /// </summary>
-        [JsonProperty("rotation")]
+        [TransloaditJsonName("rotation")]
         public AnyOf<bool, int> Rotation { get; set; }
 
         /// <summary>
         /// Specifies pixel compression for when the image is written. Valid values are "None", "BZip", "Fax", "Group4", "JPEG", "JPEG2000", "Lossless", "LZW", "RLE", and "Zip". Compression is disabled by default.
         /// </summary>
-        [JsonProperty("compress")]
+        [TransloaditJsonName("compress")]
         public string Compress { get; set; }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// The sigma value is an approximation of how many pixels the image is "spread"; think of it as the size of the brush used to blur the image. 
         /// This number is a floating point value, enabling small values like <c>"0.5"</c> to be used.
         /// </summary>
-        [JsonProperty("blur")]
+        [TransloaditJsonName("blur")]
         public string Blur { get; set; }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// <c>width</c>, <c>height</c>. If <c>blur_regions</c> has a value, then the <c>blur</c> parameter is used as the strength of the blur 
         /// for each region.
         /// </summary>
-        [JsonProperty("blur_regions")]
+        [TransloaditJsonName("blur_regions")]
         public List<BlurRegion> BlurRegions { get; set; }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// and <c>0.75</c> would decrease the brightness by 25%.
         /// <para>Default: <c>1</c>.</para>
         /// </summary>
-        [JsonProperty("brightness")]
+        [TransloaditJsonName("brightness")]
         public double? Brightness { get; set; }
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// and <c>0.75</c> would decrease the saturation by 25%.
         /// <para>Default: <c>1</c>.</para>
         /// </summary>
-        [JsonProperty("saturation")]
+        [TransloaditJsonName("saturation")]
         public double? Saturation { get; set; }
 
         /// <summary>
@@ -223,7 +223,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// negate the colors in the image.
         /// <para>Default: <c>100</c>.</para>
         /// </summary>
-        [JsonProperty("hue")]
+        [TransloaditJsonName("hue")]
         public int? Hue { get; set; }
 
         /// <summary>
@@ -232,13 +232,13 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// actual image as the data arrives. This greatly increases the user experience, but comes at a cost of a file size increase by around 10%.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
-        [JsonProperty("progressive")]
+        [TransloaditJsonName("progressive")]
         public bool? Progressive { get; set; }
 
         /// <summary>
         /// Make this color transparent within the image. Formats which support this parameter include "GIF", "PNG", "BMP", "TIFF", "WebP", and "JP2".
         /// </summary>
-        [JsonProperty("transparent")]
+        [TransloaditJsonName("transparent")]
         public string Transparent { get; set; }
 
         /// <summary>
@@ -246,7 +246,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// removes any edges that are exactly the same color as the corner pixels.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
-        [JsonProperty("trim_whitespace")]
+        [TransloaditJsonName("trim_whitespace")]
         public bool? TrimWhitespace { get; set; }
 
         /// <summary>
@@ -254,14 +254,14 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// the first clipping path. If set to a String it finds a clipping path by that name.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
-        [JsonProperty("clip")]
+        [TransloaditJsonName("clip")]
         public AnyOf<bool, string> Clip { get; set; }
 
         /// <summary>
         /// Replace each pixel with its complementary color, effectively negating the image. Especially useful when testing clipping.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
-        [JsonProperty("negate")]
+        [TransloaditJsonName("negate")]
         public bool? Negate { get; set; }
 
         /// <summary>
@@ -272,28 +272,28 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// <para>If your converted image is unsharp, please try increasing density.</para>
         /// <para>Default: <c>null</c>.</para>
         /// </summary>
-        [JsonProperty("density")]
+        [TransloaditJsonName("density")]
         public int? Density { get; set; }
 
         /// <summary>
         /// ImageMagick stack version. One of <see cref="Constants.ImageMagickStack"/>: <c>v2.0.10</c> or <c>v3.0.1</c>.
         /// <para>Default: <c>v2.0.10</c>.</para>
         /// </summary>
-        [JsonProperty("imagemagick_stack")]
+        [TransloaditJsonName("imagemagick_stack")]
         public string ImageMagickStack { get; set; }
 
         /// <summary>
         /// An array of objects each containing text rules. The following text parameters are intended to be used as properties 
         /// for your array of text overlays.
         /// </summary>
-        [JsonProperty("text")]
+        [TransloaditJsonName("text")]
         public List<TextData> Text { get; set; }
 
         /// <summary>
         /// A URL indicating a PNG image to be overlaid above this image. Please note that you can also supply the watermark via another 
         /// Assembly Step. With watermarking you can add an image onto another image. This is usually used for logos.
         /// </summary>
-        [JsonProperty("watermark_url")]
+        [TransloaditJsonName("watermark_url")]
         public string WatermarkUrl { get; set; }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// add the padding to the image itself.</para>
         /// <para>Default: <c>center</c>.</para>
         /// </summary>
-        [JsonProperty("watermark_position")]
+        [TransloaditJsonName("watermark_position")]
         public AnyOf<string, List<string>> WatermarkPosition { get; set; }
 
         /// <summary>
@@ -313,7 +313,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// further away from the image's center point.</para>
         /// <para>Default: <c>0</c>.</para>
         /// </summary>
-        [JsonProperty("watermark_x_offset")]
+        [TransloaditJsonName("watermark_x_offset")]
         public int? WatermarkXOffset { get; set; }
 
         /// <summary>
@@ -323,7 +323,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// further away from the image's center point.</para>
         /// <para>Default: <c>0</c>.</para>
         /// </summary>
-        [JsonProperty("watermark_y_offset")]
+        [TransloaditJsonName("watermark_y_offset")]
         public int? WatermarkYOffset { get; set; }
 
         /// <summary>
@@ -331,14 +331,14 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// <para>For example, a value of <c>50%</c> means that size of the watermark will be 50% of the size of image on which it is placed. 
         /// The exact sizing depends on <c>watermark_resize_strategy</c>, too.</para>
         /// </summary>
-        [JsonProperty("watermark_size")]
+        [TransloaditJsonName("watermark_size")]
         public string WatermarkSize { get; set; }
 
         /// <summary>
         /// Available values are <c>fit</c>, <c>min_fit</c>, <c>stretch</c> and <c>area</c>.
         /// <para>Default: <c>fit</c>.</para>
         /// </summary>
-        [JsonProperty("watermark_resize_strategy")]
+        [TransloaditJsonName("watermark_resize_strategy")]
         public string WatermarkResizeStrategy { get; set; }
 
         /// <summary>
@@ -358,84 +358,84 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// <summary>
         /// Text content.
         /// </summary>
-        [JsonProperty("text")]
+        [TransloaditJsonName("text")]
         public string Text { get; set; }
 
         /// <summary>
         /// The font family to use. Also includes boldness and style of the font. One of <see cref="Constants.Fonts"/>.
         /// <para>Default: <c>Arial</c>.</para>
         /// </summary>
-        [JsonProperty("font")]
+        [TransloaditJsonName("font")]
         public string Font { get; set; }
 
         /// <summary>
         /// The text size in pixels.
         /// <para>Default: <c>12</c>.</para>
         /// </summary>
-        [JsonProperty("size")]
+        [TransloaditJsonName("size")]
         public int? Size { get; set; }
 
         /// <summary>
         /// The rotation angle in degrees.
         /// <para>Default: <c>0</c>.</para>
         /// </summary>
-        [JsonProperty("rotate")]
+        [TransloaditJsonName("rotate")]
         public int? Rotate { get; set; }
 
         /// <summary>
         /// The text color. All hex colors in the form "#xxxxxx" are supported, where each x can be 0-9 or a-f. "transparent" is also supported if you want a transparent text color. In that case use "stroke" instead, otherwise your text will not be visible.
         /// <para>Default: <c>#000000</c>.</para>
         /// </summary>
-        [JsonProperty("color")]
+        [TransloaditJsonName("color")]
         public string Color { get; set; }
 
         /// <summary>
         /// The text color. All hex colors in the form "#xxxxxx" are supported, where each x is can be 0-9 or a-f. "transparent" is also supported.
         /// <para>Default: <c>transparent</c>.</para>
         /// </summary>
-        [JsonProperty("background_color")]
+        [TransloaditJsonName("background_color")]
         public string BackgroundColor { get; set; }
 
         /// <summary>
         /// The stroke's width in pixels.
         /// <para>Default: <c>0</c>.</para>
         /// </summary>
-        [JsonProperty("stroke_width")]
+        [TransloaditJsonName("stroke_width")]
         public int? StrokeWidth { get; set; }
 
         /// <summary>
         /// The stroke's color. All hex colors in the form "#xxxxxx" are supported, where each x is can be 0-9 or a-f. "transparent" is also supported.
         /// <para>Default: <c>transparent</c>.</para>
         /// </summary>
-        [JsonProperty("stroke_color")]
+        [TransloaditJsonName("stroke_color")]
         public string StrokeColor { get; set; }
 
         /// <summary>
         /// The horizontal text alignment. Can be "left", "center" and "right".
         /// <para>Default: <c>center</c>.</para>
         /// </summary>
-        [JsonProperty("align")]
+        [TransloaditJsonName("align")]
         public string Align { get; set; }
 
         /// <summary>
         /// The vertical text alignment. Can be "top", "center" and "bottom".
         /// <para>Default: <c>center</c>.</para>
         /// </summary>
-        [JsonProperty("valign")]
+        [TransloaditJsonName("valign")]
         public string Valign { get; set; }
 
         /// <summary>
         /// The horizontal offset for the text in pixels that is added (positive integer) or removed (negative integer) from the horizontal alignment.
         /// <para>Default: <c>0</c>.</para>
         /// </summary>
-        [JsonProperty("x_offset")]
+        [TransloaditJsonName("x_offset")]
         public int? XOffset { get; set; }
 
         /// <summary>
         /// The vertical offset for the text in pixels that is added (positive integer) or removed (negative integer) from the vertical alignment.
         /// <para>Default: <c>0</c>.</para>
         /// </summary>
-        [JsonProperty("y_offset")]
+        [TransloaditJsonName("y_offset")]
         public int? YOffset { get; set; }
     }
 
@@ -447,25 +447,25 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// <summary>
         /// x1 coordinate.
         /// </summary>
-        [JsonProperty("x1")]
+        [TransloaditJsonName("x1")]
         public AnyOf<int, string> X1 { get; set; }
 
         /// <summary>
         /// y1 coordinate.
         /// </summary>
-        [JsonProperty("y1")]
+        [TransloaditJsonName("y1")]
         public AnyOf<int, string> Y1 { get; set; }
 
         /// <summary>
         /// x2 coordinate.
         /// </summary>
-        [JsonProperty("x2")]
+        [TransloaditJsonName("x2")]
         public AnyOf<int, string> X2 { get; set; }
 
         /// <summary>
         /// y2 coordinate.
         /// </summary>
-        [JsonProperty("y2")]
+        [TransloaditJsonName("y2")]
         public AnyOf<int, string> Y2 { get; set; }
     }
 
@@ -477,25 +477,25 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// <summary>
         /// Region x.
         /// </summary>
-        [JsonProperty("x")]
+        [TransloaditJsonName("x")]
         public int X { get; set; }
 
         /// <summary>
         /// Region y.
         /// </summary>
-        [JsonProperty("y")]
+        [TransloaditJsonName("y")]
         public int Y { get; set; }
 
         /// <summary>
         /// Region width.
         /// </summary>
-        [JsonProperty("width")]
+        [TransloaditJsonName("width")]
         public int Width { get; set; }
 
         /// <summary>
         /// Region height.
         /// </summary>
-        [JsonProperty("height")]
+        [TransloaditJsonName("height")]
         public int Height { get; set; }
     }
 }

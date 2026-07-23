@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+using Transloadit.Serialization.Attributes;
 using Transloadit.Models.Robots;
 using Transloadit.Serialization;
 
@@ -13,7 +13,7 @@ namespace Transloadit.Models.Templates
         /// <summary>
         /// Gets or sets template name. Must be between 5-40 symbols (inclusive), lowercase, can only contain dashes and latin letters.
         /// </summary>
-        [JsonProperty("name")]
+        [TransloaditJsonName("name")]
         public string Name { get; set; }
 
         /// <summary>
@@ -21,15 +21,15 @@ namespace Transloadit.Models.Templates
         /// Use <c>true</c> to deny requests that do not include a signature.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
-        [JsonProperty("require_signature_auth")]
-        [JsonConverter(typeof(BooleanToIntConverter))]
+        [TransloaditJsonName("require_signature_auth")]
+        [TransloaditBooleanToInt]
         public bool RequireSignatureAuth { get; set; }
 
         /// <summary>
         /// Gets or sets <a href="https://transloadit.com/docs/topics/assembly-instructions/">Assembly instructions</a>
         /// and <a href="https://transloadit.com/docs/topics/templates/">Template settings</a>.
         /// </summary>
-        [JsonProperty("template")]
+        [TransloaditJsonName("template")]
         public TemplateRequestContent Template { get; set; }
     }
 
@@ -46,7 +46,7 @@ namespace Transloadit.Models.Templates
         /// may be supplied.
         /// <para>Default: <c>true</c>.</para>
         /// </summary>
-        [JsonProperty("allow_steps_override")]
+        [TransloaditJsonName("allow_steps_override")]
         public bool? AllowStepsOverride { get; set; }
 
         /// <summary>
@@ -56,26 +56,26 @@ namespace Transloadit.Models.Templates
         /// The full Assembly Status will then still be sent to the <c>notify_url</c> if one was specified.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
-        [JsonProperty("quiet")]
+        [TransloaditJsonName("quiet")]
         public bool? Quiet { get; set; }
 
         /// <summary>
         /// Notification url to which Transloadit will send Assembly status when the Assembly is completed.
         /// </summary>
-        [JsonProperty("notify_url")]
+        [TransloaditJsonName("notify_url")]
         public string NotifyUrl { get; set; }
 
         /// <summary>
         /// An object of pairs (name -> value) that can be used as 
         /// <a href="https://transloadit.com/docs/topics/assembly-instructions/#assembly-variables">Assembly Variables</a>.
         /// </summary>
-        [JsonProperty("fields")]
+        [TransloaditJsonName("fields")]
         public Dictionary<string, object> Fields { get; set; }
 
         /// <summary>
         /// Assembly instructions.
         /// </summary>
-        [JsonProperty("steps")]
+        [TransloaditJsonName("steps")]
         public Dictionary<string, RobotBase> Steps { get; set; }
     }
 
@@ -87,13 +87,13 @@ namespace Transloadit.Models.Templates
         /// <summary>
         /// Sorting property. One of <see cref="Constants.TemplateSortProperties"/>: <c>id</c>, <c>name</c>, <c>created</c>, <c>modified</c>.
         /// </summary>
-        [JsonProperty("sort")]
+        [TransloaditJsonName("sort")]
         public string Sort { get; set; }
 
         /// <summary>
         /// Ordering direction. One of <see cref="Constants.Orderings"/>: <c>asc</c>, <c>desc</c>.
         /// </summary>
-        [JsonProperty("order")]
+        [TransloaditJsonName("order")]
         public string Order { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 
 namespace Transloadit.Models.Credentials
 {
@@ -18,7 +18,7 @@ namespace Transloadit.Models.Credentials
         /// <summary>
         /// FTP credentials content.
         /// </summary>
-        [JsonProperty("content")]
+        [TransloaditJsonName("content")]
         public FtpCredentialsContent Content { get; set; }
     }
 
@@ -30,19 +30,19 @@ namespace Transloadit.Models.Credentials
         /// <summary>
         /// FTP host.
         /// </summary>
-        [JsonProperty("host")]
+        [TransloaditJsonName("host")]
         public string Host { get; set; }
 
         /// <summary>
         /// FTP user.
         /// </summary>
-        [JsonProperty("user")]
+        [TransloaditJsonName("user")]
         public string User { get; set; }
 
         /// <summary>
         /// FTP password.
         /// </summary>
-        [JsonProperty("password")]
+        [TransloaditJsonName("password")]
         public string Password { get; set; }
     }
 }

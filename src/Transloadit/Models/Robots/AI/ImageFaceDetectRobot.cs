@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 using System.Collections.Generic;
 
 namespace Transloadit.Models.Robots.AI
@@ -11,13 +11,13 @@ namespace Transloadit.Models.Robots.AI
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
-        [JsonProperty("use")]
+        [TransloaditJsonName("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
         /// Which AI provider to leverage. One of <see cref="Constants.AIProviders"/>: <c>aws</c> and <c>gcp</c>.
         /// </summary>
-        [JsonProperty("provider")]
+        [TransloaditJsonName("provider")]
         public string Provider { get; set; }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Transloadit.Models.Robots.AI
         /// <c>true</c>, the Robot will output all detected faces as images.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
-        [JsonProperty("crop")]
+        [TransloaditJsonName("crop")]
         public bool? Crop { get; set; }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Transloadit.Models.Robots.AI
         /// <c>px</c> (pixels) or <c>%</c> (percentage of the width and height of the particular face image).
         /// <para>Default: <c>5px</c>.</para>
         /// </summary>
-        [JsonProperty("crop_padding")]
+        [TransloaditJsonName("crop_padding")]
         public string CropPadding { get; set; }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Transloadit.Models.Robots.AI
         /// means that the input image format is re-used. One of: <c>jpg</c>", <c>png</c>, <c>tiff</c> and <c>preserve</c>.
         /// <para>Default: <c>preserve</c>.</para>
         /// </summary>
-        [JsonProperty("format")]
+        [TransloaditJsonName("format")]
         public string Format { get; set; }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Transloadit.Models.Robots.AI
         /// will be included in the result. Available values 1-100.
         /// <para>Default: <c>70</c>.</para>
         /// </summary>
-        [JsonProperty("min_confidence")]
+        [TransloaditJsonName("min_confidence")]
         public int MinConfidence { get; set; }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Transloadit.Models.Robots.AI
         /// no output is produced.</item>
         /// </list>
         /// </summary>
-        [JsonProperty("faces")]
+        [TransloaditJsonName("faces")]
         public AnyOf<int, string> Faces { get; set; }
 
         /// <summary>

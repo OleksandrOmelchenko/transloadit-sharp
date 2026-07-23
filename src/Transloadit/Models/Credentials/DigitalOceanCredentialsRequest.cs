@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 
 namespace Transloadit.Models.Credentials
 {
@@ -18,7 +18,7 @@ namespace Transloadit.Models.Credentials
         /// <summary>
         /// DigitalOcean credentials content.
         /// </summary>
-        [JsonProperty("content")]
+        [TransloaditJsonName("content")]
         public DigitalOceanCredentialsContent Content { get; set; }
     }
 
@@ -30,25 +30,25 @@ namespace Transloadit.Models.Credentials
         /// <summary>
         /// DigitalOcean space name.
         /// </summary>
-        [JsonProperty("space")]
+        [TransloaditJsonName("space")]
         public string Space { get; set; }
 
         /// <summary>
         /// DigitalOcean space region.
         /// </summary>
-        [JsonProperty("region")]
+        [TransloaditJsonName("region")]
         public string Region { get; set; }
 
         /// <summary>
         /// DigitalOcean space key.
         /// </summary>
-        [JsonProperty("key")]
+        [TransloaditJsonName("key")]
         public string Key { get; set; }
 
         /// <summary>
         /// DigitalOcean space secret.
         /// </summary>
-        [JsonProperty("secret")]
+        [TransloaditJsonName("secret")]
         public string Secret { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 using System.Collections.Generic;
 
 namespace Transloadit.Models.Robots.AI
@@ -11,13 +11,13 @@ namespace Transloadit.Models.Robots.AI
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
-        [JsonProperty("use")]
+        [TransloaditJsonName("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
         /// Which AI provider to leverage. One of <see cref="Constants.AIProviders"/>: <c>aws</c> and <c>gcp</c>.
         /// </summary>
-        [JsonProperty("provider")]
+        [TransloaditJsonName("provider")]
         public string Provider { get; set; }
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace Transloadit.Models.Robots.AI
         /// For example, if you specify <c>en-US</c>, <c>en</c> will be used instead. Please consult the list of supported languages for each provider.
         /// <para>Default: <c>en</c>.</para>
         /// </summary>
-        [JsonProperty("target_language")]
+        [TransloaditJsonName("target_language")]
         public string TargetLanguage { get; set; }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Transloadit.Models.Robots.AI
         /// specifying the source language prevents ambiguities. If the exact language can't be found, a generic variant can be fallen back to.
         /// For example, if you specify <c>en-US</c>, <c>en</c> will be used instead. Please consult the list of supported languages for each provider.
         /// </summary>
-        [JsonProperty("source_language")]
+        [TransloaditJsonName("source_language")]
         public string SourceLanguage { get; set; }
 
         /// <summary>

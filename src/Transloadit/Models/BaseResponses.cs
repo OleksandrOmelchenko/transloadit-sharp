@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http.Headers;
@@ -45,28 +45,28 @@ namespace Transloadit.Models
         /// <summary>
         /// Gets raw Transloadit response.
         /// </summary>
-        [JsonIgnore]
+        [TransloaditJsonIgnore]
         public TransloaditResponse TransloaditResponse { get; internal set; }
 
-        [JsonProperty("ok")]
+        [TransloaditJsonName("ok")]
         string IResponseBase.Ok { get; set; }
 
-        [JsonProperty("message")]
+        [TransloaditJsonName("message")]
         string IResponseBase.Message { get; set; }
 
-        [JsonProperty("error")]
+        [TransloaditJsonName("error")]
         string IResponseBase.Error { get; set; }
 
-        [JsonProperty("reason")]
+        [TransloaditJsonName("reason")]
         string IResponseBase.Reason { get; set; }
 
-        [JsonProperty("http_code")]
+        [TransloaditJsonName("http_code")]
         int? IResponseBase.HttpCode { get; set; }
 
         /// <summary>
         /// Base response properties.
         /// </summary>
-        [JsonIgnore]
+        [TransloaditJsonIgnore]
         public IResponseBase Base => this;
 
         /// <summary>
@@ -85,13 +85,13 @@ namespace Transloadit.Models
         /// <summary>
         /// Total items count.
         /// </summary>
-        [JsonProperty("count")]
+        [TransloaditJsonName("count")]
         public int Count { get; set; }
 
         /// <summary>
         /// Paginated items.
         /// </summary>
-        [JsonProperty("items")]
+        [TransloaditJsonName("items")]
         public List<T> Items { get; set; }
     }
 

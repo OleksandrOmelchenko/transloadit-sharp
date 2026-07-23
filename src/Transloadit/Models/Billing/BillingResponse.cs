@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 
@@ -12,217 +12,217 @@ namespace Transloadit.Models.Billing
         /// <summary>
         /// Invoice id.
         /// </summary>
-        [JsonProperty("invoice_id")]
+        [TransloaditJsonName("invoice_id")]
         public string InvoiceId { get; set; }
 
         /// <summary>
         /// Account name.
         /// </summary>
-        [JsonProperty("to")]
+        [TransloaditJsonName("to")]
         public string To { get; set; }
 
         /// <summary>
         /// Account email.
         /// </summary>
-        [JsonProperty("email")]
+        [TransloaditJsonName("email")]
         public string Email { get; set; }
 
         /// <summary>
         /// Billing month.
         /// </summary>
-        [JsonProperty("month")]
+        [TransloaditJsonName("month")]
         public string Month { get; set; }
 
         /// <summary>
         /// Invoice creation date.
         /// </summary>
-        [JsonProperty("created")]
+        [TransloaditJsonName("created")]
         public DateTimeOffset Created { get; set; }
 
         /// <summary>
         /// Billing plan.
         /// </summary>
-        [JsonProperty("plan")]
+        [TransloaditJsonName("plan")]
         public BillingPlan Plan { get; set; }
 
         /// <summary>
         /// Currency.
         /// </summary>
-        [JsonProperty("currency")]
+        [TransloaditJsonName("currency")]
         public string Currency { get; set; }
 
         /// <summary>
         /// Company name.
         /// </summary>
-        [JsonProperty("company")]
+        [TransloaditJsonName("company")]
         public string Company { get; set; }
 
         /// <summary>
         /// Contact email address.
         /// </summary>
-        [JsonProperty("to_contact_email_address")]
+        [TransloaditJsonName("to_contact_email_address")]
         public string ToContactEmailAddress { get; set; }
 
         /// <summary>
         /// Address line 1.
         /// </summary>
-        [JsonProperty("address_1")]
+        [TransloaditJsonName("address_1")]
         public string Address1 { get; set; }
 
         /// <summary>
         /// Address line 2.
         /// </summary>
-        [JsonProperty("address_2")]
+        [TransloaditJsonName("address_2")]
         public string Address2 { get; set; }
 
         /// <summary>
         /// Zip code.
         /// </summary>
-        [JsonProperty("zip")]
+        [TransloaditJsonName("zip")]
         public string Zip { get; set; }
 
         /// <summary>
         /// City.
         /// </summary>
-        [JsonProperty("city")]
+        [TransloaditJsonName("city")]
         public string City { get; set; }
 
         /// <summary>
         /// State.
         /// </summary>
-        [JsonProperty("state")]
+        [TransloaditJsonName("state")]
         public string State { get; set; }
 
         /// <summary>
         /// Country id.
         /// </summary>
-        [JsonProperty("country_id")]
+        [TransloaditJsonName("country_id")]
         public string CountryId { get; set; }
 
         /// <summary>
         /// Country.
         /// </summary>
-        [JsonProperty("country")]
+        [TransloaditJsonName("country")]
         public string Country { get; set; }
 
         /// <summary>
         /// Billing per robot.
         /// </summary>
-        [JsonProperty("robots")]
+        [TransloaditJsonName("robots")]
         public Dictionary<string, RobotBilling> Robots { get; set; }
 
         /// <summary>
         /// Subtotal.
         /// </summary>
-        [JsonProperty("sub_total")]
+        [TransloaditJsonName("sub_total")]
         public decimal SubTotal { get; set; }
 
         /// <summary>
         /// Whether billing is prorated.
         /// </summary>
-        [JsonProperty("is_prorated")]
+        [TransloaditJsonName("is_prorated")]
         public bool IsProrated { get; set; }
 
         /// <summary>
         /// Used gigabytes.
         /// </summary>
-        [JsonProperty("used_gb")]
+        [TransloaditJsonName("used_gb")]
         public decimal UsedGb { get; set; }
 
         /// <summary>
         /// Additional gigabytes.
         /// </summary>
-        [JsonProperty("additional_gb")]
+        [TransloaditJsonName("additional_gb")]
         public decimal AdditionalGb { get; set; }
 
         /// <summary>
         /// Additional gigabytes fee.
         /// </summary>
-        [JsonProperty("additional_gb_fee")]
+        [TransloaditJsonName("additional_gb_fee")]
         public decimal AdditionalGbFee { get; set; }
 
         /// <summary>
         /// Final subtotal.
         /// </summary>
-        [JsonProperty("final_sub_total")]
+        [TransloaditJsonName("final_sub_total")]
         public decimal FinalSubTotal { get; set; }
 
         /// <summary>
         /// Reward discount percent.
         /// </summary>
-        [JsonProperty("reward_discount_percent")]
+        [TransloaditJsonName("reward_discount_percent")]
         public decimal RewardDiscountPercent { get; set; }
 
         /// <summary>
         /// Reward discount.
         /// </summary>
-        [JsonProperty("reward_discount")]
+        [TransloaditJsonName("reward_discount")]
         public decimal RewardDiscount { get; set; }
 
         /// <summary>
         /// Coupon discount percent.
         /// </summary>
-        [JsonProperty("coupon_discount_percent")]
+        [TransloaditJsonName("coupon_discount_percent")]
         public decimal CouponDiscountPercent { get; set; }
 
         /// <summary>
         /// Coupon discount.
         /// </summary>
-        [JsonProperty("coupon_discount")]
+        [TransloaditJsonName("coupon_discount")]
         public decimal CouponDiscount { get; set; }
 
         /// <summary>
         /// Signup discount percent.
         /// </summary>
-        [JsonProperty("signup_discount_percent")]
+        [TransloaditJsonName("signup_discount_percent")]
         public decimal SignupDiscountPercent { get; set; }
 
         /// <summary>
         /// Signup discount.
         /// </summary>
-        [JsonProperty("signup_discount")]
+        [TransloaditJsonName("signup_discount")]
         public decimal SignupDiscount { get; set; }
 
         /// <summary>
         /// Credit.
         /// </summary>
-        [JsonProperty("credit")]
+        [TransloaditJsonName("credit")]
         public decimal Credit { get; set; }
 
         /// <summary>
         /// Billing limit which cannot be exceeded.
         /// </summary>
-        [JsonProperty("bill_limit")]
+        [TransloaditJsonName("bill_limit")]
         public decimal BillLimit { get; set; }
 
         /// <summary>
         /// VAT rate percentage.
         /// </summary>
-        [JsonProperty("vat_rate")]
+        [TransloaditJsonName("vat_rate")]
         public decimal VatRate { get; set; }
 
         /// <summary>
         /// VAT.
         /// </summary>
-        [JsonProperty("vat")]
+        [TransloaditJsonName("vat")]
         public decimal Vat { get; set; }
 
         /// <summary>
         /// Whether reverse charge VAT applied.
         /// </summary>
-        [JsonProperty("reverse_charge_vat")]
+        [TransloaditJsonName("reverse_charge_vat")]
         public bool ReverseChargeVat { get; set; }
 
         /// <summary>
         /// VAT id.
         /// </summary>
-        [JsonProperty("vat_id")]
+        [TransloaditJsonName("vat_id")]
         public string VatId { get; set; }
 
         /// <summary>
         /// Total.
         /// </summary>
-        [JsonProperty("total")]
+        [TransloaditJsonName("total")]
         public decimal Total { get; set; }
     }
 }

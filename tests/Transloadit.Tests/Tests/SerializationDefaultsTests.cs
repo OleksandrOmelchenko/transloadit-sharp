@@ -13,7 +13,7 @@ namespace Transloadit.Tests.Tests
             var settings = TransloaditSerializerSettings.CreateDefault();
 
             Assert.Equal(NullValueHandling.Ignore, settings.NullValueHandling);
-            var resolver = Assert.IsType<DefaultContractResolver>(settings.ContractResolver);
+            var resolver = Assert.IsType<TransloaditContractResolver>(settings.ContractResolver);
             Assert.IsType<SnakeCaseNamingStrategy>(resolver.NamingStrategy);
             Assert.Contains(settings.Converters, converter => converter is AnyOfConverter);
         }

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 using System.Collections.Generic;
 
 namespace Transloadit.Models.Queues
@@ -11,7 +11,7 @@ namespace Transloadit.Models.Queues
         /// <summary>
         /// Priority job slots.
         /// </summary>
-        [JsonProperty("priority_job_slots")]
+        [TransloaditJsonName("priority_job_slots")]
         public PriorityJobSlots PriorityJobSlots { get; set; }
     }
 
@@ -23,13 +23,13 @@ namespace Transloadit.Models.Queues
         /// <summary>
         /// Priority job slots count.
         /// </summary>
-        [JsonProperty("count")]
+        [TransloaditJsonName("count")]
         public int Count { get; set; }
 
         /// <summary>
         /// Slots information containing Step names, job ids and count.
         /// </summary>
-        [JsonProperty("slots")]
+        [TransloaditJsonName("slots")]
         public Dictionary<string, Dictionary<string, Dictionary<string, int>>> Slots { get; set; }
     }
 }

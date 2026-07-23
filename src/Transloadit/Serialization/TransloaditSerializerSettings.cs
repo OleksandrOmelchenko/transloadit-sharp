@@ -1,31 +1,29 @@
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace Transloadit.Serialization
 {
     /// <summary>
     /// Factory for creating <see cref="JsonSerializerSettings"/> configured for Transloadit API communication.
+    /// Used by <see cref="NewtonsoftJsonSerializer"/>; also useful as a starting point when customizing the
+    /// Newtonsoft settings passed to <see cref="NewtonsoftJsonSerializer(System.Action{JsonSerializerSettings})"/>.
     /// </summary>
     public static class TransloaditSerializerSettings
     {
         /// <summary>
-        /// Creates default <see cref="JsonSerializerSettings"/> used by <see cref="TransloaditClient"/>.
-        /// Use this method to start from the built-in defaults and apply customizations before
-        /// assigning settings to <see cref="TransloaditClientOptions.RequestSerializerSettings"/> or
-        /// <see cref="TransloaditClientOptions.ResponseSerializerSettings"/>.
+        /// Creates the default Newtonsoft.Json <see cref="JsonSerializerSettings"/> used for Transloadit serialization:
+        /// null values are ignored, the provider-neutral Transloadit attributes are honored via
+        /// <see cref="TransloaditContractResolver"/>, and the <see cref="AnyOfConverter"/> is registered.
         /// </summary>
         /// <returns>New instance of default <see cref="JsonSerializerSettings"/>.</returns>
         public static JsonSerializerSettings CreateDefault()
         {
-            return new JsonSerializerSettings
+            var settings = new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore,
-                ContractResolver = new DefaultContractResolver
-                {
-                    NamingStrategy = new SnakeCaseNamingStrategy(),
-                },
-                Converters = [new AnyOfConverter()],
+                ContractResolver = new TransloaditContractResolver(),
             };
+            settings.Converters.Add(new AnyOfConverter());
+            return settings;
         }
     }
 }

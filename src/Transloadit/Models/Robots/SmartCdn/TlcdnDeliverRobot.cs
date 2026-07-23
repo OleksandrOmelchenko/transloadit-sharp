@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using Transloadit.Serialization.Attributes;
 using System.Collections.Generic;
 
 namespace Transloadit.Models.Robots.SmartCdn
@@ -11,7 +11,7 @@ namespace Transloadit.Models.Robots.SmartCdn
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
-        [JsonProperty("use")]
+        [TransloaditJsonName("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>

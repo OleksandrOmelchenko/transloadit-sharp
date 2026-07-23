@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 
 namespace Transloadit.Models.Robots.FileImporting
 {
@@ -10,25 +10,25 @@ namespace Transloadit.Models.Robots.FileImporting
         /// <summary>
         /// DigitalOcean space name.
         /// </summary>
-        [JsonProperty("space")]
+        [TransloaditJsonName("space")]
         public string Space { get; set; }
 
         /// <summary>
         /// DigitalOcean space region.
         /// </summary>
-        [JsonProperty("region")]
+        [TransloaditJsonName("region")]
         public string Region { get; set; }
 
         /// <summary>
         /// DigitalOcean space key.
         /// </summary>
-        [JsonProperty("key")]
+        [TransloaditJsonName("key")]
         public string Key { get; set; }
 
         /// <summary>
         /// DigitalOcean space secret.
         /// </summary>
-        [JsonProperty("secret")]
+        [TransloaditJsonName("secret")]
         public string Secret { get; set; }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Transloadit.Models.Robots.FileImporting
         /// This should only be set if all subsequent Steps use Robots that support file stubs.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
-        [JsonProperty("return_file_stubs")]
+        [TransloaditJsonName("return_file_stubs")]
         public bool? ReturnFileStubs { get; set; }
 
         /// <summary>

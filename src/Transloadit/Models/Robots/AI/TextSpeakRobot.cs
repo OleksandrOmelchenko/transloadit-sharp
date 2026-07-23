@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 using System.Collections.Generic;
 
 namespace Transloadit.Models.Robots.AI
@@ -11,19 +11,19 @@ namespace Transloadit.Models.Robots.AI
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
-        [JsonProperty("use")]
+        [TransloaditJsonName("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
         /// Which text to speak. You can also set this to <c>null</c> and supply an input text file.
         /// </summary>
-        [JsonProperty("prompt")]
+        [TransloaditJsonName("prompt")]
         public string Prompt { get; set; }
 
         /// <summary>
         /// Which AI provider to leverage. One of <see cref="Constants.AIProviders"/>: <c>aws</c> and <c>gcp</c>.
         /// </summary>
-        [JsonProperty("provider")]
+        [TransloaditJsonName("provider")]
         public string Provider { get; set; }
 
         /// <summary>
@@ -31,14 +31,14 @@ namespace Transloadit.Models.Robots.AI
         /// <a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP-47</a> format, such as <c>en-GB</c>, <c>de-DE</c> or <c>fr-FR</c>.
         /// <para>Default: <c>en-US</c>.</para>
         /// </summary>
-        [JsonProperty("target_language")]
+        [TransloaditJsonName("target_language")]
         public string TargetLanguage { get; set; }
 
         /// <summary>
         /// The gender to be used for voice synthesis. Please consult the list of supported languages and voices.
         /// <para>Default: <c>female-1</c>.</para>
         /// </summary>
-        [JsonProperty("voice")]
+        [TransloaditJsonName("voice")]
         public string Voice { get; set; }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Transloadit.Models.Robots.AI
         /// including rests and pronounciations.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
-        [JsonProperty("ssml")]
+        [TransloaditJsonName("ssml")]
         public bool? Ssml { get; set; }
 
         /// <summary>
