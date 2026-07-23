@@ -132,6 +132,24 @@ namespace Transloadit.Tests.Tests.Unit
         }
 
         [Fact]
+        public void DateFormat_IsCultureInvariant()
+        {
+            // under a non-Gregorian locale (Thai Buddhist calendar) a culture-sensitive formatter would render the
+            // year as 2568; the signed `expires` must always be invariant Gregorian regardless of the ambient culture
+            var original = System.Threading.Thread.CurrentThread.CurrentCulture;
+            try
+            {
+                System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("th-TH");
+                var json = Serialize(new AuthParams { Expires = new DateTime(2025, 2, 20, 1, 52, 4, DateTimeKind.Utc) });
+                Assert.Equal("2025/02/20 01:52:04+00:00", (string)json["expires"]);
+            }
+            finally
+            {
+                System.Threading.Thread.CurrentThread.CurrentCulture = original;
+            }
+        }
+
+        [Fact]
         public void NullValues_AreOmitted()
         {
             var json = Serialize(new ImageResizeRobot { ImageMagickStack = "v3.0.1" });

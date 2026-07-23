@@ -44,6 +44,7 @@ namespace Transloadit.Serialization
             };
             _options.Converters.Add(new StjAnyOfConverterFactory());
             _options.Converters.Add(new StjPolymorphicRobotConverterFactory());
+            _options.Converters.Add(new StjInferredTypeConverter());
             configure?.Invoke(_options);
         }
 

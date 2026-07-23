@@ -1,5 +1,6 @@
 #if TRANSLOADIT_NEWTONSOFT
-﻿using Newtonsoft.Json.Converters;
+﻿using System.Globalization;
+using Newtonsoft.Json.Converters;
 
 namespace Transloadit.Serialization
 {
@@ -14,6 +15,8 @@ namespace Transloadit.Serialization
         public AuthExpiresDateTimeConverter()
         {
             DateTimeFormat = "yyyy'/'MM'/'dd HH:mm:ss+00:00";
+            // invariant culture so the signed `expires` value never picks up a locale calendar or digits
+            Culture = CultureInfo.InvariantCulture;
         }
     }
 
@@ -28,6 +31,7 @@ namespace Transloadit.Serialization
         public PaginationDateTimeConverter()
         {
             DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+            Culture = CultureInfo.InvariantCulture;
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Transloadit.Models.Assemblies;
 using Transloadit.Models.Billing;
 using Transloadit.Models.Tokens;
@@ -46,6 +47,29 @@ namespace Transloadit.Tests.Tests.Unit
             Assert.Equal(1.5m, robot.RawGb);
             Assert.Equal(2m, robot.GbFactorApplied);
             Assert.Equal(0.25m, robot.FreeGb);
+        }
+
+        [Fact]
+        public void Fields_DeserializeToInferredClrTypes_NeverJsonElement()
+        {
+            // untyped Dictionary<string, object> members must expose the same boxed CLR types on both engines.
+            // System.Text.Json otherwise leaves them as JsonElement, diverging from Newtonsoft (boxed long/string/...).
+            const string json =
+                "{\"ok\":\"X\",\"fields\":{\"s\":\"str\",\"n\":7,\"f\":1.5,\"b\":true,\"nested\":{\"k\":1},\"arr\":[1,2]}}";
+
+            var response = TestSerializer.Default.Deserialize<AssemblyResponse>(json);
+
+            Assert.IsType<string>(response.Fields["s"]);
+            Assert.IsType<long>(response.Fields["n"]);
+            Assert.Equal(7L, response.Fields["n"]);
+            Assert.IsType<double>(response.Fields["f"]);
+            Assert.IsType<bool>(response.Fields["b"]);
+
+            // nested containers are walkable types, never a raw System.Text.Json.JsonElement
+            foreach (var key in new[] { "nested", "arr" })
+            {
+                Assert.DoesNotContain("JsonElement", response.Fields[key].GetType().FullName);
+            }
         }
 
         [Fact]

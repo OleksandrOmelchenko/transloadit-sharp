@@ -1,5 +1,6 @@
 #if !TRANSLOADIT_NEWTONSOFT
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -146,6 +147,87 @@ namespace Transloadit.Serialization
         /// <inheritdoc />
         public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
             => JsonSerializer.Serialize(writer, value.Value, options);
+    }
+
+    /// <summary>
+    /// System.Text.Json converter that reads JSON <c>object</c>-typed values into inferred CLR types (<see cref="long"/>,
+    /// <see cref="double"/>, <see cref="bool"/>, <see cref="string"/>, <c>Dictionary&lt;string, object&gt;</c>,
+    /// <c>List&lt;object&gt;</c>) instead of leaving them as <see cref="JsonElement"/>. This matches how Newtonsoft.Json
+    /// materializes untyped members such as <c>AssemblyResponse.Fields</c>/<c>Meta</c>, so both serializers expose the
+    /// same runtime types to consumers. Writing defers to the value's runtime type.
+    /// </summary>
+    internal sealed class StjInferredTypeConverter : JsonConverter<object>
+    {
+        /// <inheritdoc />
+        public override object Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            switch (reader.TokenType)
+            {
+                case JsonTokenType.True:
+                    return true;
+                case JsonTokenType.False:
+                    return false;
+                case JsonTokenType.Null:
+                    return null;
+                case JsonTokenType.String:
+                    return reader.GetString();
+                case JsonTokenType.Number:
+                    // integral values become long (matching Newtonsoft), everything else double. note: separate
+                    // returns are required — a ternary would unify both arms to double and re-box the long as double
+                    if (reader.TryGetInt64(out var l))
+                    {
+                        return l;
+                    }
+
+                    return reader.GetDouble();
+                case JsonTokenType.StartObject:
+                    var dictionary = new Dictionary<string, object>();
+                    while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+                    {
+                        var key = reader.GetString();
+                        reader.Read();
+                        dictionary[key] = Read(ref reader, typeof(object), options);
+                    }
+
+                    return dictionary;
+                case JsonTokenType.StartArray:
+                    var list = new List<object>();
+                    while (reader.Read() && reader.TokenType != JsonTokenType.EndArray)
+                    {
+                        list.Add(Read(ref reader, typeof(object), options));
+                    }
+
+                    return list;
+                default:
+                    // fall back to a JsonElement for any token this converter does not model explicitly
+                    using (var document = JsonDocument.ParseValue(ref reader))
+                    {
+                        return document.RootElement.Clone();
+                    }
+            }
+        }
+
+        /// <inheritdoc />
+        public override void Write(Utf8JsonWriter writer, object value, JsonSerializerOptions options)
+        {
+            if (value == null)
+            {
+                writer.WriteNullValue();
+                return;
+            }
+
+            var runtimeType = value.GetType();
+            if (runtimeType == typeof(object))
+            {
+                // a bare object has no members; emit an empty JSON object
+                writer.WriteStartObject();
+                writer.WriteEndObject();
+                return;
+            }
+
+            // serialize by runtime type; the runtime type is never object, so this converter is not re-entered
+            JsonSerializer.Serialize(writer, value, runtimeType, options);
+        }
     }
 
     /// <summary>

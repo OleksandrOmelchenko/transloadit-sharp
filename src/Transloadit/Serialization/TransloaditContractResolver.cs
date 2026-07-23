@@ -1,6 +1,7 @@
 #if TRANSLOADIT_NEWTONSOFT
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -72,7 +73,13 @@ namespace Transloadit.Serialization
             var dateFormat = member.GetCustomAttribute<TransloaditDateFormatAttribute>();
             if (dateFormat != null)
             {
-                property.Converter = new IsoDateTimeConverter { DateTimeFormat = dateFormat.Format };
+                // pin invariant culture so dates never format with a locale calendar/digits (e.g. Thai Buddhist year,
+                // Arabic-Indic digits), which would corrupt the signed `expires`/pagination values
+                property.Converter = new IsoDateTimeConverter
+                {
+                    DateTimeFormat = dateFormat.Format,
+                    Culture = CultureInfo.InvariantCulture,
+                };
             }
 
             return property;
