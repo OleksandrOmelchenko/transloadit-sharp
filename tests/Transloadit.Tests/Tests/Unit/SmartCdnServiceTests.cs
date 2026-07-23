@@ -53,6 +53,27 @@ namespace Transloadit.Tests.Tests.Unit
         }
 
         [Fact]
+        public void GetSignedSmartCdnUrl_SortsKeysOrdinally()
+        {
+            var service = new SmartCdnService(Key, Secret);
+
+            var url = service.GetSignedSmartCdnUrl(
+                "ws",
+                "tpl",
+                "input",
+                Expiration,
+                new Dictionary<string, string> { ["Height"] = "50" });
+
+            // ordinal sort places uppercase 'Height' (0x48) before the lowercase keys; a culture-sensitive sort would
+            // interleave it (auth_key, exp, Height) and produce a signature the CDN rejects
+            const string query = "Height=50&auth_key=my-key&exp=1700000000000";
+            var stringToSign = $"ws/tpl/input?{query}";
+            var expectedSignature = SignatureUtilities.CalculateSignature(stringToSign, Secret, SignatureAlgorithm.Sha256);
+
+            Assert.Equal($"https://ws.tlcdn.com/tpl/input?{query}&sig={expectedSignature}", url);
+        }
+
+        [Fact]
         public void GetSignedSmartCdnUrl_UrlEncodesParameterValues()
         {
             var service = new SmartCdnService(Key, Secret);
