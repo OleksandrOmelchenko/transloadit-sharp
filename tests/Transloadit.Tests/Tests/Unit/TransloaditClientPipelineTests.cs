@@ -96,6 +96,33 @@ namespace Transloadit.Tests.Tests.Unit
         }
 
         [Fact]
+        public async Task Post_DoesNotMutateCallerAuth()
+        {
+            var handler = FakeHttpMessageHandler.Json(AssemblyJson);
+            var client = TestClientFactory.Create(handler);
+            var request = new AssemblyRequest { TemplateId = "tpl" };
+
+            await client.Assemblies.CreateAsync(request);
+
+            // the signed request injects auth.key + expires only for the wire payload; it must not persist them on the
+            // caller's object, or reusing the request would freeze `expires` and later calls would be rejected as expired
+            Assert.Null(request.Auth);
+        }
+
+        [Fact]
+        public async Task Response_EmptyBody_DoesNotThrowAndSurfacesStatus()
+        {
+            var handler = FakeHttpMessageHandler.Json(string.Empty, HttpStatusCode.BadGateway);
+            var client = TestClientFactory.Create(handler);
+
+            var response = await client.Assemblies.GetAsync("abc");
+
+            // an empty gateway-error body must not throw; the caller can still read the HTTP status
+            Assert.NotNull(response);
+            Assert.Equal(HttpStatusCode.BadGateway, response.TransloaditResponse.StatusCode);
+        }
+
+        [Fact]
         public async Task Token_UsesBasicAuthAndGrantType()
         {
             var handler = FakeHttpMessageHandler.Json(
