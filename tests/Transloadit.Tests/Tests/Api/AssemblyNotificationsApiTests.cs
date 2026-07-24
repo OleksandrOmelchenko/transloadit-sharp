@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Transloadit.Constants;
 using Transloadit.Models.Assemblies;
+using Transloadit.Models.AssemblyNotifications;
 using Transloadit.Models.Robots;
 using Transloadit.Models.Templates;
 using Transloadit.Tests.Fixtures;
@@ -38,20 +39,39 @@ public class AssemblyNotificationsApiTests : TestBase
         Assert.Equal(ResponseCodes.AssemblyExecuting, createResponse.Base.Ok);
         Assert.Equal(Configuration.NotifyUrl, createResponse.NotifyUrl);
 
-        var assembly = await AssemblyTracker.WaitCompletionAsync(createResponse);
-        await WaitForNotificationAsync();
-        assembly = await TransloaditClient.Assemblies.GetAsync(createResponse.AssemblyId);
+        await AssemblyTracker.WaitCompletionAsync(createResponse);
+        var assembly = await WaitForNotificationAsync(createResponse.AssemblyId);
 
-        Assert.Equal(Configuration.NotifyUrl, assembly.NotifyUrl);
-        Assert.Equal(200, assembly.NotifyResponseCode);
-        Assert.True(assembly.NotifyDuration > 0d);
-        Assert.True(assembly.NotifyStart.HasValue);
-        Assert.NotNull(assembly.NotifyResponseData);
+        AssertNotificationSucceeded(assembly);
 
         var notificationReplayResponse = await TransloaditClient.AssemblyNotifications.ReplayAsync(assembly.AssemblyId);
 
         Assert.True(notificationReplayResponse.IsSuccessResponse());
         Assert.Equal(ResponseCodes.AssemblyNotificationReplayed, notificationReplayResponse.Base.Ok);
+    }
+
+    [Fact]
+    public async Task ReplayAssemblyNotificationWithOptions_Should_Succeed()
+    {
+        var assemblyRequest = new AssemblyRequest
+        {
+            Steps = new Dictionary<string, RobotBase>
+            {
+                ["import"] = TestDataFactory.GetDemoHttpImportRobot(),
+            },
+            NotifyUrl = Configuration.NotifyUrl,
+        };
+
+        var createResponse = await TransloaditClient.Assemblies.CreateAsync(assemblyRequest);
+        await AssemblyTracker.WaitCompletionAsync(createResponse);
+
+        // replay overriding the notify url and waiting for the replayed notification to finish
+        var replayResponse = await TransloaditClient.AssemblyNotifications.ReplayAsync(
+            createResponse.AssemblyId,
+            new ReplayNotificationRequest { NotifyUrl = Configuration.NotifyUrl, Wait = true });
+
+        Assert.True(replayResponse.IsSuccessResponse());
+        Assert.Equal(ResponseCodes.AssemblyNotificationReplayed, replayResponse.Base.Ok);
     }
 
     [Fact]
@@ -71,15 +91,12 @@ public class AssemblyNotificationsApiTests : TestBase
         Assert.Equal(ResponseCodes.AssemblyExecuting, createResponse.Base.Ok);
         Assert.Equal(Configuration.NotifyUrl, createResponse.NotifyUrl);
 
-        var assembly = await AssemblyTracker.WaitCompletionAsync(createResponse);
-        await WaitForNotificationAsync();
-        assembly = await TransloaditClient.Assemblies.GetAsync(createResponse.AssemblyId);
+        await AssemblyTracker.WaitCompletionAsync(createResponse);
+        var assembly = await WaitForNotificationAsync(createResponse.AssemblyId);
 
-        Assert.Equal(Configuration.NotifyUrl, assembly.NotifyUrl);
-        Assert.Equal(200, assembly.NotifyResponseCode);
-        Assert.True(assembly.NotifyDuration > 0d);
-        Assert.True(assembly.NotifyStart.HasValue);
-        Assert.NotNull(assembly.NotifyResponseData);
+        AssertNotificationSucceeded(assembly);
+        // a successful notification never carries an error
+        Assert.Null(assembly.NotifyError);
     }
 
     [Fact]
@@ -111,19 +128,39 @@ public class AssemblyNotificationsApiTests : TestBase
         Assert.Equal(ResponseCodes.AssemblyExecuting, createResponse.Base.Ok);
         Assert.Equal(Configuration.NotifyUrl, createResponse.NotifyUrl);
 
-        var assembly = await AssemblyTracker.WaitCompletionAsync(createResponse);
-        await WaitForNotificationAsync();
-        assembly = await TransloaditClient.Assemblies.GetAsync(createResponse.AssemblyId);
-        Assert.Equal(Configuration.NotifyUrl, assembly.NotifyUrl);
-        Assert.Equal(200, assembly.NotifyResponseCode);
-        Assert.True(assembly.NotifyDuration > 0d);
-        Assert.True(assembly.NotifyStart.HasValue);
-        Assert.NotNull(assembly.NotifyResponseData);
+        await AssemblyTracker.WaitCompletionAsync(createResponse);
+        var assembly = await WaitForNotificationAsync(createResponse.AssemblyId);
+        AssertNotificationSucceeded(assembly);
 
         var deleteTemplateResponse = await TransloaditClient.Templates.DeleteAsync(templateResponse.Id);
         Assert.True(deleteTemplateResponse.IsSuccessResponse());
         Assert.Equal(ResponseCodes.TemplateDeleted, deleteTemplateResponse.Base.Ok);
     }
 
-    private static async Task WaitForNotificationAsync(int delayMs = 3000) => await Task.Delay(delayMs);
+    private static void AssertNotificationSucceeded(AssemblyResponse assembly)
+    {
+        Assert.Equal(200, assembly.NotifyResponseCode);
+        Assert.True(assembly.NotifyDuration > 0d);
+        Assert.True(assembly.NotifyStart.HasValue);
+        Assert.NotNull(assembly.NotifyResponseData);
+    }
+
+    // poll the assembly until the notification has been delivered (notify_response_code populated) rather than
+    // waiting a fixed delay, which is flaky when the notification takes longer than expected
+    private async Task<AssemblyResponse> WaitForNotificationAsync(string assemblyId, int maxAttempts = 15, int delayMs = 2000)
+    {
+        AssemblyResponse assembly = null;
+        for (var attempt = 0; attempt < maxAttempts; attempt++)
+        {
+            assembly = await TransloaditClient.Assemblies.GetAsync(assemblyId);
+            if (assembly.NotifyResponseCode.HasValue)
+            {
+                break;
+            }
+
+            await Task.Delay(delayMs);
+        }
+
+        return assembly;
+    }
 }

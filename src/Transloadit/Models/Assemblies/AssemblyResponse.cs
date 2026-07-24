@@ -388,6 +388,12 @@ public class AssemblyResponse : ResponseBase
     public double? NotifyDuration { get; set; }
 
     /// <summary>
+    /// Error message from the notification attempt, if the notification failed; otherwise <c>null</c>.
+    /// </summary>
+    [TransloaditJsonName("notify_error")]
+    public string NotifyError { get; set; }
+
+    /// <summary>
     /// Date of the last completed job.
     /// </summary>
     [TransloaditJsonName("last_job_completed")]
