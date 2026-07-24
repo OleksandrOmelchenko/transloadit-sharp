@@ -1,43 +1,42 @@
-﻿namespace Transloadit.Constants
+﻿namespace Transloadit.Constants;
+
+/// <summary>
+/// Contains available Assembly statuses for filtering when retrieving Assembly list.
+/// </summary>
+public class ListAssemlyStatuses
 {
     /// <summary>
-    /// Contains available Assembly statuses for filtering when retrieving Assembly list.
+    /// <c>all</c> status.
     /// </summary>
-    public class ListAssemlyStatuses
-    {
-        /// <summary>
-        /// <c>all</c> status.
-        /// </summary>
-        public const string All = "all";
+    public const string All = "all";
 
-        /// <summary>
-        /// <c>uploading</c> status.
-        /// </summary>
-        public const string Uploading = "uploading";
+    /// <summary>
+    /// <c>uploading</c> status.
+    /// </summary>
+    public const string Uploading = "uploading";
 
-        /// <summary>
-        /// <c>executing</c> status.
-        /// </summary>
-        public const string Executing = "executing";
+    /// <summary>
+    /// <c>executing</c> status.
+    /// </summary>
+    public const string Executing = "executing";
 
-        /// <summary>
-        /// <c>canceled</c> status.
-        /// </summary>
-        public const string Canceled = "canceled";
+    /// <summary>
+    /// <c>canceled</c> status.
+    /// </summary>
+    public const string Canceled = "canceled";
 
-        /// <summary>
-        /// <c>completed</c> status.
-        /// </summary>
-        public const string Completed = "completed";
+    /// <summary>
+    /// <c>completed</c> status.
+    /// </summary>
+    public const string Completed = "completed";
 
-        /// <summary>
-        /// <c>failed</c> status.
-        /// </summary>
-        public const string Failed = "failed";
+    /// <summary>
+    /// <c>failed</c> status.
+    /// </summary>
+    public const string Failed = "failed";
 
-        /// <summary>
-        /// <c>request_aborted</c> status.
-        /// </summary>
-        public const string RequestAborted = "request_aborted";
-    }
+    /// <summary>
+    /// <c>request_aborted</c> status.
+    /// </summary>
+    public const string RequestAborted = "request_aborted";
 }

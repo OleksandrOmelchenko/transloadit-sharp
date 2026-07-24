@@ -1,25 +1,24 @@
 ﻿using System.Collections.Generic;
 using Transloadit.Serialization.Attributes;
 
-namespace Transloadit.Models.Robots.Documents
+namespace Transloadit.Models.Robots.Documents;
+
+/// <summary>
+/// Represents <a href="https://transloadit.com/docs/robots/file-read/">/file/read</a> Robot.
+/// </summary>
+public class FileReadRobot : ProcessingRobotBase
 {
     /// <summary>
-    /// Represents <a href="https://transloadit.com/docs/robots/file-read/">/file/read</a> Robot.
+    /// Specifies which Step(s) to use as input.
     /// </summary>
-    public class FileReadRobot : ProcessingRobotBase
-    {
-        /// <summary>
-        /// Specifies which Step(s) to use as input.
-        /// </summary>
-        [TransloaditJsonName("use")]
-        public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
+    [TransloaditJsonName("use")]
+    public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
-        /// <summary>
-        /// Initializes <a href="https://transloadit.com/docs/robots/file-read/">/file/read</a> Robot.
-        /// </summary>
-        public FileReadRobot()
-        {
-            Robot = "/file/read";
-        }
+    /// <summary>
+    /// Initializes <a href="https://transloadit.com/docs/robots/file-read/">/file/read</a> Robot.
+    /// </summary>
+    public FileReadRobot()
+    {
+        Robot = "/file/read";
     }
 }

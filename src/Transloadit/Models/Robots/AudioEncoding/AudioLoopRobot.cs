@@ -1,68 +1,67 @@
-﻿using Transloadit.Serialization.Attributes;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Transloadit.Serialization.Attributes;
 
-namespace Transloadit.Models.Robots.AudioEncoding
+namespace Transloadit.Models.Robots.AudioEncoding;
+
+/// <summary>
+/// Represents <a href="https://transloadit.com/docs/robots/audio-loop/">/audio/loop</a> Robot.
+/// </summary>
+public class AudioLoopRobot : ProcessingRobotBase
 {
     /// <summary>
-    /// Represents <a href="https://transloadit.com/docs/robots/audio-loop/">/audio/loop</a> Robot.
+    /// Specifies which Step(s) to use as input.
     /// </summary>
-    public class AudioLoopRobot : ProcessingRobotBase
+    [TransloaditJsonName("use")]
+    public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
+
+    /// <summary>
+    /// Performs conversion using pre-configured settings. If you specify your own FFmpeg parameters using the Robot's ffmpeg parameter 
+    /// and you have not specified a preset, then the default mp3 preset is not applied. This is to prevent you from having to override 
+    /// each of the MP3 preset's values manually. One of <see cref="Constants.AudioEncodingPresetsV5"/> 
+    /// or <see cref="Constants.AudioEncodingPresetsV6"/>.
+    /// </summary>
+    [TransloaditJsonName("preset")]
+    public string Preset { get; set; }
+
+    /// <summary>
+    /// Bit rate of the resulting audio file, in bits per second. If not specified will default to the bit rate of the input audio file.
+    /// </summary>
+    [TransloaditJsonName("bitrate")]
+    public int? Bitrate { get; set; }
+
+    /// <summary>
+    /// Sample rate of the resulting audio file, in Hertz. If not specified will default to the sample rate of the input audio file.
+    /// </summary>
+    [TransloaditJsonName("sample_rate")]
+    public int? SampleRate { get; set; }
+
+    /// <summary>
+    /// Target duration for the whole process in seconds. The Robot will loop the input audio file for as long as this target duration is not reached yet.
+    /// <para>Default: <c>60.0</c>.</para>
+    /// </summary>
+    [TransloaditJsonName("duration")]
+    public double? Duration { get; set; }
+
+    /// <summary>
+    /// FFmpeg stack version. One of <see cref="Constants.FFMpegStack"/>: <c>v5.0.0</c> or <c>v6.0.0</c>.
+    /// <para>Default: <c>v5.0.0</c>.</para>
+    /// </summary>
+    [TransloaditJsonName("ffmpeg_stack")]
+    public string FfmpegStack { get; set; }
+
+    /// <summary>
+    /// A parameter object to be passed to FFmpeg. If a preset is used, the options specified are merged on top of the ones from the preset. 
+    /// For available options, see the <a href="https://ffmpeg.org/ffmpeg-doc.html">FFmpeg documentation</a>. 
+    /// Options specified here take precedence over the preset options.
+    /// </summary>
+    [TransloaditJsonName("ffmpeg")]
+    public Dictionary<string, object> Ffmpeg { get; set; }
+
+    /// <summary>
+    /// Initializes <a href="https://transloadit.com/docs/robots/audio-loop/">/audio/loop</a> Robot.
+    /// </summary>
+    public AudioLoopRobot()
     {
-        /// <summary>
-        /// Specifies which Step(s) to use as input.
-        /// </summary>
-        [TransloaditJsonName("use")]
-        public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
-
-        /// <summary>
-        /// Performs conversion using pre-configured settings. If you specify your own FFmpeg parameters using the Robot's ffmpeg parameter 
-        /// and you have not specified a preset, then the default mp3 preset is not applied. This is to prevent you from having to override 
-        /// each of the MP3 preset's values manually. One of <see cref="Constants.AudioEncodingPresetsV5"/> 
-        /// or <see cref="Constants.AudioEncodingPresetsV6"/>.
-        /// </summary>
-        [TransloaditJsonName("preset")]
-        public string Preset { get; set; }
-
-        /// <summary>
-        /// Bit rate of the resulting audio file, in bits per second. If not specified will default to the bit rate of the input audio file.
-        /// </summary>
-        [TransloaditJsonName("bitrate")]
-        public int? Bitrate { get; set; }
-
-        /// <summary>
-        /// Sample rate of the resulting audio file, in Hertz. If not specified will default to the sample rate of the input audio file.
-        /// </summary>
-        [TransloaditJsonName("sample_rate")]
-        public int? SampleRate { get; set; }
-
-        /// <summary>
-        /// Target duration for the whole process in seconds. The Robot will loop the input audio file for as long as this target duration is not reached yet.
-        /// <para>Default: <c>60.0</c>.</para>
-        /// </summary>
-        [TransloaditJsonName("duration")]
-        public double? Duration { get; set; }
-
-        /// <summary>
-        /// FFmpeg stack version. One of <see cref="Constants.FFMpegStack"/>: <c>v5.0.0</c> or <c>v6.0.0</c>.
-        /// <para>Default: <c>v5.0.0</c>.</para>
-        /// </summary>
-        [TransloaditJsonName("ffmpeg_stack")]
-        public string FfmpegStack { get; set; }
-
-        /// <summary>
-        /// A parameter object to be passed to FFmpeg. If a preset is used, the options specified are merged on top of the ones from the preset. 
-        /// For available options, see the <a href="https://ffmpeg.org/ffmpeg-doc.html">FFmpeg documentation</a>. 
-        /// Options specified here take precedence over the preset options.
-        /// </summary>
-        [TransloaditJsonName("ffmpeg")]
-        public Dictionary<string, object> Ffmpeg { get; set; }
-
-        /// <summary>
-        /// Initializes <a href="https://transloadit.com/docs/robots/audio-loop/">/audio/loop</a> Robot.
-        /// </summary>
-        public AudioLoopRobot()
-        {
-            Robot = "/audio/loop";
-        }
+        Robot = "/audio/loop";
     }
 }

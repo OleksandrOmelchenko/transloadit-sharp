@@ -12,271 +12,270 @@ using Transloadit.Serialization;
 using Transloadit.Services;
 using Transloadit.Utilities;
 
-namespace Transloadit
+namespace Transloadit;
+
+/// <summary>
+/// Represents Transloadit API client used to send requests and deserialize responses.
+/// </summary>
+public class TransloaditClient
 {
+    private const string ApiBase = "https://api2.transloadit.com";
+
+    private readonly string _key;
+    private readonly string _secret;
+    private readonly TransloaditClientOptions _options;
+
+    private BillingService _billingService;
+    private TemplatesService _templatesService;
+    private AssembliesService _assembliesService;
+    private QueuesService _queuesService;
+    private CredentialsService _credentialsService;
+    private AssemblyNotificationsService _assemblyNotificationsService;
+    private TokensService _tokensService;
+
     /// <summary>
-    /// Represents Transloadit API client used to send requests and deserialize responses.
+    /// Billing service.
     /// </summary>
-    public class TransloaditClient
+    public BillingService Billing => _billingService ??= new BillingService(this);
+
+    /// <summary>
+    /// Templates service.
+    /// </summary>
+    public TemplatesService Templates => _templatesService ??= new TemplatesService(this);
+
+    /// <summary>
+    /// Assemblies service.
+    /// </summary>
+    public AssembliesService Assemblies => _assembliesService ??= new AssembliesService(this);
+
+    /// <summary>
+    /// Queues service.
+    /// </summary>
+    public QueuesService Queues => _queuesService ??= new QueuesService(this);
+
+    /// <summary>
+    /// Template Credentials service.
+    /// </summary>
+    public CredentialsService Credentials => _credentialsService ??= new CredentialsService(this);
+
+    /// <summary>
+    /// Assembly Notifications service.
+    /// </summary>
+    public AssemblyNotificationsService AssemblyNotifications => _assemblyNotificationsService ??= new AssemblyNotificationsService(this);
+
+    /// <summary>
+    /// Tokens service.
+    /// </summary>
+    public TokensService Tokens => _tokensService ??= new TokensService(this);
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="TransloaditClient"/> class with specified authentication key, secret 
+    /// and optional <see cref="TransloaditClientOptions"/>.
+    /// </summary>
+    /// <param name="key">Transloadit auth key.</param>
+    /// <param name="secret">Transloadit auth secret.</param>
+    /// <param name="options">Options allowing to overwrite <see cref="TransloaditClient"/> defaults. Will be merged with default values.</param>
+    public TransloaditClient(string key, string secret, TransloaditClientOptions options = null)
     {
-        private const string ApiBase = "https://api2.transloadit.com";
+        _key = key ?? throw new ArgumentNullException(nameof(key));
+        _secret = secret ?? throw new ArgumentNullException(nameof(secret));
+        _options = MergeOptions(options);
+    }
 
-        private readonly string _key;
-        private readonly string _secret;
-        private readonly TransloaditClientOptions _options;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="TransloaditClient"/> class with specified authentication key
+    /// and optional <see cref="TransloaditClientOptions"/>. Suitable for operations that don't require 
+    /// <a href="https://transloadit.com/docs/api/authentication/#signature-authentication">signature authentication</a>
+    /// (like Assembly creation (optional), retrieving Assembly status, streaming Assembly changes and Assembly cancellation.
+    /// </summary>
+    /// <param name="key">Transloadit auth key.</param>
+    /// <param name="options">Options allowing to overwrite <see cref="TransloaditClient"/> defaults. Will be merged with default values.</param>
+    public TransloaditClient(string key, TransloaditClientOptions options = null)
+    {
+        _key = key ?? throw new ArgumentNullException(nameof(key));
+        _options = MergeOptions(options);
+    }
 
-        private BillingService _billingService;
-        private TemplatesService _templatesService;
-        private AssembliesService _assembliesService;
-        private QueuesService _queuesService;
-        private CredentialsService _credentialsService;
-        private AssemblyNotificationsService _assemblyNotificationsService;
-        private TokensService _tokensService;
-
-        /// <summary>
-        /// Billing service.
-        /// </summary>
-        public BillingService Billing => _billingService ??= new BillingService(this);
-
-        /// <summary>
-        /// Templates service.
-        /// </summary>
-        public TemplatesService Templates => _templatesService ??= new TemplatesService(this);
-
-        /// <summary>
-        /// Assemblies service.
-        /// </summary>
-        public AssembliesService Assemblies => _assembliesService ??= new AssembliesService(this);
-
-        /// <summary>
-        /// Queues service.
-        /// </summary>
-        public QueuesService Queues => _queuesService ??= new QueuesService(this);
-
-        /// <summary>
-        /// Template Credentials service.
-        /// </summary>
-        public CredentialsService Credentials => _credentialsService ??= new CredentialsService(this);
-
-        /// <summary>
-        /// Assembly Notifications service.
-        /// </summary>
-        public AssemblyNotificationsService AssemblyNotifications => _assemblyNotificationsService ??= new AssemblyNotificationsService(this);
-
-        /// <summary>
-        /// Tokens service.
-        /// </summary>
-        public TokensService Tokens => _tokensService ??= new TokensService(this);
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TransloaditClient"/> class with specified authentication key, secret 
-        /// and optional <see cref="TransloaditClientOptions"/>.
-        /// </summary>
-        /// <param name="key">Transloadit auth key.</param>
-        /// <param name="secret">Transloadit auth secret.</param>
-        /// <param name="options">Options allowing to overwrite <see cref="TransloaditClient"/> defaults. Will be merged with default values.</param>
-        public TransloaditClient(string key, string secret, TransloaditClientOptions options = null)
+    private static TransloaditClientOptions MergeOptions(TransloaditClientOptions options)
+    {
+        const string TransloaditClientHeaderValue = $"transloadit-sharp/{ClientVersion.Current}";
+        const string TransloaditClientHeaderName = "Transloadit-Client";
+        var httpClient = options?.HttpClient ?? new HttpClient();
+        if (!httpClient.DefaultRequestHeaders.Contains(TransloaditClientHeaderName))
         {
-            _key = key ?? throw new ArgumentNullException(nameof(key));
-            _secret = secret ?? throw new ArgumentNullException(nameof(secret));
-            _options = MergeOptions(options);
+            _ = httpClient.DefaultRequestHeaders.TryAddWithoutValidation(TransloaditClientHeaderName, TransloaditClientHeaderValue);
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TransloaditClient"/> class with specified authentication key
-        /// and optional <see cref="TransloaditClientOptions"/>. Suitable for operations that don't require 
-        /// <a href="https://transloadit.com/docs/api/authentication/#signature-authentication">signature authentication</a>
-        /// (like Assembly creation (optional), retrieving Assembly status, streaming Assembly changes and Assembly cancellation.
-        /// </summary>
-        /// <param name="key">Transloadit auth key.</param>
-        /// <param name="options">Options allowing to overwrite <see cref="TransloaditClient"/> defaults. Will be merged with default values.</param>
-        public TransloaditClient(string key, TransloaditClientOptions options = null)
+        return new TransloaditClientOptions
         {
-            _key = key ?? throw new ArgumentNullException(nameof(key));
-            _options = MergeOptions(options);
+            ApiBase = options?.ApiBase ?? new Uri(ApiBase),
+            HttpClient = httpClient,
+            Serializer = options?.Serializer ?? CreateDefaultSerializer(),
+        };
+    }
+
+    private static ITransloaditSerializer CreateDefaultSerializer()
+    {
+        return TransloaditSerializerFactory.CreateDefault();
+    }
+
+    /// <summary>
+    /// Sends request to Transloadit API.
+    /// </summary>
+    /// <typeparam name="T">Response type to parse into.</typeparam>
+    /// <param name="httpMethod">HTTP method to use.</param>
+    /// <param name="path">Request path.</param>
+    /// <param name="parameters">Request parameters. Auhtorization parameters are added automatically.</param>
+    /// <param name="formData">Request form data. Usually contains file uploads and <c>${fields.*}</c> assembly parameters.</param>
+    /// <returns>Parsed response.</returns>
+    public async Task<T> SendRequest<T>(
+        HttpMethod httpMethod,
+        string path,
+        BaseParams parameters = null,
+        MultipartFormDataContent formData = null) where T : ResponseBase
+    {
+        var uri = new Uri(_options.ApiBase, path);
+        return await SendRequest<T>(httpMethod, uri, parameters, formData).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Sends request to the specified url.
+    /// </summary>
+    /// <typeparam name="T">Response type to parse into.</typeparam>
+    /// <param name="httpMethod">HTTP method to use.</param>
+    /// <param name="uri">Request url.</param>
+    /// <param name="parameters">Request parameters. Auhtorization parameters are added automatically.</param>
+    /// <param name="formData">Request form data. Usually contains file uploads and <c>${fields.*}</c> assembly parameters.</param>
+    /// <returns>Parsed response.</returns>
+    public async Task<T> SendRequest<T>(
+       HttpMethod httpMethod,
+       Uri uri,
+       BaseParams parameters = null,
+       MultipartFormDataContent formData = null) where T : ResponseBase
+    {
+        var request = BuildRequest(httpMethod, uri, parameters, formData);
+        var response = await _options.HttpClient.SendAsync(request).ConfigureAwait(false);
+
+        var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+        // an empty/whitespace body (e.g. a gateway 502/504) would otherwise throw an opaque JSON/NRE and hide the
+        // HTTP status; fall back to an empty response so the caller can inspect TransloaditResponse.StatusCode
+        var parsed = string.IsNullOrWhiteSpace(content)
+            ? Activator.CreateInstance<T>()
+            : _options.Serializer.Deserialize<T>(content) ?? Activator.CreateInstance<T>();
+        parsed.TransloaditResponse = new TransloaditResponse(response.StatusCode, response.Headers, content);
+        return parsed;
+    }
+
+    internal async Task<TokenResponse> SendTokenRequest(TokenRequest request = null)
+    {
+        if (string.IsNullOrWhiteSpace(_secret))
+        {
+            throw new InvalidOperationException("Token requests require a client initialized with both key and secret.");
         }
 
-        private static TransloaditClientOptions MergeOptions(TransloaditClientOptions options)
-        {
-            const string TransloaditClientHeaderValue = $"transloadit-sharp/{ClientVersion.Current}";
-            const string TransloaditClientHeaderName = "Transloadit-Client";
-            var httpClient = options?.HttpClient ?? new HttpClient();
-            if (!httpClient.DefaultRequestHeaders.Contains(TransloaditClientHeaderName))
-            {
-                _ = httpClient.DefaultRequestHeaders.TryAddWithoutValidation(TransloaditClientHeaderName, TransloaditClientHeaderValue);
-            }
+        request ??= new TokenRequest();
+        request.GrantType ??= "client_credentials";
 
-            return new TransloaditClientOptions
-            {
-                ApiBase = options?.ApiBase ?? new Uri(ApiBase),
-                HttpClient = httpClient,
-                Serializer = options?.Serializer ?? CreateDefaultSerializer(),
-            };
+        var formData = new List<KeyValuePair<string, string>>
+        {
+            new KeyValuePair<string, string>("grant_type", request.GrantType),
+        };
+
+        if (!string.IsNullOrWhiteSpace(request.Scope))
+        {
+            formData.Add(new KeyValuePair<string, string>("scope", request.Scope));
         }
 
-        private static ITransloaditSerializer CreateDefaultSerializer()
+        if (!string.IsNullOrWhiteSpace(request.Aud))
         {
-            return TransloaditSerializerFactory.CreateDefault();
+            formData.Add(new KeyValuePair<string, string>("aud", request.Aud));
         }
 
-        /// <summary>
-        /// Sends request to Transloadit API.
-        /// </summary>
-        /// <typeparam name="T">Response type to parse into.</typeparam>
-        /// <param name="httpMethod">HTTP method to use.</param>
-        /// <param name="path">Request path.</param>
-        /// <param name="parameters">Request parameters. Auhtorization parameters are added automatically.</param>
-        /// <param name="formData">Request form data. Usually contains file uploads and <c>${fields.*}</c> assembly parameters.</param>
-        /// <returns>Parsed response.</returns>
-        public async Task<T> SendRequest<T>(
-            HttpMethod httpMethod,
-            string path,
-            BaseParams parameters = null,
-            MultipartFormDataContent formData = null) where T : ResponseBase
+        var uri = new Uri(_options.ApiBase, "/token");
+        var message = new HttpRequestMessage(HttpMethod.Post, uri)
         {
-            var uri = new Uri(_options.ApiBase, path);
-            return await SendRequest<T>(httpMethod, uri, parameters, formData).ConfigureAwait(false);
+            Content = new FormUrlEncodedContent(formData),
+        };
+
+        var credentials = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{_key}:{_secret}"));
+        message.Headers.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+
+        var response = await _options.HttpClient.SendAsync(message).ConfigureAwait(false);
+        var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+        var parsed = _options.Serializer.Deserialize<TokenResponse>(content) ?? new TokenResponse();
+        parsed.TransloaditResponse = new TransloaditResponse(response.StatusCode, response.Headers, content);
+        return parsed;
+    }
+
+    private static string BuildQuery(string paramsJson, string signature)
+        => $"?params={WebUtility.UrlEncode(paramsJson)}&signature={WebUtility.UrlEncode(signature)}";
+
+    private static string BuildQuery(string paramsJson) => $"?params={WebUtility.UrlEncode(paramsJson)}";
+
+    private HttpRequestMessage BuildRequest(
+        HttpMethod httpMethod,
+        Uri uri,
+        BaseParams parameters = null,
+        MultipartFormDataContent content = null)
+    {
+        parameters ??= new BaseParams();
+
+        var enableSignatureAuth = parameters.EnableSignatureAuth && _secret is not null;
+
+        // build the effective auth on a fresh object instead of mutating the caller's params — reusing a request
+        // must not freeze `expires` at the first call's timestamp (later calls would be rejected as expired)
+        var callerAuth = parameters.Auth;
+        var effectiveAuth = new AuthParams
+        {
+            Key = callerAuth?.Key ?? _key,
+            Expires = callerAuth?.Expires,
+            Nonce = callerAuth?.Nonce,
+            Referer = callerAuth?.Referer,
+            MaxSize = callerAuth?.MaxSize,
+        };
+        if (enableSignatureAuth)
+        {
+            effectiveAuth.Expires ??= DateTime.UtcNow.AddMinutes(30);
         }
 
-        /// <summary>
-        /// Sends request to the specified url.
-        /// </summary>
-        /// <typeparam name="T">Response type to parse into.</typeparam>
-        /// <param name="httpMethod">HTTP method to use.</param>
-        /// <param name="uri">Request url.</param>
-        /// <param name="parameters">Request parameters. Auhtorization parameters are added automatically.</param>
-        /// <param name="formData">Request form data. Usually contains file uploads and <c>${fields.*}</c> assembly parameters.</param>
-        /// <returns>Parsed response.</returns>
-        public async Task<T> SendRequest<T>(
-           HttpMethod httpMethod,
-           Uri uri,
-           BaseParams parameters = null,
-           MultipartFormDataContent formData = null) where T : ResponseBase
+        string paramsJson;
+        parameters.Auth = effectiveAuth;
+        try
         {
-            var request = BuildRequest(httpMethod, uri, parameters, formData);
-            var response = await _options.HttpClient.SendAsync(request).ConfigureAwait(false);
-
-            var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-            // an empty/whitespace body (e.g. a gateway 502/504) would otherwise throw an opaque JSON/NRE and hide the
-            // HTTP status; fall back to an empty response so the caller can inspect TransloaditResponse.StatusCode
-            var parsed = string.IsNullOrWhiteSpace(content)
-                ? Activator.CreateInstance<T>()
-                : _options.Serializer.Deserialize<T>(content) ?? Activator.CreateInstance<T>();
-            parsed.TransloaditResponse = new TransloaditResponse(response.StatusCode, response.Headers, content);
-            return parsed;
+            paramsJson = _options.Serializer.Serialize(parameters);
+        }
+        finally
+        {
+            parameters.Auth = callerAuth;
         }
 
-        internal async Task<TokenResponse> SendTokenRequest(TokenRequest request = null)
+        var signature = enableSignatureAuth
+            ? SignatureUtilities.CalculateSignature(paramsJson, _secret)
+            : null;
+
+        if (httpMethod == HttpMethod.Get)
         {
-            if (string.IsNullOrWhiteSpace(_secret))
-            {
-                throw new InvalidOperationException("Token requests require a client initialized with both key and secret.");
-            }
-
-            request ??= new TokenRequest();
-            request.GrantType ??= "client_credentials";
-
-            var formData = new List<KeyValuePair<string, string>>
-            {
-                new KeyValuePair<string, string>("grant_type", request.GrantType),
-            };
-
-            if (!string.IsNullOrWhiteSpace(request.Scope))
-            {
-                formData.Add(new KeyValuePair<string, string>("scope", request.Scope));
-            }
-
-            if (!string.IsNullOrWhiteSpace(request.Aud))
-            {
-                formData.Add(new KeyValuePair<string, string>("aud", request.Aud));
-            }
-
-            var uri = new Uri(_options.ApiBase, "/token");
-            var message = new HttpRequestMessage(HttpMethod.Post, uri)
-            {
-                Content = new FormUrlEncodedContent(formData),
-            };
-
-            var credentials = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{_key}:{_secret}"));
-            message.Headers.Authorization = new AuthenticationHeaderValue("Basic", credentials);
-
-            var response = await _options.HttpClient.SendAsync(message).ConfigureAwait(false);
-            var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-            var parsed = _options.Serializer.Deserialize<TokenResponse>(content) ?? new TokenResponse();
-            parsed.TransloaditResponse = new TransloaditResponse(response.StatusCode, response.Headers, content);
-            return parsed;
+            var query = enableSignatureAuth ? BuildQuery(paramsJson, signature) : BuildQuery(paramsJson);
+            uri = new Uri(uri, query);
         }
 
-        private static string BuildQuery(string paramsJson, string signature)
-            => $"?params={WebUtility.UrlEncode(paramsJson)}&signature={WebUtility.UrlEncode(signature)}";
-
-        private static string BuildQuery(string paramsJson) => $"?params={WebUtility.UrlEncode(paramsJson)}";
-
-        private HttpRequestMessage BuildRequest(
-            HttpMethod httpMethod,
-            Uri uri,
-            BaseParams parameters = null,
-            MultipartFormDataContent content = null)
+        var message = new HttpRequestMessage(httpMethod, uri);
+        if (httpMethod == HttpMethod.Post || httpMethod == HttpMethod.Delete || httpMethod == HttpMethod.Put)
         {
-            parameters ??= new BaseParams();
-
-            var enableSignatureAuth = parameters.EnableSignatureAuth && _secret is not null;
-
-            // build the effective auth on a fresh object instead of mutating the caller's params — reusing a request
-            // must not freeze `expires` at the first call's timestamp (later calls would be rejected as expired)
-            var callerAuth = parameters.Auth;
-            var effectiveAuth = new AuthParams
-            {
-                Key = callerAuth?.Key ?? _key,
-                Expires = callerAuth?.Expires,
-                Nonce = callerAuth?.Nonce,
-                Referer = callerAuth?.Referer,
-                MaxSize = callerAuth?.MaxSize,
-            };
+            content ??= new MultipartFormDataContent();
+            content.Add(new StringContent(paramsJson), "params");
             if (enableSignatureAuth)
             {
-                effectiveAuth.Expires ??= DateTime.UtcNow.AddMinutes(30);
+                content.Add(new StringContent(signature), "signature");
             }
-
-            string paramsJson;
-            parameters.Auth = effectiveAuth;
-            try
-            {
-                paramsJson = _options.Serializer.Serialize(parameters);
-            }
-            finally
-            {
-                parameters.Auth = callerAuth;
-            }
-
-            var signature = enableSignatureAuth
-                ? SignatureUtilities.CalculateSignature(paramsJson, _secret)
-                : null;
-
-            if (httpMethod == HttpMethod.Get)
-            {
-                var query = enableSignatureAuth ? BuildQuery(paramsJson, signature) : BuildQuery(paramsJson);
-                uri = new Uri(uri, query);
-            }
-
-            var message = new HttpRequestMessage(httpMethod, uri);
-            if (httpMethod == HttpMethod.Post || httpMethod == HttpMethod.Delete || httpMethod == HttpMethod.Put)
-            {
-                content ??= new MultipartFormDataContent();
-                content.Add(new StringContent(paramsJson), "params");
-                if (enableSignatureAuth)
-                {
-                    content.Add(new StringContent(signature), "signature");
-                }
-            }
-            if (content != null)
-            {
-                message.Content = content;
-            }
-
-            return message;
         }
+        if (content != null)
+        {
+            message.Content = content;
+        }
+
+        return message;
     }
 }

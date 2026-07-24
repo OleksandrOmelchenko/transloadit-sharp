@@ -1,33 +1,32 @@
-﻿using Transloadit.Serialization.Attributes;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Transloadit.Serialization.Attributes;
 
-namespace Transloadit.Models.Robots.ImageManipulation
+namespace Transloadit.Models.Robots.ImageManipulation;
+
+/// <summary>
+/// Represents <c>/image/bgremove</c> Robot.
+/// </summary>
+public class ImageBackgroundRemove : RobotBase
 {
     /// <summary>
-    /// Represents <c>/image/bgremove</c> Robot.
+    /// Specifies which Step(s) to use as input.
     /// </summary>
-    public class ImageBackgroundRemove : RobotBase
+    [TransloaditJsonName("use")]
+    public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
+
+    /// <summary>
+    /// The output format for the modified image. Currently, only <c>png</c> is supported. 
+    /// To change the image format, you can use <see cref="ImageResizeRobot"/>.
+    /// <para>Default: <c>png</c>.</para>
+    /// </summary>
+    [TransloaditJsonName("format")]
+    public string Format { get; set; }
+
+    /// <summary>
+    /// Initializes <c>/image/bgremove</c> Robot.
+    /// </summary>
+    public ImageBackgroundRemove()
     {
-        /// <summary>
-        /// Specifies which Step(s) to use as input.
-        /// </summary>
-        [TransloaditJsonName("use")]
-        public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
-
-        /// <summary>
-        /// The output format for the modified image. Currently, only <c>png</c> is supported. 
-        /// To change the image format, you can use <see cref="ImageResizeRobot"/>.
-        /// <para>Default: <c>png</c>.</para>
-        /// </summary>
-        [TransloaditJsonName("format")]
-        public string Format { get; set; }
-
-        /// <summary>
-        /// Initializes <c>/image/bgremove</c> Robot.
-        /// </summary>
-        public ImageBackgroundRemove()
-        {
-            Robot = "/image/bgremove";
-        }
+        Robot = "/image/bgremove";
     }
 }

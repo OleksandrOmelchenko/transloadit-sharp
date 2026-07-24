@@ -1,50 +1,49 @@
 ﻿using Transloadit.Serialization.Attributes;
 
-namespace Transloadit.Models.Robots.FileImporting
+namespace Transloadit.Models.Robots.FileImporting;
+
+/// <summary>
+/// Represents <a href="https://transloadit.com/docs/robots/minio-import/">/minio/import</a> Robot.
+/// </summary>
+public class MinioImportRobot : PaginatedImportRobotBase
 {
     /// <summary>
-    /// Represents <a href="https://transloadit.com/docs/robots/minio-import/">/minio/import</a> Robot.
+    /// MinIO bucket.
     /// </summary>
-    public class MinioImportRobot : PaginatedImportRobotBase
+    [TransloaditJsonName("bucket")]
+    public string Bucket { get; set; }
+
+    /// <summary>
+    /// MinIO key.
+    /// </summary>
+    [TransloaditJsonName("key")]
+    public string Key { get; set; }
+
+    /// <summary>
+    /// MinIO secret.
+    /// </summary>
+    [TransloaditJsonName("secret")]
+    public string Secret { get; set; }
+
+    /// <summary>
+    /// MinIO host.
+    /// </summary>
+    [TransloaditJsonName("host")]
+    public string Host { get; set; }
+
+    /// <summary>
+    /// If set to <c>true</c>, the Robot will not import the actual files yet, but instead returns an empty file stub that includes a URL from where the file can be imported by subsequent Robots.
+    /// This should only be set if all subsequent Steps use Robots that support file stubs.
+    /// <para>Default: <c>false</c>.</para>
+    /// </summary>
+    [TransloaditJsonName("return_file_stubs")]
+    public bool? ReturnFileStubs { get; set; }
+
+    /// <summary>
+    /// Initializes <a href="https://transloadit.com/docs/robots/minio-import/">/minio/import</a> Robot.
+    /// </summary>
+    public MinioImportRobot()
     {
-        /// <summary>
-        /// MinIO bucket.
-        /// </summary>
-        [TransloaditJsonName("bucket")]
-        public string Bucket { get; set; }
-
-        /// <summary>
-        /// MinIO key.
-        /// </summary>
-        [TransloaditJsonName("key")]
-        public string Key { get; set; }
-
-        /// <summary>
-        /// MinIO secret.
-        /// </summary>
-        [TransloaditJsonName("secret")]
-        public string Secret { get; set; }
-
-        /// <summary>
-        /// MinIO host.
-        /// </summary>
-        [TransloaditJsonName("host")]
-        public string Host { get; set; }
-
-        /// <summary>
-        /// If set to <c>true</c>, the Robot will not import the actual files yet, but instead returns an empty file stub that includes a URL from where the file can be imported by subsequent Robots.
-        /// This should only be set if all subsequent Steps use Robots that support file stubs.
-        /// <para>Default: <c>false</c>.</para>
-        /// </summary>
-        [TransloaditJsonName("return_file_stubs")]
-        public bool? ReturnFileStubs { get; set; }
-
-        /// <summary>
-        /// Initializes <a href="https://transloadit.com/docs/robots/minio-import/">/minio/import</a> Robot.
-        /// </summary>
-        public MinioImportRobot()
-        {
-            Robot = "/minio/import";
-        }
+        Robot = "/minio/import";
     }
 }

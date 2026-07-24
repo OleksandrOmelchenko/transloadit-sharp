@@ -1,32 +1,31 @@
 ﻿using System.Collections.Generic;
 using Transloadit.Serialization.Attributes;
 
-namespace Transloadit.Models.Robots.MediaCataloging
+namespace Transloadit.Models.Robots.MediaCataloging;
+
+/// <summary>
+/// Represents <a href="https://transloadit.com/docs/robots/file-hash/">/file/hash</a> Robot.
+/// </summary>
+public class FileHashRobot : ProcessingRobotBase
 {
     /// <summary>
-    /// Represents <a href="https://transloadit.com/docs/robots/file-hash/">/file/hash</a> Robot.
+    /// Specifies which Step(s) to use as input.
     /// </summary>
-    public class FileHashRobot : ProcessingRobotBase
+    [TransloaditJsonName("use")]
+    public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
+
+    /// <summary>
+    /// The hashing algorithm to use. One of <see cref="Constants.FileHashingAlgorithms"/>: <c>b2</c>, <c>md5</c>, <c>sha1</c>, 
+    /// <c>sha224</c>, <c>sha256</c>, <c>sha384</c> and <c>sha512</c>.
+    /// </summary>
+    [TransloaditJsonName("algorithm")]
+    public string Algorithm { get; set; }
+
+    /// <summary>
+    /// Initializes <a href="https://transloadit.com/docs/robots/file-hash/">/file/hash</a> Robot.
+    /// </summary>
+    public FileHashRobot()
     {
-        /// <summary>
-        /// Specifies which Step(s) to use as input.
-        /// </summary>
-        [TransloaditJsonName("use")]
-        public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
-
-        /// <summary>
-        /// The hashing algorithm to use. One of <see cref="Constants.FileHashingAlgorithms"/>: <c>b2</c>, <c>md5</c>, <c>sha1</c>, 
-        /// <c>sha224</c>, <c>sha256</c>, <c>sha384</c> and <c>sha512</c>.
-        /// </summary>
-        [TransloaditJsonName("algorithm")]
-        public string Algorithm { get; set; }
-
-        /// <summary>
-        /// Initializes <a href="https://transloadit.com/docs/robots/file-hash/">/file/hash</a> Robot.
-        /// </summary>
-        public FileHashRobot()
-        {
-            Robot = "/file/hash";
-        }
+        Robot = "/file/hash";
     }
 }

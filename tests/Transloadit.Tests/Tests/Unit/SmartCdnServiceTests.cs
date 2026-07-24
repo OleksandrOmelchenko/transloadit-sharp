@@ -4,87 +4,86 @@ using Transloadit.Services;
 using Transloadit.Utilities;
 using Xunit;
 
-namespace Transloadit.Tests.Tests.Unit
+namespace Transloadit.Tests.Tests.Unit;
+
+public class SmartCdnServiceTests
 {
-    public class SmartCdnServiceTests
+    private const string Key = "my-key";
+    private const string Secret = "my-secret";
+
+    // a fixed expiration keeps the produced url deterministic
+    private static readonly DateTimeOffset Expiration = DateTimeOffset.FromUnixTimeMilliseconds(1700000000000);
+
+    [Fact]
+    public void GetSignedSmartCdnUrl_ProducesDeterministicSignedUrl()
     {
-        private const string Key = "my-key";
-        private const string Secret = "my-secret";
+        var service = new SmartCdnService(Key, Secret);
 
-        // a fixed expiration keeps the produced url deterministic
-        private static readonly DateTimeOffset Expiration = DateTimeOffset.FromUnixTimeMilliseconds(1700000000000);
+        var url = service.GetSignedSmartCdnUrl(
+            "ws",
+            "tpl",
+            "input",
+            Expiration,
+            new Dictionary<string, string> { ["width"] = "100" });
 
-        [Fact]
-        public void GetSignedSmartCdnUrl_ProducesDeterministicSignedUrl()
-        {
-            var service = new SmartCdnService(Key, Secret);
+        // params are sorted by key: auth_key, exp, width
+        const string query = "auth_key=my-key&exp=1700000000000&width=100";
+        var stringToSign = $"ws/tpl/input?{query}";
+        var expectedSignature = SignatureUtilities.CalculateSignature(stringToSign, Secret, SignatureAlgorithm.Sha256);
 
-            var url = service.GetSignedSmartCdnUrl(
-                "ws",
-                "tpl",
-                "input",
-                Expiration,
-                new Dictionary<string, string> { ["width"] = "100" });
+        Assert.Equal($"https://ws.tlcdn.com/tpl/input?{query}&sig={expectedSignature}", url);
+    }
 
-            // params are sorted by key: auth_key, exp, width
-            const string query = "auth_key=my-key&exp=1700000000000&width=100";
-            var stringToSign = $"ws/tpl/input?{query}";
-            var expectedSignature = SignatureUtilities.CalculateSignature(stringToSign, Secret, SignatureAlgorithm.Sha256);
+    [Fact]
+    public void GetSignedSmartCdnUrl_UsesSha256Signature()
+    {
+        var service = new SmartCdnService(Key, Secret);
+        var url = service.GetSignedSmartCdnUrl("ws", "tpl", "input", Expiration);
+        Assert.Contains("&sig=sha256:", url);
+    }
 
-            Assert.Equal($"https://ws.tlcdn.com/tpl/input?{query}&sig={expectedSignature}", url);
-        }
+    [Fact]
+    public void GetSignedSmartCdnUrl_WorksWithoutExtraParameters()
+    {
+        var service = new SmartCdnService(Key, Secret);
+        var url = service.GetSignedSmartCdnUrl("ws", "tpl", "input", Expiration);
 
-        [Fact]
-        public void GetSignedSmartCdnUrl_UsesSha256Signature()
-        {
-            var service = new SmartCdnService(Key, Secret);
-            var url = service.GetSignedSmartCdnUrl("ws", "tpl", "input", Expiration);
-            Assert.Contains("&sig=sha256:", url);
-        }
+        Assert.Contains("auth_key=my-key", url);
+        Assert.Contains("exp=1700000000000", url);
+    }
 
-        [Fact]
-        public void GetSignedSmartCdnUrl_WorksWithoutExtraParameters()
-        {
-            var service = new SmartCdnService(Key, Secret);
-            var url = service.GetSignedSmartCdnUrl("ws", "tpl", "input", Expiration);
+    [Fact]
+    public void GetSignedSmartCdnUrl_SortsKeysOrdinally()
+    {
+        var service = new SmartCdnService(Key, Secret);
 
-            Assert.Contains("auth_key=my-key", url);
-            Assert.Contains("exp=1700000000000", url);
-        }
+        var url = service.GetSignedSmartCdnUrl(
+            "ws",
+            "tpl",
+            "input",
+            Expiration,
+            new Dictionary<string, string> { ["Height"] = "50" });
 
-        [Fact]
-        public void GetSignedSmartCdnUrl_SortsKeysOrdinally()
-        {
-            var service = new SmartCdnService(Key, Secret);
+        // ordinal sort places uppercase 'Height' (0x48) before the lowercase keys; a culture-sensitive sort would
+        // interleave it (auth_key, exp, Height) and produce a signature the CDN rejects
+        const string query = "Height=50&auth_key=my-key&exp=1700000000000";
+        var stringToSign = $"ws/tpl/input?{query}";
+        var expectedSignature = SignatureUtilities.CalculateSignature(stringToSign, Secret, SignatureAlgorithm.Sha256);
 
-            var url = service.GetSignedSmartCdnUrl(
-                "ws",
-                "tpl",
-                "input",
-                Expiration,
-                new Dictionary<string, string> { ["Height"] = "50" });
+        Assert.Equal($"https://ws.tlcdn.com/tpl/input?{query}&sig={expectedSignature}", url);
+    }
 
-            // ordinal sort places uppercase 'Height' (0x48) before the lowercase keys; a culture-sensitive sort would
-            // interleave it (auth_key, exp, Height) and produce a signature the CDN rejects
-            const string query = "Height=50&auth_key=my-key&exp=1700000000000";
-            var stringToSign = $"ws/tpl/input?{query}";
-            var expectedSignature = SignatureUtilities.CalculateSignature(stringToSign, Secret, SignatureAlgorithm.Sha256);
+    [Fact]
+    public void GetSignedSmartCdnUrl_UrlEncodesParameterValues()
+    {
+        var service = new SmartCdnService(Key, Secret);
+        var url = service.GetSignedSmartCdnUrl(
+            "ws",
+            "tpl",
+            "input",
+            Expiration,
+            new Dictionary<string, string> { ["path"] = "/a b" });
 
-            Assert.Equal($"https://ws.tlcdn.com/tpl/input?{query}&sig={expectedSignature}", url);
-        }
-
-        [Fact]
-        public void GetSignedSmartCdnUrl_UrlEncodesParameterValues()
-        {
-            var service = new SmartCdnService(Key, Secret);
-            var url = service.GetSignedSmartCdnUrl(
-                "ws",
-                "tpl",
-                "input",
-                Expiration,
-                new Dictionary<string, string> { ["path"] = "/a b" });
-
-            Assert.Contains("path=%2Fa+b", url);
-        }
+        Assert.Contains("path=%2Fa+b", url);
     }
 }

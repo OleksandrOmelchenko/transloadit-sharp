@@ -1,227 +1,226 @@
 ﻿using System;
 
-namespace Transloadit.Models
+namespace Transloadit.Models;
+
+/// <summary>
+/// Represents a base union class.
+/// </summary>
+public abstract class AnyOf
 {
     /// <summary>
-    /// Represents a base union class.
+    /// Gets the current value.
     /// </summary>
-    public abstract class AnyOf
-    {
-        /// <summary>
-        /// Gets the current value.
-        /// </summary>
-        public abstract object Value { get; }
+    public abstract object Value { get; }
 
-        /// <summary>
-        /// Gets the current value type.
-        /// </summary>
-        public abstract Type Type { get; }
+    /// <summary>
+    /// Gets the current value type.
+    /// </summary>
+    public abstract Type Type { get; }
+}
+
+/// <summary>
+/// Represents a union of 2 types.
+/// </summary>
+/// <typeparam name="T1">First type.</typeparam>
+/// <typeparam name="T2">Second type.</typeparam>
+public class AnyOf<T1, T2> : AnyOf
+{
+    private enum Values
+    {
+        First,
+        Seconds
+    }
+
+    private readonly T1 _value1;
+    private readonly T2 _value2;
+    private readonly Values _values;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AnyOf{T1, T2}"/> class with type <typeparamref name="T1"/>.
+    /// </summary>
+    /// <param name="value"><typeparamref name="T1"/> value.</param>
+    public AnyOf(T1 value)
+    {
+        _value1 = value;
+        _values = Values.First;
     }
 
     /// <summary>
-    /// Represents a union of 2 types.
+    /// Initializes a new instance of the <see cref="AnyOf{T1, T2}"/> class with type <typeparamref name="T2"/>.
     /// </summary>
-    /// <typeparam name="T1">First type.</typeparam>
-    /// <typeparam name="T2">Second type.</typeparam>
-    public class AnyOf<T1, T2> : AnyOf
+    /// <param name="value"><typeparamref name="T2"/> value.</param>
+    public AnyOf(T2 value)
     {
-        private enum Values
-        {
-            First,
-            Seconds
-        }
+        _value2 = value;
+        _values = Values.Seconds;
+    }
 
-        private readonly T1 _value1;
-        private readonly T2 _value2;
-        private readonly Values _values;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AnyOf{T1, T2}"/> class with type <typeparamref name="T1"/>.
-        /// </summary>
-        /// <param name="value"><typeparamref name="T1"/> value.</param>
-        public AnyOf(T1 value)
+    ///<inheritdoc/>
+    public override object Value
+    {
+        get
         {
-            _value1 = value;
-            _values = Values.First;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AnyOf{T1, T2}"/> class with type <typeparamref name="T2"/>.
-        /// </summary>
-        /// <param name="value"><typeparamref name="T2"/> value.</param>
-        public AnyOf(T2 value)
-        {
-            _value2 = value;
-            _values = Values.Seconds;
-        }
-
-        ///<inheritdoc/>
-        public override object Value
-        {
-            get
+            return _values switch
             {
-                return _values switch
-                {
-                    Values.First => _value1,
-                    Values.Seconds => _value2,
-                    _ => throw new InvalidOperationException($"Unexpected value type: {_values}"),
-                };
-            }
+                Values.First => _value1,
+                Values.Seconds => _value2,
+                _ => throw new InvalidOperationException($"Unexpected value type: {_values}"),
+            };
         }
+    }
 
-        ///<inheritdoc/>
-        public override Type Type
+    ///<inheritdoc/>
+    public override Type Type
+    {
+        get
         {
-            get
+            return _values switch
             {
-                return _values switch
-                {
-                    Values.First => typeof(T1),
-                    Values.Seconds => typeof(T2),
-                    _ => throw new InvalidOperationException($"Unexpected value type: {_values}"),
-                };
-            }
+                Values.First => typeof(T1),
+                Values.Seconds => typeof(T2),
+                _ => throw new InvalidOperationException($"Unexpected value type: {_values}"),
+            };
         }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AnyOf{T1, T2}"/> class with type <typeparamref name="T1"/>.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        public static implicit operator AnyOf<T1, T2>(T1 value) => value is null ? null : new AnyOf<T1, T2>(value);
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AnyOf{T1, T2}"/> class with type <typeparamref name="T2"/>.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        public static implicit operator AnyOf<T1, T2>(T2 value) => value is null ? null : new AnyOf<T1, T2>(value);
-
-        /// <summary>
-        /// Converts the <see cref="AnyOf{T1, T2}"/> to <typeparamref name="T1"/>.
-        /// </summary>
-        /// <param name="anyOf">The union.</param>
-        public static implicit operator T1(AnyOf<T1, T2> anyOf) => anyOf is null ? default : anyOf._value1;
-
-        /// <summary>
-        /// Converts the <see cref="AnyOf{T1, T2}"/> to <typeparamref name="T2"/>.
-        /// </summary>
-        /// <param name="anyOf">The union.</param>
-        public static implicit operator T2(AnyOf<T1, T2> anyOf) => anyOf is null ? default : anyOf._value2;
     }
 
     /// <summary>
-    /// Represents a union of 3 types.
+    /// Initializes a new instance of the <see cref="AnyOf{T1, T2}"/> class with type <typeparamref name="T1"/>.
     /// </summary>
-    /// <typeparam name="T1">First type.</typeparam>
-    /// <typeparam name="T2">Second type.</typeparam>
-    /// <typeparam name="T3">Third type.</typeparam>
-    public class AnyOf<T1, T2, T3> : AnyOf
+    /// <param name="value">The value.</param>
+    public static implicit operator AnyOf<T1, T2>(T1 value) => value is null ? null : new AnyOf<T1, T2>(value);
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AnyOf{T1, T2}"/> class with type <typeparamref name="T2"/>.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    public static implicit operator AnyOf<T1, T2>(T2 value) => value is null ? null : new AnyOf<T1, T2>(value);
+
+    /// <summary>
+    /// Converts the <see cref="AnyOf{T1, T2}"/> to <typeparamref name="T1"/>.
+    /// </summary>
+    /// <param name="anyOf">The union.</param>
+    public static implicit operator T1(AnyOf<T1, T2> anyOf) => anyOf is null ? default : anyOf._value1;
+
+    /// <summary>
+    /// Converts the <see cref="AnyOf{T1, T2}"/> to <typeparamref name="T2"/>.
+    /// </summary>
+    /// <param name="anyOf">The union.</param>
+    public static implicit operator T2(AnyOf<T1, T2> anyOf) => anyOf is null ? default : anyOf._value2;
+}
+
+/// <summary>
+/// Represents a union of 3 types.
+/// </summary>
+/// <typeparam name="T1">First type.</typeparam>
+/// <typeparam name="T2">Second type.</typeparam>
+/// <typeparam name="T3">Third type.</typeparam>
+public class AnyOf<T1, T2, T3> : AnyOf
+{
+    private enum Values
     {
-        private enum Values
-        {
-            First,
-            Second,
-            Third,
-        }
-
-        private readonly T1 _firstValue;
-        private readonly T2 _secondValue;
-        private readonly T3 _thirdValue;
-        private readonly Values _values;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AnyOf{T1, T2, T3}"/> class with type <typeparamref name="T1"/>.
-        /// </summary>
-        /// <param name="value"><typeparamref name="T1"/> value.</param>
-        public AnyOf(T1 value)
-        {
-            _firstValue = value;
-            _values = Values.First;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AnyOf{T1, T2, T3}"/> class with type <typeparamref name="T2"/>.
-        /// </summary>
-        /// <param name="value"><typeparamref name="T2"/> value.</param>
-        public AnyOf(T2 value)
-        {
-            _secondValue = value;
-            _values = Values.Second;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AnyOf{T1, T2, T3}"/> class with type <typeparamref name="T3"/>.
-        /// </summary>
-        /// <param name="value"><typeparamref name="T3"/> value.</param>
-        public AnyOf(T3 value)
-        {
-            _thirdValue = value;
-            _values = Values.Third;
-        }
-
-        ///<inheritdoc/>
-        public override object Value
-        {
-            get
-            {
-                return _values switch
-                {
-                    Values.First => _firstValue,
-                    Values.Second => _secondValue,
-                    Values.Third => _thirdValue,
-                    _ => throw new InvalidOperationException($"Unexpected value type: {_values}"),
-                };
-            }
-        }
-
-        ///<inheritdoc/>
-        public override Type Type
-        {
-            get
-            {
-                return _values switch
-                {
-                    Values.First => typeof(T1),
-                    Values.Second => typeof(T2),
-                    Values.Third => typeof(T3),
-                    _ => throw new InvalidOperationException($"Unexpected value type: {_values}"),
-                };
-            }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AnyOf{T1, T2, T3}"/> class with type <typeparamref name="T1"/>.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        public static implicit operator AnyOf<T1, T2, T3>(T1 value) => value is null ? null : new AnyOf<T1, T2, T3>(value);
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AnyOf{T1, T2, T3}"/> class with type <typeparamref name="T2"/>.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        public static implicit operator AnyOf<T1, T2, T3>(T2 value) => value is null ? null : new AnyOf<T1, T2, T3>(value);
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AnyOf{T1, T2, T3}"/> class with type <typeparamref name="T3"/>.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        public static implicit operator AnyOf<T1, T2, T3>(T3 value) => value is null ? null : new AnyOf<T1, T2, T3>(value);
-
-        /// <summary>
-        /// Converts the <see cref="AnyOf{T1, T2}"/> to <typeparamref name="T1"/>.
-        /// </summary>
-        /// <param name="anyOf">The union.</param>
-        public static implicit operator T1(AnyOf<T1, T2, T3> anyOf) => anyOf is null ? default : anyOf._firstValue;
-
-        /// <summary>
-        /// Converts the <see cref="AnyOf{T1, T2}"/> to <typeparamref name="T2"/>.
-        /// </summary>
-        /// <param name="anyOf">The union.</param>
-        public static implicit operator T2(AnyOf<T1, T2, T3> anyOf) => anyOf is null ? default : anyOf._secondValue;
-
-        /// <summary>
-        /// Converts the <see cref="AnyOf{T1, T2}"/> to <typeparamref name="T3"/>.
-        /// </summary>
-        /// <param name="anyOf">The union.</param>
-        public static implicit operator T3(AnyOf<T1, T2, T3> anyOf) => anyOf is null ? default : anyOf._thirdValue;
+        First,
+        Second,
+        Third,
     }
+
+    private readonly T1 _firstValue;
+    private readonly T2 _secondValue;
+    private readonly T3 _thirdValue;
+    private readonly Values _values;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AnyOf{T1, T2, T3}"/> class with type <typeparamref name="T1"/>.
+    /// </summary>
+    /// <param name="value"><typeparamref name="T1"/> value.</param>
+    public AnyOf(T1 value)
+    {
+        _firstValue = value;
+        _values = Values.First;
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AnyOf{T1, T2, T3}"/> class with type <typeparamref name="T2"/>.
+    /// </summary>
+    /// <param name="value"><typeparamref name="T2"/> value.</param>
+    public AnyOf(T2 value)
+    {
+        _secondValue = value;
+        _values = Values.Second;
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AnyOf{T1, T2, T3}"/> class with type <typeparamref name="T3"/>.
+    /// </summary>
+    /// <param name="value"><typeparamref name="T3"/> value.</param>
+    public AnyOf(T3 value)
+    {
+        _thirdValue = value;
+        _values = Values.Third;
+    }
+
+    ///<inheritdoc/>
+    public override object Value
+    {
+        get
+        {
+            return _values switch
+            {
+                Values.First => _firstValue,
+                Values.Second => _secondValue,
+                Values.Third => _thirdValue,
+                _ => throw new InvalidOperationException($"Unexpected value type: {_values}"),
+            };
+        }
+    }
+
+    ///<inheritdoc/>
+    public override Type Type
+    {
+        get
+        {
+            return _values switch
+            {
+                Values.First => typeof(T1),
+                Values.Second => typeof(T2),
+                Values.Third => typeof(T3),
+                _ => throw new InvalidOperationException($"Unexpected value type: {_values}"),
+            };
+        }
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AnyOf{T1, T2, T3}"/> class with type <typeparamref name="T1"/>.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    public static implicit operator AnyOf<T1, T2, T3>(T1 value) => value is null ? null : new AnyOf<T1, T2, T3>(value);
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AnyOf{T1, T2, T3}"/> class with type <typeparamref name="T2"/>.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    public static implicit operator AnyOf<T1, T2, T3>(T2 value) => value is null ? null : new AnyOf<T1, T2, T3>(value);
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AnyOf{T1, T2, T3}"/> class with type <typeparamref name="T3"/>.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    public static implicit operator AnyOf<T1, T2, T3>(T3 value) => value is null ? null : new AnyOf<T1, T2, T3>(value);
+
+    /// <summary>
+    /// Converts the <see cref="AnyOf{T1, T2}"/> to <typeparamref name="T1"/>.
+    /// </summary>
+    /// <param name="anyOf">The union.</param>
+    public static implicit operator T1(AnyOf<T1, T2, T3> anyOf) => anyOf is null ? default : anyOf._firstValue;
+
+    /// <summary>
+    /// Converts the <see cref="AnyOf{T1, T2}"/> to <typeparamref name="T2"/>.
+    /// </summary>
+    /// <param name="anyOf">The union.</param>
+    public static implicit operator T2(AnyOf<T1, T2, T3> anyOf) => anyOf is null ? default : anyOf._secondValue;
+
+    /// <summary>
+    /// Converts the <see cref="AnyOf{T1, T2}"/> to <typeparamref name="T3"/>.
+    /// </summary>
+    /// <param name="anyOf">The union.</param>
+    public static implicit operator T3(AnyOf<T1, T2, T3> anyOf) => anyOf is null ? default : anyOf._thirdValue;
 }

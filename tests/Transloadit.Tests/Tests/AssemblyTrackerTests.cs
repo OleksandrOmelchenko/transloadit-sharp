@@ -7,63 +7,62 @@ using Transloadit.Tests.Fixtures;
 using Transloadit.Utilities;
 using Xunit;
 
-namespace Transloadit.Tests.Tests
+namespace Transloadit.Tests.Tests;
+
+public class AssemblyTrackerTests : TestBase
 {
-    public class AssemblyTrackerTests : TestBase
+    private async Task<AssemblyResponse> CreateAssemblyAsync()
     {
-        private async Task<AssemblyResponse> CreateAssemblyAsync()
+        var assemblyRequest = new AssemblyRequest
         {
-            var assemblyRequest = new AssemblyRequest
+            Steps = new Dictionary<string, RobotBase>
             {
-                Steps = new Dictionary<string, RobotBase>
-                {
-                    ["import"] = TestDataFactory.GetDemoHttpImportRobot(),
-                }
-            };
+                ["import"] = TestDataFactory.GetDemoHttpImportRobot(),
+            }
+        };
 
-            return await TransloaditClient.Assemblies.CreateAsync(assemblyRequest);
-        }
+        return await TransloaditClient.Assemblies.CreateAsync(assemblyRequest);
+    }
 
-        [Fact]
-        public async Task TestWaitCompletion_ShouldReturnCompletedAssembly()
+    [Fact]
+    public async Task TestWaitCompletion_ShouldReturnCompletedAssembly()
+    {
+        var assemblyTracker = new AssemblyTracker(TransloaditClient);
+
+        var createAssemblyResponse = await CreateAssemblyAsync();
+        Assert.True(createAssemblyResponse.IsSuccessResponse());
+
+        var completedAssembly = await assemblyTracker.WaitCompletionAsync(createAssemblyResponse.AssemblyId);
+        Assert.Equal(ResponseCodes.AssemblyCompleted, completedAssembly.Base.Ok);
+    }
+
+    [Fact]
+    public async Task TestWaitCompletionLong_ShouldReturnCompletedAssembly()
+    {
+        var assemblyTracker = new AssemblyTracker(TransloaditClient);
+
+        var createAssemblyResponse = await CreateAssemblyAsync();
+        Assert.True(createAssemblyResponse.IsSuccessResponse());
+
+        var completedAssembly = await assemblyTracker.WaitCompletionAsync(createAssemblyResponse.AssemblyId, 5000);
+        Assert.Equal(ResponseCodes.AssemblyCompleted, completedAssembly.Base.Ok);
+    }
+
+    [Fact]
+    public async Task TestLongDelay_ShortTimeout_ShouldFail()
+    {
+        var options = new AssemblyTrackerOptions
         {
-            var assemblyTracker = new AssemblyTracker(TransloaditClient);
+            WaitCompletionTimeout = 1000
+        };
+        var assemblyTracker = new AssemblyTracker(TransloaditClient, options);
 
-            var createAssemblyResponse = await CreateAssemblyAsync();
-            Assert.True(createAssemblyResponse.IsSuccessResponse());
+        var createAssemblyResponse = await CreateAssemblyAsync();
+        Assert.True(createAssemblyResponse.IsSuccessResponse());
 
-            var completedAssembly = await assemblyTracker.WaitCompletionAsync(createAssemblyResponse.AssemblyId);
-            Assert.Equal(ResponseCodes.AssemblyCompleted, completedAssembly.Base.Ok);
-        }
-
-        [Fact]
-        public async Task TestWaitCompletionLong_ShouldReturnCompletedAssembly()
+        await Assert.ThrowsAsync<TaskCanceledException>(async () =>
         {
-            var assemblyTracker = new AssemblyTracker(TransloaditClient);
-
-            var createAssemblyResponse = await CreateAssemblyAsync();
-            Assert.True(createAssemblyResponse.IsSuccessResponse());
-
-            var completedAssembly = await assemblyTracker.WaitCompletionAsync(createAssemblyResponse.AssemblyId, 5000);
-            Assert.Equal(ResponseCodes.AssemblyCompleted, completedAssembly.Base.Ok);
-        }
-
-        [Fact]
-        public async Task TestLongDelay_ShortTimeout_ShouldFail()
-        {
-            var options = new AssemblyTrackerOptions
-            {
-                WaitCompletionTimeout = 1000
-            };
-            var assemblyTracker = new AssemblyTracker(TransloaditClient, options);
-
-            var createAssemblyResponse = await CreateAssemblyAsync();
-            Assert.True(createAssemblyResponse.IsSuccessResponse());
-
-            await Assert.ThrowsAsync<TaskCanceledException>(async () =>
-            {
-                _ = await assemblyTracker.WaitCompletionAsync(createAssemblyResponse.AssemblyId, 3000);
-            });
-        }
+            _ = await assemblyTracker.WaitCompletionAsync(createAssemblyResponse.AssemblyId, 3000);
+        });
     }
 }

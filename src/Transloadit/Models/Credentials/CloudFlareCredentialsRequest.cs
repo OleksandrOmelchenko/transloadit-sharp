@@ -1,54 +1,53 @@
 ﻿using Transloadit.Serialization.Attributes;
 
-namespace Transloadit.Models.Credentials
+namespace Transloadit.Models.Credentials;
+
+/// <summary>
+/// Represents Cloudflare credentials request.
+/// </summary>
+public class CloudflareCredentialsRequest : CredentialsRequestBase
 {
     /// <summary>
-    /// Represents Cloudflare credentials request.
+    /// Initializes Cloudflare credentials request.
     /// </summary>
-    public class CloudflareCredentialsRequest : CredentialsRequestBase
+    public CloudflareCredentialsRequest()
     {
-        /// <summary>
-        /// Initializes Cloudflare credentials request.
-        /// </summary>
-        public CloudflareCredentialsRequest()
-        {
-            Type = "cloudflare";
-        }
-
-        /// <summary>
-        /// Cloudflare credentials content.
-        /// </summary>
-        [TransloaditJsonName("content")]
-        public CloudFlareCredentialsContent Content { get; set; }
+        Type = "cloudflare";
     }
 
     /// <summary>
-    /// Represents Cloudflare credentials.
+    /// Cloudflare credentials content.
     /// </summary>
-    public class CloudFlareCredentialsContent
-    {
-        /// <summary>
-        /// Cloudflare bucket.
-        /// </summary>
-        [TransloaditJsonName("bucket")]
-        public string Bucket { get; set; }
+    [TransloaditJsonName("content")]
+    public CloudFlareCredentialsContent Content { get; set; }
+}
 
-        /// <summary>
-        /// Cloudflare host.
-        /// </summary>
-        [TransloaditJsonName("host")]
-        public string Host { get; set; }
+/// <summary>
+/// Represents Cloudflare credentials.
+/// </summary>
+public class CloudFlareCredentialsContent
+{
+    /// <summary>
+    /// Cloudflare bucket.
+    /// </summary>
+    [TransloaditJsonName("bucket")]
+    public string Bucket { get; set; }
 
-        /// <summary>
-        /// Cloudflare key.
-        /// </summary>
-        [TransloaditJsonName("key")]
-        public string Key { get; set; }
+    /// <summary>
+    /// Cloudflare host.
+    /// </summary>
+    [TransloaditJsonName("host")]
+    public string Host { get; set; }
 
-        /// <summary>
-        /// Cloudflare secret.
-        /// </summary>
-        [TransloaditJsonName("secret")]
-        public string Secret { get; set; }
-    }
+    /// <summary>
+    /// Cloudflare key.
+    /// </summary>
+    [TransloaditJsonName("key")]
+    public string Key { get; set; }
+
+    /// <summary>
+    /// Cloudflare secret.
+    /// </summary>
+    [TransloaditJsonName("secret")]
+    public string Secret { get; set; }
 }

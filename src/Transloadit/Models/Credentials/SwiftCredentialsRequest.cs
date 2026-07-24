@@ -1,54 +1,53 @@
 ﻿using Transloadit.Serialization.Attributes;
 
-namespace Transloadit.Models.Credentials
+namespace Transloadit.Models.Credentials;
+
+/// <summary>
+/// Represents Swift credentials request.
+/// </summary>
+public class SwiftCredentialsRequest : CredentialsRequestBase
 {
     /// <summary>
-    /// Represents Swift credentials request.
+    /// Initializes Swift credentials request.
     /// </summary>
-    public class SwiftCredentialsRequest : CredentialsRequestBase
+    public SwiftCredentialsRequest()
     {
-        /// <summary>
-        /// Initializes Swift credentials request.
-        /// </summary>
-        public SwiftCredentialsRequest()
-        {
-            Type = "swift";
-        }
-
-        /// <summary>
-        /// Swift credentials content.
-        /// </summary>
-        [TransloaditJsonName("content")]
-        public SwiftCredentialsContent Content { get; set; }
+        Type = "swift";
     }
 
     /// <summary>
-    /// Represents Swift credentials.
+    /// Swift credentials content.
     /// </summary>
-    public class SwiftCredentialsContent
-    {
-        /// <summary>
-        /// Swift bucket.
-        /// </summary>
-        [TransloaditJsonName("bucket")]
-        public string Bucket { get; set; }
+    [TransloaditJsonName("content")]
+    public SwiftCredentialsContent Content { get; set; }
+}
 
-        /// <summary>
-        /// Swift host.
-        /// </summary>
-        [TransloaditJsonName("host")]
-        public string Host { get; set; }
+/// <summary>
+/// Represents Swift credentials.
+/// </summary>
+public class SwiftCredentialsContent
+{
+    /// <summary>
+    /// Swift bucket.
+    /// </summary>
+    [TransloaditJsonName("bucket")]
+    public string Bucket { get; set; }
 
-        /// <summary>
-        /// Swift key.
-        /// </summary>
-        [TransloaditJsonName("key")]
-        public string Key { get; set; }
+    /// <summary>
+    /// Swift host.
+    /// </summary>
+    [TransloaditJsonName("host")]
+    public string Host { get; set; }
 
-        /// <summary>
-        /// Swift secret.
-        /// </summary>
-        [TransloaditJsonName("secret")]
-        public string Secret { get; set; }
-    }
+    /// <summary>
+    /// Swift key.
+    /// </summary>
+    [TransloaditJsonName("key")]
+    public string Key { get; set; }
+
+    /// <summary>
+    /// Swift secret.
+    /// </summary>
+    [TransloaditJsonName("secret")]
+    public string Secret { get; set; }
 }

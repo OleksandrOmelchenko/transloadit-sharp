@@ -13,82 +13,81 @@ using Transloadit.Tests.Robots;
 using Transloadit.Tests.Tests;
 using Xunit;
 
-namespace Transloadit.Tests.Api
+namespace Transloadit.Tests.Api;
+
+public class BaseParamsTests : TestBase
 {
-    public class BaseParamsTests : TestBase
+    [Fact]
+    public async Task SetInvalidAuthKey_Should_Fail()
     {
-        [Fact]
-        public async Task SetInvalidAuthKey_Should_Fail()
+        var templateRequest = new TemplateRequest
         {
-            var templateRequest = new TemplateRequest
-            {
-                Name = $"my-test-generic-template-{DateTime.UtcNow:yyyyMMddHHmmss}",
-                Template = new TemplateRequestContent
-                {
-                    Steps = new Dictionary<string, RobotBase>
-                    {
-                        ["import"] = TestDataFactory.GetDemoHttpImportRobot(),
-                    }
-                }
-            };
-            templateRequest.SetAuth(new AuthParams
-            {
-                Key = "invalid key"
-            });
-
-            var createResponse = await TransloaditClient.Templates.CreateAsync(templateRequest);
-            Assert.Equal(ResponseCodes.GetAccountUnknownAuthKey, createResponse.Base.Error);
-            Assert.Equal(400, createResponse.Base.HttpCode);
-        }
-
-        [Fact]
-        public async Task SetZeroMaxSize_Should_Fail()
-        {
-            var imageResizeRobot = new TestImageResizeRobot
-            {
-                Use = ":original",
-                Result = true,
-                Width = 130,
-                Height = 130
-            };
-
-            var createAssembly = new AssemblyRequest
+            Name = $"my-test-generic-template-{DateTime.UtcNow:yyyyMMddHHmmss}",
+            Template = new TemplateRequestContent
             {
                 Steps = new Dictionary<string, RobotBase>
                 {
-                    ["resize"] = imageResizeRobot
+                    ["import"] = TestDataFactory.GetDemoHttpImportRobot(),
                 }
-            };
-            createAssembly.SetAuth(new AuthParams
-            {
-                MaxSize = 0
-            });
-
-            var file = new ByteArrayContent(File.ReadAllBytes(@"TestData/snowflake.jpg"));
-            var formData = new MultipartFormDataContent
-            {
-                { file, "file-first", "snowflake.jpg" },
-            };
-
-            var response = await TransloaditClient.Assemblies.CreateAsync(createAssembly, formData);
-
-            Assert.Equal(ResponseCodes.MaxSizeExceeded, response.Base.Error);
-            Assert.Equal(400, response.Base.HttpCode);
-        }
-
-        [Fact]
-        public async Task SetNonceAndExpires_Should_Succeed()
+            }
+        };
+        templateRequest.SetAuth(new AuthParams
         {
-            var listAssembliesRequest = new AssemblyListRequest();
-            listAssembliesRequest.SetAuth(new AuthParams
+            Key = "invalid key"
+        });
+
+        var createResponse = await TransloaditClient.Templates.CreateAsync(templateRequest);
+        Assert.Equal(ResponseCodes.GetAccountUnknownAuthKey, createResponse.Base.Error);
+        Assert.Equal(400, createResponse.Base.HttpCode);
+    }
+
+    [Fact]
+    public async Task SetZeroMaxSize_Should_Fail()
+    {
+        var imageResizeRobot = new TestImageResizeRobot
+        {
+            Use = ":original",
+            Result = true,
+            Width = 130,
+            Height = 130
+        };
+
+        var createAssembly = new AssemblyRequest
+        {
+            Steps = new Dictionary<string, RobotBase>
             {
-                Nonce = Guid.NewGuid().ToString(),
-                Expires = DateTime.UtcNow.AddMinutes(5)
-            });
+                ["resize"] = imageResizeRobot
+            }
+        };
+        createAssembly.SetAuth(new AuthParams
+        {
+            MaxSize = 0
+        });
 
-            var response = await TransloaditClient.Assemblies.GetListAsync(listAssembliesRequest);
+        var file = new ByteArrayContent(File.ReadAllBytes(@"TestData/snowflake.jpg"));
+        var formData = new MultipartFormDataContent
+        {
+            { file, "file-first", "snowflake.jpg" },
+        };
 
-            Assert.True(response.IsSuccessResponse());
-        }
+        var response = await TransloaditClient.Assemblies.CreateAsync(createAssembly, formData);
+
+        Assert.Equal(ResponseCodes.MaxSizeExceeded, response.Base.Error);
+        Assert.Equal(400, response.Base.HttpCode);
+    }
+
+    [Fact]
+    public async Task SetNonceAndExpires_Should_Succeed()
+    {
+        var listAssembliesRequest = new AssemblyListRequest();
+        listAssembliesRequest.SetAuth(new AuthParams
+        {
+            Nonce = Guid.NewGuid().ToString(),
+            Expires = DateTime.UtcNow.AddMinutes(5)
+        });
+
+        var response = await TransloaditClient.Assemblies.GetListAsync(listAssembliesRequest);
+
+        Assert.True(response.IsSuccessResponse());
     }
 }

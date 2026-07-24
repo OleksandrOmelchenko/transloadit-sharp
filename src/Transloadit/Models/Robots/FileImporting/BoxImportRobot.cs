@@ -1,18 +1,17 @@
 using System.Collections.Generic;
 
-namespace Transloadit.Models.Robots.FileImporting
+namespace Transloadit.Models.Robots.FileImporting;
+
+/// <summary>
+/// Represents <a href="https://transloadit.com/docs/robots/box-import/">/box/import</a> Robot.
+/// </summary>
+public class BoxImportRobot : ImportRobotBase
 {
     /// <summary>
-    /// Represents <a href="https://transloadit.com/docs/robots/box-import/">/box/import</a> Robot.
+    /// Initializes <a href="https://transloadit.com/docs/robots/box-import/">/box/import</a> Robot.
     /// </summary>
-    public class BoxImportRobot : ImportRobotBase
+    public BoxImportRobot()
     {
-        /// <summary>
-        /// Initializes <a href="https://transloadit.com/docs/robots/box-import/">/box/import</a> Robot.
-        /// </summary>
-        public BoxImportRobot()
-        {
-            Robot = "/box/import";
-        }
+        Robot = "/box/import";
     }
 }
