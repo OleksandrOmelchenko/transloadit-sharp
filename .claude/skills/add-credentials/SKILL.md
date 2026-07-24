@@ -12,15 +12,17 @@ Credentials request models live in `src/Transloadit/Models/Credentials/`. `Crede
 1. **Fetch the content fields** for the service using the `fetch-transloadit-docs` skill (API credentials docs). Cross-check against an existing sibling such as `S3CredentialsRequest.cs` or `AzureCredentialsRequest.cs`.
 
 2. **Create** `src/Transloadit/Models/Credentials/<Svc>CredentialsRequest.cs` with two `public` classes in one file:
-   - `public class <Svc>CredentialsRequest : CredentialsRequestBase` (base in `CredentialsRequest.cs`; it provides `[JsonProperty("name")] Name`). The parameterless constructor sets the discriminator:
+   - `public class <Svc>CredentialsRequest : CredentialsRequestBase` (base in `CredentialsRequest.cs`; it provides `[TransloaditJsonName("name")] Name`). The parameterless constructor sets the discriminator:
      ```csharp
      public <Svc>CredentialsRequest()
      {
          Type = "<svc>";
      }
      ```
-     and exposes `[JsonProperty("content")] public <Svc>CredentialsContent Content { get; set; }`.
-   - `public class <Svc>CredentialsContent` holding the service fields, each with `[JsonProperty("snake_case_key")]`.
+     and exposes `[TransloaditJsonName("content")] public <Svc>CredentialsContent Content { get; set; }`.
+   - `public class <Svc>CredentialsContent` holding the service fields, each with `[TransloaditJsonName("snake_case_key")]` (omit the attribute when the key is exactly `snake_case(PropertyName)`).
+
+   Use the library's provider-neutral `Transloadit*` attributes (in `Transloadit.Serialization.Attributes`), **not** native `[JsonProperty]`/`[JsonPropertyName]`: the client serializes with System.Text.Json on `net462`+ and Newtonsoft on `net452`/`net461`, and a native attribute is honored on only one engine — so the JSON key would differ by target framework.
 
 3. **Conventions:** nullable value types use `?`; no `string?` (`Nullable` is disabled); full XML docs on every public type and member (build fails otherwise); comments lowercase, no trailing period.
 

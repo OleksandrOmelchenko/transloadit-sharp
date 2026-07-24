@@ -114,6 +114,47 @@ var client = new TransloaditClient("<auth key>", "<auth secret>", new Transloadi
 > built-in serializers derive all of this from the models' provider-neutral attributes, so wrapping the default
 > is the recommended path.
 
+#### Attributes on your own models
+
+When you define your own model that flows through the client — a custom robot, credentials type, or request —
+annotate it with the library's **provider-neutral attributes**, not a specific serializer's native attributes:
+
+| Attribute | Purpose |
+| --- | --- |
+| `[TransloaditJsonName("snake_case_key")]` | JSON property name |
+| `[TransloaditJsonIgnore]` | exclude the property |
+| `[TransloaditBooleanToInt]` | serialize a `bool` as `1`/`0` |
+| `[TransloaditDateFormat("…")]` | format a date with a fixed .NET format string |
+
+They live in `Transloadit.Serialization.Attributes`. Both built-in adapters map them, so they behave identically on
+every target framework.
+
+**Do not use native serializer attributes** (`[JsonProperty]` from Newtonsoft, `[JsonPropertyName]` from
+System.Text.Json). The library uses **System.Text.Json on `net462`+ and Newtonsoft on `net452`/`net461`**, and each
+native attribute is invisible to the other engine — so a native attribute is honored on only some of the target
+frameworks and silently falls back to the default snake_case name on the rest, producing a different JSON key
+depending on where your code runs. A custom `ITransloaditSerializer` would ignore them entirely.
+
+```csharp
+using Transloadit.Models.Robots;
+using Transloadit.Serialization.Attributes;
+
+public class MyRobot : RobotBase
+{
+    public MyRobot() => Robot = "/my/robot";
+
+    // no attribute needed: the C# name already snake_cases to "resize_strategy" on both engines
+    public string ResizeStrategy { get; set; }
+
+    // attribute needed only when the JSON key differs from snake_case(PropertyName)
+    [TransloaditJsonName("imagemagick_stack")]
+    public string ImageMagickStack { get; set; }
+
+    [TransloaditBooleanToInt]
+    public bool? Turbo { get; set; }
+}
+```
+
 ### Create an Assembly
 
 Using a template

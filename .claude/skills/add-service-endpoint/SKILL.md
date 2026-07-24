@@ -14,7 +14,7 @@ Use `fetch-transloadit-docs` against the `/docs/api/` endpoint to get the path, 
 ## Mode A — new endpoint on an existing service
 
 1. Add request/response models as needed:
-   - request: `public class <X>Request : BaseParams` (or `PaginationParams` for lists), snake_case `[JsonProperty]` fields.
+   - request: `public class <X>Request : BaseParams` (or `PaginationParams` for lists), fields mapped with the provider-neutral `[TransloaditJsonName("snake_case_key")]` (omit it when the key is already `snake_case(PropertyName)`) — **not** native `[JsonProperty]`/`[JsonPropertyName]`, which each work on only one of the two serializer engines the library ships (Newtonsoft on `net452`/`net461`, System.Text.Json on `net462`+).
    - response: `public class <X>Response : ResponseBase`.
 2. Add the method to the service:
    ```csharp
