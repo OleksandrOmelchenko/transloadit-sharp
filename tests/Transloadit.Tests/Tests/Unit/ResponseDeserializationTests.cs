@@ -70,6 +70,21 @@ public class ResponseDeserializationTests
     }
 
     [Fact]
+    public void AssemblyResponse_MapsNotifyFields_IncludingNotifyError()
+    {
+        // notify_error is populated only when a notification fails; it must not be silently dropped
+        const string json =
+            "{\"ok\":\"ASSEMBLY_COMPLETED\",\"notify_url\":\"https://hook.test\"," +
+            "\"notify_response_code\":500,\"notify_error\":\"connection refused\"}";
+
+        var response = TestSerializer.Default.Deserialize<AssemblyResponse>(json);
+
+        Assert.Equal("https://hook.test", response.NotifyUrl);
+        Assert.Equal(500, response.NotifyResponseCode);
+        Assert.Equal("connection refused", response.NotifyError);
+    }
+
+    [Fact]
     public void BillingResponse_Deserializes_CamelCaseAndOverrideNames()
     {
         const string json =

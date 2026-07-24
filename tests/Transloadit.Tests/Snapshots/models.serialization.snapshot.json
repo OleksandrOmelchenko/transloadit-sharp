@@ -288,6 +288,10 @@
         "type": "Nullable<Double>"
       },
       {
+        "name": "notify_error",
+        "type": "String"
+      },
+      {
         "name": "notify_response_code",
         "type": "Nullable<Int32>"
       },

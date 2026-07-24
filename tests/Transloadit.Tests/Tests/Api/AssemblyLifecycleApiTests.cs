@@ -149,9 +149,9 @@ public class AssemblyLifecycleApiTests : TestBase
         var unmapped = ResponseCoverage.UnmappedTopLevelKeys(handler.LastResponseBody, typeof(AssemblyResponse));
         _output.WriteLine("AssemblyResponse does not map: " + string.Join(", ", unmapped));
 
-        // regression guard: every key the API returns must be mapped, except a small reviewed allowlist.
-        // notify_error is notify-feature only (always null without a notify url) and intentionally not modeled.
-        var allowed = new HashSet<string> { "notify_error" };
+        // regression guard: every key the API returns must be mapped (the allowlist is now empty — a newly-returned
+        // API key that the model does not map fails the test)
+        var allowed = new HashSet<string>();
         var unexpected = unmapped.Where(k => !allowed.Contains(k)).ToList();
         Assert.True(
             unexpected.Count == 0,
