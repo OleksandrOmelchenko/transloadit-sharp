@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 
 namespace Transloadit.Models.Credentials
 {
@@ -18,7 +18,7 @@ namespace Transloadit.Models.Credentials
         /// <summary>
         /// MinIO credentials content.
         /// </summary>
-        [JsonProperty("content")]
+        [TransloaditJsonName("content")]
         public MinioCredentialsContent Content { get; set; }
     }
 
@@ -30,25 +30,25 @@ namespace Transloadit.Models.Credentials
         /// <summary>
         /// MinIO bucket.
         /// </summary>
-        [JsonProperty("bucket")]
+        [TransloaditJsonName("bucket")]
         public string Bucket { get; set; }
 
         /// <summary>
         /// MinIO key.
         /// </summary>
-        [JsonProperty("key")]
+        [TransloaditJsonName("key")]
         public string Key { get; set; }
 
         /// <summary>
         /// MinIO secret.
         /// </summary>
-        [JsonProperty("secret")]
+        [TransloaditJsonName("secret")]
         public string Secret { get; set; }
 
         /// <summary>
         /// MinIO host.
         /// </summary>
-        [JsonProperty("host")]
+        [TransloaditJsonName("host")]
         public string Host { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using Transloadit.Serialization.Attributes;
 
 namespace Transloadit.Models.Robots.ImageManipulation
 {
@@ -11,25 +11,25 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
-        [JsonProperty("use")]
+        [TransloaditJsonName("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
         /// AI model used for upscaling. One of <see cref="Constants.ImageUpscaleModels"/>.
         /// </summary>
-        [JsonProperty("model")]
+        [TransloaditJsonName("model")]
         public string Model { get; set; }
 
         /// <summary>
         /// Upscaling factor.
         /// </summary>
-        [JsonProperty("scale")]
+        [TransloaditJsonName("scale")]
         public int? Scale { get; set; }
 
         /// <summary>
         /// Enables face enhancement.
         /// </summary>
-        [JsonProperty("face_enhance")]
+        [TransloaditJsonName("face_enhance")]
         public bool? FaceEnhance { get; set; }
 
         /// <summary>

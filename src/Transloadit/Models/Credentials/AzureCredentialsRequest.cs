@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 
 namespace Transloadit.Models.Credentials
 {
@@ -18,7 +18,7 @@ namespace Transloadit.Models.Credentials
         /// <summary>
         /// Azure credentials content.
         /// </summary>
-        [JsonProperty("content")]
+        [TransloaditJsonName("content")]
         public AzureCredentialsContent Content { get; set; }
     }
 
@@ -30,19 +30,19 @@ namespace Transloadit.Models.Credentials
         /// <summary>
         /// Azure blob storage account.
         /// </summary>
-        [JsonProperty("account")]
+        [TransloaditJsonName("account")]
         public string Account { get; set; }
 
         /// <summary>
         /// Azure blob storage key.
         /// </summary>
-        [JsonProperty("key")]
+        [TransloaditJsonName("key")]
         public string Key { get; set; }
 
         /// <summary>
         /// Azure blob storage container.
         /// </summary>
-        [JsonProperty("container")]
+        [TransloaditJsonName("container")]
         public string Container { get; set; }
     }
 }

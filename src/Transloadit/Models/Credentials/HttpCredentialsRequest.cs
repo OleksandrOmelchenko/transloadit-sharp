@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 
 namespace Transloadit.Models.Credentials
 {
@@ -18,7 +18,7 @@ namespace Transloadit.Models.Credentials
         /// <summary>
         /// HTTP credentials content.
         /// </summary>
-        [JsonProperty("content")]
+        [TransloaditJsonName("content")]
         public HttpCredentialsContent Content { get; set; }
     }
 
@@ -30,7 +30,7 @@ namespace Transloadit.Models.Credentials
         /// <summary>
         /// HTTP headers.
         /// </summary>
-        [JsonProperty("headers")]
+        [TransloaditJsonName("headers")]
         public string Headers { get; set; }
     }
 }

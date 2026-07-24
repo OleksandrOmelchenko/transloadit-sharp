@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 
 namespace Transloadit.Models.Credentials
 {
@@ -18,7 +18,7 @@ namespace Transloadit.Models.Credentials
         /// <summary>
         /// Supabase credentials content.
         /// </summary>
-        [JsonProperty("content")]
+        [TransloaditJsonName("content")]
         public SupabaseCredentialsContent Content { get; set; }
     }
 
@@ -30,31 +30,31 @@ namespace Transloadit.Models.Credentials
         /// <summary>
         /// Supabase bucket.
         /// </summary>
-        [JsonProperty("bucket")]
+        [TransloaditJsonName("bucket")]
         public string Bucket { get; set; }
 
         /// <summary>
         /// Supabase host.
         /// </summary>
-        [JsonProperty("host")]
+        [TransloaditJsonName("host")]
         public string Host { get; set; }
 
         /// <summary>
         /// Supabase bucket region.
         /// </summary>
-        [JsonProperty("bucket_region")]
+        [TransloaditJsonName("bucket_region")]
         public string BucketRegion { get; set; }
 
         /// <summary>
         /// Supabase key.
         /// </summary>
-        [JsonProperty("key")]
+        [TransloaditJsonName("key")]
         public string Key { get; set; }
 
         /// <summary>
         /// Supabase secret.
         /// </summary>
-        [JsonProperty("secret")]
+        [TransloaditJsonName("secret")]
         public string Secret { get; set; }
     }
 }

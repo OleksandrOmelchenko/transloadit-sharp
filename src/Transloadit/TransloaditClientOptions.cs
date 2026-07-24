@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 using System.Net.Http;
-using Newtonsoft.Json;
+using Transloadit.Serialization;
 
 namespace Transloadit
 {
@@ -20,13 +20,10 @@ namespace Transloadit
         public HttpClient HttpClient { get; set; }
 
         /// <summary>
-        /// <see cref="JsonSerializerSettings"/> for response deserialization.
+        /// The JSON serializer used for request serialization and response deserialization.
+        /// Defaults to a System.Text.Json implementation (Newtonsoft.Json on net452). Provide a custom
+        /// <see cref="ITransloaditSerializer"/> to change the engine or register additional converters.
         /// </summary>
-        public JsonSerializerSettings ResponseSerializerSettings { get; set; }
-
-        /// <summary>
-        /// <see cref="JsonSerializerSettings"/> for request serialization.
-        /// </summary>
-        public JsonSerializerSettings RequestSerializerSettings { get; set; }
+        public ITransloaditSerializer Serializer { get; set; }
     }
 }

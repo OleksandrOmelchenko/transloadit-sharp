@@ -53,9 +53,11 @@ namespace Transloadit.Services
             parameters["auth_key"] = _key;
             parameters["exp"] = signatureExpiration.ToUnixTimeMilliseconds().ToString();
 
-            //todo: fix ordering
-            var sortedParams = parameters.OrderBy(p => p.Key);
-            var queryParams = string.Join("&", sortedParams.Select(p => $"{p.Key}={WebUtility.UrlEncode(p.Value)}"));
+            // ordinal sort to match the server, which reconstructs the string-to-sign using URLSearchParams.sort()
+            // (UTF-16 code-unit order). a culture-sensitive sort would order mixed-case keys differently and produce
+            // a signature the CDN rejects. keys are encoded too, mirroring URLSearchParams.toString().
+            var sortedParams = parameters.OrderBy(p => p.Key, StringComparer.Ordinal);
+            var queryParams = string.Join("&", sortedParams.Select(p => $"{WebUtility.UrlEncode(p.Key)}={WebUtility.UrlEncode(p.Value)}"));
 
             var stringToSign = $"{encodedWorkspaceSlug}/{encodedTemplateSlug}/{encodedInputField}?{queryParams}";
 

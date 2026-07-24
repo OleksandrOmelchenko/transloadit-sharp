@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 using System.Collections.Generic;
 
 namespace Transloadit.Models.Robots.FileExporting
@@ -12,7 +12,7 @@ namespace Transloadit.Models.Robots.FileExporting
         /// The permissions used for this file: <c>private</c> or <c>public-read</c>.
         /// <para>Default: <c>public-read</c>.</para>
         /// </summary>
-        [JsonProperty("acl")]
+        [TransloaditJsonName("acl")]
         public string Acl { get; set; }
 
         /// <summary>
@@ -20,38 +20,38 @@ namespace Transloadit.Models.Robots.FileExporting
         /// This can also include any available <a href="https://transloadit.com/docs/topics/assembly-instructions/#assembly-variables">Assembly variables</a>.
         /// Object Metadata can be specified using <c>x-amz-meta-*</c> headers.
         /// </summary>
-        [JsonProperty("headers")]
+        [TransloaditJsonName("headers")]
         public Dictionary<string, string> Headers { get; set; }
 
         /// <summary>
         /// This parameter provides signed URLs in the result JSON (in the <c>signed_ssl_url</c> property). 
         /// The number that you set this parameter to is the URL expiry time in seconds.
         /// </summary>
-        [JsonProperty("sign_urls_for")]
+        [TransloaditJsonName("sign_urls_for")]
         public int? SignUrlsFor { get; set; }
 
         /// <summary>
         /// The name of the bucket to which the file is exported.
         /// </summary>
-        [JsonProperty("bucket")]
+        [TransloaditJsonName("bucket")]
         public string Bucket { get; set; }
 
         /// <summary>
         /// The custom domain for Tigris bucket location.
         /// </summary>
-        [JsonProperty("host")]
+        [TransloaditJsonName("host")]
         public string Host { get; set; }
 
         /// <summary>
         /// Tigris access key ID.
         /// </summary>
-        [JsonProperty("key")]
+        [TransloaditJsonName("key")]
         public string Key { get; set; }
 
         /// <summary>
         /// Tigris secret access Key.
         /// </summary>
-        [JsonProperty("secret")]
+        [TransloaditJsonName("secret")]
         public string Secret { get; set; }
 
         /// <summary>

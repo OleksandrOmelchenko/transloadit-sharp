@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 using System.Collections.Generic;
 
 namespace Transloadit.Models.Robots.ImageManipulation
@@ -11,7 +11,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
-        [JsonProperty("use")]
+        [TransloaditJsonName("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
@@ -20,7 +20,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// average compression ratio of 31%.
         /// <para>Default: <c>compression-ratio</c>.</para>
         /// </summary>
-        [JsonProperty("priority")]
+        [TransloaditJsonName("priority")]
         public string Priority { get; set; }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// file size reduction.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
-        [JsonProperty("progressive")]
+        [TransloaditJsonName("progressive")]
         public bool? Progressive { get; set; }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// further reduced. But be aware that this could strip a photographer's copyright information, which for obvious reasons can be frowned upon.
         /// <para>Default: <c>true</c>.</para>
         /// </summary>
-        [JsonProperty("preserve_meta_data")]
+        [TransloaditJsonName("preserve_meta_data")]
         public bool? PreserveMetaData { get; set; }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Transloadit.Models.Robots.ImageManipulation
         /// Assemblies. This can sometimes result in a larger file size, though.
         /// <para>Default: <c>true</c>.</para>
         /// </summary>
-        [JsonProperty("fix_breaking_images")]
+        [TransloaditJsonName("fix_breaking_images")]
         public bool? FixBreakingImages { get; set; }
 
         /// <summary>

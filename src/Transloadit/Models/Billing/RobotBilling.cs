@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+using Transloadit.Serialization.Attributes;
 
 namespace Transloadit.Models.Billing
 {
@@ -11,43 +11,43 @@ namespace Transloadit.Models.Billing
         /// <summary>
         /// Raw gigabytes.
         /// </summary>
-        [JsonProperty("rawGb")]
+        [TransloaditJsonName("rawGb")]
         public decimal RawGb { get; set; }
 
         /// <summary>
         /// Gigabytes.
         /// </summary>
-        [JsonProperty("gb")]
+        [TransloaditJsonName("gb")]
         public decimal Gb { get; set; }
 
         /// <summary>
         /// Free gigabytes.
         /// </summary>
-        [JsonProperty("freeGb")]
+        [TransloaditJsonName("freeGb")]
         public decimal FreeGb { get; set; }
 
         /// <summary>
         /// Discounted gigabytes.
         /// </summary>
-        [JsonProperty("discountedGb")]
+        [TransloaditJsonName("discountedGb")]
         public decimal DiscountedGb { get; set; }
 
         /// <summary>
         /// Gigabytes factor applied.
         /// </summary>
-        [JsonProperty("gbFactorApplied")]
+        [TransloaditJsonName("gbFactorApplied")]
         public decimal GbFactorApplied { get; set; }
 
         /// <summary>
         /// Factor.
         /// </summary>
-        [JsonProperty("factor")]
+        [TransloaditJsonName("factor")]
         public decimal Factor { get; set; }
 
         /// <summary>
         /// Grouping by region and factor.
         /// </summary>
-        [JsonProperty("by_region_and_factor")]
+        [TransloaditJsonName("by_region_and_factor")]
         public List<RobotBillingByRegionAndFactor> ByRegionAndFactor { get; set; }
     }
 
@@ -59,31 +59,31 @@ namespace Transloadit.Models.Billing
         /// <summary>
         /// Factor.
         /// </summary>
-        [JsonProperty("factor")]
+        [TransloaditJsonName("factor")]
         public decimal Factor { get; set; }
 
         /// <summary>
         /// Raw gigabytes.
         /// </summary>
-        [JsonProperty("rawGb")]
+        [TransloaditJsonName("rawGb")]
         public decimal RawGb { get; set; }
 
         /// <summary>
         /// Gigabytes factor applied.
         /// </summary>
-        [JsonProperty("gbFactorApplied")]
+        [TransloaditJsonName("gbFactorApplied")]
         public decimal GbFactorApplied { get; set; }
 
         /// <summary>
         /// Free gigabytes.
         /// </summary>
-        [JsonProperty("freeGb")]
+        [TransloaditJsonName("freeGb")]
         public decimal FreeGb { get; set; }
 
         /// <summary>
         /// AWS Region.
         /// </summary>
-        [JsonProperty("region")]
+        [TransloaditJsonName("region")]
         public string Region { get; set; }
     }
 }

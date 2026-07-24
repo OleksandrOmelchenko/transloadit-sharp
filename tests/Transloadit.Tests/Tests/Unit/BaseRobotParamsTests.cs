@@ -9,6 +9,8 @@ using Transloadit.Models.Robots.ImageManipulation;
 using Transloadit.Serialization;
 using Xunit;
 
+using Transloadit.Tests.Infrastructure;
+
 namespace Transloadit.Tests.Tests.Unit
 {
     // guards the base-class generic-param model:
@@ -28,7 +30,7 @@ namespace Transloadit.Tests.Tests.Unit
                 IgnoreErrors = true,
             };
 
-            var json = JObject.Parse(JsonConvert.SerializeObject(robot, TransloaditSerializerSettings.CreateDefault()));
+            var json = JObject.Parse(TestSerializer.Default.Serialize(robot));
 
             Assert.Equal(true, (bool)json["output_meta"]);
             Assert.Equal(false, (bool)json["interpolate"]);
@@ -48,7 +50,7 @@ namespace Transloadit.Tests.Tests.Unit
                 ReturnFileStubs = true,
             };
 
-            var json = JObject.Parse(JsonConvert.SerializeObject(robot, TransloaditSerializerSettings.CreateDefault()));
+            var json = JObject.Parse(TestSerializer.Default.Serialize(robot));
 
             Assert.Equal(true, (bool)json["output_meta"]);
             Assert.Equal("batch", (string)json["queue"]);

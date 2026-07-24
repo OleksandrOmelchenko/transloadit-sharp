@@ -20,11 +20,11 @@
       },
       {
         "name": "execution_duration",
-        "type": "Double"
+        "type": "Nullable<Double>"
       },
       {
         "name": "execution_start",
-        "type": "DateTimeOffset"
+        "type": "Nullable<DateTimeOffset>"
       },
       {
         "name": "files",
@@ -98,7 +98,7 @@
       {
         "name": "fromdate",
         "type": "Nullable<DateTime>",
-        "converter": "PaginationDateTimeConverter"
+        "converter": "DateFormat"
       },
       {
         "name": "keywords",
@@ -115,7 +115,7 @@
       {
         "name": "todate",
         "type": "Nullable<DateTime>",
-        "converter": "PaginationDateTimeConverter"
+        "converter": "DateFormat"
       },
       {
         "name": "type",
@@ -225,11 +225,11 @@
       },
       {
         "name": "execution_duration",
-        "type": "Double"
+        "type": "Nullable<Double>"
       },
       {
         "name": "execution_start",
-        "type": "DateTimeOffset"
+        "type": "Nullable<DateTimeOffset>"
       },
       {
         "name": "expected_tus_uploads",
@@ -250,6 +250,14 @@
       {
         "name": "http_code",
         "type": "Nullable<Int32>"
+      },
+      {
+        "name": "ignored_error_count",
+        "type": "Int32"
+      },
+      {
+        "name": "ignored_errors",
+        "type": "List<Object>"
       },
       {
         "name": "instance",
@@ -337,7 +345,7 @@
       },
       {
         "name": "start_date",
-        "type": "DateTimeOffset"
+        "type": "Nullable<DateTimeOffset>"
       },
       {
         "name": "started_jobs",
@@ -507,7 +515,7 @@
       },
       {
         "name": "size",
-        "type": "Int32"
+        "type": "Int64"
       },
       {
         "name": "ssl_url",
@@ -549,7 +557,7 @@
       {
         "name": "reparse_template",
         "type": "Nullable<Boolean>",
-        "converter": "BooleanToIntConverter"
+        "converter": "BooleanToInt"
       },
       {
         "name": "steps",
@@ -631,7 +639,7 @@
       },
       {
         "name": "size",
-        "type": "Int32"
+        "type": "Int64"
       },
       {
         "name": "upload_url",
@@ -724,7 +732,7 @@
       },
       {
         "name": "size",
-        "type": "Int32"
+        "type": "Int64"
       },
       {
         "name": "ssl_url",
@@ -796,7 +804,7 @@
       {
         "name": "expires",
         "type": "Nullable<DateTime>",
-        "converter": "AuthExpiresDateTimeConverter"
+        "converter": "DateFormat"
       },
       {
         "name": "key",
@@ -853,6 +861,10 @@
         "type": "String"
       },
       {
+        "name": "custom_robot_factors",
+        "type": "Object"
+      },
+      {
         "name": "deleted",
         "type": "Nullable<DateTimeOffset>"
       },
@@ -901,6 +913,10 @@
         "type": "Int32"
       },
       {
+        "name": "po_number",
+        "type": "String"
+      },
+      {
         "name": "price_per_gb",
         "type": "Decimal"
       },
@@ -935,6 +951,10 @@
       {
         "name": "usd_exchange_rate",
         "type": "Nullable<Decimal>"
+      },
+      {
+        "name": "uses_flat_rate_tiers",
+        "type": "Int32"
       }
     ]
   },
@@ -1943,7 +1963,7 @@
       {
         "name": "fromdate",
         "type": "Nullable<DateTime>",
-        "converter": "PaginationDateTimeConverter"
+        "converter": "DateFormat"
       },
       {
         "name": "keywords",
@@ -1960,7 +1980,7 @@
       {
         "name": "todate",
         "type": "Nullable<DateTime>",
-        "converter": "PaginationDateTimeConverter"
+        "converter": "DateFormat"
       }
     ]
   },
@@ -2067,7 +2087,7 @@
       {
         "name": "credentials",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "force_accept",
@@ -2076,12 +2096,12 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "mcp_servers",
@@ -2090,7 +2110,7 @@
       {
         "name": "messages",
         "type": "AnyOf<String, List<AiChatMessage>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "model",
@@ -2099,7 +2119,7 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -2132,7 +2152,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -2154,17 +2174,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "provider",
@@ -2185,7 +2205,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -2211,17 +2231,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "provider",
@@ -2242,7 +2262,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -2260,7 +2280,7 @@
       {
         "name": "faces",
         "type": "AnyOf<Int32, String>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "force_accept",
@@ -2273,12 +2293,12 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "min_confidence",
@@ -2287,7 +2307,7 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "provider",
@@ -2308,7 +2328,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -2334,12 +2354,12 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "model",
@@ -2348,7 +2368,7 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "prompt",
@@ -2377,7 +2397,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "width",
@@ -2403,17 +2423,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "provider",
@@ -2434,7 +2454,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -2456,17 +2476,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "provider",
@@ -2491,7 +2511,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -2505,17 +2525,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "prompt",
@@ -2548,7 +2568,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "voice",
@@ -2566,17 +2586,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "provider",
@@ -2605,7 +2625,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -2623,7 +2643,7 @@
       {
         "name": "duration",
         "type": "AnyOf<Int32, String>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "force_accept",
@@ -2636,22 +2656,22 @@
       {
         "name": "fps",
         "type": "AnyOf<Int32, String>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "height",
         "type": "AnyOf<Int32, String>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "model",
@@ -2660,7 +2680,7 @@
       {
         "name": "motion_amount",
         "type": "AnyOf<Int32, String>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "negative_prompt",
@@ -2669,12 +2689,12 @@
       {
         "name": "num_outputs",
         "type": "AnyOf<Int32, String>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "prompt",
@@ -2691,7 +2711,7 @@
       {
         "name": "reference_strength",
         "type": "AnyOf<Double, String>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "result",
@@ -2704,7 +2724,7 @@
       {
         "name": "seed",
         "type": "AnyOf<Int32, String>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "style",
@@ -2713,12 +2733,12 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "width",
         "type": "AnyOf<Int32, String>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -2757,7 +2777,7 @@
       {
         "name": "steps",
         "type": "AnyOf<List<String>, List<AdvancedStep>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -2779,12 +2799,12 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "method",
@@ -2793,7 +2813,7 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -2810,7 +2830,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -2840,17 +2860,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "preset",
@@ -2875,7 +2895,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -2901,17 +2921,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "preset",
@@ -2936,7 +2956,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -2966,17 +2986,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "preset",
@@ -3001,7 +3021,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -3031,12 +3051,12 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "loop",
@@ -3045,7 +3065,7 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "preset",
@@ -3070,7 +3090,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "volume",
@@ -3084,7 +3104,7 @@
       {
         "name": "bitrate",
         "type": "AnyOf<Int32, String>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "ffmpeg",
@@ -3101,17 +3121,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "preset",
@@ -3132,7 +3152,7 @@
       {
         "name": "sample_rate",
         "type": "AnyOf<Int32, String>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "segments",
@@ -3141,7 +3161,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -3151,12 +3171,12 @@
       {
         "name": "from",
         "type": "AnyOf<Int32, String>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "to",
         "type": "AnyOf<Int32, String>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -3190,12 +3210,12 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "outer_color",
@@ -3204,7 +3224,7 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -3225,7 +3245,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "width",
@@ -3243,7 +3263,12 @@
       {
         "name": "headers",
         "type": "AnyOf<Dictionary<String, String>, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
+      },
+      {
+        "name": "interpolate",
+        "type": "AnyOf<Boolean, Dictionary<String, Object>>",
+        "converter": "AnyOf"
       },
       {
         "name": "max_response_size",
@@ -3262,7 +3287,16 @@
         "type": "String"
       },
       {
+        "name": "output_meta",
+        "type": "AnyOf<Boolean, OutputMeta>",
+        "converter": "AnyOf"
+      },
+      {
         "name": "payload",
+        "type": "String"
+      },
+      {
+        "name": "queue",
         "type": "String"
       },
       {
@@ -3288,7 +3322,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -3302,17 +3336,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -3333,7 +3367,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -3347,17 +3381,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -3374,7 +3408,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -3392,12 +3426,12 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "markdown_format",
@@ -3410,7 +3444,7 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "pdf_display_header_footer",
@@ -3451,7 +3485,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -3465,7 +3499,7 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "input_passwords",
@@ -3474,12 +3508,12 @@
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_password",
@@ -3500,7 +3534,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -3522,17 +3556,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "image_dpi",
         "type": "AnyOf<Int32, String>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "linearize",
@@ -3541,7 +3575,7 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "preset",
@@ -3570,7 +3604,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -3584,22 +3618,22 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "pages",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -3616,7 +3650,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -3662,7 +3696,7 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "imagemagick_stack",
@@ -3671,12 +3705,12 @@
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "page",
@@ -3709,7 +3743,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "width",
@@ -3727,17 +3761,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -3754,7 +3788,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -3788,12 +3822,12 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "omit_background",
@@ -3802,7 +3836,7 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -3823,7 +3857,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "width",
@@ -3857,17 +3891,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "password",
@@ -3888,7 +3922,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -3902,17 +3936,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -3929,7 +3963,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -3971,12 +4005,12 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "key",
@@ -3989,12 +4023,12 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -4019,7 +4053,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -4053,22 +4087,22 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -4085,7 +4119,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -4107,22 +4141,22 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -4139,7 +4173,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -4169,12 +4203,12 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "key",
@@ -4183,12 +4217,12 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -4213,7 +4247,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -4239,12 +4273,12 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "key",
@@ -4253,12 +4287,12 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -4295,7 +4329,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -4317,22 +4351,22 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -4349,7 +4383,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -4371,17 +4405,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "password",
@@ -4390,7 +4424,7 @@
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "port",
@@ -4423,7 +4457,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "user",
@@ -4453,22 +4487,22 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -4493,7 +4527,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -4527,12 +4561,12 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "key",
@@ -4541,12 +4575,12 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -4571,7 +4605,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -4601,12 +4635,12 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "key",
@@ -4615,12 +4649,12 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -4637,7 +4671,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "user",
@@ -4683,12 +4717,12 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "key",
@@ -4701,12 +4735,12 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -4739,7 +4773,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -4765,22 +4799,22 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "port",
@@ -4813,7 +4847,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "user",
@@ -4851,12 +4885,12 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "key",
@@ -4865,12 +4899,12 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -4895,7 +4929,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -4929,12 +4963,12 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "key",
@@ -4943,12 +4977,12 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -4973,7 +5007,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -5007,12 +5041,12 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "key",
@@ -5021,12 +5055,12 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -5051,7 +5085,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -5077,12 +5111,12 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "metadata",
@@ -5091,7 +5125,7 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -5116,7 +5150,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -5150,17 +5184,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "password",
@@ -5189,7 +5223,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -5219,17 +5253,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "password",
@@ -5238,7 +5272,7 @@
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -5259,7 +5293,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "user",
@@ -5289,12 +5323,12 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "keywords",
@@ -5303,7 +5337,7 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -5324,7 +5358,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "visibility",
@@ -5338,7 +5372,7 @@
       {
         "name": "accepts",
         "type": "AnyOf<String, List<List<String>>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "condition_type",
@@ -5347,7 +5381,7 @@
       {
         "name": "declines",
         "type": "AnyOf<String, List<List<String>>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "error_msg",
@@ -5364,17 +5398,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -5391,7 +5425,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -5413,17 +5447,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -5440,7 +5474,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "verify_to_be",
@@ -5466,17 +5500,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -5493,7 +5527,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -5523,7 +5557,7 @@
       {
         "name": "force_name",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "import_on_errors",
@@ -5532,7 +5566,7 @@
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "key",
@@ -5545,12 +5579,12 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -5596,7 +5630,7 @@
       {
         "name": "force_name",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "import_on_errors",
@@ -5605,17 +5639,17 @@
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -5653,7 +5687,7 @@
       {
         "name": "force_name",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "import_on_errors",
@@ -5662,17 +5696,17 @@
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -5710,7 +5744,7 @@
       {
         "name": "force_name",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "host",
@@ -5723,7 +5757,7 @@
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "key",
@@ -5732,7 +5766,7 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "page_number",
@@ -5741,7 +5775,7 @@
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -5787,7 +5821,7 @@
       {
         "name": "force_name",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "import_on_errors",
@@ -5796,7 +5830,7 @@
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "key",
@@ -5805,7 +5839,7 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "page_number",
@@ -5814,7 +5848,7 @@
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -5864,7 +5898,7 @@
       {
         "name": "force_name",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "import_on_errors",
@@ -5873,17 +5907,17 @@
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -5917,12 +5951,12 @@
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "passive_mode",
@@ -5976,7 +6010,7 @@
       {
         "name": "force_name",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "import_on_errors",
@@ -5985,7 +6019,7 @@
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "next_page_token",
@@ -5994,12 +6028,12 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -6033,7 +6067,7 @@
       {
         "name": "force_name",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "headers",
@@ -6046,12 +6080,12 @@
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -6072,7 +6106,7 @@
       {
         "name": "url",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "url_delimiter",
@@ -6102,7 +6136,7 @@
       {
         "name": "force_name",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "host",
@@ -6115,7 +6149,7 @@
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "key",
@@ -6124,7 +6158,7 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "page_number",
@@ -6133,7 +6167,7 @@
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -6191,7 +6225,7 @@
       {
         "name": "force_name",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "import_on_errors",
@@ -6200,7 +6234,7 @@
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "key",
@@ -6209,7 +6243,7 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "page_number",
@@ -6218,7 +6252,7 @@
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -6268,7 +6302,7 @@
       {
         "name": "force_name",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "import_on_errors",
@@ -6277,7 +6311,7 @@
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "key",
@@ -6286,7 +6320,7 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "page_number",
@@ -6295,7 +6329,7 @@
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -6345,7 +6379,7 @@
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "key",
@@ -6354,7 +6388,7 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "path",
@@ -6408,7 +6442,7 @@
       {
         "name": "force_name",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "host",
@@ -6421,7 +6455,7 @@
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "key",
@@ -6430,7 +6464,7 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "page_number",
@@ -6439,7 +6473,7 @@
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -6489,7 +6523,7 @@
       {
         "name": "force_name",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "host",
@@ -6502,7 +6536,7 @@
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "key",
@@ -6511,7 +6545,7 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "page_number",
@@ -6520,7 +6554,7 @@
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -6570,7 +6604,7 @@
       {
         "name": "force_name",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "host",
@@ -6583,7 +6617,7 @@
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "key",
@@ -6592,7 +6626,7 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "page_number",
@@ -6601,7 +6635,7 @@
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -6647,7 +6681,7 @@
       {
         "name": "force_name",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "import_on_errors",
@@ -6656,12 +6690,12 @@
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "page_number",
@@ -6670,7 +6704,7 @@
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -6708,7 +6742,7 @@
       {
         "name": "force_name",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "host",
@@ -6721,12 +6755,12 @@
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "page_number",
@@ -6739,7 +6773,7 @@
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -6794,22 +6828,22 @@
       {
         "name": "x1",
         "type": "AnyOf<Int32, String>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "x2",
         "type": "AnyOf<Int32, String>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "y1",
         "type": "AnyOf<Int32, String>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "y2",
         "type": "AnyOf<Int32, String>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -6827,12 +6861,12 @@
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -6849,7 +6883,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -6883,17 +6917,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "quality",
@@ -6914,7 +6948,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -6932,17 +6966,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "preserve_meta_data",
@@ -6971,7 +7005,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -7005,7 +7039,7 @@
       {
         "name": "clip",
         "type": "AnyOf<Boolean, String>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "colorspace",
@@ -7022,7 +7056,7 @@
       {
         "name": "crop",
         "type": "AnyOf<String, Crop>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "density",
@@ -7059,7 +7093,7 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "imagemagick_stack",
@@ -7068,7 +7102,7 @@
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "negate",
@@ -7077,7 +7111,7 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "preclip_alpha",
@@ -7110,7 +7144,7 @@
       {
         "name": "rotation",
         "type": "AnyOf<Boolean, Int32>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "saturation",
@@ -7143,12 +7177,12 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "watermark_position",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "watermark_resize_strategy",
@@ -7194,12 +7228,12 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "model",
@@ -7208,7 +7242,7 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -7229,7 +7263,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -7300,7 +7334,7 @@
       {
         "name": "force_name",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "import_on_errors",
@@ -7309,17 +7343,17 @@
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -7349,17 +7383,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -7376,7 +7410,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -7438,12 +7472,12 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "optimize",
@@ -7460,7 +7494,7 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -7485,7 +7519,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "waveform_center_color",
@@ -7527,17 +7561,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -7554,7 +7588,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -7630,7 +7664,7 @@
       {
         "name": "force_name",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "import_on_errors",
@@ -7639,12 +7673,12 @@
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "page_number",
@@ -7653,7 +7687,7 @@
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -7683,17 +7717,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -7719,12 +7753,12 @@
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -7754,17 +7788,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -7781,7 +7815,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -7795,17 +7829,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -7822,7 +7856,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -7840,22 +7874,22 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "path",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -7872,7 +7906,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -7886,17 +7920,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -7926,17 +7960,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "playlist_name",
@@ -7965,7 +7999,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -7987,12 +8021,12 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "method",
@@ -8001,7 +8035,7 @@
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "preset",
@@ -8022,7 +8056,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -8048,17 +8082,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "preset",
@@ -8079,7 +8113,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "video_fade_seconds",
@@ -8101,7 +8135,7 @@
       {
         "name": "crop",
         "type": "AnyOf<String, Crop>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "ffmpeg",
@@ -8130,17 +8164,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "preset",
@@ -8165,7 +8199,7 @@
       {
         "name": "rotate",
         "type": "AnyOf<Boolean, Int32>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "turbo",
@@ -8174,7 +8208,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "width",
@@ -8224,7 +8258,7 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "image_durations",
@@ -8233,12 +8267,12 @@
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "preset",
@@ -8267,7 +8301,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "vstack",
@@ -8293,7 +8327,7 @@
       {
         "name": "enabled_variants",
         "type": "AnyOf<String, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "force_accept",
@@ -8302,17 +8336,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -8329,17 +8363,17 @@
       {
         "name": "segment_duration",
         "type": "AnyOf<Int32, String>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "sign_urls_for",
         "type": "AnyOf<Int32, String>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "variants",
@@ -8361,7 +8395,7 @@
       {
         "name": "height",
         "type": "AnyOf<Int32, String>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "preset",
@@ -8370,7 +8404,7 @@
       {
         "name": "width",
         "type": "AnyOf<Int32, String>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -8392,22 +8426,22 @@
       {
         "name": "height",
         "type": "AnyOf<Int32, String>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "preset",
@@ -8432,12 +8466,12 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "width",
         "type": "AnyOf<Int32, String>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -8447,12 +8481,12 @@
       {
         "name": "from",
         "type": "AnyOf<Int32, String>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "to",
         "type": "AnyOf<Int32, String>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -8494,17 +8528,17 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "position",
@@ -8533,7 +8567,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       }
     ]
   },
@@ -8567,22 +8601,22 @@
       {
         "name": "ignore_errors",
         "type": "AnyOf<Boolean, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "interpolate",
         "type": "AnyOf<Boolean, Dictionary<String, Object>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "offsets",
         "type": "AnyOf<List<Int32>, List<String>>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "output_meta",
         "type": "AnyOf<Boolean, OutputMeta>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "queue",
@@ -8607,7 +8641,7 @@
       {
         "name": "use",
         "type": "AnyOf<String, List<String>, AdvancedUse>",
-        "converter": "AnyOfConverter"
+        "converter": "AnyOf"
       },
       {
         "name": "width",
@@ -8659,7 +8693,7 @@
       {
         "name": "fromdate",
         "type": "Nullable<DateTime>",
-        "converter": "PaginationDateTimeConverter"
+        "converter": "DateFormat"
       },
       {
         "name": "keywords",
@@ -8684,7 +8718,7 @@
       {
         "name": "todate",
         "type": "Nullable<DateTime>",
-        "converter": "PaginationDateTimeConverter"
+        "converter": "DateFormat"
       }
     ]
   },
@@ -8726,7 +8760,7 @@
       {
         "name": "require_signature_auth",
         "type": "Boolean",
-        "converter": "BooleanToIntConverter"
+        "converter": "BooleanToInt"
       },
       {
         "name": "transcoding_result_expiry",
@@ -8747,8 +8781,8 @@
       },
       {
         "name": "require_signature_auth",
-        "type": "Boolean",
-        "converter": "BooleanToIntConverter"
+        "type": "Nullable<Boolean>",
+        "converter": "BooleanToInt"
       },
       {
         "name": "template",
@@ -8823,7 +8857,7 @@
       {
         "name": "require_signature_auth",
         "type": "Boolean",
-        "converter": "BooleanToIntConverter"
+        "converter": "BooleanToInt"
       },
       {
         "name": "transcoding_result_expiry",

@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using Transloadit.Serialization.Attributes;
 
 namespace Transloadit.Models.Tokens
 {
@@ -10,19 +10,19 @@ namespace Transloadit.Models.Tokens
         /// <summary>
         /// OAuth2 grant type. Must be <c>client_credentials</c>.
         /// </summary>
-        [JsonProperty("grant_type")]
+        [TransloaditJsonName("grant_type")]
         public string GrantType { get; set; } = "client_credentials";
 
         /// <summary>
         /// Optional token scopes, separated by spaces.
         /// </summary>
-        [JsonProperty("scope")]
+        [TransloaditJsonName("scope")]
         public string Scope { get; set; }
 
         /// <summary>
         /// Optional audience.
         /// </summary>
-        [JsonProperty("aud")]
+        [TransloaditJsonName("aud")]
         public string Aud { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 
 namespace Transloadit.Models.Robots.FileImporting
 {
@@ -10,19 +10,19 @@ namespace Transloadit.Models.Robots.FileImporting
         /// <summary>
         /// Wasabi host.
         /// </summary>
-        [JsonProperty("host")]
+        [TransloaditJsonName("host")]
         public string Host { get; set; }
 
         /// <summary>
         /// Wasabi user.
         /// </summary>
-        [JsonProperty("user")]
+        [TransloaditJsonName("user")]
         public string User { get; set; }
 
         /// <summary>
         /// Wasabi password.
         /// </summary>
-        [JsonProperty("password")]
+        [TransloaditJsonName("password")]
         public string Password { get; set; }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Transloadit.Models.Robots.FileImporting
         /// This should only be set if all subsequent Steps use Robots that support file stubs.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
-        [JsonProperty("return_file_stubs")]
+        [TransloaditJsonName("return_file_stubs")]
         public bool? ReturnFileStubs { get; set; }
 
         /// <summary>

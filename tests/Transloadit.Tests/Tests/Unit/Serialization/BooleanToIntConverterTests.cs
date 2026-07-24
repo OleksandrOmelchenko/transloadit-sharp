@@ -1,3 +1,4 @@
+#if TRANSLOADIT_NEWTONSOFT
 using System.IO;
 using Newtonsoft.Json;
 using Transloadit.Serialization;
@@ -46,3 +47,4 @@ namespace Transloadit.Tests.Tests.Unit.Serialization
         }
     }
 }
+#endif

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 
 namespace Transloadit.Models.Credentials
 {
@@ -18,7 +18,7 @@ namespace Transloadit.Models.Credentials
         /// <summary>
         /// Backblaze credentials content.
         /// </summary>
-        [JsonProperty("content")]
+        [TransloaditJsonName("content")]
         public BackblazeCredentialsContent Content { get; set; }
     }
 
@@ -30,19 +30,19 @@ namespace Transloadit.Models.Credentials
         /// <summary>
         /// Backblaze bucket name.
         /// </summary>
-        [JsonProperty("bucket")]
+        [TransloaditJsonName("bucket")]
         public string Bucket { get; set; }
 
         /// <summary>
         /// Backblaze App Key ID.
         /// </summary>
-        [JsonProperty("app_key_id")]
+        [TransloaditJsonName("app_key_id")]
         public string AppKeyId { get; set; }
 
         /// <summary>
         /// Backblaze App Key.
         /// </summary>
-        [JsonProperty("app_key")]
+        [TransloaditJsonName("app_key")]
         public string AppKey { get; set; }
     }
 }

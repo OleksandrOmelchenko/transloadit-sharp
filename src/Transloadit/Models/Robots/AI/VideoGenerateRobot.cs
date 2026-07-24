@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using Transloadit.Serialization.Attributes;
 
 namespace Transloadit.Models.Robots.AI
 {
@@ -11,103 +11,103 @@ namespace Transloadit.Models.Robots.AI
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
-        [JsonProperty("use")]
+        [TransloaditJsonName("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
         /// The model to use.
         /// </summary>
-        [JsonProperty("model")]
+        [TransloaditJsonName("model")]
         public string Model { get; set; }
 
         /// <summary>
         /// Required prompt describing desired video content.
         /// </summary>
-        [JsonProperty("prompt")]
+        [TransloaditJsonName("prompt")]
         public string Prompt { get; set; }
 
         /// <summary>
         /// Output format such as <c>mp4</c> or <c>gif</c>.
         /// </summary>
-        [JsonProperty("format")]
+        [TransloaditJsonName("format")]
         public string Format { get; set; }
 
         /// <summary>
         /// Deterministic generation seed.
         /// </summary>
-        [JsonProperty("seed")]
+        [TransloaditJsonName("seed")]
         public AnyOf<int, string> Seed { get; set; }
 
         /// <summary>
         /// Output aspect ratio.
         /// </summary>
-        [JsonProperty("aspect_ratio")]
+        [TransloaditJsonName("aspect_ratio")]
         public string AspectRatio { get; set; }
 
         /// <summary>
         /// Output height in pixels.
         /// </summary>
-        [JsonProperty("height")]
+        [TransloaditJsonName("height")]
         public AnyOf<int, string> Height { get; set; }
 
         /// <summary>
         /// Output width in pixels.
         /// </summary>
-        [JsonProperty("width")]
+        [TransloaditJsonName("width")]
         public AnyOf<int, string> Width { get; set; }
 
         /// <summary>
         /// Generation style.
         /// </summary>
-        [JsonProperty("style")]
+        [TransloaditJsonName("style")]
         public string Style { get; set; }
 
         /// <summary>
         /// Number of variants to generate.
         /// </summary>
-        [JsonProperty("num_outputs")]
+        [TransloaditJsonName("num_outputs")]
         public AnyOf<int, string> NumOutputs { get; set; }
 
         /// <summary>
         /// Output duration in seconds.
         /// </summary>
-        [JsonProperty("duration")]
+        [TransloaditJsonName("duration")]
         public AnyOf<int, string> Duration { get; set; }
 
         /// <summary>
         /// Frames per second.
         /// </summary>
-        [JsonProperty("fps")]
+        [TransloaditJsonName("fps")]
         public AnyOf<int, string> Fps { get; set; }
 
         /// <summary>
         /// Motion intensity control.
         /// </summary>
-        [JsonProperty("motion_amount")]
+        [TransloaditJsonName("motion_amount")]
         public AnyOf<int, string> MotionAmount { get; set; }
 
         /// <summary>
         /// Camera movement type.
         /// </summary>
-        [JsonProperty("camera_motion")]
+        [TransloaditJsonName("camera_motion")]
         public string CameraMotion { get; set; }
 
         /// <summary>
         /// Negative prompt describing what to avoid.
         /// </summary>
-        [JsonProperty("negative_prompt")]
+        [TransloaditJsonName("negative_prompt")]
         public string NegativePrompt { get; set; }
 
         /// <summary>
         /// Reference adherence strength.
         /// </summary>
-        [JsonProperty("reference_strength")]
+        [TransloaditJsonName("reference_strength")]
         public AnyOf<double, string> ReferenceStrength { get; set; }
 
         /// <summary>
         /// Provider override.
         /// </summary>
-        [JsonProperty("provider")]
+        [TransloaditJsonName("provider")]
         public string Provider { get; set; }
 
         /// <summary>

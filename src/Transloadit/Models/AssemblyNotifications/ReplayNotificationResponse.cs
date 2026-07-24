@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 
 namespace Transloadit.Models.AssemblyNotifications
 {
@@ -17,14 +17,14 @@ namespace Transloadit.Models.AssemblyNotifications
         /// <summary>
         /// Notification url to which Transloadit will send Assembly status when the Assembly is completed.
         /// </summary>
-        [JsonProperty("notify_url")]
+        [TransloaditJsonName("notify_url")]
         public string NotifyUrl { get; set; }
 
         /// <summary>
         /// Whether to wait for the notification to finish.
         /// <para>Default: <c>true</c>.</para>
         /// </summary>
-        [JsonProperty("wait")]
+        [TransloaditJsonName("wait")]
         public bool? Wait { get; set; }
     }
 }

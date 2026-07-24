@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using Transloadit.Serialization.Attributes;
 
 namespace Transloadit.Models.Robots.FileExporting
 {
@@ -10,7 +10,7 @@ namespace Transloadit.Models.Robots.FileExporting
         /// <summary>
         /// Whether to create a sharing URL.
         /// </summary>
-        [JsonProperty("create_sharing_link")]
+        [TransloaditJsonName("create_sharing_link")]
         public bool? CreateSharingLink { get; set; }
 
         /// <summary>

@@ -5,6 +5,8 @@ using Transloadit.Models.Credentials;
 using Transloadit.Serialization;
 using Xunit;
 
+using Transloadit.Tests.Infrastructure;
+
 namespace Transloadit.Tests.Tests.Models
 {
     // GenericCredentialsRequest has no parameterless ctor, so the reflection smoke
@@ -20,7 +22,7 @@ namespace Transloadit.Tests.Tests.Models
                 Content = new Dictionary<string, string> { ["key"] = "value" },
             };
 
-            var json = JsonConvert.SerializeObject(credentials, TransloaditSerializerSettings.CreateDefault());
+            var json = TestSerializer.Default.Serialize(credentials);
             var parsed = JObject.Parse(json);
 
             Assert.Equal("mytype", (string)parsed["type"]);

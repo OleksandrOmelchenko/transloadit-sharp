@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 using System.Collections.Generic;
 
 namespace Transloadit.Models.Robots.VideoEncoding
@@ -11,7 +11,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
-        [JsonProperty("use")]
+        [TransloaditJsonName("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
@@ -20,21 +20,21 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// to override each of the flash preset's values manually. One of <see cref="Constants.VideoEncodingPresetsV5"/> or
         /// <see cref="Constants.VideoEncodingPresetsV6"/>.
         /// </summary>
-        [JsonProperty("preset")]
+        [TransloaditJsonName("preset")]
         public string Preset { get; set; }
 
         /// <summary>
         /// Width of the new video, in pixels. If the value is not specified and the preset parameter is available, the preset's supplied width 
         /// will be implemented. Value 1-1920.
         /// </summary>
-        [JsonProperty("width")]
+        [TransloaditJsonName("width")]
         public int? Width { get; set; }
 
         /// <summary>
         /// Height of the new video, in pixels. If the value is not specified and the preset parameter is available, the preset's supplied height 
         /// will be implemented. Value 1-1000.
         /// </summary>
-        [JsonProperty("height")]
+        [TransloaditJsonName("height")]
         public int? Height { get; set; }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// <c>pad</c>, <c>stretch</c> and <c>crop</c>.
         /// <para>Default: <c>pad</c>.</para>
         /// </summary>
-        [JsonProperty("resize_strategy")]
+        [TransloaditJsonName("resize_strategy")]
         public string ResizeStrategy { get; set; }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// The default color is black.
         /// <para>Default: <c>00000000</c>.</para>
         /// </summary>
-        [JsonProperty("background")]
+        [TransloaditJsonName("background")]
         public string Background { get; set; }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// frame appears (the inverse of a framerate of "5"). Likewise for "1/10", "1/20", etc. A value of "5" means there are 5 frames per second.
         /// <para>Default: <c>1/5</c>.</para>
         /// </summary>
-        [JsonProperty("framerate")]
+        [TransloaditJsonName("framerate")]
         public string Framerate { get; set; }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// for 9s. The <c>duration</c> parameter will automatically be set to the sum of the <c>image_durations</c>, so 17 in our example. 
         /// It can still be overwritten, though, in which case the last image will be shown until the defined duration is reached.
         /// </summary>
-        [JsonProperty("image_durations")]
+        [TransloaditJsonName("image_durations")]
         public List<double> ImageDurations { get; set; }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// </list>
         /// <para>Default: Depends on the input.</para>
         /// </summary>
-        [JsonProperty("duration")]
+        [TransloaditJsonName("duration")]
         public double? Duration { get; set; }
 
         /// <summary>
@@ -90,14 +90,14 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// to start playing after 5 seconds and not immediately, then this is the parameter to use.
         /// <para>Default: <c>0.0</c>.</para>
         /// </summary>
-        [JsonProperty("audio_delay")]
+        [TransloaditJsonName("audio_delay")]
         public double? AudioDelay { get; set; }
 
         /// <summary>
         /// Determines whether the audio of the video should be replaced with a provided audio file.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
-        [JsonProperty("replace_audio")]
+        [TransloaditJsonName("replace_audio")]
         public bool? ReplaceAudio { get; set; }
 
         /// <summary>
@@ -105,14 +105,14 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// <c>/video/encode</c> Step before using this parameter to enforce this.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
-        [JsonProperty("vstack")]
+        [TransloaditJsonName("vstack")]
         public bool? Vstack { get; set; }
 
         /// <summary>
         /// FFmpeg stack version. One of <see cref="Constants.FFMpegStack"/>: <c>v5.0.0</c> or <c>v6.0.0</c>.
         /// <para>Default: <c>v5.0.0</c>.</para>
         /// </summary>
-        [JsonProperty("ffmpeg_stack")]
+        [TransloaditJsonName("ffmpeg_stack")]
         public string FfmpegStack { get; set; }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Transloadit.Models.Robots.VideoEncoding
         /// For available options, see the <a href="https://ffmpeg.org/ffmpeg-doc.html">FFmpeg documentation</a>. 
         /// Options specified here take precedence over the preset options.
         /// </summary>
-        [JsonProperty("ffmpeg")]
+        [TransloaditJsonName("ffmpeg")]
         public Dictionary<string, object> Ffmpeg { get; set; }
 
         /// <summary>

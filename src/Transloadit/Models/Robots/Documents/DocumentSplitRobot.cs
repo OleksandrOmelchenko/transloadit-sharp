@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+using Transloadit.Serialization.Attributes;
 
 namespace Transloadit.Models.Robots.Documents
 {
@@ -11,14 +11,14 @@ namespace Transloadit.Models.Robots.Documents
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
-        [JsonProperty("use")]
+        [TransloaditJsonName("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
         /// The pages to extract from the document. Pages can be selected either through their page number 
         /// (starting at 1, e.g. "5") or through an inclusive range (e.g. "1-10").
         /// </summary>
-        [JsonProperty("pages")]
+        [TransloaditJsonName("pages")]
         public AnyOf<string, List<string>> Pages { get; set; }
 
         /// <summary>

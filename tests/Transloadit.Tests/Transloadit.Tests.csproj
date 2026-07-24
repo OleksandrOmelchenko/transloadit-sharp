@@ -37,10 +37,17 @@
     </Content>
   </ItemGroup>
 
+  <!-- match the library: net461 uses the Newtonsoft serializer, so guard tests accordingly -->
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net461'">
+    <DefineConstants>$(DefineConstants);TRANSLOADIT_NEWTONSOFT</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="xunit" Version="2.5.3" />
+    <!-- test-only: used to parse/inspect JSON in assertions regardless of the serializer under test -->
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' != 'net461' And '$(TargetFramework)' != 'netstandard2.0'">

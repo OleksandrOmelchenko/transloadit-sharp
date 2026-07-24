@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 using System.Collections.Generic;
 
 namespace Transloadit.Models.Robots.FileCompressing
@@ -11,7 +11,7 @@ namespace Transloadit.Models.Robots.FileCompressing
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
-        [JsonProperty("use")]
+        [TransloaditJsonName("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
@@ -19,14 +19,14 @@ namespace Transloadit.Models.Robots.FileCompressing
         /// Setting <c>tar</c> without setting <c>gzip</c> to <c>true</c> results in an archive that's not compressed in any way.
         /// <para>Default: <c>tar</c>.</para>
         /// </summary>
-        [JsonProperty("format")]
+        [TransloaditJsonName("format")]
         public string Format { get; set; }
 
         /// <summary>
         /// Determines if the result archive should also be gzipped. Gzip compression is only applied if the <c>tar</c> format is used.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
-        [JsonProperty("gzip")]
+        [TransloaditJsonName("gzip")]
         public bool? Gzip { get; set; }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Transloadit.Models.Robots.FileCompressing
         /// To unzip the archive, the user will need to provide the password in a text input field prompt.
         /// <para>This parameter has no effect if the <c>format</c> parameter is anything other than <c>zip</c>.</para>
         /// </summary>
-        [JsonProperty("password")]
+        [TransloaditJsonName("password")]
         public string Password { get; set; }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Transloadit.Models.Robots.FileCompressing
         /// <c>-1</c> is fastest with lowest compression. <c>-9</c> is slowest with the highest compression.
         /// <para>Default: <c>-6</c>.</para>
         /// </summary>
-        [JsonProperty("compression_level")]
+        [TransloaditJsonName("compression_level")]
         public int? CompressionLevel { get; set; }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Transloadit.Models.Robots.FileCompressing
         /// or in subfolders according to the explanation below (value for this is <c>advanced</c>).
         /// <para>Default: <c>advanced</c>.</para>
         /// </summary>
-        [JsonProperty("file_layout")]
+        [TransloaditJsonName("file_layout")]
         public string FileLayout { get; set; }
 
         /// <summary>

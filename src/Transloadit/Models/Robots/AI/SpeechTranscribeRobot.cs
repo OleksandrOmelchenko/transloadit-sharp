@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 using System.Collections.Generic;
 
 namespace Transloadit.Models.Robots.AI
@@ -11,13 +11,13 @@ namespace Transloadit.Models.Robots.AI
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
-        [JsonProperty("use")]
+        [TransloaditJsonName("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
         /// Which AI provider to leverage. One of <see cref="Constants.AIProviders"/>: <c>aws</c> and <c>gcp</c>.
         /// </summary>
-        [JsonProperty("provider")]
+        [TransloaditJsonName("provider")]
         public string Provider { get; set; }
 
          /// <summary>
@@ -25,7 +25,7 @@ namespace Transloadit.Models.Robots.AI
         /// This parameter has no effect if the format parameter is set to <c>text</c>.
         /// <para>Default: <c>full</c>.</para>
         /// </summary>
-        [JsonProperty("granularity")]
+        [TransloaditJsonName("granularity")]
         public string Granularity { get; set; }
 
         /// <summary>
@@ -39,14 +39,14 @@ namespace Transloadit.Models.Robots.AI
         /// <item><c>text</c> returns the recognized text as a plain UTF-8 encoded text file.</item>
         /// </list>
         /// </summary>
-        [JsonProperty("format")]
+        [TransloaditJsonName("format")]
         public string Format { get; set; }
 
         /// <summary>
         /// The spoken language of the audio or video. This will also be the language of the transcribed text. The language should be specified in the 
         /// <a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP-47</a> format, such as <c>en-GB</c>, <c>de-DE</c> or <c>fr-FR</c>.
         /// </summary>
-        [JsonProperty("source_language")]
+        [TransloaditJsonName("source_language")]
         public string SourceLanguage { get; set; }
 
         /// <summary>

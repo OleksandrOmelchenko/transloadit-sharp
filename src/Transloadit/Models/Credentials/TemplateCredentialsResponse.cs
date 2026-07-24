@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 
@@ -12,55 +12,55 @@ namespace Transloadit.Models.Credentials
         /// <summary>
         /// Template credential id.
         /// </summary>
-        [JsonProperty("id")]
+        [TransloaditJsonName("id")]
         public string Id { get; set; }
 
         /// <summary>
         /// Account id.
         /// </summary>
-        [JsonProperty("account_id")]
+        [TransloaditJsonName("account_id")]
         public string AccountId { get; set; }
 
         /// <summary>
         /// Template credential name.
         /// </summary>
-        [JsonProperty("name")]
+        [TransloaditJsonName("name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Template credential type.
         /// </summary>
-        [JsonProperty("type")]
+        [TransloaditJsonName("type")]
         public string Type { get; set; }
 
         /// <summary>
         /// Creation date.
         /// </summary>
-        [JsonProperty("created")]
+        [TransloaditJsonName("created")]
         public DateTimeOffset Created { get; set; }
 
         /// <summary>
         /// Last modification date.
         /// </summary>
-        [JsonProperty("modified")]
+        [TransloaditJsonName("modified")]
         public DateTimeOffset Modified { get; set; }
 
         /// <summary>
         /// Deletion date.
         /// </summary>
-        [JsonProperty("deleted")]
+        [TransloaditJsonName("deleted")]
         public DateTimeOffset? Deleted { get; set; }
 
         /// <summary>
         /// Template credential content.
         /// </summary>
-        [JsonProperty("content")]
+        [TransloaditJsonName("content")]
         public Dictionary<string, string> Content { get; set; }
 
         /// <summary>
         /// Credential JSON representation.
         /// </summary>
-        [JsonProperty("stringified")]
+        [TransloaditJsonName("stringified")]
         public string Stringified { get; set; }
     }
 
@@ -72,7 +72,7 @@ namespace Transloadit.Models.Credentials
         /// <summary>
         /// Credentials list.
         /// </summary>
-        [JsonProperty("credentials")]
+        [TransloaditJsonName("credentials")]
         public List<Credential> Credentials { get; set; }
     }
 
@@ -84,7 +84,7 @@ namespace Transloadit.Models.Credentials
         /// <summary>
         /// Credential data.
         /// </summary>
-        [JsonProperty("credential")]
+        [TransloaditJsonName("credential")]
         public Credential Credential { get; set; }
     }
 

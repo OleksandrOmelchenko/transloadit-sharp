@@ -2,7 +2,7 @@
   <PropertyGroup>
     <AssemblyName>Transloadit</AssemblyName>
     <Title>Transloadit Sharp</Title>
-    <Version>0.9.4</Version>
+    <Version>0.10.0</Version>
     <Copyright>Copyright © 2025 Oleksandr Omelchenko</Copyright>
     <PackageTags>transloadit</PackageTags>
     <Description>Transloadit Sharp is an API client and portable class library for the Transloadit API.</Description>
@@ -39,6 +39,20 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <DebugType>embedded</DebugType>
   </PropertyGroup>
+  <!-- net452 and net461 cannot consume System.Text.Json 8 (min net462), so they use Newtonsoft.Json -->
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net452' or '$(TargetFramework)' == 'net461'">
+    <DefineConstants>$(DefineConstants);TRANSLOADIT_NEWTONSOFT</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net452' or '$(TargetFramework)' == 'net461'">
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <!-- every other framework uses System.Text.Json; reference the package where STJ 8 is not already in-box -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0' or '$(TargetFramework)' == 'net462' or '$(TargetFramework)' == 'net472' or '$(TargetFramework)' == 'net48' or '$(TargetFramework)' == 'net5.0' or '$(TargetFramework)' == 'net6.0' or '$(TargetFramework)' == 'net7.0'">
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
     <None Include="../../readme.md" Link="readme.md" Pack="true" PackagePath="/" Visible="false" />

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 
 namespace Transloadit.Models.Robots.FileExporting
 {
@@ -10,13 +10,13 @@ namespace Transloadit.Models.Robots.FileExporting
         /// <summary>
         /// The URL of the file in the result JSON.
         /// </summary>
-        [JsonProperty("url_template")]
+        [TransloaditJsonName("url_template")]
         public string UrlTemplate { get; set; }
 
         /// <summary>
         /// The SSL URL of the file in the result JSON.
         /// </summary>
-        [JsonProperty("ssl_url_template")]
+        [TransloaditJsonName("ssl_url_template")]
         public string SslUrlTemplate { get; set; }
 
         /// <summary>
@@ -24,31 +24,31 @@ namespace Transloadit.Models.Robots.FileExporting
         /// command would accept, such as <c>755</c>. If you don't specify this option, the file's permission bits aren't changed at all, 
         /// meaning it's up to your server's configuration (e.g. umask).
         /// </summary>
-        [JsonProperty("file_chmod")]
+        [TransloaditJsonName("file_chmod")]
         public string FileChmod { get; set; }
 
         /// <summary>
         /// SFTP host.
         /// </summary>
-        [JsonProperty("host")]
+        [TransloaditJsonName("host")]
         public string Host { get; set; }
 
         /// <summary>
         /// SFTP port.
         /// </summary>
-        [JsonProperty("port")]
+        [TransloaditJsonName("port")]
         public int? Port { get; set; }
 
         /// <summary>
         /// SFTP user.
         /// </summary>
-        [JsonProperty("user")]
+        [TransloaditJsonName("user")]
         public string User { get; set; }
 
         /// <summary>
         /// SFTP public key.
         /// </summary>
-        [JsonProperty("public_key")]
+        [TransloaditJsonName("public_key")]
         public string PublicKey { get; set; }
 
         /// <summary>

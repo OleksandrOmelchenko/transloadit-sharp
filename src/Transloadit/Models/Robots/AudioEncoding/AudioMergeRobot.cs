@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 using System.Collections.Generic;
 
 namespace Transloadit.Models.Robots.AudioEncoding
@@ -11,7 +11,7 @@ namespace Transloadit.Models.Robots.AudioEncoding
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
-        [JsonProperty("use")]
+        [TransloaditJsonName("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
@@ -20,19 +20,19 @@ namespace Transloadit.Models.Robots.AudioEncoding
         /// each of the MP3 preset's values manually. One of <see cref="Constants.AudioEncodingPresetsV5"/> 
         /// or <see cref="Constants.AudioEncodingPresetsV6"/>.
         /// </summary>
-        [JsonProperty("preset")]
+        [TransloaditJsonName("preset")]
         public string Preset { get; set; }
 
         /// <summary>
         /// Bit rate of the resulting audio file, in bits per second. If not specified will default to the bit rate of the input audio file.
         /// </summary>
-        [JsonProperty("bitrate")]
+        [TransloaditJsonName("bitrate")]
         public int? Bitrate { get; set; }
 
         /// <summary>
         /// Sample rate of the resulting audio file, in Hertz. If not specified will default to the sample rate of the input audio file.
         /// </summary>
-        [JsonProperty("sample_rate")]
+        [TransloaditJsonName("sample_rate")]
         public int? SampleRate { get; set; }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Transloadit.Models.Robots.AudioEncoding
         /// <c>shortest</c> (duration of the shortest audio file) or <c>longest</c> for the duration of the longest input file.
         /// <para>Default: <c>longest</c>.</para>
         /// </summary>
-        [JsonProperty("duration")]
+        [TransloaditJsonName("duration")]
         public string Duration { get; set; }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Transloadit.Models.Robots.AudioEncoding
         /// where your overlay file is typically much shorter than the main audio file.
         /// <para>Default: <c>false</c>.</para>
         /// </summary>
-        [JsonProperty("loop")]
+        [TransloaditJsonName("loop")]
         public bool? Loop { get; set; }
 
         /// <summary>
@@ -57,14 +57,14 @@ namespace Transloadit.Models.Robots.AudioEncoding
         /// this could result in very loud output.
         /// <para>Default: <c>average</c>.</para>
         /// </summary>
-        [JsonProperty("volume")]
+        [TransloaditJsonName("volume")]
         public string Volume { get; set; }
 
         /// <summary>
         /// FFmpeg stack version. One of <see cref="Constants.FFMpegStack"/>: <c>v5.0.0</c> or <c>v6.0.0</c>.
         /// <para>Default: <c>v5.0.0</c>.</para>
         /// </summary>
-        [JsonProperty("ffmpeg_stack")]
+        [TransloaditJsonName("ffmpeg_stack")]
         public string FfmpegStack { get; set; }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Transloadit.Models.Robots.AudioEncoding
         /// For available options, see the <a href="https://ffmpeg.org/ffmpeg-doc.html">FFmpeg documentation</a>. 
         /// Options specified here take precedence over the preset options.
         /// </summary>
-        [JsonProperty("ffmpeg")]
+        [TransloaditJsonName("ffmpeg")]
         public Dictionary<string, object> Ffmpeg { get; set; }
 
         /// <summary>

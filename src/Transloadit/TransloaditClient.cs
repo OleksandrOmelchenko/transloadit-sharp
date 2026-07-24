@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using Transloadit.Constants;
 using Transloadit.Models;
 using Transloadit.Models.Tokens;
@@ -111,9 +110,13 @@ namespace Transloadit
             {
                 ApiBase = options?.ApiBase ?? new Uri(ApiBase),
                 HttpClient = httpClient,
-                RequestSerializerSettings = options?.RequestSerializerSettings ?? TransloaditSerializerSettings.CreateDefault(),
-                ResponseSerializerSettings = options?.ResponseSerializerSettings ?? TransloaditSerializerSettings.CreateDefault(),
+                Serializer = options?.Serializer ?? CreateDefaultSerializer(),
             };
+        }
+
+        private static ITransloaditSerializer CreateDefaultSerializer()
+        {
+            return TransloaditSerializerFactory.CreateDefault();
         }
 
         /// <summary>
@@ -155,7 +158,11 @@ namespace Transloadit
 
             var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            var parsed = JsonConvert.DeserializeObject<T>(content, _options.ResponseSerializerSettings);
+            // an empty/whitespace body (e.g. a gateway 502/504) would otherwise throw an opaque JSON/NRE and hide the
+            // HTTP status; fall back to an empty response so the caller can inspect TransloaditResponse.StatusCode
+            var parsed = string.IsNullOrWhiteSpace(content)
+                ? Activator.CreateInstance<T>()
+                : _options.Serializer.Deserialize<T>(content) ?? Activator.CreateInstance<T>();
             parsed.TransloaditResponse = new TransloaditResponse(response.StatusCode, response.Headers, content);
             return parsed;
         }
@@ -197,7 +204,7 @@ namespace Transloadit
             var response = await _options.HttpClient.SendAsync(message).ConfigureAwait(false);
             var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            var parsed = JsonConvert.DeserializeObject<TokenResponse>(content, _options.ResponseSerializerSettings) ?? new TokenResponse();
+            var parsed = _options.Serializer.Deserialize<TokenResponse>(content) ?? new TokenResponse();
             parsed.TransloaditResponse = new TransloaditResponse(response.StatusCode, response.Headers, content);
             return parsed;
         }
@@ -214,16 +221,36 @@ namespace Transloadit
             MultipartFormDataContent content = null)
         {
             parameters ??= new BaseParams();
-            parameters.Auth ??= new AuthParams();
-            parameters.Auth.Key ??= _key;
 
             var enableSignatureAuth = parameters.EnableSignatureAuth && _secret is not null;
+
+            // build the effective auth on a fresh object instead of mutating the caller's params — reusing a request
+            // must not freeze `expires` at the first call's timestamp (later calls would be rejected as expired)
+            var callerAuth = parameters.Auth;
+            var effectiveAuth = new AuthParams
+            {
+                Key = callerAuth?.Key ?? _key,
+                Expires = callerAuth?.Expires,
+                Nonce = callerAuth?.Nonce,
+                Referer = callerAuth?.Referer,
+                MaxSize = callerAuth?.MaxSize,
+            };
             if (enableSignatureAuth)
             {
-                parameters.Auth.Expires ??= DateTime.UtcNow.AddMinutes(30);
+                effectiveAuth.Expires ??= DateTime.UtcNow.AddMinutes(30);
             }
 
-            var paramsJson = JsonConvert.SerializeObject(parameters, _options.RequestSerializerSettings);
+            string paramsJson;
+            parameters.Auth = effectiveAuth;
+            try
+            {
+                paramsJson = _options.Serializer.Serialize(parameters);
+            }
+            finally
+            {
+                parameters.Auth = callerAuth;
+            }
+
             var signature = enableSignatureAuth
                 ? SignatureUtilities.CalculateSignature(paramsJson, _secret)
                 : null;

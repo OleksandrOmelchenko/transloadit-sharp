@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
+using Transloadit.Tests.Infrastructure;
 using Transloadit.Constants;
 using Transloadit.Models.Assemblies;
 using Transloadit.Models.Robots;
@@ -343,7 +343,7 @@ namespace Transloadit.Tests.Tests.Api.Assemblies
                 new ReplayAssemblyRequest { ReparseTemplate = false });
             Assert.Equal(ResponseCodes.AssemblyReplaying, firstReplayResponse.Base.Ok);
             var firstAssembly = await AssemblyTracker.WaitCompletionAsync(firstReplayResponse.AssemblyId);
-            var firstAssemblySteps = JsonConvert.DeserializeObject<TemplateContent>(firstAssembly.MergedParams);
+            var firstAssemblySteps = TestSerializer.Default.Deserialize<TemplateContent>(firstAssembly.MergedParams);
             Assert.True(firstAssembly.IsSuccessResponse());
             //bug: first replay expicitly say to not reparse a template, but as the result first replay contains
             //new and old templates versions merged
@@ -356,7 +356,7 @@ namespace Transloadit.Tests.Tests.Api.Assemblies
             Assert.Equal(ResponseCodes.AssemblyReplaying, secondReplayResponse.Base.Ok);
             Assert.Equal(Configuration.NotifyUrl, secondReplayResponse.NotifyUrl);
             var secondAssembly = await AssemblyTracker.WaitCompletionAsync(secondReplayResponse.AssemblyId);
-            var secondAssemblySteps = JsonConvert.DeserializeObject<TemplateContent>(secondAssembly.MergedParams);
+            var secondAssemblySteps = TestSerializer.Default.Deserialize<TemplateContent>(secondAssembly.MergedParams);
             Assert.True(secondAssembly.IsSuccessResponse());
             //bug: assembly url is empty while even the replay response contains the passed url
             Assert.Equal(Configuration.NotifyUrl, secondAssembly.NotifyUrl);
@@ -367,7 +367,7 @@ namespace Transloadit.Tests.Tests.Api.Assemblies
             var thirdReplayResponse = await TransloaditClient.Assemblies.ReplayAsync(createAssemblyResponse.AssemblyId);
             Assert.Equal(ResponseCodes.AssemblyReplaying, firstReplayResponse.Base.Ok);
             var thirdAssembly = await AssemblyTracker.WaitCompletionAsync(thirdReplayResponse.AssemblyId);
-            var thirdAssemblySteps = JsonConvert.DeserializeObject<TemplateContent>(thirdAssembly.MergedParams);
+            var thirdAssemblySteps = TestSerializer.Default.Deserialize<TemplateContent>(thirdAssembly.MergedParams);
             Assert.True(thirdAssembly.IsSuccessResponse());
             Assert.Equal(templateResponse.Content.Steps.Count, thirdAssemblySteps.Steps.Count);
             //bug: according to the docs the template is not reparsed on a replay by default

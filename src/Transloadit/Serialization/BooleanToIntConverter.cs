@@ -1,3 +1,4 @@
+#if TRANSLOADIT_NEWTONSOFT
 ﻿using System;
 using Newtonsoft.Json;
 
@@ -25,3 +26,4 @@ namespace Transloadit.Serialization
         public override bool CanConvert(Type objectType) => objectType == typeof(bool);
     }
 }
+#endif

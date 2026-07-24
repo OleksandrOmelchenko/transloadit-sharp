@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Concurrent;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -93,6 +95,79 @@ namespace Transloadit.Tests.Tests.Unit
             Assert.NotNull(response.TransloaditResponse);
             Assert.Equal(HttpStatusCode.OK, response.TransloaditResponse.StatusCode);
             Assert.Equal(AssemblyJson, response.TransloaditResponse.Content);
+        }
+
+        [Fact]
+        public async Task CancelByUri_IsUnsigned()
+        {
+            var handler = FakeHttpMessageHandler.Json(AssemblyJson);
+            var client = TestClientFactory.Create(handler);
+
+            await client.Assemblies.CancelAsync(new Uri("https://api.test/assemblies/abc"));
+
+            // assembly cancel is key-only; the DELETE must not carry a signature (parity with CancelAsync(string))
+            Assert.Equal(HttpMethod.Delete, handler.LastMethod);
+            Assert.DoesNotContain("signature", handler.LastRequestContent ?? string.Empty);
+        }
+
+        [Fact]
+        public async Task Post_DoesNotMutateCallerAuth()
+        {
+            var handler = FakeHttpMessageHandler.Json(AssemblyJson);
+            var client = TestClientFactory.Create(handler);
+            var request = new AssemblyRequest { TemplateId = "tpl" };
+
+            await client.Assemblies.CreateAsync(request);
+
+            // the signed request injects auth.key + expires only for the wire payload; it must not persist them on the
+            // caller's object, or reusing the request would freeze `expires` and later calls would be rejected as expired
+            Assert.Null(request.Auth);
+        }
+
+        [Fact]
+        public async Task Response_EmptyBody_DoesNotThrowAndSurfacesStatus()
+        {
+            var handler = FakeHttpMessageHandler.Json(string.Empty, HttpStatusCode.BadGateway);
+            var client = TestClientFactory.Create(handler);
+
+            var response = await client.Assemblies.GetAsync("abc");
+
+            // an empty gateway-error body must not throw; the caller can still read the HTTP status
+            Assert.NotNull(response);
+            Assert.Equal(HttpStatusCode.BadGateway, response.TransloaditResponse.StatusCode);
+        }
+
+        [Fact]
+        public async Task ConcurrentSignedRequests_AreIndependentAndUncorrupted()
+        {
+            // one client shares a serializer and injects auth per request; concurrent calls must not race on that
+            // shared state — every request must reach the wire exactly once with its own params and a signature
+            const int count = 25;
+            var bodies = new ConcurrentBag<string>();
+            var handler = new FakeHttpMessageHandler((request, _) =>
+            {
+                bodies.Add(request.Content == null ? string.Empty : request.Content.ReadAsStringAsync().GetAwaiter().GetResult());
+                return new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(AssemblyJson, Encoding.UTF8, "application/json"),
+                };
+            });
+            var client = TestClientFactory.Create(handler);
+
+            var responses = await Task.WhenAll(
+                Enumerable.Range(0, count).Select(k => client.Assemblies.CreateAsync(new AssemblyRequest { TemplateId = $"tpl-{k}" })));
+
+            Assert.All(responses, r => Assert.Equal("abc", r.AssemblyId));
+
+            var captured = bodies.ToList();
+            Assert.Equal(count, captured.Count);
+            Assert.All(captured, body => Assert.Contains("signature", body));
+            // each distinct template id reached the wire exactly once (no lost/duplicated/cross-contaminated requests).
+            // match the quoted value so "tpl-2" does not also match "tpl-20"
+            for (var k = 0; k < count; k++)
+            {
+                Assert.Equal(1, captured.Count(b => b.Contains($"\"tpl-{k}\"")));
+            }
         }
 
         [Fact]

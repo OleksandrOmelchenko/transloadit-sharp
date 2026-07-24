@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+using Transloadit.Serialization.Attributes;
 
 namespace Transloadit.Models.Credentials
 {
@@ -11,7 +11,7 @@ namespace Transloadit.Models.Credentials
         /// <summary>
         /// Template credentials name.
         /// </summary>
-        [JsonProperty("name")]
+        [TransloaditJsonName("name")]
         public string Name { get; set; }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Transloadit.Models.Credentials
         /// <summary>
         /// Generic credentials content.
         /// </summary>
-        [JsonProperty("content")]
+        [TransloaditJsonName("content")]
         public Dictionary<string, string> Content { get; set; }
     }
 }

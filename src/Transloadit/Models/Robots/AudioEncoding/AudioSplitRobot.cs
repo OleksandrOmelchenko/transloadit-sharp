@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using Transloadit.Serialization.Attributes;
 
 namespace Transloadit.Models.Robots.AudioEncoding
 {
@@ -11,43 +11,43 @@ namespace Transloadit.Models.Robots.AudioEncoding
         /// <summary>
         /// Specifies which Step(s) to use as input.
         /// </summary>
-        [JsonProperty("use")]
+        [TransloaditJsonName("use")]
         public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
 
         /// <summary>
         /// FFmpeg options merged over preset options.
         /// </summary>
-        [JsonProperty("ffmpeg")]
+        [TransloaditJsonName("ffmpeg")]
         public Dictionary<string, object> Ffmpeg { get; set; }
 
         /// <summary>
         /// FFmpeg stack version.
         /// </summary>
-        [JsonProperty("ffmpeg_stack")]
+        [TransloaditJsonName("ffmpeg_stack")]
         public string FfmpegStack { get; set; }
 
         /// <summary>
         /// Audio encoding preset.
         /// </summary>
-        [JsonProperty("preset")]
+        [TransloaditJsonName("preset")]
         public string Preset { get; set; }
 
         /// <summary>
         /// Output bitrate.
         /// </summary>
-        [JsonProperty("bitrate")]
+        [TransloaditJsonName("bitrate")]
         public AnyOf<int, string> Bitrate { get; set; }
 
         /// <summary>
         /// Output sample rate.
         /// </summary>
-        [JsonProperty("sample_rate")]
+        [TransloaditJsonName("sample_rate")]
         public AnyOf<int, string> SampleRate { get; set; }
 
         /// <summary>
         /// Audio segments to extract.
         /// </summary>
-        [JsonProperty("segments")]
+        [TransloaditJsonName("segments")]
         public List<AudioSplitSegment> Segments { get; set; }
 
         /// <summary>
@@ -67,13 +67,13 @@ namespace Transloadit.Models.Robots.AudioEncoding
         /// <summary>
         /// Segment start offset.
         /// </summary>
-        [JsonProperty("from")]
+        [TransloaditJsonName("from")]
         public AnyOf<int, string> From { get; set; }
 
         /// <summary>
         /// Segment end offset.
         /// </summary>
-        [JsonProperty("to")]
+        [TransloaditJsonName("to")]
         public AnyOf<int, string> To { get; set; }
     }
 }

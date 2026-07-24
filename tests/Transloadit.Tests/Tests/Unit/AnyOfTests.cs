@@ -50,6 +50,33 @@ namespace Transloadit.Tests.Tests.Unit
         }
 
         [Fact]
+        public void TwoArg_OutboundOperator_OnNullUnion_ReturnsDefault()
+        {
+            AnyOf<string, List<string>> anyOf = null;
+
+            // the outbound operators must not throw when the union itself is null
+            string asString = anyOf;
+            List<string> asList = anyOf;
+
+            Assert.Null(asString);
+            Assert.Null(asList);
+        }
+
+        [Fact]
+        public void ThreeArg_OutboundOperator_OnNullUnion_ReturnsDefault()
+        {
+            AnyOf<string, List<string>, AdvancedUse> anyOf = null;
+
+            string asString = anyOf;
+            List<string> asList = anyOf;
+            AdvancedUse asAdvanced = anyOf;
+
+            Assert.Null(asString);
+            Assert.Null(asList);
+            Assert.Null(asAdvanced);
+        }
+
+        [Fact]
         public void ThreeArg_SelectsCorrectCase()
         {
             AnyOf<string, List<string>, AdvancedUse> first = "s";

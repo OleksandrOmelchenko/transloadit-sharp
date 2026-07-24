@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Transloadit.Serialization.Attributes;
 
 namespace Transloadit.Models.Credentials
 {
@@ -18,7 +18,7 @@ namespace Transloadit.Models.Credentials
         /// <summary>
         /// Wasabi credentials content.
         /// </summary>
-        [JsonProperty("content")]
+        [TransloaditJsonName("content")]
         public WasabiCredentialsContent Content { get; set; }
     }
 
@@ -30,19 +30,19 @@ namespace Transloadit.Models.Credentials
         /// <summary>
         /// Wasabi host.
         /// </summary>
-        [JsonProperty("host")]
+        [TransloaditJsonName("host")]
         public string Host { get; set; }
 
         /// <summary>
         /// Wasabi user.
         /// </summary>
-        [JsonProperty("user")]
+        [TransloaditJsonName("user")]
         public string User { get; set; }
 
         /// <summary>
         /// Wasabi password.
         /// </summary>
-        [JsonProperty("password")]
+        [TransloaditJsonName("password")]
         public string Password { get; set; }
     }
 }
