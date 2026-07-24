@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Concurrent;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -143,15 +142,8 @@ public class TransloaditClientPipelineTests
         // one client shares a serializer and injects auth per request; concurrent calls must not race on that
         // shared state — every request must reach the wire exactly once with its own params and a signature
         const int count = 25;
-        var bodies = new ConcurrentBag<string>();
-        var handler = new FakeHttpMessageHandler((request, _) =>
-        {
-            bodies.Add(request.Content == null ? string.Empty : request.Content.ReadAsStringAsync().GetAwaiter().GetResult());
-            return new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(AssemblyJson, Encoding.UTF8, "application/json"),
-            };
-        });
+        // the handler reads each body asynchronously and captures it under a lock, so no blocking read is needed here
+        var handler = FakeHttpMessageHandler.Json(AssemblyJson);
         var client = TestClientFactory.Create(handler);
 
         var responses = await Task.WhenAll(
@@ -159,7 +151,7 @@ public class TransloaditClientPipelineTests
 
         Assert.All(responses, r => Assert.Equal("abc", r.AssemblyId));
 
-        var captured = bodies.ToList();
+        var captured = handler.RequestContents;
         Assert.Equal(count, captured.Count);
         Assert.All(captured, body => Assert.Contains("signature", body));
         // each distinct template id reached the wire exactly once (no lost/duplicated/cross-contaminated requests).

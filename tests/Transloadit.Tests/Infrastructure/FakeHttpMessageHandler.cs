@@ -13,6 +13,7 @@ namespace Transloadit.Tests.Infrastructure;
 internal sealed class FakeHttpMessageHandler : HttpMessageHandler
 {
     private readonly Func<HttpRequestMessage, int, HttpResponseMessage> _responder;
+    private readonly object _sync = new object();
     private int _callCount;
 
     public FakeHttpMessageHandler(Func<HttpRequestMessage, int, HttpResponseMessage> responder)
@@ -44,20 +45,23 @@ internal sealed class FakeHttpMessageHandler : HttpMessageHandler
 
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
-        var index = _callCount++;
-        LastRequest = request;
-        LastRequestUri = request.RequestUri;
-        LastMethod = request.Method;
-        RequestUris.Add(request.RequestUri);
+        // read the body before taking the lock — it is async and safe to run concurrently
+        var content = request.Content == null
+            ? null
+            : await request.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-        string content = null;
-        if (request.Content != null)
+        int index;
+        // serialize the shared-state capture so concurrent requests don't race on the counter/lists
+        lock (_sync)
         {
-            content = await request.Content.ReadAsStringAsync().ConfigureAwait(false);
+            index = _callCount++;
+            LastRequest = request;
+            LastRequestUri = request.RequestUri;
+            LastMethod = request.Method;
+            LastRequestContent = content;
+            RequestUris.Add(request.RequestUri);
+            RequestContents.Add(content);
         }
-
-        LastRequestContent = content;
-        RequestContents.Add(content);
 
         return _responder(request, index);
     }

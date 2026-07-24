@@ -31,10 +31,10 @@ public class BaseRobotParamsTests
 
         var json = JObject.Parse(TestSerializer.Default.Serialize(robot));
 
-        Assert.Equal(true, (bool)json["output_meta"]);
-        Assert.Equal(false, (bool)json["interpolate"]);
+        Assert.True((bool)json["output_meta"]);
+        Assert.False((bool)json["interpolate"]);
         Assert.Equal("batch", (string)json["queue"]);
-        Assert.Equal(true, (bool)json["ignore_errors"]);
+        Assert.True((bool)json["ignore_errors"]);
     }
 
     [Fact]
@@ -51,11 +51,11 @@ public class BaseRobotParamsTests
 
         var json = JObject.Parse(TestSerializer.Default.Serialize(robot));
 
-        Assert.Equal(true, (bool)json["output_meta"]);
+        Assert.True((bool)json["output_meta"]);
         Assert.Equal("batch", (string)json["queue"]);
         Assert.Equal("renamed.jpg", (string)json["force_name"]);
         Assert.Equal("meta", (string)json["import_on_errors"][0]);
-        Assert.Equal(true, (bool)json["return_file_stubs"]);
+        Assert.True((bool)json["return_file_stubs"]);
         Assert.Null(json["ignore_errors"]);
     }
 
