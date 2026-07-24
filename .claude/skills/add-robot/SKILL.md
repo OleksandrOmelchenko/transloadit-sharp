@@ -1,6 +1,6 @@
 ---
 name: add-robot
-description: Add a new Transloadit Robot model class to the Transloadit Sharp library. Use when the user wants to implement/add a robot, gives a robot path like /image/resize or /ai/chat, or points at a robot docs URL. Handles picking the base class, the constructor Robot string, snake_case JsonProperty mapping, mandatory XML docs, and the NewRobotsTests assertion.
+description: Add a new Transloadit Robot model class to the Transloadit Sharp library. Use when the user wants to implement/add a robot, gives a robot path like /image/resize or /ai/chat, or points at a robot docs URL. Handles picking the base class, the constructor Robot string, snake_case TransloaditJsonName mapping, mandatory XML docs, and the NewRobotsTests assertion.
 ---
 
 # Add a Transloadit Robot
@@ -25,8 +25,9 @@ Robots are strongly-typed step models under `src/Transloadit/Models/Robots/<Cate
    - `public class <Name>Robot : <Base>`
    - parameterless constructor sets the path: `Robot = "/x/y";`
 
-5. **Map each parameter** to a `public` property:
-   - `[JsonProperty("snake_case_key")]` on every property.
+5. **Map each parameter** to a `public` property using the library's **provider-neutral attributes** (from `Transloadit.Serialization.Attributes`) — **never** a native serializer attribute like `[JsonProperty]` (Newtonsoft) or `[JsonPropertyName]` (System.Text.Json). The library serializes with System.Text.Json on `net462`+ and Newtonsoft on `net452`/`net461`; a native attribute is honored on only one engine and silently ignored (falling back to the snake_case default) on the other, so the JSON key would differ by target framework. Only the `Transloadit*` attributes are mapped by both adapters.
+   - `[TransloaditJsonName("snake_case_key")]` — **omit it when the key is exactly `snake_case(PropertyName)`** (both engines apply snake_case by default); add it only when the JSON key differs (e.g. `imagemagick_stack`, `rawGb`).
+   - `[TransloaditBooleanToInt]` for a `bool`/`bool?` the API expects as `1`/`0`; `[TransloaditDateFormat("…")]` for a fixed date format; `[TransloaditJsonIgnore]` to exclude — these have no portable native equivalent, so the neutral attribute is the only option.
    - nullable value types use `?` (`int?`, `bool?`, `double?`); reference types plain — do **not** write `string?` (`Nullable` is disabled).
    - multi-shape fields → `AnyOf<...>` (`src/Transloadit/Models/AnyOf.cs`).
    - enum-like string values → reuse or add a `src/Transloadit/Constants/` static class and reference it in the doc with `<see cref="Constants.X"/>`.
