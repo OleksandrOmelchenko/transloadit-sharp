@@ -1,60 +1,59 @@
-﻿using Transloadit.Serialization.Attributes;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Transloadit.Serialization.Attributes;
 
-namespace Transloadit.Models.Robots.AI
+namespace Transloadit.Models.Robots.AI;
+
+/// <summary>
+/// Represents <a href="https://transloadit.com/docs/robots/text-speak/">/text/speak</a> Robot.
+/// </summary>
+public class TextSpeakRobot : ProcessingRobotBase
 {
     /// <summary>
-    /// Represents <a href="https://transloadit.com/docs/robots/text-speak/">/text/speak</a> Robot.
+    /// Specifies which Step(s) to use as input.
     /// </summary>
-    public class TextSpeakRobot : ProcessingRobotBase
+    [TransloaditJsonName("use")]
+    public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
+
+    /// <summary>
+    /// Which text to speak. You can also set this to <c>null</c> and supply an input text file.
+    /// </summary>
+    [TransloaditJsonName("prompt")]
+    public string Prompt { get; set; }
+
+    /// <summary>
+    /// Which AI provider to leverage. One of <see cref="Constants.AIProviders"/>: <c>aws</c> and <c>gcp</c>.
+    /// </summary>
+    [TransloaditJsonName("provider")]
+    public string Provider { get; set; }
+
+    /// <summary>
+    /// The written language of the document. This will also be the language of the spoken text. The language should be specified in the 
+    /// <a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP-47</a> format, such as <c>en-GB</c>, <c>de-DE</c> or <c>fr-FR</c>.
+    /// <para>Default: <c>en-US</c>.</para>
+    /// </summary>
+    [TransloaditJsonName("target_language")]
+    public string TargetLanguage { get; set; }
+
+    /// <summary>
+    /// The gender to be used for voice synthesis. Please consult the list of supported languages and voices.
+    /// <para>Default: <c>female-1</c>.</para>
+    /// </summary>
+    [TransloaditJsonName("voice")]
+    public string Voice { get; set; }
+
+    /// <summary>
+    /// Supply Speech Synthesis Markup Language instead of raw text, in order to gain more control over how your text is voiced, 
+    /// including rests and pronounciations.
+    /// <para>Default: <c>false</c>.</para>
+    /// </summary>
+    [TransloaditJsonName("ssml")]
+    public bool? Ssml { get; set; }
+
+    /// <summary>
+    /// Initializes <a href="https://transloadit.com/docs/robots/text-speak/">/text/speak</a> Robot.
+    /// </summary>
+    public TextSpeakRobot()
     {
-        /// <summary>
-        /// Specifies which Step(s) to use as input.
-        /// </summary>
-        [TransloaditJsonName("use")]
-        public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
-
-        /// <summary>
-        /// Which text to speak. You can also set this to <c>null</c> and supply an input text file.
-        /// </summary>
-        [TransloaditJsonName("prompt")]
-        public string Prompt { get; set; }
-
-        /// <summary>
-        /// Which AI provider to leverage. One of <see cref="Constants.AIProviders"/>: <c>aws</c> and <c>gcp</c>.
-        /// </summary>
-        [TransloaditJsonName("provider")]
-        public string Provider { get; set; }
-
-        /// <summary>
-        /// The written language of the document. This will also be the language of the spoken text. The language should be specified in the 
-        /// <a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP-47</a> format, such as <c>en-GB</c>, <c>de-DE</c> or <c>fr-FR</c>.
-        /// <para>Default: <c>en-US</c>.</para>
-        /// </summary>
-        [TransloaditJsonName("target_language")]
-        public string TargetLanguage { get; set; }
-
-        /// <summary>
-        /// The gender to be used for voice synthesis. Please consult the list of supported languages and voices.
-        /// <para>Default: <c>female-1</c>.</para>
-        /// </summary>
-        [TransloaditJsonName("voice")]
-        public string Voice { get; set; }
-
-        /// <summary>
-        /// Supply Speech Synthesis Markup Language instead of raw text, in order to gain more control over how your text is voiced, 
-        /// including rests and pronounciations.
-        /// <para>Default: <c>false</c>.</para>
-        /// </summary>
-        [TransloaditJsonName("ssml")]
-        public bool? Ssml { get; set; }
-
-        /// <summary>
-        /// Initializes <a href="https://transloadit.com/docs/robots/text-speak/">/text/speak</a> Robot.
-        /// </summary>
-        public TextSpeakRobot()
-        {
-            Robot = "/text/speak";
-        }
+        Robot = "/text/speak";
     }
 }

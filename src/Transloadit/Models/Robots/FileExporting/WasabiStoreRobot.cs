@@ -1,59 +1,58 @@
-﻿using Transloadit.Serialization.Attributes;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Transloadit.Serialization.Attributes;
 
-namespace Transloadit.Models.Robots.FileExporting
+namespace Transloadit.Models.Robots.FileExporting;
+
+/// <summary>
+/// Represents <a href="https://transloadit.com/docs/robots/wasabi-store/">/wasabi/store</a> Robot.
+/// </summary>
+public class WasabiStoreRobot : StoreRobotBase
 {
     /// <summary>
-    /// Represents <a href="https://transloadit.com/docs/robots/wasabi-store/">/wasabi/store</a> Robot.
+    /// The permissions used for this file.
+    /// <para>Default: <c>public-read</c>.</para>
     /// </summary>
-    public class WasabiStoreRobot : StoreRobotBase
+    [TransloaditJsonName("acl")]
+    public string Acl { get; set; }
+
+    /// <summary>
+    /// An object containing a list of headers to be set for this file on Wasabi Spaces, such as <c>{ FileURL: "${file.url_name}" }</c>. 
+    /// This can also include any available <a href="https://transloadit.com/docs/topics/assembly-instructions/#assembly-variables">Assembly variables</a>.
+    /// Object Metadata can be specified using <c>x-amz-meta-*</c> headers.
+    /// </summary>
+    [TransloaditJsonName("headers")]
+    public Dictionary<string, string> Headers { get; set; }
+
+    /// <summary>
+    /// This parameter provides signed URLs in the result JSON (in the <c>signed_ssl_url</c> property). The number that you set this parameter 
+    /// to is the URL expiry time in seconds. If this parameter is not used, no URL signing is done.
+    /// </summary>
+    [TransloaditJsonName("sign_urls_for")]
+    public int? SignUrlsFor { get; set; }
+
+    /// <summary>
+    /// Wasabi host.
+    /// </summary>
+    [TransloaditJsonName("host")]
+    public string Host { get; set; }
+
+    /// <summary>
+    /// Wasabi user.
+    /// </summary>
+    [TransloaditJsonName("user")]
+    public string User { get; set; }
+
+    /// <summary>
+    /// Wasabi password.
+    /// </summary>
+    [TransloaditJsonName("password")]
+    public string Password { get; set; }
+
+    /// <summary>
+    /// Initializes <a href="https://transloadit.com/docs/robots/wasabi-store/">/wasabi/store</a> Robot.
+    /// </summary>
+    public WasabiStoreRobot()
     {
-        /// <summary>
-        /// The permissions used for this file.
-        /// <para>Default: <c>public-read</c>.</para>
-        /// </summary>
-        [TransloaditJsonName("acl")]
-        public string Acl { get; set; }
-
-        /// <summary>
-        /// An object containing a list of headers to be set for this file on Wasabi Spaces, such as <c>{ FileURL: "${file.url_name}" }</c>. 
-        /// This can also include any available <a href="https://transloadit.com/docs/topics/assembly-instructions/#assembly-variables">Assembly variables</a>.
-        /// Object Metadata can be specified using <c>x-amz-meta-*</c> headers.
-        /// </summary>
-        [TransloaditJsonName("headers")]
-        public Dictionary<string, string> Headers { get; set; }
-
-        /// <summary>
-        /// This parameter provides signed URLs in the result JSON (in the <c>signed_ssl_url</c> property). The number that you set this parameter 
-        /// to is the URL expiry time in seconds. If this parameter is not used, no URL signing is done.
-        /// </summary>
-        [TransloaditJsonName("sign_urls_for")]
-        public int? SignUrlsFor { get; set; }
-
-        /// <summary>
-        /// Wasabi host.
-        /// </summary>
-        [TransloaditJsonName("host")]
-        public string Host { get; set; }
-
-        /// <summary>
-        /// Wasabi user.
-        /// </summary>
-        [TransloaditJsonName("user")]
-        public string User { get; set; }
-
-        /// <summary>
-        /// Wasabi password.
-        /// </summary>
-        [TransloaditJsonName("password")]
-        public string Password { get; set; }
-
-        /// <summary>
-        /// Initializes <a href="https://transloadit.com/docs/robots/wasabi-store/">/wasabi/store</a> Robot.
-        /// </summary>
-        public WasabiStoreRobot()
-        {
-            Robot = "/wasabi/store";
-        }
+        Robot = "/wasabi/store";
     }
 }

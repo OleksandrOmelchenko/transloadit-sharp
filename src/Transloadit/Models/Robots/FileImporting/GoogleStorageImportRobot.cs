@@ -1,39 +1,38 @@
 ﻿using Transloadit.Serialization.Attributes;
 
-namespace Transloadit.Models.Robots.FileImporting
+namespace Transloadit.Models.Robots.FileImporting;
+
+/// <summary>
+/// Represents <a href="https://transloadit.com/docs/robots/google-import/">/google/import</a> Robot.
+/// </summary>
+public class GoogleStorageImportRobot : ImportRobotBase
 {
     /// <summary>
-    /// Represents <a href="https://transloadit.com/docs/robots/google-import/">/google/import</a> Robot.
+    /// Setting this to <c>true</c> will enable importing files from subdirectories and sub-subdirectories (etc.) of the given path.
     /// </summary>
-    public class GoogleStorageImportRobot : ImportRobotBase
+    [TransloaditJsonName("recursive")]
+    public bool? Recursive { get; set; }
+
+    /// <summary>
+    /// A string token used for pagination. The returned files of one paginated call have the next page token inside of their 
+    /// meta data, which needs to be used for the subsequent paging call.
+    /// </summary>
+    [TransloaditJsonName("next_page_token")]
+    public string NextPageToken { get; set; }
+
+    /// <summary>
+    /// The pagination page size. This only works when <c>recursive</c> is <c>true</c> for now, in order to not break backwards 
+    /// compatibility in non-recursive imports.
+    /// <para>Default: <c>1000</c>.</para>
+    /// </summary>
+    [TransloaditJsonName("files_per_page")]
+    public int? FilesPerPage { get; set; }
+
+    /// <summary>
+    /// Initializes <a href="https://transloadit.com/docs/robots/google-import/">/google/import</a> Robot.
+    /// </summary>
+    public GoogleStorageImportRobot()
     {
-        /// <summary>
-        /// Setting this to <c>true</c> will enable importing files from subdirectories and sub-subdirectories (etc.) of the given path.
-        /// </summary>
-        [TransloaditJsonName("recursive")]
-        public bool? Recursive { get; set; }
-
-        /// <summary>
-        /// A string token used for pagination. The returned files of one paginated call have the next page token inside of their 
-        /// meta data, which needs to be used for the subsequent paging call.
-        /// </summary>
-        [TransloaditJsonName("next_page_token")]
-        public string NextPageToken { get; set; }
-
-        /// <summary>
-        /// The pagination page size. This only works when <c>recursive</c> is <c>true</c> for now, in order to not break backwards 
-        /// compatibility in non-recursive imports.
-        /// <para>Default: <c>1000</c>.</para>
-        /// </summary>
-        [TransloaditJsonName("files_per_page")]
-        public int? FilesPerPage { get; set; }
-
-        /// <summary>
-        /// Initializes <a href="https://transloadit.com/docs/robots/google-import/">/google/import</a> Robot.
-        /// </summary>
-        public GoogleStorageImportRobot()
-        {
-            Robot = "/google/import";
-        }
+        Robot = "/google/import";
     }
 }

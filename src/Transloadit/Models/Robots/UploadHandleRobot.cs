@@ -1,19 +1,18 @@
 
-namespace Transloadit.Models.Robots
+namespace Transloadit.Models.Robots;
 
+
+/// <summary>
+/// Represents <a href="https://transloadit.com/docs/robots/upload-handle/">/upload/handle</a> Robot.
+/// </summary>
+public class UploadHandleRobot : ProcessingRobotBase
 {
     /// <summary>
-    /// Represents <a href="https://transloadit.com/docs/robots/upload-handle/">/upload/handle</a> Robot.
+    /// Initializes <a href="https://transloadit.com/docs/robots/upload-handle/">/upload/handle</a> Robot.
     /// </summary>
-    public class UploadHandleRobot : ProcessingRobotBase
+    public UploadHandleRobot()
     {
-        /// <summary>
-        /// Initializes <a href="https://transloadit.com/docs/robots/upload-handle/">/upload/handle</a> Robot.
-        /// </summary>
-        public UploadHandleRobot()
-        {
-            Robot = "/upload/handle";
-        }
+        Robot = "/upload/handle";
     }
 }
 

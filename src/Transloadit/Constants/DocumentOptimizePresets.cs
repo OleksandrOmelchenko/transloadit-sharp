@@ -1,28 +1,27 @@
-namespace Transloadit.Constants
+namespace Transloadit.Constants;
+
+/// <summary>
+/// Contains quality presets for <c>/document/optimize</c>.
+/// </summary>
+public static class DocumentOptimizePresets
 {
     /// <summary>
-    /// Contains quality presets for <c>/document/optimize</c>.
+    /// Screen quality.
     /// </summary>
-    public static class DocumentOptimizePresets
-    {
-        /// <summary>
-        /// Screen quality.
-        /// </summary>
-        public const string Screen = "screen";
+    public const string Screen = "screen";
 
-        /// <summary>
-        /// Ebook quality.
-        /// </summary>
-        public const string Ebook = "ebook";
+    /// <summary>
+    /// Ebook quality.
+    /// </summary>
+    public const string Ebook = "ebook";
 
-        /// <summary>
-        /// Printer quality.
-        /// </summary>
-        public const string Printer = "printer";
+    /// <summary>
+    /// Printer quality.
+    /// </summary>
+    public const string Printer = "printer";
 
-        /// <summary>
-        /// Prepress quality.
-        /// </summary>
-        public const string Prepress = "prepress";
-    }
+    /// <summary>
+    /// Prepress quality.
+    /// </summary>
+    public const string Prepress = "prepress";
 }

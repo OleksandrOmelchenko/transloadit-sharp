@@ -2,47 +2,46 @@
 using Transloadit.Models;
 using Transloadit.Models.Robots;
 
-namespace Transloadit.Tests.Robots
+namespace Transloadit.Tests.Robots;
+
+public class TestImageResizeRobot : RobotBase
 {
-    public class TestImageResizeRobot : RobotBase
-    {
-        public AnyOf<string, List<string>> Use { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
+    public AnyOf<string, List<string>> Use { get; set; }
+    public int Width { get; set; }
+    public int Height { get; set; }
 
-        public TestImageResizeRobot()
-        {
-            Robot = "/image/resize";
-        }
+    public TestImageResizeRobot()
+    {
+        Robot = "/image/resize";
     }
+}
 
-    public class TestHttpImportRobot : RobotBase
+public class TestHttpImportRobot : RobotBase
+{
+    public string Url { get; set; }
+
+    public TestHttpImportRobot()
     {
-        public string Url { get; set; }
-
-        public TestHttpImportRobot()
-        {
-            Robot = "/http/import";
-        }
+        Robot = "/http/import";
     }
+}
 
-    public class TestImageOptimizeRobot : RobotBase
+public class TestImageOptimizeRobot : RobotBase
+{
+    public string Use { get; set; }
+    public string Priority { get; set; }
+    public bool PreserveMetaData { get; set; }
+
+    public TestImageOptimizeRobot()
     {
-        public string Use { get; set; }
-        public string Priority { get; set; }
-        public bool PreserveMetaData { get; set; }
-
-        public TestImageOptimizeRobot()
-        {
-            Robot = "/image/optimize";
-        }
+        Robot = "/image/optimize";
     }
+}
 
-    public class NonExistentRobot : RobotBase
+public class NonExistentRobot : RobotBase
+{
+    public NonExistentRobot()
     {
-        public NonExistentRobot()
-        {
-            Robot = "/robot/does-not-exist";
-        }
+        Robot = "/robot/does-not-exist";
     }
 }

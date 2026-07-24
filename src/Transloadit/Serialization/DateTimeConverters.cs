@@ -2,37 +2,36 @@
 ﻿using System.Globalization;
 using Newtonsoft.Json.Converters;
 
-namespace Transloadit.Serialization
+namespace Transloadit.Serialization;
+
+/// <summary>
+/// Represents date time converter used to format dates in specific Trasloadit format.
+/// </summary>
+public class AuthExpiresDateTimeConverter : IsoDateTimeConverter
 {
     /// <summary>
-    /// Represents date time converter used to format dates in specific Trasloadit format.
+    /// Initializes a new instance of the <see cref="AuthExpiresDateTimeConverter"/> with <c>"yyyy'/'MM'/'dd HH:mm:ss+00:00"</c> date format.
     /// </summary>
-    public class AuthExpiresDateTimeConverter : IsoDateTimeConverter
+    public AuthExpiresDateTimeConverter()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AuthExpiresDateTimeConverter"/> with <c>"yyyy'/'MM'/'dd HH:mm:ss+00:00"</c> date format.
-        /// </summary>
-        public AuthExpiresDateTimeConverter()
-        {
-            DateTimeFormat = "yyyy'/'MM'/'dd HH:mm:ss+00:00";
-            // invariant culture so the signed `expires` value never picks up a locale calendar or digits
-            Culture = CultureInfo.InvariantCulture;
-        }
+        DateTimeFormat = "yyyy'/'MM'/'dd HH:mm:ss+00:00";
+        // invariant culture so the signed `expires` value never picks up a locale calendar or digits
+        Culture = CultureInfo.InvariantCulture;
     }
+}
 
-    /// <summary>
-    /// Represents date time converter used to format dates when using pagination.
+/// <summary>
+/// Represents date time converter used to format dates when using pagination.
+/// </summary>
+public class PaginationDateTimeConverter : IsoDateTimeConverter
+{
+     /// <summary>
+    /// Initializes a new instance of the <see cref="PaginationDateTimeConverter"/> with <c>"yyyy-MM-dd HH:mm:ss"</c> date format.
     /// </summary>
-    public class PaginationDateTimeConverter : IsoDateTimeConverter
+    public PaginationDateTimeConverter()
     {
-         /// <summary>
-        /// Initializes a new instance of the <see cref="PaginationDateTimeConverter"/> with <c>"yyyy-MM-dd HH:mm:ss"</c> date format.
-        /// </summary>
-        public PaginationDateTimeConverter()
-        {
-            DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
-            Culture = CultureInfo.InvariantCulture;
-        }
+        DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+        Culture = CultureInfo.InvariantCulture;
     }
 }
 #endif

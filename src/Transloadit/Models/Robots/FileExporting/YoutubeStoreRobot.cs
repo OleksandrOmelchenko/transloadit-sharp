@@ -1,62 +1,61 @@
 ﻿using System.Collections.Generic;
 using Transloadit.Serialization.Attributes;
 
-namespace Transloadit.Models.Robots.FileExporting
+namespace Transloadit.Models.Robots.FileExporting;
+
+/// <summary>
+/// Represents <a href="https://transloadit.com/docs/robots/youtube-store/">/youtube/store</a> Robot.
+/// </summary>
+public class YoutubeStoreRobot : ProcessingRobotBase
 {
     /// <summary>
-    /// Represents <a href="https://transloadit.com/docs/robots/youtube-store/">/youtube/store</a> Robot.
+    /// Specifies which Step(s) to use as input.
     /// </summary>
-    public class YoutubeStoreRobot : ProcessingRobotBase
+    [TransloaditJsonName("use")]
+    public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
+
+    /// <summary>
+    /// Template credentials name.
+    /// </summary>
+    [TransloaditJsonName("credentials")]
+    public string Credentials { get; set; }
+
+    /// <summary>
+    /// The title of the video to be displayed on YouTube. Note that since the YouTube API requires titles to be within 80 characters, 
+    /// longer titles may be truncated.
+    /// </summary>
+    [TransloaditJsonName("title")]
+    public string Title { get; set; }
+
+    /// <summary>
+    /// The description of the video to be displayed on YouTube. This can be up to 5000 characters, including <c>\n</c> for new-lines.
+    /// </summary>
+    [TransloaditJsonName("description")]
+    public string Description { get; set; }
+
+    /// <summary>
+    /// The category to which this video will be assigned. These are the valid values: <c>autos &amp; vehicles</c>, <c>comedy</c>, <c>education</c>, <c>entertainment</c>, <c>film &amp; animation</c>, <c>gaming</c>, <c>howto &amp; style</c>, <c>music</c>, <c>news &amp; politics</c>, <c>people &amp; blogs</c>, <c>pets &amp; animals</c>, <c>science &amp; technology</c>, <c>sports</c>, <c>travel &amp; events</c>.
+    /// </summary>
+    [TransloaditJsonName("category")]
+    public string Category { get; set; }
+
+    /// <summary>
+    /// Tags used to describe the video, separated by commas. These tags will also be displayed on YouTube.
+    /// </summary>
+    [TransloaditJsonName("keywords")]
+    public string Keywords { get; set; }
+
+    /// <summary>
+    /// Defines the visibility of the uploaded video.
+    /// </summary>
+    [TransloaditJsonName("visibility")]
+    public string Visibility { get; set; }
+
+    /// <summary>
+    /// Initializes <a href="https://transloadit.com/docs/robots/youtube-store/">/youtube/store</a> Robot.
+    /// </summary>
+    public YoutubeStoreRobot()
     {
-        /// <summary>
-        /// Specifies which Step(s) to use as input.
-        /// </summary>
-        [TransloaditJsonName("use")]
-        public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
-
-        /// <summary>
-        /// Template credentials name.
-        /// </summary>
-        [TransloaditJsonName("credentials")]
-        public string Credentials { get; set; }
-
-        /// <summary>
-        /// The title of the video to be displayed on YouTube. Note that since the YouTube API requires titles to be within 80 characters, 
-        /// longer titles may be truncated.
-        /// </summary>
-        [TransloaditJsonName("title")]
-        public string Title { get; set; }
-
-        /// <summary>
-        /// The description of the video to be displayed on YouTube. This can be up to 5000 characters, including <c>\n</c> for new-lines.
-        /// </summary>
-        [TransloaditJsonName("description")]
-        public string Description { get; set; }
-
-        /// <summary>
-        /// The category to which this video will be assigned. These are the valid values: <c>autos &amp; vehicles</c>, <c>comedy</c>, <c>education</c>, <c>entertainment</c>, <c>film &amp; animation</c>, <c>gaming</c>, <c>howto &amp; style</c>, <c>music</c>, <c>news &amp; politics</c>, <c>people &amp; blogs</c>, <c>pets &amp; animals</c>, <c>science &amp; technology</c>, <c>sports</c>, <c>travel &amp; events</c>.
-        /// </summary>
-        [TransloaditJsonName("category")]
-        public string Category { get; set; }
-
-        /// <summary>
-        /// Tags used to describe the video, separated by commas. These tags will also be displayed on YouTube.
-        /// </summary>
-        [TransloaditJsonName("keywords")]
-        public string Keywords { get; set; }
-
-        /// <summary>
-        /// Defines the visibility of the uploaded video.
-        /// </summary>
-        [TransloaditJsonName("visibility")]
-        public string Visibility { get; set; }
-
-        /// <summary>
-        /// Initializes <a href="https://transloadit.com/docs/robots/youtube-store/">/youtube/store</a> Robot.
-        /// </summary>
-        public YoutubeStoreRobot()
-        {
-            Robot = "/youtube/store";
-        }
+        Robot = "/youtube/store";
     }
 }

@@ -1,38 +1,37 @@
 ﻿using System.Collections.Generic;
 using Transloadit.Serialization.Attributes;
 
-namespace Transloadit.Models.Robots.SmartCdn
+namespace Transloadit.Models.Robots.SmartCdn;
+
+/// <summary>
+/// Represents <a href="https://transloadit.com/docs/robots/file-serve/">/file/serve</a> Robot.
+/// </summary>
+public class FileServeRobot : ProcessingRobotBase
 {
     /// <summary>
-    /// Represents <a href="https://transloadit.com/docs/robots/file-serve/">/file/serve</a> Robot.
+    /// Specifies which Step(s) to use as input.
     /// </summary>
-    public class FileServeRobot : ProcessingRobotBase
+    [TransloaditJsonName("use")]
+    public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
+
+    /// <summary>
+    /// An object containing a list of headers to be set for a file as we serve it to a CDN/web browser, such as 
+    /// <c>{ FileURL: "${file.url_name}" }</c> which will be merged over the defaults, and can include any 
+    /// available <a href="https://transloadit.com/docs/topics/assembly-instructions/#assembly-variables">Assembly Variable</a>.
+    /// <para>Default: <c>{ "Access-Control-Allow-Headers": "X-Requested-With, Content-Type, Cache-Control, Accept, Content-Length, 
+    /// Transloadit-Client, Authorization", "Access-Control-Allow-Methods": "POST, GET, PUT, DELETE, OPTIONS", 
+    /// "Access-Control-Allow-Origin": "*", "Cache-Control": "public, max-age=259200, s-max-age=86400", 
+    /// "Content-Type": "${file.mime}; charset=utf-8", "Transfer-Encoding": "chunked", "Transloadit-Assembly": "…", 
+    /// "Transloadit-RequestID": "…" }</c>.</para>
+    /// </summary>
+    [TransloaditJsonName("headers")]
+    public Dictionary<string, string> Headers { get; set; }
+
+    /// <summary>
+    /// Initializes <a href="https://transloadit.com/docs/robots/file-serve/">/file/serve</a> Robot.
+    /// </summary>
+    public FileServeRobot()
     {
-        /// <summary>
-        /// Specifies which Step(s) to use as input.
-        /// </summary>
-        [TransloaditJsonName("use")]
-        public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
-
-        /// <summary>
-        /// An object containing a list of headers to be set for a file as we serve it to a CDN/web browser, such as 
-        /// <c>{ FileURL: "${file.url_name}" }</c> which will be merged over the defaults, and can include any 
-        /// available <a href="https://transloadit.com/docs/topics/assembly-instructions/#assembly-variables">Assembly Variable</a>.
-        /// <para>Default: <c>{ "Access-Control-Allow-Headers": "X-Requested-With, Content-Type, Cache-Control, Accept, Content-Length, 
-        /// Transloadit-Client, Authorization", "Access-Control-Allow-Methods": "POST, GET, PUT, DELETE, OPTIONS", 
-        /// "Access-Control-Allow-Origin": "*", "Cache-Control": "public, max-age=259200, s-max-age=86400", 
-        /// "Content-Type": "${file.mime}; charset=utf-8", "Transfer-Encoding": "chunked", "Transloadit-Assembly": "…", 
-        /// "Transloadit-RequestID": "…" }</c>.</para>
-        /// </summary>
-        [TransloaditJsonName("headers")]
-        public Dictionary<string, string> Headers { get; set; }
-
-        /// <summary>
-        /// Initializes <a href="https://transloadit.com/docs/robots/file-serve/">/file/serve</a> Robot.
-        /// </summary>
-        public FileServeRobot()
-        {
-            Robot = "/file/serve";
-        }
+        Robot = "/file/serve";
     }
 }

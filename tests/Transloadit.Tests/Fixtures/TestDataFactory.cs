@@ -1,12 +1,11 @@
 ﻿using Transloadit.Tests.Robots;
 
-namespace Transloadit.Tests.Fixtures
+namespace Transloadit.Tests.Fixtures;
+
+public static class TestDataFactory
 {
-    public static class TestDataFactory
+    public static TestHttpImportRobot GetDemoHttpImportRobot() => new TestHttpImportRobot
     {
-        public static TestHttpImportRobot GetDemoHttpImportRobot() => new TestHttpImportRobot
-        {
-            Url = TestConstants.DemoImageUrl,
-        };
-    }
+        Url = TestConstants.DemoImageUrl,
+    };
 }

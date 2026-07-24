@@ -1,19 +1,18 @@
 using System.Threading.Tasks;
 using Transloadit.Constants;
-using Xunit;
 using Transloadit.Tests.Tests;
+using Xunit;
 
-namespace Transloadit.Tests.Tests.Api
+namespace Transloadit.Tests.Tests.Api;
+
+public class QueuesApiTests : TestBase
 {
-    public class QueuesApiTests : TestBase
+    [Fact]
+    public async Task GetQueue_Should_Succeed()
     {
-        [Fact]
-        public async Task GetQueue_Should_Succeed()
-        {
-            var jobSlots = await TransloaditClient.Queues.GetJobSlotsAsync();
+        var jobSlots = await TransloaditClient.Queues.GetJobSlotsAsync();
 
-            Assert.Equal(ResponseCodes.PriorityJobSlotsFound, jobSlots.Base.Ok);
-            Assert.True(jobSlots.IsSuccessResponse());
-        }
+        Assert.Equal(ResponseCodes.PriorityJobSlotsFound, jobSlots.Base.Ok);
+        Assert.True(jobSlots.IsSuccessResponse());
     }
 }

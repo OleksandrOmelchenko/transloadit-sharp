@@ -1,54 +1,53 @@
-﻿using Transloadit.Serialization.Attributes;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Transloadit.Serialization.Attributes;
 
-namespace Transloadit.Models.Robots.VideoEncoding
+namespace Transloadit.Models.Robots.VideoEncoding;
+
+/// <summary>
+/// Represents <a href="https://transloadit.com/docs/robots/video-adaptive/">/video/adaptive</a> Robot.
+/// </summary>
+public class VideoAdaptiveRobot : ProcessingRobotBase
 {
     /// <summary>
-    /// Represents <a href="https://transloadit.com/docs/robots/video-adaptive/">/video/adaptive</a> Robot.
+    /// Specifies which Step(s) to use as input.
     /// </summary>
-    public class VideoAdaptiveRobot : ProcessingRobotBase
+    [TransloaditJsonName("use")]
+    public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
+
+    /// <summary>
+    /// Determines which streaming technique should be used. Currently supports <c>dash</c> for MPEG-Dash and <c>hls</c> for HTTP Live Streaming.
+    /// <para>Default: <c>dash</c>.</para>
+    /// </summary>
+    [TransloaditJsonName("technique")]
+    public string Technique { get; set; }
+
+    /// <summary>
+    /// The filename for the generated manifest/playlist file. The default is <c>playlist.mpd</c> if your technique is <c>dash</c>, and 
+    /// <c>playlist.m3u8</c> if your technique is <c>hls</c>.
+    /// <para>Default: <c>playlist.mpd</c>.</para>
+    /// </summary>
+    [TransloaditJsonName("playlist_name")]
+    public string PlaylistName { get; set; }
+
+    /// <summary>
+    /// The duration for each segment in seconds.
+    /// <para>Default: <c>10</c>.</para>
+    /// </summary>
+    [TransloaditJsonName("segment_duration")]
+    public int? SegmentDuration { get; set; }
+
+    /// <summary>
+    /// Determines whether you want closed caption support when using the <c>hls</c> technique.
+    /// <para>Default: <c>true</c>.</para>
+    /// </summary>
+    [TransloaditJsonName("closed_captions")]
+    public bool? ClosedCaptions { get; set; }
+
+    /// <summary>
+    /// Initializes <a href="https://transloadit.com/docs/robots/video-adaptive/">/video/adaptive</a> Robot.
+    /// </summary>
+    public VideoAdaptiveRobot()
     {
-        /// <summary>
-        /// Specifies which Step(s) to use as input.
-        /// </summary>
-        [TransloaditJsonName("use")]
-        public AnyOf<string, List<string>, AdvancedUse> Use { get; set; }
-
-        /// <summary>
-        /// Determines which streaming technique should be used. Currently supports <c>dash</c> for MPEG-Dash and <c>hls</c> for HTTP Live Streaming.
-        /// <para>Default: <c>dash</c>.</para>
-        /// </summary>
-        [TransloaditJsonName("technique")]
-        public string Technique { get; set; }
-
-        /// <summary>
-        /// The filename for the generated manifest/playlist file. The default is <c>playlist.mpd</c> if your technique is <c>dash</c>, and 
-        /// <c>playlist.m3u8</c> if your technique is <c>hls</c>.
-        /// <para>Default: <c>playlist.mpd</c>.</para>
-        /// </summary>
-        [TransloaditJsonName("playlist_name")]
-        public string PlaylistName { get; set; }
-
-        /// <summary>
-        /// The duration for each segment in seconds.
-        /// <para>Default: <c>10</c>.</para>
-        /// </summary>
-        [TransloaditJsonName("segment_duration")]
-        public int? SegmentDuration { get; set; }
-
-        /// <summary>
-        /// Determines whether you want closed caption support when using the <c>hls</c> technique.
-        /// <para>Default: <c>true</c>.</para>
-        /// </summary>
-        [TransloaditJsonName("closed_captions")]
-        public bool? ClosedCaptions { get; set; }
-
-        /// <summary>
-        /// Initializes <a href="https://transloadit.com/docs/robots/video-adaptive/">/video/adaptive</a> Robot.
-        /// </summary>
-        public VideoAdaptiveRobot()
-        {
-            Robot = "/video/adaptive";
-        }
+        Robot = "/video/adaptive";
     }
 }

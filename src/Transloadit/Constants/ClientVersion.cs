@@ -1,7 +1,6 @@
-﻿namespace Transloadit.Constants
+﻿namespace Transloadit.Constants;
+
+internal static class ClientVersion
 {
-    internal static class ClientVersion
-    {
-        public const string Current = "0.10.0";
-    }
+    public const string Current = "0.10.0";
 }

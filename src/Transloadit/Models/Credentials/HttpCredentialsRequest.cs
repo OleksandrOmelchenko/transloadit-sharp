@@ -1,36 +1,35 @@
 ﻿using Transloadit.Serialization.Attributes;
 
-namespace Transloadit.Models.Credentials
+namespace Transloadit.Models.Credentials;
+
+/// <summary>
+/// Represents HTTP credentials request.
+/// </summary>
+public class HttpCredentialsRequest : CredentialsRequestBase
 {
     /// <summary>
-    /// Represents HTTP credentials request.
+    /// Initializes HTTP credentials request.
     /// </summary>
-    public class HttpCredentialsRequest : CredentialsRequestBase
+    public HttpCredentialsRequest()
     {
-        /// <summary>
-        /// Initializes HTTP credentials request.
-        /// </summary>
-        public HttpCredentialsRequest()
-        {
-            Type = "http";
-        }
-
-        /// <summary>
-        /// HTTP credentials content.
-        /// </summary>
-        [TransloaditJsonName("content")]
-        public HttpCredentialsContent Content { get; set; }
+        Type = "http";
     }
 
     /// <summary>
-    /// Represents HTTP credentials.
+    /// HTTP credentials content.
     /// </summary>
-    public class HttpCredentialsContent
-    {
-        /// <summary>
-        /// HTTP headers.
-        /// </summary>
-        [TransloaditJsonName("headers")]
-        public string Headers { get; set; }
-    }
+    [TransloaditJsonName("content")]
+    public HttpCredentialsContent Content { get; set; }
+}
+
+/// <summary>
+/// Represents HTTP credentials.
+/// </summary>
+public class HttpCredentialsContent
+{
+    /// <summary>
+    /// HTTP headers.
+    /// </summary>
+    [TransloaditJsonName("headers")]
+    public string Headers { get; set; }
 }
