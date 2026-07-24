@@ -47,6 +47,7 @@ namespace Transloadit.Serialization
             _options.Converters.Add(new StjAnyOfConverterFactory());
             _options.Converters.Add(new StjPolymorphicRobotConverterFactory());
             _options.Converters.Add(new StjInferredTypeConverter());
+            _options.Converters.Add(new StjDateTimeOffsetConverter());
             configure?.Invoke(_options);
         }
 

@@ -41,7 +41,8 @@ namespace Transloadit.Tests.Tests.Api
             var createResponse = await TransloaditClient.Templates.CreateAsync(templateRequest);
             Assert.Equal(ResponseCodes.TemplateCreated, createResponse.Base.Ok);
             Assert.Equal(templateRequest.Name, createResponse.Name);
-            Assert.Equal(templateRequest.RequireSignatureAuth, createResponse.RequireSignatureAuth);
+            // RequireSignatureAuth is nullable on the request (omitted when unset); the server defaults it to false
+            Assert.Equal(templateRequest.RequireSignatureAuth ?? false, createResponse.RequireSignatureAuth);
             Assert.Equal(2, createResponse.Content.Steps.Count);
             Assert.Equal(httpImportRobot.Robot, createResponse.Content.Steps["import"]["robot"]);
             Assert.Equal(httpImportRobot.Url, createResponse.Content.Steps["import"]["url"]);
@@ -54,7 +55,7 @@ namespace Transloadit.Tests.Tests.Api
             var templateResponse = await TransloaditClient.Templates.GetAsync(createResponse.Id);
             Assert.Equal(ResponseCodes.TemplateFound, templateResponse.Base.Ok);
             Assert.Equal(templateRequest.Name, templateResponse.Name);
-            Assert.Equal(templateRequest.RequireSignatureAuth, templateResponse.RequireSignatureAuth);
+            Assert.Equal(templateRequest.RequireSignatureAuth ?? false, templateResponse.RequireSignatureAuth);
             Assert.Equal(2, templateResponse.Content.Steps.Count);
             Assert.Equal(httpImportRobot.Robot, templateResponse.Content.Steps["import"]["robot"]);
             Assert.Equal(httpImportRobot.Url, templateResponse.Content.Steps["import"]["url"]);

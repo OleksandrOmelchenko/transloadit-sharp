@@ -23,7 +23,7 @@ namespace Transloadit.Models.Templates
         /// </summary>
         [TransloaditJsonName("require_signature_auth")]
         [TransloaditBooleanToInt]
-        public bool RequireSignatureAuth { get; set; }
+        public bool? RequireSignatureAuth { get; set; }
 
         /// <summary>
         /// Gets or sets <a href="https://transloadit.com/docs/topics/assembly-instructions/">Assembly instructions</a>

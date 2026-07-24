@@ -98,7 +98,12 @@ namespace Transloadit.Services
         /// <returns>Canceled assembly data.</returns>
         public async Task<AssemblyResponse> CancelAsync(Uri assemblyUrl)
         {
-            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Delete, assemblyUrl)
+            // assembly cancel is a key-only operation; match the other cancel/status overloads and skip signing
+            var parameters = new BaseParams
+            {
+                EnableSignatureAuth = false,
+            };
+            return await _client.SendRequest<AssemblyResponse>(HttpMethod.Delete, assemblyUrl, parameters)
                 .ConfigureAwait(false);
         }
 

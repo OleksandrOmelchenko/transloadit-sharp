@@ -94,6 +94,24 @@ namespace Transloadit.Models.Billing
         public object Tiers { get; set; }
 
         /// <summary>
+        /// Whether the plan uses flat-rate tiers (<c>1</c>) or not (<c>0</c>).
+        /// </summary>
+        [TransloaditJsonName("uses_flat_rate_tiers")]
+        public int UsesFlatRateTiers { get; set; }
+
+        /// <summary>
+        /// Custom per-robot billing factors, when configured for the plan.
+        /// </summary>
+        [TransloaditJsonName("custom_robot_factors")]
+        public object CustomRobotFactors { get; set; }
+
+        /// <summary>
+        /// Purchase order number associated with the plan, if any.
+        /// </summary>
+        [TransloaditJsonName("po_number")]
+        public string PoNumber { get; set; }
+
+        /// <summary>
         /// Currency code.
         /// </summary>
         [TransloaditJsonName("currency")]

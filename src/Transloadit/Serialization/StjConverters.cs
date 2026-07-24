@@ -138,6 +138,23 @@ namespace Transloadit.Serialization
     }
 
     /// <summary>
+    /// System.Text.Json converter that reads response timestamps leniently. Transloadit returns dates such as
+    /// <c>"2020/01/09 12:02:06 GMT"</c>, which is not ISO 8601 and which System.Text.Json's built-in reader rejects
+    /// (Newtonsoft parsed it via <c>DateTime.Parse</c>). Parsing with the invariant culture handles that format as
+    /// well as ISO 8601. Response dates carry no per-property format attribute, so this is registered globally.
+    /// </summary>
+    internal sealed class StjDateTimeOffsetConverter : JsonConverter<DateTimeOffset>
+    {
+        /// <inheritdoc />
+        public override DateTimeOffset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            => DateTimeOffset.Parse(reader.GetString(), CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal);
+
+        /// <inheritdoc />
+        public override void Write(Utf8JsonWriter writer, DateTimeOffset value, JsonSerializerOptions options)
+            => writer.WriteStringValue(value.ToString("o", CultureInfo.InvariantCulture));
+    }
+
+    /// <summary>
     /// System.Text.Json converter factory that serializes <see cref="AnyOf"/> union values by emitting their inner value.
     /// </summary>
     internal sealed class StjAnyOfConverterFactory : JsonConverterFactory

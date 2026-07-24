@@ -20,11 +20,11 @@
       },
       {
         "name": "execution_duration",
-        "type": "Double"
+        "type": "Nullable<Double>"
       },
       {
         "name": "execution_start",
-        "type": "DateTimeOffset"
+        "type": "Nullable<DateTimeOffset>"
       },
       {
         "name": "files",
@@ -225,11 +225,11 @@
       },
       {
         "name": "execution_duration",
-        "type": "Double"
+        "type": "Nullable<Double>"
       },
       {
         "name": "execution_start",
-        "type": "DateTimeOffset"
+        "type": "Nullable<DateTimeOffset>"
       },
       {
         "name": "expected_tus_uploads",
@@ -250,6 +250,14 @@
       {
         "name": "http_code",
         "type": "Nullable<Int32>"
+      },
+      {
+        "name": "ignored_error_count",
+        "type": "Int32"
+      },
+      {
+        "name": "ignored_errors",
+        "type": "List<Object>"
       },
       {
         "name": "instance",
@@ -337,7 +345,7 @@
       },
       {
         "name": "start_date",
-        "type": "DateTimeOffset"
+        "type": "Nullable<DateTimeOffset>"
       },
       {
         "name": "started_jobs",
@@ -507,7 +515,7 @@
       },
       {
         "name": "size",
-        "type": "Int32"
+        "type": "Int64"
       },
       {
         "name": "ssl_url",
@@ -631,7 +639,7 @@
       },
       {
         "name": "size",
-        "type": "Int32"
+        "type": "Int64"
       },
       {
         "name": "upload_url",
@@ -724,7 +732,7 @@
       },
       {
         "name": "size",
-        "type": "Int32"
+        "type": "Int64"
       },
       {
         "name": "ssl_url",
@@ -853,6 +861,10 @@
         "type": "String"
       },
       {
+        "name": "custom_robot_factors",
+        "type": "Object"
+      },
+      {
         "name": "deleted",
         "type": "Nullable<DateTimeOffset>"
       },
@@ -901,6 +913,10 @@
         "type": "Int32"
       },
       {
+        "name": "po_number",
+        "type": "String"
+      },
+      {
         "name": "price_per_gb",
         "type": "Decimal"
       },
@@ -935,6 +951,10 @@
       {
         "name": "usd_exchange_rate",
         "type": "Nullable<Decimal>"
+      },
+      {
+        "name": "uses_flat_rate_tiers",
+        "type": "Int32"
       }
     ]
   },
@@ -8761,7 +8781,7 @@
       },
       {
         "name": "require_signature_auth",
-        "type": "Boolean",
+        "type": "Nullable<Boolean>",
         "converter": "BooleanToInt"
       },
       {

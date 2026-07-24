@@ -85,13 +85,13 @@ namespace Transloadit.Models.Assemblies
         /// Assembly execution duration.
         /// </summary>
         [TransloaditJsonName("execution_duration")]
-        public double ExecutionDuration { get; set; }
+        public double? ExecutionDuration { get; set; }
 
         /// <summary>
         /// Assembly execution start date.
         /// </summary>
         [TransloaditJsonName("execution_start")]
-        public DateTimeOffset ExecutionStart { get; set; }
+        public DateTimeOffset? ExecutionStart { get; set; }
 
         /// <summary>
         /// Assembly creation date.
@@ -295,7 +295,7 @@ namespace Transloadit.Models.Assemblies
         /// Assembly start date.
         /// </summary>
         [TransloaditJsonName("start_date")]
-        public DateTimeOffset StartDate { get; set; }
+        public DateTimeOffset? StartDate { get; set; }
 
         /// <summary>
         /// Whether upload metadata is extracted.
@@ -325,13 +325,25 @@ namespace Transloadit.Models.Assemblies
         /// Assembly execution start date.
         /// </summary>
         [TransloaditJsonName("execution_start")]
-        public DateTimeOffset ExecutionStart { get; set; }
+        public DateTimeOffset? ExecutionStart { get; set; }
 
         /// <summary>
         /// Assembly execution duration.
         /// </summary>
         [TransloaditJsonName("execution_duration")]
-        public double ExecutionDuration { get; set; }
+        public double? ExecutionDuration { get; set; }
+
+        /// <summary>
+        /// Number of errors that were ignored (for steps configured to ignore errors).
+        /// </summary>
+        [TransloaditJsonName("ignored_error_count")]
+        public int IgnoredErrorCount { get; set; }
+
+        /// <summary>
+        /// The errors that were ignored (for steps configured to ignore errors).
+        /// </summary>
+        [TransloaditJsonName("ignored_errors")]
+        public List<object> IgnoredErrors { get; set; }
 
         /// <summary>
         /// Queue duration.
@@ -518,7 +530,7 @@ namespace Transloadit.Models.Assemblies
         /// File size.
         /// </summary>
         [TransloaditJsonName("size")]
-        public int Size { get; set; }
+        public long Size { get; set; }
 
         /// <summary>
         /// File offset.
@@ -578,7 +590,7 @@ namespace Transloadit.Models.Assemblies
         /// File size.
         /// </summary>
         [TransloaditJsonName("size")]
-        public int Size { get; set; }
+        public long Size { get; set; }
 
         /// <summary>
         /// File MIME type.
@@ -734,7 +746,7 @@ namespace Transloadit.Models.Assemblies
         /// File size.
         /// </summary>
         [TransloaditJsonName("size")]
-        public int Size { get; set; }
+        public long Size { get; set; }
 
         /// <summary>
         /// File MIME type.
