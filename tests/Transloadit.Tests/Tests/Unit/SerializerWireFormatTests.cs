@@ -78,6 +78,14 @@ namespace Transloadit.Tests.Tests.Unit
         }
 
         [Fact]
+        public void BooleanToInt_WhenUnset_IsOmitted()
+        {
+            // require_signature_auth is nullable, so an unset value must not force "0" onto e.g. a template rename
+            var json = Serialize(new TemplateRequest { Name = "n" });
+            Assert.Null(json["require_signature_auth"]);
+        }
+
+        [Fact]
         public void CamelCaseBillingOverrides_ArePreserved()
         {
             var json = Serialize(new RobotBilling { RawGb = 1.5m, GbFactorApplied = 2m });

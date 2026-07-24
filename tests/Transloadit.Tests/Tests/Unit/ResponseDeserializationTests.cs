@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Transloadit.Models;
 using Transloadit.Models.Assemblies;
@@ -30,6 +31,42 @@ namespace Transloadit.Tests.Tests.Unit
             Assert.Equal(2, response.NumInputFiles);
             Assert.Equal("t1", response.TemplateId);
             Assert.Equal(2, response.Results["resized"].Count);
+        }
+
+        [Theory]
+        [InlineData("2020/01/09 12:02:06 GMT")] // the actual Transloadit response format (not ISO 8601)
+        [InlineData("2024-02-20T01:52:04+00:00")] // ISO 8601 must still parse
+        [InlineData("2024-02-20T01:52:04Z")]
+        public void ResponseDates_ParseAcrossFormats(string raw)
+        {
+            var response = TestSerializer.Default.Deserialize<AssemblyResponse>(
+                "{\"ok\":\"ASSEMBLY_COMPLETED\",\"execution_start\":\"" + raw + "\"}");
+
+            // all four inputs denote a UTC instant; the converter must parse them without throwing
+            Assert.NotNull(response.ExecutionStart);
+            Assert.Equal(TimeSpan.Zero, response.ExecutionStart.Value.Offset);
+            Assert.True(response.ExecutionStart.Value.Year >= 2020);
+        }
+
+        [Fact]
+        public void AssemblyResponse_HandlesNullDatesAndLargeFileSizes()
+        {
+            // failed/in-progress assemblies send null for lifecycle dates and durations (verified against the live
+            // API), and media files routinely exceed 2 GB (int range) — none of these may crash deserialization
+            const string json =
+                "{\"ok\":\"ASSEMBLY_EXECUTING\",\"assembly_id\":\"abc\"," +
+                "\"start_date\":null,\"execution_start\":null,\"execution_duration\":null," +
+                "\"ignored_error_count\":2,\"ignored_errors\":[{\"name\":\"x\"}]," +
+                "\"uploads\":[{\"size\":3221225472}]}";
+
+            var response = TestSerializer.Default.Deserialize<AssemblyResponse>(json);
+
+            Assert.Null(response.StartDate);
+            Assert.Null(response.ExecutionStart);
+            Assert.Null(response.ExecutionDuration);
+            Assert.Equal(2, response.IgnoredErrorCount);
+            Assert.Single(response.IgnoredErrors);
+            Assert.Equal(3221225472L, response.Uploads[0].Size);
         }
 
         [Fact]
