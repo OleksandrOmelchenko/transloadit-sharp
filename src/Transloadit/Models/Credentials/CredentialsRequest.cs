@@ -17,6 +17,7 @@ public abstract class CredentialsRequestBase : BaseParams
     /// <summary>
     /// Template credentials type.
     /// </summary>
+    [TransloaditJsonName("type")]
     public string Type { get; protected set; }
 }
 
