@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Transloadit.Constants;
 using Transloadit.Models.Assemblies;
 using Transloadit.Tests.Infrastructure;
+using Transloadit.Utilities;
 using Xunit;
 
 namespace Transloadit.Tests.Tests.Unit;
@@ -15,6 +16,38 @@ public class TransloaditClientPipelineTests
 {
     private const string AssemblyJson = "{\"ok\":\"ASSEMBLY_COMPLETED\",\"assembly_id\":\"abc\"}";
     private const string ListJson = "{\"ok\":\"ASSEMBLIES_FOUND\",\"count\":0,\"items\":[]}";
+
+    [Fact]
+    public async Task Post_MultipartSignatureIsValidOverTheParams()
+    {
+        var handler = FakeHttpMessageHandler.Json(AssemblyJson);
+        var client = TestClientFactory.Create(handler);
+
+        await client.Assemblies.CreateAsync(new AssemblyRequest { TemplateId = "tpl" });
+
+        // extract the params + signature the client actually put on the wire and verify the signature validates
+        // over those exact params — closing the loop between the request pipeline and the signer
+        var paramsField = ExtractMultipartField(handler.LastRequestContent, "params");
+        var signatureField = ExtractMultipartField(handler.LastRequestContent, "signature");
+
+        Assert.False(string.IsNullOrEmpty(paramsField));
+        Assert.False(string.IsNullOrEmpty(signatureField));
+        Assert.True(SignatureUtilities.ValidateSignature(paramsField, TestClientFactory.Secret, signatureField));
+    }
+
+    private static string ExtractMultipartField(string body, string name)
+    {
+        var index = body.IndexOf($"name={name}", StringComparison.Ordinal);
+        if (index < 0)
+        {
+            index = body.IndexOf($"name=\"{name}\"", StringComparison.Ordinal);
+        }
+
+        Assert.True(index >= 0, $"multipart field '{name}' not found in body");
+        var valueStart = body.IndexOf("\r\n\r\n", index, StringComparison.Ordinal) + 4;
+        var valueEnd = body.IndexOf("\r\n--", valueStart, StringComparison.Ordinal);
+        return body.Substring(valueStart, valueEnd - valueStart);
+    }
 
     [Fact]
     public async Task Get_UnsignedEndpoint_PutsParamsInQueryWithoutSignature()
