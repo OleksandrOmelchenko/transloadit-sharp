@@ -11,6 +11,7 @@ public abstract class RobotBase
     /// <summary>
     /// Robot which should process the files. For example <c>/ftp/import</c>.
     /// </summary>
+    [TransloaditJsonName("robot")]
     public string Robot { get; protected set; }
 
     /// <summary>
