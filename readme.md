@@ -161,10 +161,9 @@ public class MyRobot : RobotBase
 
 ##### Opting in to snake_case naming
 
-Snake_case naming is **included out of the box** — both underlying engines ship it, so you never need to write a
-custom converter — but it is **not applied by default**. If you would rather derive names by convention than
-annotate every property on your own models, enable it in one line via the adapter's configuration callback. The
-neutral attributes still take precedence wherever they are present:
+If you would rather derive names by convention on your own models than annotate every property, turn snake_case on
+through the adapter's configuration callback — both engines provide the policy, so there is nothing custom to
+write. Explicit `[TransloaditJsonName]` values still win over the convention:
 
 ```csharp
 using System.Text.Json;
