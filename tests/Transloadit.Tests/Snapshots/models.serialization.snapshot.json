@@ -1266,6 +1266,40 @@
     ]
   },
   {
+    "type": "Transloadit.Models.Credentials.BoxCredentialsContent",
+    "properties": [
+      {
+        "name": "access_token",
+        "type": "String"
+      },
+      {
+        "name": "refresh_token",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.BoxCredentialsRequest",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "AuthParams"
+      },
+      {
+        "name": "content",
+        "type": "BoxCredentialsContent"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "type",
+        "type": "String"
+      }
+    ]
+  },
+  {
     "type": "Transloadit.Models.Credentials.CloudFlareCredentialsContent",
     "properties": [
       {
@@ -1491,6 +1525,48 @@
     ]
   },
   {
+    "type": "Transloadit.Models.Credentials.DropboxCredentialsContent",
+    "properties": [
+      {
+        "name": "access_token",
+        "type": "String"
+      },
+      {
+        "name": "app_key",
+        "type": "String"
+      },
+      {
+        "name": "app_secret",
+        "type": "String"
+      },
+      {
+        "name": "refresh_token",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.DropboxCredentialsRequest",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "AuthParams"
+      },
+      {
+        "name": "content",
+        "type": "DropboxCredentialsContent"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "type",
+        "type": "String"
+      }
+    ]
+  },
+  {
     "type": "Transloadit.Models.Credentials.FtpCredentialsContent",
     "properties": [
       {
@@ -1538,6 +1614,44 @@
       {
         "name": "content",
         "type": "Dictionary<String, String>"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "type",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.GoogleCredentialsContent",
+    "properties": [
+      {
+        "name": "bucket",
+        "type": "String"
+      },
+      {
+        "name": "key_file_contents",
+        "type": "String"
+      },
+      {
+        "name": "project_id",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.GoogleCredentialsRequest",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "AuthParams"
+      },
+      {
+        "name": "content",
+        "type": "GoogleCredentialsContent"
       },
       {
         "name": "name",
@@ -1920,6 +2034,40 @@
     ]
   },
   {
+    "type": "Transloadit.Models.Credentials.VimeoCredentialsContent",
+    "properties": [
+      {
+        "name": "access_token",
+        "type": "String"
+      },
+      {
+        "name": "refresh_token",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.VimeoCredentialsRequest",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "AuthParams"
+      },
+      {
+        "name": "content",
+        "type": "VimeoCredentialsContent"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "type",
+        "type": "String"
+      }
+    ]
+  },
+  {
     "type": "Transloadit.Models.Credentials.WasabiCredentialsContent",
     "properties": [
       {
@@ -1946,6 +2094,40 @@
       {
         "name": "content",
         "type": "WasabiCredentialsContent"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "type",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.YoutubeCredentialsContent",
+    "properties": [
+      {
+        "name": "access_token",
+        "type": "String"
+      },
+      {
+        "name": "refresh_token",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "type": "Transloadit.Models.Credentials.YoutubeCredentialsRequest",
+    "properties": [
+      {
+        "name": "auth",
+        "type": "AuthParams"
+      },
+      {
+        "name": "content",
+        "type": "YoutubeCredentialsContent"
       },
       {
         "name": "name",
