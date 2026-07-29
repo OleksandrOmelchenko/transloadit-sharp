@@ -129,11 +129,15 @@ annotate it with the library's **provider-neutral attributes**, not a specific s
 They live in `Transloadit.Serialization.Attributes`. Both built-in adapters map them, so they behave identically on
 every target framework.
 
+**Name every property.** The serializers apply **no naming convention** — a property without
+`[TransloaditJsonName]` is serialized under its C# name (`ResizeStrategy` → `"ResizeStrategy"`), which the API will
+not recognize. Declaring every name explicitly is what guarantees the two engines can never disagree about a key.
+
 **Do not use native serializer attributes** (`[JsonProperty]` from Newtonsoft, `[JsonPropertyName]` from
 System.Text.Json). The library uses **System.Text.Json on `net462`+ and Newtonsoft on `net452`/`net461`**, and each
 native attribute is invisible to the other engine — so a native attribute is honored on only some of the target
-frameworks and silently falls back to the default snake_case name on the rest, producing a different JSON key
-depending on where your code runs. A custom `ITransloaditSerializer` would ignore them entirely.
+frameworks and ignored on the rest, producing a different JSON key depending on where your code runs. A custom
+`ITransloaditSerializer` would ignore them entirely.
 
 ```csharp
 using Transloadit.Models.Robots;
@@ -143,17 +147,51 @@ public class MyRobot : RobotBase
 {
     public MyRobot() => Robot = "/my/robot";
 
-    // no attribute needed: the C# name already snake_cases to "resize_strategy" on both engines
+    [TransloaditJsonName("resize_strategy")]
     public string ResizeStrategy { get; set; }
 
-    // attribute needed only when the JSON key differs from snake_case(PropertyName)
     [TransloaditJsonName("imagemagick_stack")]
     public string ImageMagickStack { get; set; }
 
     [TransloaditBooleanToInt]
+    [TransloaditJsonName("turbo")]
     public bool? Turbo { get; set; }
 }
 ```
+
+##### Opting in to snake_case naming
+
+Snake_case naming is **included out of the box** — both underlying engines ship it, so you never need to write a
+custom converter — but it is **not applied by default**. If you would rather derive names by convention than
+annotate every property on your own models, enable it in one line via the adapter's configuration callback. The
+neutral attributes still take precedence wherever they are present:
+
+```csharp
+using System.Text.Json;
+using Transloadit;
+using Transloadit.Serialization;
+
+// System.Text.Json (net462+)
+var serializer = new SystemTextJsonSerializer(options =>
+    options.PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower);
+
+var client = new TransloaditClient("<auth key>", "<auth secret>", new TransloaditClientOptions
+{
+    Serializer = serializer,
+});
+```
+
+```csharp
+using Newtonsoft.Json.Serialization;
+using Transloadit.Serialization;
+
+// Newtonsoft.Json (net452 / net461)
+var serializer = new NewtonsoftJsonSerializer(settings =>
+    ((DefaultContractResolver)settings.ContractResolver).NamingStrategy = new SnakeCaseNamingStrategy());
+```
+
+> The library's own models are unaffected either way: every one of them declares an explicit
+> `[TransloaditJsonName]`, so their wire format is identical with or without a naming convention enabled.
 
 ### Create an Assembly
 
