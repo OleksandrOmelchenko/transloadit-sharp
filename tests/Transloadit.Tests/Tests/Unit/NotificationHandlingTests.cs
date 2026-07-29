@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Runtime.CompilerServices;
 using Transloadit.Constants;
 using Transloadit.Models.Assemblies;
 using Transloadit.Serialization;
@@ -96,6 +98,39 @@ public class NotificationHandlingTests
         // signing and verifying are impossible without a secret; fail loudly instead of producing bogus signatures
         Assert.Throws<InvalidOperationException>(() => client.Signature);
         Assert.Throws<InvalidOperationException>(() => client.SmartCdn);
+    }
+
+    [Fact]
+    public void RecordedNotification_ParsesAndMapsEveryReturnedKey()
+    {
+        // a real notification body captured from the API (identifiers sanitized). guards against the model drifting
+        // from what Transloadit actually posts — this payload is what revealed notify_status and import_url were
+        // being silently dropped.
+        var json = File.ReadAllText(FixturePath());
+
+        var assembly = TestSerializer.Default.Deserialize<AssemblyResponse>(json);
+
+        Assert.True(assembly.IsSuccessResponse());
+        Assert.Equal("processing", assembly.NotifyStatus);
+        Assert.NotNull(assembly.NotifyStart);
+        Assert.Equal(1, assembly.NumInputFiles);
+
+        var file = assembly.Results["import"][0];
+        Assert.Equal("snowflake.jpg", file.Name);
+        Assert.Equal(133788L, file.Size);
+        Assert.StartsWith("https://demos.transloadit.com/", file.ImportUrl);
+        // meta is untyped, so exotic keys survive without a model change
+        Assert.Equal(1152L, file.Meta["width"]);
+
+        var unmapped = ResponseCoverage.UnmappedTopLevelKeys(json, typeof(AssemblyResponse));
+        Assert.True(unmapped.Count == 0, "AssemblyResponse drops keys a real notification contains: " + string.Join(", ", unmapped));
+    }
+
+    private static string FixturePath([CallerFilePath] string thisFile = null)
+    {
+        // <tests>/Tests/Unit/NotificationHandlingTests.cs -> <tests>/Fixtures/...
+        var testsRoot = Directory.GetParent(thisFile).Parent.Parent.FullName;
+        return Path.Combine(testsRoot, "Fixtures", "notification-assembly-completed.json");
     }
 
     [Fact]

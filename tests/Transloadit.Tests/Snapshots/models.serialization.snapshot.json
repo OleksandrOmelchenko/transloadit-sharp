@@ -304,6 +304,10 @@
         "type": "Nullable<DateTimeOffset>"
       },
       {
+        "name": "notify_status",
+        "type": "String"
+      },
+      {
         "name": "notify_url",
         "type": "String"
       },
@@ -463,6 +467,10 @@
       },
       {
         "name": "id",
+        "type": "String"
+      },
+      {
+        "name": "import_url",
         "type": "String"
       },
       {
