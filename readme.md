@@ -295,6 +295,61 @@ var completedAssembly = await assemblyTracker.WaitCompletionAsync(assemblyRespon
 var completedAssembly2 = await assemblyTracker.WaitCompletionAsync(assemblyResponse);
 ```
 
+### Receiving Assembly notifications
+
+When an Assembly specifies a `NotifyUrl`, Transloadit sends a
+[notification](https://transloadit.com/docs/topics/webhooks/) to it: a **multipart POST** with two form fields —
+`transloadit` (the Assembly Status JSON) and `signature` (an HMAC of that exact string, keyed with your Auth
+Secret). Verify the signature before trusting the payload, then deserialize it into an `AssemblyResponse`. Respond
+with `200`, otherwise Transloadit retries with an exponential backoff.
+
+```csharp
+using Microsoft.AspNetCore.Mvc;
+using Transloadit;
+using Transloadit.Models.Assemblies;
+using Transloadit.Serialization;
+
+[ApiController]
+public class NotificationsController : ControllerBase
+{
+    // built with both key and secret — verifying a signature requires the secret
+    private readonly TransloaditClient _client = new TransloaditClient("<auth key>", "<auth secret>");
+    private readonly ITransloaditSerializer _serializer = TransloaditSerializerFactory.CreateDefault();
+
+    [HttpPost("/transloadit/notify")]
+    public IActionResult Notify([FromForm] string transloadit, [FromForm] string signature)
+    {
+        if (!_client.Signature.ValidateSignature(transloadit, signature))
+        {
+            return Unauthorized();
+        }
+
+        var assembly = _serializer.Deserialize<AssemblyResponse>(transloadit);
+        if (assembly.IsSuccessResponse())
+        {
+            // the Assembly completed — assembly.Results holds the produced files
+        }
+
+        return Ok();
+    }
+}
+```
+
+`ValidateSignature` handles both signature formats Transloadit emits: the prefixed `algo:hash` form
+(`sha384:…`, `sha256:…`) and the legacy unprefixed SHA-1 one. If you do not have a client instance handy, the same
+check is available statically as `SignatureUtilities.ValidateSignature(payload, secret, signature)`.
+
+You can replay a notification for an Assembly at any time:
+
+```csharp
+var replayResponse = await client.AssemblyNotifications.ReplayAsync(assemblyId);
+
+// optionally override the notify url, and wait for the replayed notification to finish
+var replayWithOptions = await client.AssemblyNotifications.ReplayAsync(
+    assemblyId,
+    new ReplayNotificationRequest { NotifyUrl = "https://my.webhook/notify", Wait = true });
+```
+
 ### Create a template and credentials
 
 ```csharp

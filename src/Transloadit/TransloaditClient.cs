@@ -32,6 +32,8 @@ public class TransloaditClient
     private CredentialsService _credentialsService;
     private AssemblyNotificationsService _assemblyNotificationsService;
     private TokensService _tokensService;
+    private SignatureService _signatureService;
+    private SmartCdnService _smartCdnService;
 
     /// <summary>
     /// Billing service.
@@ -67,6 +69,28 @@ public class TransloaditClient
     /// Tokens service.
     /// </summary>
     public TokensService Tokens => _tokensService ??= new TokensService(this);
+
+    /// <summary>
+    /// Signature service. Use it to calculate signatures and to verify incoming
+    /// <a href="https://transloadit.com/docs/topics/webhooks/">Assembly notifications</a>.
+    /// Requires a client initialized with both key and secret.
+    /// </summary>
+    public SignatureService Signature => _signatureService ??= new SignatureService(RequireSecret(nameof(Signature)));
+
+    /// <summary>
+    /// Smart CDN service. Requires a client initialized with both key and secret.
+    /// </summary>
+    public SmartCdnService SmartCdn => _smartCdnService ??= new SmartCdnService(_key, RequireSecret(nameof(SmartCdn)));
+
+    private string RequireSecret(string service)
+    {
+        if (string.IsNullOrWhiteSpace(_secret))
+        {
+            throw new InvalidOperationException($"{service} requires a client initialized with both key and secret.");
+        }
+
+        return _secret;
+    }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="TransloaditClient"/> class with specified authentication key, secret 
