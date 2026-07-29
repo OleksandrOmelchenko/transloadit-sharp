@@ -6,6 +6,7 @@ using Transloadit.Models.Billing;
 using Transloadit.Models.Robots;
 using Transloadit.Models.Robots.ImageManipulation;
 using Transloadit.Models.Templates;
+using Transloadit.Serialization.Attributes;
 using Transloadit.Tests.Infrastructure;
 using Xunit;
 
@@ -75,6 +76,30 @@ public class SerializerWireFormatTests
         var json = Serialize(new TemplateRequest { Name = "n", RequireSignatureAuth = true });
         Assert.Equal(JTokenType.Integer, json["require_signature_auth"].Type);
         Assert.Equal(1, (int)json["require_signature_auth"]);
+    }
+
+    // stands in for a user model: one property names itself, the other declares nothing
+    private sealed class NamingProbe
+    {
+        [TransloaditJsonName("explicit_name")]
+        public string Named { get; set; }
+
+        public string Unnamed { get; set; }
+    }
+
+    [Fact]
+    public void PropertyNames_ComeFromAttributesOnly_WithNoNamingConvention()
+    {
+        var json = Serialize(new NamingProbe { Named = "a", Unnamed = "b" });
+
+        // the declared name is used verbatim
+        Assert.Equal("a", (string)json["explicit_name"]);
+        Assert.Null(json["named"]);
+
+        // no naming policy is applied, so an undeclared property keeps its C# name on both engines — this is why
+        // every model property must carry [TransloaditJsonName] (enforced by ModelPropertyNamingTests)
+        Assert.Equal("b", (string)json["Unnamed"]);
+        Assert.Null(json["unnamed"]);
     }
 
     [Fact]

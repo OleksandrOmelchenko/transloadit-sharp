@@ -73,9 +73,15 @@
     </None>
   </ItemGroup>
   
-  <!-- CsCheck (property-based tests) is net8.0+ only; the signature logic it exercises is engine-agnostic, so
-       running these properties on the modern TFMs fully covers it -->
+  <!-- CsCheck (property-based tests): latest where it is supported, and the last netstandard2.0-compatible release
+       on the older frameworks. both TFM sets are listed explicitly rather than negated, so the reference resolves
+       to exactly one version in every evaluation (including the outer, cross-targeting one). the tests are source
+       compatible with both majors. -->
   <ItemGroup Condition="'$(TargetFramework)' == 'net8.0' or '$(TargetFramework)' == 'net9.0' or '$(TargetFramework)' == 'net10.0'">
     <PackageReference Include="CsCheck" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461' or '$(TargetFramework)' == 'net462' or '$(TargetFramework)' == 'net472' or '$(TargetFramework)' == 'net48' or '$(TargetFramework)' == 'net6.0' or '$(TargetFramework)' == 'net7.0'">
+    <PackageReference Include="CsCheck" Version="2.9.0" />
   </ItemGroup>
 </Project>

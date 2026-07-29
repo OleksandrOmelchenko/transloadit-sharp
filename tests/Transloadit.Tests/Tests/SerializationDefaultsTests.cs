@@ -1,6 +1,5 @@
 #if TRANSLOADIT_NEWTONSOFT
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using Transloadit.Serialization;
 using Xunit;
 
@@ -15,7 +14,8 @@ public class SerializationDefaultsTests
 
         Assert.Equal(NullValueHandling.Ignore, settings.NullValueHandling);
         var resolver = Assert.IsType<TransloaditContractResolver>(settings.ContractResolver);
-        Assert.IsType<SnakeCaseNamingStrategy>(resolver.NamingStrategy);
+        // no naming strategy on purpose: every model property declares its JSON name via [TransloaditJsonName]
+        Assert.Null(resolver.NamingStrategy);
         Assert.Contains(settings.Converters, converter => converter is AnyOfConverter);
     }
 

@@ -22,7 +22,8 @@ internal sealed class TransloaditContractResolver : DefaultContractResolver
     /// </summary>
     public TransloaditContractResolver()
     {
-        NamingStrategy = new SnakeCaseNamingStrategy();
+        // no naming strategy: every model property declares its JSON name via [TransloaditJsonName], so nothing
+        // relies on a default naming convention (and the two engines cannot diverge on one)
     }
 
     /// <inheritdoc />

@@ -35,7 +35,8 @@ public sealed class SystemTextJsonSerializer : ITransloaditSerializer
     {
         _options = new JsonSerializerOptions
         {
-            PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
+            // no naming policy: every model property declares its JSON name via [TransloaditJsonName], so nothing
+            // relies on a default naming convention (and the two engines cannot diverge on one)
             // match Newtonsoft's DefaultContractResolver, which resolves property names case-insensitively
             PropertyNameCaseInsensitive = true,
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,

@@ -1,13 +1,12 @@
-#if NET8_0_OR_GREATER
 using CsCheck;
 using Transloadit.Utilities;
 using Xunit;
 
 namespace Transloadit.Tests.Tests.Unit;
 
-// property-based tests over the security-critical signature path (CsCheck, net8.0+ only — the signature logic is
-// engine-agnostic, so one modern TFM fully covers it). these exercise arbitrary inputs/keys where SignatureTests
-// only pins a few hardcoded hashes.
+// property-based tests over the security-critical signature path, exercising arbitrary inputs/keys where
+// SignatureTests only pins a few hardcoded hashes. these run on every target framework, so they also cover the
+// signature path under both serializer engines' TFMs.
 public class SignaturePropertyTests
 {
     private static readonly Gen<SignatureAlgorithm> Algorithms =
@@ -38,4 +37,3 @@ public class SignaturePropertyTests
             .Sample((input, key, algorithm) =>
                 !SignatureUtilities.ValidateSignature(input + "x", key, SignatureUtilities.CalculateSignature(input, key, algorithm)));
 }
-#endif
