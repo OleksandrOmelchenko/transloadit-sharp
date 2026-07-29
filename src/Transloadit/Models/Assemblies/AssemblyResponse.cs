@@ -370,6 +370,12 @@ public class AssemblyResponse : ResponseBase
     public string NotifyUrl { get; set; }
 
     /// <summary>
+    /// Delivery status of the notification, for example <c>processing</c>.
+    /// </summary>
+    [TransloaditJsonName("notify_status")]
+    public string NotifyStatus { get; set; }
+
+    /// <summary>
     /// Notification response code.
     /// </summary>
     [TransloaditJsonName("notify_response_code")]
@@ -819,6 +825,12 @@ public class FileResult
     /// </summary>
     [TransloaditJsonName("is_tus_file")]
     public bool IsTusFile { get; set; }
+
+    /// <summary>
+    /// Source url the file was imported from, when it came from an import Robot.
+    /// </summary>
+    [TransloaditJsonName("import_url")]
+    public string ImportUrl { get; set; }
 
     /// <summary>
     /// TUS result url.
