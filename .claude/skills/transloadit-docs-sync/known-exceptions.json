@@ -1,0 +1,15 @@
+{
+ "_doc": "Findings deliberately not acted on. `match` is a glob over finding fingerprints. `while` (optional) records the docs state the exception was granted for; when it stops holding, the exception resurfaces as an `exception-stale` finding instead of silently suppressing. Every entry needs a reason.",
+ "exceptions": [
+  {
+   "match": "source-stale-robot:/image/copyrightdetect",
+   "reason": "deprecated robot: docs page 404s, but llms-full.txt and openapi.json still carry its schema (the API accepts it for backwards compatibility); intentionally not implemented",
+   "while": {"robot": "/image/copyrightdetect", "md_status": 404}
+  },
+  {
+   "match": "source-stale-robot:/edgly/deliver",
+   "reason": "legacy Edgly CDN, marked removed and superseded by /tlcdn/deliver (TlcdnDeliverRobot); intentionally not implemented",
+   "while": {"robot": "/edgly/deliver", "stage": "removed"}
+  }
+ ]
+}
