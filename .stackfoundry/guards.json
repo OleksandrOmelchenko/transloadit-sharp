@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "generated": [
+    {
+      "glob": "tests/Transloadit.Tests/Snapshots/models.golden.json",
+      "regenerate": "After the user accepts the wire-format change: UPDATE_GOLDEN=1 dotnet test tests/Transloadit.Tests/Transloadit.Tests.csproj -f net8.0 --filter \"FullyQualifiedName~SerializationGoldenTests\", then run the net461 leg to prove the Newtonsoft engine agrees"
+    },
+    {
+      "glob": "tests/Transloadit.Tests/Snapshots/robots.golden.json",
+      "regenerate": "After the user accepts the change: UPDATE_ROBOT_GOLDEN=1 dotnet test tests/Transloadit.Tests/Transloadit.Tests.csproj -f net8.0 --filter \"FullyQualifiedName~AutoPopulatedRobotGoldenTests\", then run the net461 leg for parity"
+    },
+    {
+      "glob": "tests/Transloadit.Tests/Snapshots/models.serialization.snapshot.json",
+      "regenerate": "After the user accepts the change: UPDATE_SNAPSHOTS=1 dotnet test tests/Transloadit.Tests/Transloadit.Tests.csproj -f net8.0 --filter \"FullyQualifiedName~ModelSerializationSnapshotTests\""
+    },
+    {
+      "glob": ".claude/skills/transloadit-docs-sync/baseline.json",
+      "regenerate": "Only via the transloadit-docs-sync skill's accept-baseline step, when the user asks for it"
+    }
+  ],
+  "commands": [
+    {
+      "pattern": "(?i)\\bdotnet\\s+nuget\\s+push\\b",
+      "decision": "deny",
+      "reason": "Releases are published only by .github/workflows/deploy.yml through NuGet Trusted Publishing; never push a package from this machine"
+    },
+    {
+      "pattern": "(?i)\\bgh\\s+workflow\\s+run\\b",
+      "decision": "ask",
+      "reason": "Dispatching deploy.yml publishes to nuget.org and tags v<Version>; tests.yml spends live Transloadit account usage. The owner's call"
+    },
+    {
+      "pattern": "(?i)UPDATE_(ROBOT_)?(GOLDEN|SNAPSHOTS)\\W{0,4}=\\W{0,2}1",
+      "decision": "ask",
+      "reason": "Rewrites golden/snapshot files to whatever the code now emits, blessing any wire-format change; only after the user accepted that change, and always with -f net8.0"
+    },
+    {
+      "pattern": "(?i)\\bRUN_EXISTENCE_CHECKS\\b",
+      "decision": "ask",
+      "reason": "Enables live existence probes against the Transloadit API with the account in appsettings.Tests.json"
+    },
+    {
+      "pattern": "(?i)\\bdotnet\\s+test\\b(?!.*--filter)",
+      "decision": "ask",
+      "reason": "An unfiltered run includes the live Tests/Api/* and AssemblyTrackerTests, which use real credentials and account usage; add --filter \"FullyQualifiedName!~.Api.&FullyQualifiedName!~Transloadit.Tests.Tests.AssemblyTrackerTests.\" unless the user asked for integration tests"
+    },
+    {
+      "pattern": "(?i)\\b(cat|type|more|less|head|tail|Get-Content|gc|sed|awk|grep|rg|Select-String)\\b[^|;&]*appsettings\\.Tests\\.json",
+      "decision": "ask",
+      "reason": "appsettings.Tests.json holds the live Transloadit auth key and secret; do not print it"
+    },
+    {
+      "pattern": "(?i)\\b(cp|copy|Copy-Item|mv|move|Move-Item)\\b.*transloadit-docs-sync.baseline\\.json",
+      "decision": "ask",
+      "reason": "Accepting a new docs baseline is the user's decision (transloadit-docs-sync SKILL.md accept-baseline)"
+    }
+  ],
+  "git": {
+    "writes": "ask",
+    "reason": "The owner decides every commit, push, tag, branch delete and PR"
+  }
+}

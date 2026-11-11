@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "deferredFile": "docs/plans/deferred-upgrades.md",
+  "ecosystems": [
+    {
+      "id": "dotnet-platform",
+      "kind": "platform",
+      "pack": "language-csharp",
+      "pins": [
+        {"file": "src/Transloadit/Transloadit.csproj", "anchor": "<TargetFrameworks>", "policy": "exact"},
+        {"file": "tests/Transloadit.Tests/Transloadit.Tests.csproj", "anchor": "<TargetFrameworks>", "policy": "exact"},
+        {"file": "src/Transloadit/Transloadit.csproj", "anchor": "<LangVersion>", "policy": "exact"},
+        {"file": "tests/Transloadit.Tests/Transloadit.Tests.csproj", "anchor": "<LangVersion>", "policy": "exact"},
+        {"file": ".github/workflows/tests.yml", "anchor": "matrix target-framework / dotnet-version:", "policy": "range"},
+        {"file": ".github/workflows/deploy.yml", "anchor": "dotnet-version:", "policy": "range"}
+      ],
+      "discover": ["dotnet --list-sdks", "dotnet sdk check"],
+      "apply": "Add or drop a TFM in both csproj TargetFrameworks, then update every TFM-conditional block and the CI matrix together",
+      "gateTargets": ["client"],
+      "chains": [
+        {
+          "name": "TFM set",
+          "members": [
+            "src/Transloadit/Transloadit.csproj <TargetFrameworks>",
+            "src/Transloadit/Transloadit.csproj TRANSLOADIT_NEWTONSOFT / Newtonsoft.Json / System.Text.Json Condition lists",
+            "tests/Transloadit.Tests/Transloadit.Tests.csproj <TargetFrameworks>",
+            "tests/Transloadit.Tests/Transloadit.Tests.csproj TRANSLOADIT_NEWTONSOFT, CsCheck and xunit.runner.visualstudio Condition lists",
+            ".github/workflows/tests.yml matrix target-framework + dotnet-version",
+            ".github/workflows/deploy.yml dotnet-version"
+          ]
+        },
+        {
+          "name": "C# language version",
+          "members": [
+            "src/Transloadit/Transloadit.csproj <LangVersion>",
+            "tests/Transloadit.Tests/Transloadit.Tests.csproj <LangVersion>"
+          ]
+        }
+      ],
+      "outsideManifest": [
+        "No global.json: the SDK floats to the newest installed (10.0.x locally and in CI); the C# rulebook records adding one as a fix",
+        "CheckEolTargetFramework=false in src/Transloadit/Transloadit.csproj suppresses EOL-TFM warnings that would otherwise fail the warnings-as-errors build"
+      ],
+      "sources": [
+        "https://learn.microsoft.com/dotnet/core/whats-new/",
+        "https://learn.microsoft.com/dotnet/core/compatibility/",
+        "https://learn.microsoft.com/dotnet/standard/frameworks"
+      ],
+      "traps": [
+        "Without global.json, a new SDK on the machine or runner can introduce new warnings that fail the TreatWarningsAsErrors build with no code change"
+      ]
+    },
+    {
+      "id": "nuget",
+      "kind": "packages",
+      "pack": "language-csharp",
+      "pins": [
+        {"file": "src/Transloadit/Transloadit.csproj", "anchor": "<PackageReference Include=", "policy": "exact"},
+        {"file": "tests/Transloadit.Tests/Transloadit.Tests.csproj", "anchor": "<PackageReference Include=", "policy": "exact"},
+        {"file": "Directory.Build.props", "anchor": "<PackageReference Include=", "policy": "exact"}
+      ],
+      "lockFiles": [],
+      "discover": [
+        "dotnet list Transloadit.slnx package --outdated",
+        "dotnet list Transloadit.slnx package --vulnerable --include-transitive",
+        "dotnet list Transloadit.slnx package --deprecated"
+      ],
+      "apply": "Edit the Version attribute of the PackageReference in the csproj or Directory.Build.props (no central package management, no lock files)",
+      "afterApply": ["dotnet restore Transloadit.slnx"],
+      "gateTargets": ["client"],
+      "chains": [
+        {
+          "name": "xunit",
+          "members": [
+            "Transloadit.Tests.csproj xunit",
+            "Transloadit.Tests.csproj xunit.runner.visualstudio (modern TFMs)",
+            "Transloadit.Tests.csproj xunit.runner.visualstudio 2.4.3 (net461, held back: later adapters ship no net461 build)"
+          ]
+        },
+        {
+          "name": "Newtonsoft.Json",
+          "members": [
+            "Transloadit.csproj Newtonsoft.Json (net452/net461 runtime dependency)",
+            "Transloadit.Tests.csproj Newtonsoft.Json (test-only)"
+          ]
+        },
+        {
+          "name": "coverlet",
+          "members": [
+            "Transloadit.Tests.csproj coverlet.collector (6.0.x while net461/net462 are tested)",
+            "Transloadit.Tests.csproj Microsoft.NET.Test.Sdk (coverlet 10.x needs 17.12+)"
+          ]
+        }
+      ],
+      "traps": [
+        "System.Text.Json is a runtime dependency of the published package on netstandard2.0/net462-net7.0; a major bump changes what consumers get transitively",
+        "CsCheck is deliberately split: 4.x on net8.0+ and 2.x on older TFMs; --outdated will propose collapsing them",
+        "xunit.runner.visualstudio is held at 2.4.3 for net461 on purpose",
+        "coverlet.collector 8.0.0 through 10.0.x reports zero coverage on .NET Framework; skip that range",
+        "dotnet list package needs a prior restore (obj/project.assets.json); conditional references are listed per TFM"
+      ]
+    },
+    {
+      "id": "dotnet-tools",
+      "kind": "tooling",
+      "pack": "tooling-coverlet",
+      "pins": [
+        {"file": ".config/dotnet-tools.json", "anchor": "tools.dotnet-reportgenerator-globaltool.version", "policy": "exact"}
+      ],
+      "discover": ["dotnet tool list --local", "dotnet tool search dotnet-reportgenerator-globaltool --take 1"],
+      "apply": "dotnet tool update dotnet-reportgenerator-globaltool --local --version <version>",
+      "gateTargets": []
+    },
+    {
+      "id": "actions",
+      "kind": "ci",
+      "pack": "tooling-github-actions",
+      "pins": [
+        {"file": ".github/workflows/*.yml", "anchor": "uses:", "policy": "tag"}
+      ],
+      "discover": [
+        "gh api repos/actions/checkout/releases/latest --jq .tag_name",
+        "gh api repos/actions/setup-dotnet/releases/latest --jq .tag_name",
+        "gh api repos/actions/upload-artifact/releases/latest --jq .tag_name",
+        "gh api repos/actions/download-artifact/releases/latest --jq .tag_name",
+        "gh api repos/cardinalby/git-tag-action/tags --jq \".[0].name\"",
+        "gh api repos/NuGet/login/tags --jq \".[0].name\""
+      ],
+      "apply": "Edit the uses: ref in .github/workflows/tests.yml and deploy.yml (the Actions rulebook asks for full commit SHAs with a version comment)",
+      "gateTargets": [],
+      "traps": [
+        "Workflows run only on workflow_dispatch/workflow_call and need live API secrets plus the Release environment, so an actions bump cannot be proven locally or by a PR run",
+        "NuGet/login is bound to the nuget.org Trusted Publishing policy (repo + deploy.yml + Release environment); renaming the workflow or environment breaks publishing",
+        "upload-artifact and download-artifact move in lock-step (same @actions/artifact backend)"
+      ]
+    }
+  ]
+}

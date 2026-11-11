@@ -1,0 +1,447 @@
+{
+  "schemaVersion": 1,
+  "id": "capability-newtonsoft-json",
+  "layer": "capability",
+  "title": "Newtonsoft.Json (net452/net461 serializer engine, wire-format parity with System.Text.Json)",
+  "researchedAt": "2026-11-09",
+  "versions": [
+    {
+      "version": "13.0.1",
+      "pinnedIn": "src/Transloadit/Transloadit.csproj (PackageReference, condition net452 or net461)",
+      "latest": "13.0.4 (stable, 2025-09-16); 14.0.1-beta2 prerelease"
+    },
+    {
+      "version": "13.0.1",
+      "pinnedIn": "tests/Transloadit.Tests/Transloadit.Tests.csproj (PackageReference, all TFMs, test-only JSON inspection)",
+      "latest": "13.0.4"
+    }
+  ],
+  "targets": ["client"],
+  "rulebookPaths": [
+    "src/Transloadit/Serialization/**",
+    "src/Transloadit/Models/**",
+    "src/Transloadit/Transloadit.csproj",
+    "tests/Transloadit.Tests/Transloadit.Tests.csproj",
+    "tests/Transloadit.Tests/Infrastructure/TestSerializer.cs",
+    "tests/Transloadit.Tests/Tests/**"
+  ],
+  "rules": [
+    {
+      "rule": "Never set TypeNameHandling to anything but None on the settings that deserialize Transloadit responses, and never let a caller's configure callback or host defaults turn it on silently. If type names are ever needed, restrict them with an ISerializationBinder allow-list.",
+      "why": "Responses come from the network (public API, proxies, a compromised or spoofed endpoint). With TypeNameHandling other than None, a `$type` in the payload makes Json.NET instantiate attacker-chosen types: the classic insecure-deserialization hole (command execution, file deletion). CA2326 flags it; it is off by default in .NET 10 analyzers, so the build will not catch it.",
+      "where": [
+        "src/Transloadit/Serialization/NewtonsoftJsonSerializer.cs NewtonsoftJsonSerializer(Action<JsonSerializerSettings>)",
+        "src/Transloadit/Serialization/TransloaditSerializerSettings.cs CreateDefault"
+      ],
+      "sources": ["nj-typenamehandling", "ca2326"]
+    },
+    {
+      "rule": "Isolate the engine from the host's JsonConvert.DefaultSettings: serialize and deserialize through JsonSerializer.Create(settings) (with a StringWriter/JsonTextReader), not JsonConvert.SerializeObject/DeserializeObject; or, at minimum, set explicitly every setting the wire format depends on (TypeNameHandling = None, DateParseHandling, MaxDepth, DateFormatString, FloatFormatHandling, Formatting). Keep these in TransloaditSerializerSettings.CreateDefault and build the NewtonsoftJsonSerializer settings from it, so the defaults test guards the settings actually used.",
+      "why": "JsonConvert.SerializeObject/DeserializeObject call JsonSerializer.CreateDefault(settings), which first applies DefaultSettings and then overrides only the values the passed settings explicitly set; host converters are kept (behind ours). A consuming app that sets JsonConvert.DefaultSettings (TypeNameHandling.All, DateParseHandling.DateTimeOffset, a DateFormatString, a JavaScriptDateTimeConverter) changes how this library reads API responses and writes the signed params on net452/net461 only, so the two engines diverge per host. The settings are also built twice (constructor and CreateDefault); SerializationDefaultsTests only checks CreateDefault.",
+      "where": [
+        "src/Transloadit/Serialization/NewtonsoftJsonSerializer.cs Serialize / Deserialize (JsonConvert calls), constructor (duplicate settings)",
+        "src/Transloadit/Serialization/TransloaditSerializerSettings.cs CreateDefault",
+        "tests/Transloadit.Tests/Tests/SerializationDefaultsTests.cs CreateDefault_Should_ReturnExpectedDefaults"
+      ],
+      "sources": ["nj-jsonconvert-src", "nj-serializer-src", "nj-defaultsettings", "nj-create", "nj-createdefault"]
+    },
+    {
+      "rule": "Keep Newtonsoft.Json at 13.0.1 or later and never set MaxDepth to null; leave the 64-level read limit in place.",
+      "why": "Before 13.0.1 there was no default depth limit: deeply nested JSON caused StackOverflow or CPU/RAM exhaustion (CVE-2024-21907 / GHSA-5crp-9r3c-p9vr, CVSS 7.5). 13.0.1 made 64 the default for JsonReader and JsonSerializer. Note the asymmetry: Newtonsoft's MaxDepth limits reading only, while System.Text.Json's MaxDepth (64) also limits writing, so a request whose Fields/Ffmpeg dictionaries nest deeper than 64 serializes on net452/net461 but throws JsonException on every other TFM.",
+      "where": [
+        "src/Transloadit/Transloadit.csproj PackageReference Newtonsoft.Json 13.0.1",
+        "src/Transloadit/Models/Assemblies/AssemblyRequest.cs Fields (Dictionary<string, object>)"
+      ],
+      "since": "13.0.1",
+      "sources": ["ghsa-5crp", "nj-releases", "nj-settings-src", "nj-reader-src", "stj-maxdepth"]
+    },
+    {
+      "rule": "Give every IsoDateTimeConverter (or any Newtonsoft date formatting) Culture = CultureInfo.InvariantCulture explicitly.",
+      "why": "IsoDateTimeConverter.Culture falls back to CultureInfo.CurrentCulture when unset, and the format string is applied with that culture: under th-TH/ar-SA/fa-IR the signed `expires` and pagination dates get a Buddhist/Umm al-Qura year or non-Latin digits and the API rejects the request.",
+      "where": [
+        "src/Transloadit/Serialization/TransloaditContractResolver.cs CreateProperty (TransloaditDateFormatAttribute branch)",
+        "src/Transloadit/Serialization/DateTimeConverters.cs AuthExpiresDateTimeConverter, PaginationDateTimeConverter"
+      ],
+      "repoConvention": "Already done in all three places; tests/Transloadit.Tests/Tests/Unit/CultureRobustnessTests.cs SerializeAndDeserialize_AreCultureInvariant guards it (only when run on net461 for this engine).",
+      "sources": ["nj-isodate-src"]
+    },
+    {
+      "rule": "Treat request DateTime values as UTC before they reach the formatter: the `expires` format hard-codes `+00:00`, and neither engine converts. Either convert with ToUniversalTime in both engines (DateTimeStyles.AdjustToUniversal on the Newtonsoft IsoDateTimeConverter plus the same in StjDateFormatConverter) or reject non-UTC kinds; change both engines together.",
+      "why": "IsoDateTimeConverter only converts to UTC when DateTimeStyles includes AdjustToUniversal/AssumeUniversal; the default RoundtripKind writes the clock time as is. A caller passing AuthParams.Expires = DateTime.Now gets local wall-clock time labelled +00:00, so the signature's expiry is off by the host's UTC offset: rejected as expired east of UTC, valid too long west of it.",
+      "where": [
+        "src/Transloadit/Models/BaseRequests.cs AuthParams.Expires ([TransloaditDateFormat(\"yyyy'/'MM'/'dd HH:mm:ss+00:00\")])",
+        "src/Transloadit/TransloaditClient.cs BuildRequest (caller-supplied Expires passed through; default is DateTime.UtcNow)"
+      ],
+      "sources": ["nj-isodate-src"]
+    },
+    {
+      "rule": "Parse response timestamps that may lack a zone the same way on both engines: add a Newtonsoft DateTimeOffset converter mirroring StjDateTimeOffsetConverter (InvariantCulture, AssumeUniversal | AdjustToUniversal), or prove the API always sends a zone.",
+      "why": "For a DateTimeOffset member, Json.NET falls back to DateTimeOffset.TryParse(s, Culture, DateTimeStyles.RoundtripKind); RoundtripKind has no effect on DateTimeOffset, so a string with no offset gets the machine's local offset. The STJ converter assumes UTC. The current \"2020/01/09 12:02:06 GMT\" shape parses identically, but any zone-less timestamp is shifted by the host offset on net452/net461 only.",
+      "where": [
+        "src/Transloadit/Models/Assemblies/AssemblyResponse.cs ExecutionStart, Created, StartDate, NotifyStart, LastJobCompleted",
+        "src/Transloadit/Models/Templates/TemplateResponse.cs Created, Modified, LastUsed",
+        "src/Transloadit/Serialization/StjConverters.cs StjDateTimeOffsetConverter (the STJ behaviour to match)"
+      ],
+      "sources": ["nj-reader-src", "ms-dto-tryparse"]
+    },
+    {
+      "rule": "Decide one runtime shape for untyped (object / Dictionary<string, object>) response members and enforce it on both engines: set DateParseHandling = DateParseHandling.None on the Newtonsoft settings, and either convert nested JObject/JArray to Dictionary<string, object>/List<object> or document that net452/net461 consumers get JToken.",
+      "why": "Json.NET reads object-typed values as boxed string/long/double/bool/DateTime and nested values as JObject/JArray, and with the default DateParseHandling.DateTime turns any ISO-8601-looking string into a DateTime (the maintainer will not change this, issue #862). StjInferredTypeConverter returns strings and Dictionary/List. A consumer's `fields[\"meta\"] as Dictionary<string, object>` is null on net461, and a field value \"2024-01-01T00:00:00Z\" is a DateTime there and a string elsewhere.",
+      "where": [
+        "src/Transloadit/Models/Assemblies/AssemblyResponse.cs Fields, Meta, UserMeta, ParentAssemblyStatus",
+        "src/Transloadit/Models/Templates/TemplateResponse.cs Steps",
+        "src/Transloadit/Models/Billing/BillingPlan.cs Tiers, CustomRobotFactors",
+        "src/Transloadit/Serialization/StjConverters.cs StjInferredTypeConverter (doc comment claims it matches Newtonsoft)"
+      ],
+      "sources": ["ms-migrate", "nj-dateparsehandling", "nj-issue-862", "nj-settings-src"]
+    },
+    {
+      "rule": "Make every response value-type member the API can send as null nullable; do not read a passing net461 run as proof that a null is handled.",
+      "why": "With NullValueHandling.Ignore (this repo's setting), Json.NET does not throw on a JSON null for a non-nullable value type: it leaves the default (DateTimeOffset.MinValue, 0, false), silently corrupting data. System.Text.Json throws for the same input. The same model fails loudly on net8 and returns wrong data on net461.",
+      "where": [
+        "src/Transloadit/Models/Assemblies/AssemblyResponse.cs Created (non-nullable DateTimeOffset)",
+        "src/Transloadit/Models/Templates/TemplateResponse.cs Created, Modified",
+        "src/Transloadit/Models/Billing/BillingPlan.cs Created, Modified"
+      ],
+      "sources": ["ms-migrate"]
+    },
+    {
+      "rule": "When adding a member typed as an abstract base (another RobotBase collection, a nested credentials base), add a value-level golden case asserting a derived-only property; a green net461 run says nothing about STJ.",
+      "why": "Json.NET serializes by runtime type automatically; System.Text.Json serializes against the declared type unless told otherwise, dropping every robot-specific parameter. The Newtonsoft leg hides this bug class rather than catching it.",
+      "where": [
+        "src/Transloadit/Models/Robots/RobotBase.cs (steps are Dictionary<string, RobotBase>)",
+        "src/Transloadit/Serialization/StjConverters.cs StjPolymorphicRobotConverterFactory",
+        "tests/Transloadit.Tests/Tests/Models/AutoPopulatedRobotGoldenTests.cs PopulatedRobot_MatchesCrossProviderGolden"
+      ],
+      "sources": ["ms-migrate"]
+    },
+    {
+      "rule": "Map models only with the provider-neutral Transloadit* attributes; never put [JsonProperty], [JsonConverter], [JsonIgnore] or other Newtonsoft attributes on library models.",
+      "why": "DefaultContractResolver honours Newtonsoft attributes, so they take effect on net452/net461 only; System.Text.Json ignores them, and the JSON key or converter differs by target framework. Converter precedence also differs between the engines (property attribute, then type attribute, then settings in Json.NET).",
+      "where": [
+        "src/Transloadit/Serialization/TransloaditContractResolver.cs CreateProperty (maps TransloaditJsonName/JsonIgnore/BooleanToInt/DateFormat)",
+        "src/Transloadit/Models/**"
+      ],
+      "repoConvention": "readme.md (\"Do not use native serializer attributes\") and .claude/skills/add-credentials/SKILL.md say this. CLAUDE.md (Robots section) and .claude/agents/csharp-build-reviewer.md still say to use [JsonProperty(\"snake_case_name\")]: stale, see questions.",
+      "sources": ["ms-migrate"]
+    },
+    {
+      "rule": "Give every Newtonsoft converter that has an STJ twin the same read coercions and null handling, and test each input shape on both legs.",
+      "why": "BooleanToIntConverter.ReadJson uses Convert.ToInt32(reader.Value): a JSON string \"true\"/\"false\" throws FormatException, which StjBooleanToIntConverter.ReadBoolean accepts. A JSON null becomes 0, so false, where StjNullableBooleanToIntConverter returns null for bool?. The theory BooleanToInt_ReadsNumberStringAndBoolTokens covers neither shape.",
+      "where": [
+        "src/Transloadit/Serialization/BooleanToIntConverter.cs ReadJson",
+        "src/Transloadit/Serialization/StjConverters.cs StjBooleanToIntConverter.ReadBoolean",
+        "tests/Transloadit.Tests/Tests/Unit/ResponseDeserializationTests.cs BooleanToInt_ReadsNumberStringAndBoolTokens"
+      ],
+      "sources": ["ms-convert-toint32"]
+    },
+    {
+      "rule": "Bump the test project's Newtonsoft.Json in lock-step with the library's (equal or higher, never lower).",
+      "why": "The test project references both the library (which depends on Newtonsoft.Json on net461) and Newtonsoft.Json directly; a lower direct pin is a package downgrade (NU1605), which the .NET SDK treats as an error, and it would test against a different version than ships.",
+      "where": [
+        "tests/Transloadit.Tests/Transloadit.Tests.csproj PackageReference Newtonsoft.Json 13.0.1",
+        "src/Transloadit/Transloadit.csproj PackageReference Newtonsoft.Json 13.0.1"
+      ],
+      "sources": ["nu1605"]
+    }
+  ],
+  "bugCategories": [
+    {
+      "name": "insecure-type-name-handling",
+      "lookFor": "TypeNameHandling set to anything but None (settings, configure callback examples in readme, tests); a missing ISerializationBinder where type names are used.",
+      "failure": "Attacker-controlled `$type` in an API response instantiates arbitrary types: remote code execution or file deletion in the consuming app.",
+      "severityHint": "blocker",
+      "sources": ["ca2326", "nj-typenamehandling"]
+    },
+    {
+      "name": "host-default-settings-leak",
+      "lookFor": "JsonConvert.SerializeObject/DeserializeObject (or JToken.ToObject/FromObject) in library code; a wire-relevant setting left unset on the library's JsonSerializerSettings.",
+      "failure": "The consuming app's JsonConvert.DefaultSettings changes how responses are parsed (dates, type names, extra converters) and how signed params are written, on net452/net461 only.",
+      "severityHint": "confirm",
+      "sources": ["nj-jsonconvert-src", "nj-serializer-src", "nj-defaultsettings"]
+    },
+    {
+      "name": "culture-sensitive-date-format",
+      "lookFor": "new IsoDateTimeConverter without Culture = CultureInfo.InvariantCulture; DateTime.ToString(format) without a provider in serialization code.",
+      "failure": "Signed `expires`/pagination dates are written with a locale calendar or digits; the API rejects the signature.",
+      "severityHint": "blocker",
+      "sources": ["nj-isodate-src"]
+    },
+    {
+      "name": "local-time-labelled-utc",
+      "lookFor": "Request DateTime members formatted with a literal `+00:00` or `Z` and no ToUniversalTime/AdjustToUniversal; callers passing DateTime.Now.",
+      "failure": "`expires` is shifted by the host's UTC offset: requests are rejected as expired, or signatures stay valid longer than intended.",
+      "severityHint": "confirm",
+      "sources": ["nj-isodate-src"]
+    },
+    {
+      "name": "zone-less-timestamp-local-offset",
+      "lookFor": "DateTimeOffset/DateTime response members parsed by Json.NET's built-in reader with no converter, where the API may omit the zone.",
+      "failure": "Timestamps are shifted by the machine's local offset on net452/net461, while STJ treats them as UTC.",
+      "severityHint": "confirm",
+      "sources": ["nj-reader-src", "ms-dto-tryparse"]
+    },
+    {
+      "name": "untyped-member-shape-divergence",
+      "lookFor": "object / Dictionary<string, object> response members; tests asserting only \"not JsonElement\" for nested values; DateParseHandling left at default.",
+      "failure": "Consumers get JObject/JArray and DateTime on net452/net461 but Dictionary/List and string elsewhere; casts return null or throw InvalidCastException depending on TFM.",
+      "severityHint": "confirm",
+      "sources": ["ms-migrate", "nj-dateparsehandling", "nj-issue-862"]
+    },
+    {
+      "name": "silent-null-into-value-type",
+      "lookFor": "Non-nullable DateTimeOffset/int/double/bool response members for fields the API can return as null (lifecycle fields of in-progress or failed assemblies).",
+      "failure": "Json.NET with NullValueHandling.Ignore leaves the default value (0001-01-01, 0, false) with no error: wrong data on net461, exception on STJ.",
+      "severityHint": "confirm",
+      "sources": ["ms-migrate"]
+    },
+    {
+      "name": "converter-twin-divergence",
+      "lookFor": "A Newtonsoft JsonConverter and its STJ counterpart that differ in accepted token types, null handling, culture or DateTimeStyles (BooleanToIntConverter vs StjBooleanToIntConverter, IsoDateTimeConverter vs StjDateFormatConverter).",
+      "failure": "The same API payload parses on one TFM and throws, or yields a different value, on another.",
+      "severityHint": "confirm",
+      "sources": ["ms-convert-toint32", "nj-isodate-src"]
+    },
+    {
+      "name": "native-newtonsoft-attribute",
+      "lookFor": "[JsonProperty], [JsonConverter], [JsonIgnore], [JsonObject] from Newtonsoft.Json on library models or robots.",
+      "failure": "The JSON key or converter differs by target framework; the API ignores the misnamed parameter on STJ frameworks.",
+      "severityHint": "blocker",
+      "sources": ["ms-migrate"]
+    }
+  ],
+  "testing": {
+    "layers": "Offline unit tests through TestSerializer.Default prove engine behaviour: the same test binary runs Newtonsoft on net461 and System.Text.Json on net6+, so every parity test must run on both net461 and net8.0. Golden tests compare structurally (JToken.DeepEquals), never by raw string. Live Api tests prove the real payload shapes (nulls, date formats) but need credentials.",
+    "harness": [
+      "tests/Transloadit.Tests/Infrastructure/TestSerializer.cs TestSerializer.Default",
+      "tests/Transloadit.Tests/Tests/Models/SerializationGoldenTests.cs (UPDATE_GOLDEN=1, net8.0 only)",
+      "tests/Transloadit.Tests/Tests/Models/AutoPopulatedRobotGoldenTests.cs (UPDATE_ROBOT_GOLDEN=1, net8.0 only)",
+      "tests/Transloadit.Tests/Tests/Unit/CultureRobustnessTests.cs SerializeAndDeserialize_AreCultureInvariant",
+      "tests/Transloadit.Tests/Tests/Unit/ResponseDeserializationTests.cs",
+      "tests/Transloadit.Tests/Tests/Unit/SerializerWireFormatTests.cs",
+      "tests/Transloadit.Tests/Tests/SerializationDefaultsTests.cs (#if TRANSLOADIT_NEWTONSOFT)",
+      "tests/Transloadit.Tests/Tests/Unit/Serialization/BooleanToIntConverterTests.cs, DateTimeConvertersTests.cs, AnyOfConverterTests.cs (#if TRANSLOADIT_NEWTONSOFT)"
+    ],
+    "commands": [
+      "dotnet test tests/Transloadit.Tests/Transloadit.Tests.csproj -f net461 --filter \"FullyQualifiedName!~Tests.Api\"",
+      "dotnet test tests/Transloadit.Tests/Transloadit.Tests.csproj -f net8.0 --filter \"FullyQualifiedName!~Tests.Api\"",
+      "dotnet test tests/Transloadit.Tests/Transloadit.Tests.csproj -f net461 --filter \"FullyQualifiedName~Golden|FullyQualifiedName~CultureRobustness|FullyQualifiedName~ResponseDeserialization|FullyQualifiedName~SerializerWireFormat\""
+    ],
+    "traps": [
+      "CI never runs net461: .github/workflows/tests.yml test-netfx covers net462/net472/net48 (all STJ), so this engine is exercised only when someone runs -f net461 locally on Windows.",
+      "A test that sets JsonConvert.DefaultSettings mutates process-wide state; restore it in finally (parallelization is disabled globally, but a leak still poisons later tests).",
+      "Goldens are regenerated on net8.0/STJ only; regenerating on net461 would bless Newtonsoft output as the contract.",
+      "Do not compare serialized strings across engines: Json.NET escapes minimally while STJ escapes non-ASCII and HTML-sensitive characters, and integral double/decimal render as 2.0 vs 2 (repo comment in AutoPopulatedRobotGoldenTests). Parse and compare with JToken.DeepEquals.",
+      "Hand-written JSON in offline tests hides the null and date-shape bugs; include null lifecycle fields, zone-less dates, ISO-looking strings in fields, and nested objects in untyped members."
+    ],
+    "sources": ["ms-migrate", "nj-defaultsettings"]
+  },
+  "wiring": [
+    {
+      "check": "Every Newtonsoft-dependent file is wrapped in #if TRANSLOADIT_NEWTONSOFT, and that constant is defined exactly for the TFMs that reference the package (net452 and net461 in the library; net461 in the tests).",
+      "failure": "Builds break on the other TFMs, or a TFM ships with no serializer.",
+      "where": [
+        "src/Transloadit/Transloadit.csproj DefineConstants / PackageReference conditions",
+        "tests/Transloadit.Tests/Transloadit.Tests.csproj DefineConstants condition",
+        "src/Transloadit/Serialization/TransloaditSerializerFactory.cs CreateDefault"
+      ],
+      "sources": ["nj-nuget"]
+    },
+    {
+      "check": "Every converter or setting the Newtonsoft engine needs is registered in TransloaditSerializerSettings.CreateDefault and in the NewtonsoftJsonSerializer constructor (today duplicated), and has a counterpart registered in SystemTextJsonSerializer.",
+      "failure": "A converter present on one path only: the defaults test passes while the serializer actually used differs, or the engines diverge.",
+      "where": [
+        "src/Transloadit/Serialization/NewtonsoftJsonSerializer.cs constructor",
+        "src/Transloadit/Serialization/TransloaditSerializerSettings.cs CreateDefault",
+        "src/Transloadit/Serialization/SystemTextJsonSerializer.cs constructor"
+      ],
+      "sources": ["nj-serializer-src"]
+    }
+  ],
+  "performance": [
+    {
+      "note": "Create the contract resolver once and reuse it: DefaultContractResolver caches contracts per instance, and a new resolver repeats the reflection on every call. Here a resolver lives per NewtonsoftJsonSerializer, which lives per TransloaditClient, so a client created per request pays reflection every time.",
+      "where": [
+        "src/Transloadit/Serialization/NewtonsoftJsonSerializer.cs constructor (new TransloaditContractResolver())",
+        "src/Transloadit/TransloaditClient.cs CreateDefaultSerializer"
+      ],
+      "sources": ["nj-performance"]
+    }
+  ],
+  "security": [
+    {
+      "note": "Stakes are auth and data integrity, exposure public: responses are untrusted input. Keep TypeNameHandling None, keep the 13.0.1+ MaxDepth limit, and do not inherit host DefaultSettings (see rules). No advisory affects 13.0.1 to 13.0.4; the only Newtonsoft.Json advisory is CVE-2024-21907 (< 13.0.1).",
+      "where": ["src/Transloadit/Serialization/NewtonsoftJsonSerializer.cs"],
+      "sources": ["ghsa-5crp", "gh-advisories", "ca2326"]
+    },
+    {
+      "note": "The signature is computed over the exact params string the serializer produced and that same string is sent, so engine formatting differences do not break signatures. Value differences do: a mis-formatted or mis-zoned `expires` is signed as is.",
+      "where": ["src/Transloadit/TransloaditClient.cs BuildRequest"],
+      "sources": ["nj-isodate-src"]
+    }
+  ],
+  "upgrade": {
+    "pins": [
+      "src/Transloadit/Transloadit.csproj: Newtonsoft.Json 13.0.1 (net452, net461 only)",
+      "tests/Transloadit.Tests/Transloadit.Tests.csproj: Newtonsoft.Json 13.0.1 (all TFMs)"
+    ],
+    "lockStep": [
+      "Test project's direct Newtonsoft.Json must be at least the library's version (NU1605 downgrade otherwise)."
+    ],
+    "releaseNotes": [
+      "https://github.com/JamesNK/Newtonsoft.Json/releases",
+      "https://www.nuget.org/packages/Newtonsoft.Json/"
+    ],
+    "migrationGuides": [
+      "https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/migrate-from-newtonsoft"
+    ],
+    "deprecationsInUse": []
+  },
+  "sources": {
+    "nj-releases": {
+      "url": "https://github.com/JamesNK/Newtonsoft.Json/releases",
+      "title": "Newtonsoft.Json releases (13.0.1, 13.0.2, 13.0.3, 13.0.4)",
+      "version": "13.0.1-13.0.4",
+      "accessed": "2026-11-09"
+    },
+    "nj-nuget": {
+      "url": "https://www.nuget.org/packages/Newtonsoft.Json/",
+      "title": "Newtonsoft.Json on NuGet (versions, TFMs, vulnerability flags)",
+      "version": "13.0.4 / 14.0.1-beta2",
+      "accessed": "2026-11-09"
+    },
+    "ghsa-5crp": {
+      "url": "https://github.com/advisories/GHSA-5crp-9r3c-p9vr",
+      "title": "CVE-2024-21907: Improper Handling of Exceptional Conditions in Newtonsoft.Json",
+      "version": "< 13.0.1 affected, 13.0.1 patched",
+      "accessed": "2026-11-09"
+    },
+    "gh-advisories": {
+      "url": "https://github.com/advisories?query=ecosystem%3Anuget+Newtonsoft.Json",
+      "title": "GitHub Advisory Database search: Newtonsoft.Json (NuGet)",
+      "version": "all",
+      "accessed": "2026-11-09"
+    },
+    "nj-settings-src": {
+      "url": "https://github.com/JamesNK/Newtonsoft.Json/blob/master/Src/Newtonsoft.Json/JsonSerializerSettings.cs",
+      "title": "JsonSerializerSettings.cs (DefaultMaxDepth = 64, DateParseHandling, Culture defaults)",
+      "version": "master (13.x)",
+      "accessed": "2026-11-09"
+    },
+    "nj-reader-src": {
+      "url": "https://github.com/JamesNK/Newtonsoft.Json/blob/master/Src/Newtonsoft.Json/JsonReader.cs",
+      "title": "JsonReader.cs (MaxDepth 64, ReadDateTimeOffsetString fallback)",
+      "version": "master (13.x)",
+      "accessed": "2026-11-09"
+    },
+    "nj-serializer-src": {
+      "url": "https://github.com/JamesNK/Newtonsoft.Json/blob/master/Src/Newtonsoft.Json/JsonSerializer.cs",
+      "title": "JsonSerializer.cs (CreateDefault, ApplySerializerSettings merge rules)",
+      "version": "master (13.x)",
+      "accessed": "2026-11-09"
+    },
+    "nj-jsonconvert-src": {
+      "url": "https://github.com/JamesNK/Newtonsoft.Json/blob/master/Src/Newtonsoft.Json/JsonConvert.cs",
+      "title": "JsonConvert.cs (SerializeObject/DeserializeObject use JsonSerializer.CreateDefault)",
+      "version": "master (13.x)",
+      "accessed": "2026-11-09"
+    },
+    "nj-defaultsettings": {
+      "url": "https://www.newtonsoft.com/json/help/html/P_Newtonsoft_Json_JsonConvert_DefaultSettings.htm",
+      "title": "JsonConvert.DefaultSettings property",
+      "version": "docs site (12.0.1 build)",
+      "accessed": "2026-11-09"
+    },
+    "nj-create": {
+      "url": "https://www.newtonsoft.com/json/help/html/M_Newtonsoft_Json_JsonSerializer_Create_1.htm",
+      "title": "JsonSerializer.Create(JsonSerializerSettings)",
+      "version": "docs site (12.0.1 build)",
+      "accessed": "2026-11-09"
+    },
+    "nj-createdefault": {
+      "url": "https://www.newtonsoft.com/json/help/html/M_Newtonsoft_Json_JsonSerializer_CreateDefault_1.htm",
+      "title": "JsonSerializer.CreateDefault(JsonSerializerSettings)",
+      "version": "docs site (12.0.1 build)",
+      "accessed": "2026-11-09"
+    },
+    "nj-typenamehandling": {
+      "url": "https://www.newtonsoft.com/json/help/html/T_Newtonsoft_Json_TypeNameHandling.htm",
+      "title": "TypeNameHandling enumeration (security caution)",
+      "version": "docs site (12.0.1 build)",
+      "accessed": "2026-11-09"
+    },
+    "nj-dateparsehandling": {
+      "url": "https://www.newtonsoft.com/json/help/html/T_Newtonsoft_Json_DateParseHandling.htm",
+      "title": "DateParseHandling enumeration",
+      "version": "docs site (12.0.1 build)",
+      "accessed": "2026-11-09"
+    },
+    "nj-issue-862": {
+      "url": "https://github.com/JamesNK/Newtonsoft.Json/issues/862",
+      "title": "Json.NET interprets and modifies ISO dates when deserializing to JObject (maintainer: by design)",
+      "version": "all",
+      "accessed": "2026-11-09"
+    },
+    "nj-isodate-src": {
+      "url": "https://github.com/JamesNK/Newtonsoft.Json/blob/master/Src/Newtonsoft.Json/Converters/IsoDateTimeConverter.cs",
+      "title": "IsoDateTimeConverter.cs (Culture falls back to CurrentCulture; UTC conversion only with AdjustToUniversal)",
+      "version": "master (13.x)",
+      "accessed": "2026-11-09"
+    },
+    "nj-performance": {
+      "url": "https://www.newtonsoft.com/json/help/html/Performance.htm",
+      "title": "Json.NET Performance Tips",
+      "version": "docs site (12.0.1 build)",
+      "accessed": "2026-11-09"
+    },
+    "ca2326": {
+      "url": "https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/ca2326",
+      "title": "CA2326: Do not use TypeNameHandling values other than None",
+      "version": ".NET 10 analyzers",
+      "accessed": "2026-11-09"
+    },
+    "ms-migrate": {
+      "url": "https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/migrate-from-newtonsoft",
+      "title": "Migrate from Newtonsoft.Json to System.Text.Json (behaviour differences)",
+      "version": "System.Text.Json .NET 8-10 vs Newtonsoft.Json 13",
+      "accessed": "2026-11-09"
+    },
+    "ms-dto-tryparse": {
+      "url": "https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset.tryparse",
+      "title": "DateTimeOffset.TryParse (missing offset defaults to local; RoundtripKind has no effect)",
+      "version": ".NET Framework 4.5.2-.NET 10",
+      "accessed": "2026-11-09"
+    },
+    "stj-maxdepth": {
+      "url": "https://learn.microsoft.com/en-us/dotnet/api/system.text.json.jsonserializeroptions.maxdepth",
+      "title": "JsonSerializerOptions.MaxDepth (applies to serializing and deserializing, default 64)",
+      "version": "System.Text.Json 8+",
+      "accessed": "2026-11-09"
+    },
+    "ms-convert-toint32": {
+      "url": "https://learn.microsoft.com/en-us/dotnet/api/system.convert.toint32?view=netframework-4.8",
+      "title": "Convert.ToInt32 (null returns 0; FormatException for unparseable values)",
+      "version": ".NET Framework 4.8",
+      "accessed": "2026-11-09"
+    },
+    "nu1605": {
+      "url": "https://learn.microsoft.com/en-us/nuget/reference/errors-and-warnings/nu1605",
+      "title": "NuGet NU1605: detected package downgrade",
+      "version": "current NuGet / .NET SDK",
+      "accessed": "2026-11-09"
+    }
+  },
+  "notReached": [
+    "Newtonsoft.Json 14.0.1-beta1/beta2 release notes: the GitHub release tag page returned 404 and NuGet lists no notes. Breaking changes in 14.x are unknown; the package still ships net45 and netstandard2.0 assets.",
+    "Official newtonsoft.com API docs are built from 12.0.1 and still say MaxDepth defaults to null. The 13.x default (64) comes from the 13.0.1 release notes and current source instead."
+  ],
+  "questions": [
+    "Docs vs code: CLAUDE.md says TransloaditSerializerSettings uses SnakeCaseNamingStrategy and that robot properties use [JsonProperty(\"snake_case_name\")]; .claude/agents/csharp-build-reviewer.md says the same. The code (TransloaditContractResolver, no naming strategy) and readme.md use [TransloaditJsonName] only. .claude/skills/add-service-endpoint/SKILL.md says to omit [TransloaditJsonName] when the key is snake_case(PropertyName), which no longer holds now that there is no naming convention. Doc comments in NewtonsoftJsonSerializer and TransloaditClientOptions say Newtonsoft is used on net452 only (it is net452 and net461). Update these?",
+    "CI gap: .github/workflows/tests.yml test-netfx runs net462/net472/net48 only, so the Newtonsoft engine (net461) is never tested in CI despite the goldens relying on that leg. Add a net461 leg, at least for the offline serialization tests?",
+    "NewtonsoftJsonSerializer uses JsonConvert.SerializeObject/DeserializeObject, which merge the host app's JsonConvert.DefaultSettings. Switch to JsonSerializer.Create(settings), or set every wire-relevant setting explicitly?",
+    "Untyped members: on net452/net461 consumers get JObject/JArray for nested values and DateTime for ISO-looking strings; on other TFMs they get Dictionary/List and string. StjInferredTypeConverter's doc comment says it matches Newtonsoft. Which shape is the public contract? Set DateParseHandling.None and normalise nested values on Newtonsoft?",
+    "AuthParams.Expires with DateTimeKind.Local is written as local time labelled +00:00 on both engines. Convert to UTC in both converters, reject non-UTC values, or document?",
+    "The project memory note says a null into a non-nullable value type crashes both engines. Microsoft's migration guide says Json.NET with NullValueHandling.Ignore does not throw and leaves the default value. Verify on net461 with a null `created` and decide whether the remaining non-nullable dates (AssemblyResponse.Created, TemplateResponse.Created/Modified, BillingPlan.Created/Modified) are guaranteed non-null.",
+    "Version: 13.0.1 is the patched floor for CVE-2024-21907 and no later advisory exists. Keep 13.0.1 as the library's minimum, so consumers can unify upward, or move to 13.0.4 (fixes include decimal trailing-zero and negative-zero parsing in 13.0.3)?"
+  ]
+}

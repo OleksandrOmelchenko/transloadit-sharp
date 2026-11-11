@@ -1,0 +1,329 @@
+{
+  "schemaVersion": 1,
+  "id": "tooling-xunit",
+  "layer": "tooling",
+  "title": "xUnit.net v2 with the VSTest adapter (xunit.runner.visualstudio) and Microsoft.NET.Test.Sdk",
+  "researchedAt": "2026-11-09",
+  "versions": [
+    {"version": "xunit 2.5.3", "pinnedIn": "tests/Transloadit.Tests/Transloadit.Tests.csproj (all TFMs)", "latest": "2.9.3 (final v2; v3 line is xunit.v3 4.0.3)"},
+    {"version": "xunit.runner.visualstudio 2.5.3", "pinnedIn": "tests/Transloadit.Tests/Transloadit.Tests.csproj (every TFM except net461)", "latest": "4.0.1 (last 2.x adapter: 2.8.2)"},
+    {"version": "xunit.runner.visualstudio 2.4.3", "pinnedIn": "tests/Transloadit.Tests/Transloadit.Tests.csproj (net461 only, held back on purpose)", "latest": "4.0.1"},
+    {"version": "Microsoft.NET.Test.Sdk 17.8.0", "pinnedIn": "tests/Transloadit.Tests/Transloadit.Tests.csproj (all TFMs)", "latest": "18.11.0 (latest 17.x: 17.14.1)"}
+  ],
+  "targets": ["client"],
+  "rulebookPaths": ["tests/**", ".github/workflows/tests.yml", "coverlet.runsettings"],
+  "rules": [
+    {
+      "rule": "Keep the assembly-wide [assembly: CollectionBehavior(DisableTestParallelization = true)] in TestBase.cs. If parallelism is ever re-enabled, first move every live test into one [CollectionDefinition(..., DisableParallelization = true)] collection and give tests that mutate ambient state (thread culture, environment) the same treatment.",
+      "why": "By default each test class is its own collection and classes run in parallel. Live tests would then hit the shared account's rate limit concurrently, and CultureRobustnessTests.RunInCulture, which swaps Thread.CurrentCulture, would leak its culture into whichever test is running beside it.",
+      "where": ["tests/Transloadit.Tests/Tests/TestBase.cs (assembly attribute)", "tests/Transloadit.Tests/Tests/Unit/CultureRobustnessTests.cs RunInCulture", "tests/Transloadit.Tests/Infrastructure/RateLimit.cs Retry"],
+      "sources": ["xunit-parallel"]
+    },
+    {
+      "rule": "Always run `dotnet test` with `-f <tfm>` (as tests.yml and CLAUDE.md do), or pass `-p:TestTfmsInParallel=false` when you must run every TFM. Never run the live suite or an UPDATE_* regeneration across all TFMs at once.",
+      "why": "Starting with the .NET 9 SDK, a multi-targeted test project runs all its TFMs in parallel, in separate processes. DisableTestParallelization only serializes tests inside one process, so a bare `dotnet test` starts nine concurrent live runs against one account.",
+      "where": ["tests/Transloadit.Tests/Transloadit.Tests.csproj TargetFrameworks", ".github/workflows/tests.yml (Run Tests steps)"],
+      "since": ".NET 9 SDK",
+      "sources": ["ms-dotnet-test-vstest", "ms-dotnet9-sdk", "xunit-parallel"]
+    },
+    {
+      "rule": "Pin golden and snapshot regeneration to one TFM in code. Each UPDATE_* branch (UPDATE_GOLDEN, UPDATE_ROBOT_GOLDEN, UPDATE_SNAPSHOTS) writes only under `#if NET8_0`, the SDK-defined symbol for the System.Text.Json reference leg. Under any other TFM it fails with a message naming net8.0 instead of writing. Run regeneration as `-f net8.0 -e UPDATE_...=1`, review the diff, then re-run without the variable on net8.0 and on net461/net48.",
+      "why": "Without the pin, whichever TFM runs writes the file. A Newtonsoft (net461) or parallel multi-TFM run can overwrite the STJ reference. In update mode every case returns before asserting, so the run is green whatever was written, and a golden from the wrong engine becomes the oracle the other engine is checked against.",
+      "where": ["tests/Transloadit.Tests/Tests/Models/SerializationGoldenTests.cs Serializes_To_Golden", "tests/Transloadit.Tests/Tests/Models/AutoPopulatedRobotGoldenTests.cs PopulatedRobot_MatchesCrossProviderGolden", "tests/Transloadit.Tests/Tests/Models/ModelSerializationSnapshotTests.cs ModelsSerializationContract_MatchesSnapshot"],
+      "repoConvention": "Known deviation: all three UPDATE_* branches write under whichever TFM runs. The pin is only a comment ('Regenerate via UPDATE_GOLDEN=1 (writes only under net8.0/STJ)' in SerializationGoldenTests.cs; the same claim in AutoPopulatedRobotGoldenTests.cs). Fix: wrap each write branch in `#if NET8_0 ... #else` and fail with a message naming net8.0 in the `#else` branch.",
+      "sources": ["ms-tfm-symbols", "ms-dotnet-test-vstest", "ms-dotnet9-sdk"]
+    },
+    {
+      "rule": "Feed [Theory] rows with serializable keys (string, primitive, enum, Type) and build the object inside the test, as CaseNames and RobotTypeNames do. Do not pass model instances, dictionaries, or v2-unserializable types such as Guid, Uri or Version as theory arguments.",
+      "why": "In v2, rows that cannot be serialized collapse into a single test case, so individual rows cannot be listed or re-run (Test Explorer, --filter on DisplayName), and one failing robot hides behind one aggregate result. Guid, Uri and Version became serializable only in v3.",
+      "where": ["tests/Transloadit.Tests/Tests/Models/SerializationGoldenTests.cs CaseNames", "tests/Transloadit.Tests/Tests/Models/AutoPopulatedRobotGoldenTests.cs RobotTypeNames", "tests/Transloadit.Tests/Tests/Constants/ConstantsTests.cs ConstantClassNames"],
+      "sources": ["xunit1044"]
+    },
+    {
+      "rule": "Mark every live test class (every TestBase subclass, and any other class that calls the real Transloadit API) with a class-level [Trait(\"Category\", \"Live\")]. Select runs by trait only: the offline gate uses `--filter \"Category!=Live\"` and the live run uses `--filter \"Category=Live\"`. Do not select tests by namespace or class-name substrings.",
+      "why": "A trait states intent on the class itself; a namespace filter does not. TestBase throws in its constructor when appsettings.Tests.json is missing, so a live class outside an `.Api.` namespace breaks the offline gate. An offline class placed under `.Api.` silently drops out of it. A filter that matches nothing still exits 0, so a typo or a lost trait passes green.",
+      "where": ["tests/Transloadit.Tests/Tests/TestBase.cs TestBase()", "tests/Transloadit.Tests/Tests/AssemblyTrackerTests.cs AssemblyTrackerTests", "tests/Transloadit.Tests/Tests/Api/* (13 TestBase subclasses)", "tests/Transloadit.Tests/Tests/Api/BaseParamsTests.cs (namespace Transloadit.Tests.Api)"],
+      "repoConvention": "Known deviation: no class carries the trait yet. The offline gate excludes by substring: --filter \"FullyQualifiedName!~.Api.&FullyQualifiedName!~Transloadit.Tests.Tests.AssemblyTrackerTests.\" (brief and CLAUDE.md), and AssemblyTrackerTests needs a name exclusion because it lives outside `.Api.`. The team has decided to adopt the trait. Fix: add [Trait(\"Category\", \"Live\")] to all 14 TestBase subclasses. Before switching the gate filter, confirm `Category!=Live` selects the same number of tests as the namespace filter. Set RunConfiguration.TreatNoTestsAsError=true for the live leg.",
+      "sources": ["ms-selective-tests", "ms-dotnet-test-vstest"]
+    },
+    {
+      "rule": "Never let an opt-in test report Passed when it did not run. On v2 there is no runtime skip: SkipException and Assert.Skip work only in v3. So keep opt-in tests out of default runs with a trait (for example [Trait(\"Category\", \"OptIn\")]) that both the offline and live filters exclude. When such a test is selected without its enabling variable, fail with a message naming the variable instead of returning. On v3, use `[Fact(Explicit = true)]` or Assert.SkipUnless.",
+      "why": "An early return is reported as Passed. Every normal run then shows the robot and credential existence checks and the docs dump as green while they verified nothing, and a removed robot ships unnoticed. v3 Explicit tests report as not run, and SkipUnless tests report as skipped.",
+      "where": ["tests/Transloadit.Tests/Tests/Api/RobotExistenceApiTests.cs RobotTypeNames/Robot_ExistsInApi", "tests/Transloadit.Tests/Tests/Api/CredentialExistenceApiTests.cs", "tests/Transloadit.Tests/Tests/Tooling/LibraryMetadataDumpTests.cs DumpLibraryMetadata"],
+      "repoConvention": "Known deviation: RobotExistenceApiTests and CredentialExistenceApiTests yield a null sentinel row and `return` when RUN_EXISTENCE_CHECKS != 1, and LibraryMetadataDumpTests returns when DOCS_SYNC_DUMP is unset, so all three report Passed in every ordinary run. Fix: tag the three classes with the opt-in trait and exclude it from the default offline and live filters. Drop the sentinel row and replace each early return with a failure naming the missing variable. Have the docs-sync skill and the existence-check runs select the trait explicitly. On a v3 move, convert to Explicit = true.",
+      "sources": ["xunit-skipexception", "xunit-v3-whatsnew", "ms-selective-tests"]
+    },
+    {
+      "rule": "Async test methods return Task, never async void. Never block on a Task with .Result, .Wait() or GetAwaiter().GetResult() in a test. Do not add ConfigureAwait(false) inside [Fact]/[Theory] methods; non-test helpers may keep it.",
+      "why": "async void tests are deprecated (xUnit1048) and fast-fail at runtime in v3. Blocking calls can deadlock on xUnit's limited test thread pool (xUnit1031). ConfigureAwait(false) in a test method moves the continuation off xUnit's thread pool, which caps how many tests run at once (xUnit1030).",
+      "where": ["tests/Transloadit.Tests/Tests/** (no violations found; the `.Result` hits in TemplatesApiTests are a robot property, not Task.Result)", "tests/Transloadit.Tests/Infrastructure/RateLimit.cs Retry"],
+      "repoConvention": "Sound: CLAUDE.md requires .ConfigureAwait(false) throughout the library. The test project correctly limits it to non-test helpers (RateLimit.Retry), and no test method uses it, which is what xUnit1030 requires.",
+      "sources": ["xunit-analyzers", "xunit1030", "xunit1031", "xunit-v3-migration"]
+    },
+    {
+      "rule": "Use Assert.ThrowsAsync<T>/Throws<T> only when the exact exception type is the contract. Use ThrowsAnyAsync<OperationCanceledException> for cancellation and timeouts. Always await ThrowsAsync, and never pass an async lambda to the synchronous Assert.Throws.",
+      "why": "Throws<T> fails on a derived type, so a correct change in how a timeout is signalled (TaskCanceledException vs OperationCanceledException) breaks the test. Assert.Throws with an async lambda never observes the exception (xUnit2014, error severity).",
+      "where": ["tests/Transloadit.Tests/Tests/AssemblyTrackerTests.cs TestLongDelay_ShortTimeout_ShouldFail", "tests/Transloadit.Tests/Tests/Unit/AssemblyTrackerOfflineTests.cs"],
+      "repoConvention": "Known deviation: the live AssemblyTrackerTests.TestLongDelay_ShortTimeout_ShouldFail asserts ThrowsAsync<TaskCanceledException>, while the offline AssemblyTrackerOfflineTests already uses ThrowsAnyAsync<OperationCanceledException>. Fix: change the live test to ThrowsAnyAsync<OperationCanceledException>.",
+      "sources": ["xunit-assert-throws", "xunit-analyzers"]
+    },
+    {
+      "rule": "Keep the TestBase constructor cheap and free of side effects. Put shared or account-mutating setup in an IClassFixture/ICollectionFixture (the collection definition must live in this assembly) and async setup in IAsyncLifetime, never in a constructor that blocks.",
+      "why": "xUnit creates a new instance of the test class for every test, so TestBase re-reads the config and builds two clients per test. Anything heavier, such as creating templates or credentials, runs once per test, multiplies live calls and leaves account state behind. v2's IAsyncLifetime is Task-based; v3 changes it to ValueTask and IAsyncDisposable, so every fixture you add now is a v3 migration edit.",
+      "where": ["tests/Transloadit.Tests/Tests/TestBase.cs TestBase()"],
+      "sources": ["xunit-shared-context", "xunit-v3-migration"]
+    },
+    {
+      "rule": "Write diagnostics through an injected ITestOutputHelper (Xunit.Abstractions on v2), not Console.WriteLine, and only from inside the running test.",
+      "why": "v2 does not capture Console output, so it is lost. Since 2.9.0, writing to the helper outside the test's lifetime throws InvalidOperationException. ITestOutputHelper moves to the Xunit namespace in v3, so each `using Xunit.Abstractions;` is a migration edit.",
+      "where": ["tests/Transloadit.Tests/Tests/Api/AssemblyLifecycleApiTests.cs _output", "tests/Transloadit.Tests/Tests/Api/ResponseCoverageApiTests.cs _output"],
+      "sources": ["xunit-capturing-output", "xunit-2.9.0", "xunit-v3-migration"]
+    },
+    {
+      "rule": "Bump xunit.runner.visualstudio per TFM group, not globally. net461 stays on 2.4.3. Other .NET Framework TFMs can go to 2.8.2, the last 2.x. 3.0.x needs net472+ (drops net462). 3.1+ and 4.x also need .NET 8+ (drop net6.0/net7.0).",
+      "why": "Adapter 2.5.3 and 2.8.2 ship net462 and net6.0 builds; 2.4.3 ships net452 and netcoreapp2.1; 3.0.2 ships net472 and net6.0; 4.0.1 ships net472 and net8.0. A single bumped adapter leaves some test TFMs with no adapter that loads, and those TFMs then discover zero tests and still exit 0.",
+      "where": ["tests/Transloadit.Tests/Transloadit.Tests.csproj (TFM-conditional xunit.runner.visualstudio ItemGroups)"],
+      "repoConvention": "Hard constraint: net461 deliberately stays on adapter 2.4.3 in its own conditional ItemGroup because no later adapter ships a build net461 can load (2.5.3+ start at net462). Keep it.",
+      "sources": ["nuget-runner-2.4.3", "nuget-runner-2.5.3", "nuget-runner-2.8.2", "nuget-runner-3.0.2", "nuget-runner-4.0.1", "xunit-vs-3.1.0", "ms-dotnet-test-vstest"]
+    },
+    {
+      "rule": "Keep Microsoft.NET.Test.Sdk on the 17.x line (latest 17.14.1) while net6.0/net7.0 are test TFMs, and move it together with the adapter.",
+      "why": "17.8.0 ships net462 and netcoreapp3.1 builds. 18.x ships net462 and net8.0, with the testhost dependency only on net8.0, so the net6.0/net7.0 legs lose their host. Each adapter also sets a floor on Microsoft.TestPlatform.ObjectModel for .NET Framework (2.5.3: >= 17.7.2, 2.8.2: >= 17.10.0, 3.0.2: >= 17.12.0, 4.0.1: >= 17.13.0).",
+      "where": ["tests/Transloadit.Tests/Transloadit.Tests.csproj Microsoft.NET.Test.Sdk"],
+      "sources": ["nuget-testsdk-17.8.0", "nuget-testsdk-18.11.0", "nuget-runner-2.5.3", "nuget-runner-2.8.2", "nuget-runner-3.0.2", "nuget-runner-4.0.1"]
+    },
+    {
+      "rule": "Do not start a v3 migration while the test TFMs include net461, net462, net6.0 or net7.0. Upgrade within v2 to 2.9.3 instead. Keep xunit 2.x and a VSTest adapter, and do not opt `dotnet test` into Microsoft.Testing.Platform in global.json.",
+      "why": "v3 requires .NET Framework 4.7.2+ or .NET 8+, an Exe test project, xunit.v3 packages and adapter 3.0+. Four of the nine test TFMs cannot meet that. v2 is in maintenance mode, and 2.9.3 is expected to be its last release. MTP support is a v3 feature; without the global.json opt-in, `dotnet test` stays on VSTest.",
+      "where": ["tests/Transloadit.Tests/Transloadit.Tests.csproj TargetFrameworks"],
+      "sources": ["xunit-v3-migration", "xunit-releases", "xunit-2.9.3", "xunit-v3-whatsnew", "ms-selective-tests"]
+    },
+    {
+      "rule": "When a test polls the live API (AssemblyTracker, Task.Delay loops), assert the terminal state after the loop before asserting anything else.",
+      "why": "A loop that ends at its attempt cap without asserting goes on to inspect an in-progress body. The test can then pass or fail for the wrong reason. On v2 the only built-in timeout, [Fact(Timeout)], applies only to async tests, and the 2.8.0 notes say it was unreliable under the old parallel algorithm.",
+      "where": ["tests/Transloadit.Tests/Tests/Api/AssemblyLifecycleApiTests.cs CompletedAssembly_ModelMapsEveryDataCarryingKey", "tests/Transloadit.Tests/Tests/Api/AssemblyNotificationsApiTests.cs WaitForNotificationAsync"],
+      "repoConvention": "Known deviation: CompletedAssembly_ModelMapsEveryDataCarryingKey polls up to 40 times but never asserts that status.Base.Ok == ResponseCodes.AssemblyCompleted before checking unmapped keys. Fix: add that assertion right after the loop.",
+      "sources": ["xunit-2.7.0", "xunit-2.8.0"]
+    }
+  ],
+  "bugCategories": [
+    {
+      "name": "live-test-leaks-into-offline-gate",
+      "lookFor": "A class deriving from TestBase, or creating a TransloaditClient from appsettings.Tests.json, without a class-level [Trait(\"Category\", \"Live\")]. Until the trait lands, also any such class whose fully qualified name lacks `.Api.` and is not AssemblyTrackerTests.",
+      "failure": "The offline gate fails on machines without credentials (TestBase throws InvalidOperationException). If the file exists, the gate silently makes live, rate-limited calls.",
+      "severityHint": "blocker",
+      "sources": ["ms-selective-tests", "xunit-shared-context"]
+    },
+    {
+      "name": "offline-test-hidden-by-filter",
+      "lookFor": "An offline test class carrying the Live or OptIn trait, an offline class in a namespace containing `.Api.` while the namespace filter is still in use, or a trait or filter typo that selects zero tests.",
+      "failure": "The test never runs in the offline gate. `dotnet test` exits 0 even when the filter selects nothing.",
+      "severityHint": "confirm",
+      "sources": ["ms-dotnet-test-vstest", "ms-selective-tests"]
+    },
+    {
+      "name": "vacuous-pass",
+      "lookFor": "Tests that return before asserting: env-gated early returns, null sentinel theory rows, UPDATE_* write-and-return branches not pinned to net8.0, polling loops that exit at their cap without asserting, permanent [Fact(Skip = ...)] with no condition for unskipping.",
+      "failure": "Reported green while verifying nothing. A regression in robot existence, golden content or notification delivery ships unnoticed.",
+      "severityHint": "confirm",
+      "sources": ["xunit-skipexception", "xunit-v3-whatsnew", "xunit-config-json", "xunit-analyzers"]
+    },
+    {
+      "name": "exception-type-mismatch",
+      "lookFor": "Assert.Throws/ThrowsAsync<T> where T is a concrete subtype of the contract (TaskCanceledException vs OperationCanceledException). ThrowsAny<Exception> where an engine-neutral type exists (MalformedInputTests uses it deliberately across two engines; confirm it is still needed). Assert.Throws given an async lambda. ThrowsAsync not awaited.",
+      "failure": "Exact-type asserts break on a correct refactor. ThrowsAny<Exception> also passes on NullReferenceException. A non-awaited or sync-wrapped async assertion never fails.",
+      "severityHint": "confirm",
+      "sources": ["xunit-assert-throws", "xunit-analyzers"]
+    },
+    {
+      "name": "ambient-state-leak",
+      "lookFor": "Tests that set Thread.CurrentCulture, environment variables or static fields without restoring them in finally, or that rely on DisableTestParallelization for isolation.",
+      "failure": "Order-dependent failures in unrelated tests (for example date or number formatting under tr-TR/fa-IR), which become nondeterministic as soon as parallelization is enabled.",
+      "severityHint": "confirm",
+      "sources": ["xunit-parallel"]
+    },
+    {
+      "name": "cross-tfm-concurrency",
+      "lookFor": "Docs, scripts or CI steps that run `dotnet test` on the multi-targeted project without -f or TestTfmsInParallel=false, especially with credentials or UPDATE_* set.",
+      "failure": "Up to nine concurrent live runs trip the account rate limit (429s, flaky failures). Concurrent golden writes from different serializers leave a corrupted or wrong-engine golden.",
+      "severityHint": "blocker",
+      "sources": ["ms-dotnet-test-vstest", "ms-dotnet9-sdk"]
+    },
+    {
+      "name": "blocking-async-in-test",
+      "lookFor": ".Result, .Wait() or GetAwaiter().GetResult() on a Task inside a test or fixture, async void test methods.",
+      "failure": "Test-run deadlock or hang (xUnit's limited thread pool). async void tests fail outright after a v3 migration.",
+      "severityHint": "confirm",
+      "sources": ["xunit1031", "xunit-analyzers", "xunit-v3-migration"]
+    },
+    {
+      "name": "theory-row-collapse",
+      "lookFor": "MemberData/ClassData/TheoryData rows carrying model objects, dictionaries, Guid, Uri or Version on v2.",
+      "failure": "All rows report as one test. A single bad row cannot be isolated or re-run, and per-row results are lost in TRX.",
+      "severityHint": "suggestion",
+      "sources": ["xunit1044"]
+    }
+  ],
+  "testing": {
+    "layers": "One xUnit v2 project serves three layers. (1) Offline unit, property-based and serialization tests (Tests/Unit, Tests/Models, SignatureTests, NewRobotsTests) run on every TFM without credentials and gate every change. (2) Golden/snapshot tests (Tests/Models plus tests/Transloadit.Tests/Snapshots) pin the wire contract across the System.Text.Json and Newtonsoft engines; net8.0 is the reference leg that writes goldens, and net461 is the Newtonsoft check. (3) Live integration tests (TestBase subclasses: Tests/Api/*, Tests/AssemblyTrackerTests.cs) prove behaviour against the real API and carry [Trait(\"Category\", \"Live\")]. They run one TFM at a time in tests.yml (net8/9/10 on Linux, net462/472/48 on Windows); net461, net6.0 and net7.0 are never run in CI. Opt-in checks (existence, docs dump) are selected explicitly by trait.",
+    "harness": [
+      "tests/Transloadit.Tests/Tests/TestBase.cs TestBase (live base class, credentials from appsettings.Tests.json)",
+      "tests/Transloadit.Tests/Configuration/TestConfiguration.cs ReadFromAppSettings",
+      "tests/Transloadit.Tests/Infrastructure/FakeHttpMessageHandler.cs (offline HTTP)",
+      "tests/Transloadit.Tests/Infrastructure/CapturingHandler.cs (live body capture)",
+      "tests/Transloadit.Tests/Infrastructure/TestSerializer.cs Default (engine under test)",
+      "tests/Transloadit.Tests/Infrastructure/RateLimit.cs Retry (429 back-off)",
+      "coverlet.runsettings (XPlat code coverage, library only)"
+    ],
+    "commands": [
+      "dotnet test tests/Transloadit.Tests/Transloadit.Tests.csproj -f net8.0 --filter \"Category!=Live&Category!=OptIn\"   (offline gate once the traits land)",
+      "dotnet test tests/Transloadit.Tests/Transloadit.Tests.csproj -f net8.0 --filter \"FullyQualifiedName!~.Api.&FullyQualifiedName!~Transloadit.Tests.Tests.AssemblyTrackerTests.\"   (current offline gate, to be replaced by the trait filter)",
+      "dotnet test tests/Transloadit.Tests/Transloadit.Tests.csproj -f net8.0 -c Release --filter \"Category=Live&Category!=OptIn\"   (live; needs appsettings.Tests.json)",
+      "dotnet test tests/Transloadit.Tests/Transloadit.Tests.csproj -f net8.0 --filter \"FullyQualifiedName~SerializationGoldenTests\" -e UPDATE_GOLDEN=1   (regenerate on the pinned TFM only, then re-run without -e)",
+      "dotnet test tests/Transloadit.Tests/Transloadit.Tests.csproj -f net8.0 --settings coverlet.runsettings --collect \"XPlat Code Coverage\"",
+      "dotnet test tests/Transloadit.Tests/Transloadit.Tests.csproj -f net8.0 --blame-hang-timeout 10m   (diagnose a hung live run)"
+    ],
+    "shuffle": "xUnit v2 has no random-order option. Classes and methods run in an unspecified but stable order, and parallelization is off, so ordering bugs show only as cross-test state leaks. Look for them as the ambient-state-leak category rather than by shuffling.",
+    "mutation": "Not configured. The project does not reference a mutation tool.",
+    "traps": [
+      "A `--filter` that matches nothing exits 0; set RunConfiguration.TreatNoTestsAsError in a runsettings file if the gate must prove it ran something.",
+      "When switching from the namespace filter to `Category!=Live`, compare the selected test counts: the VSTest docs do not say how `!=` treats tests that lack the trait.",
+      "`dotnet test` runs from the output directory: TestConfiguration reads the relative path appsettings.Tests.json, which is only there because the csproj copies it (CopyToOutputDirectory Always).",
+      "Golden paths are resolved with [CallerFilePath], i.e. the source path at compile time; running copied binaries on another machine (--no-build in a different checkout) will not find the Snapshots folder.",
+      "UPDATE_GOLDEN / UPDATE_ROBOT_GOLDEN / UPDATE_SNAPSHOTS make the corresponding tests always pass; never set them in CI.",
+      "Two permanent skips (BillingApiTests, AssembliesApiTests replay) hide coverage; failSkips (v2.5+) in xunit.runner.json would surface them, but there is no xunit.runner.json in the repo.",
+      "The csproj's netstandard2.0 adapter ItemGroup is dead (netstandard2.0 is not a test TFM); the net461 ItemGroup is the one that matters."
+    ],
+    "sources": ["ms-dotnet-test-vstest", "ms-selective-tests", "vstest-filter", "xunit-config-json", "xunit-parallel", "xunit-2.5.0"]
+  },
+  "wiring": [
+    {
+      "check": "Every TestBase subclass, and every other class that reaches the live API, carries a class-level [Trait(\"Category\", \"Live\")]. The opt-in classes (RobotExistenceApiTests, CredentialExistenceApiTests, LibraryMetadataDumpTests) also carry the opt-in trait that the default filters exclude.",
+      "failure": "Live tests run in the offline gate, or opt-in checks run (or report Passed) in ordinary runs.",
+      "where": ["tests/Transloadit.Tests/Tests/TestBase.cs", "tests/Transloadit.Tests/Tests/Api/*", "tests/Transloadit.Tests/Tests/AssemblyTrackerTests.cs", "tests/Transloadit.Tests/Tests/Tooling/LibraryMetadataDumpTests.cs"],
+      "sources": ["ms-selective-tests"]
+    },
+    {
+      "check": "Every xunit.runner.visualstudio PackageReference condition resolves to exactly one version per TFM: net461 gets 2.4.3, every other test TFM gets 2.5.3. A newly added TFM falls into the negated 2.5.3 group and must be compatible with net462 or net6.0 builds.",
+      "failure": "A TFM without a loadable adapter discovers zero tests and reports success.",
+      "where": ["tests/Transloadit.Tests/Transloadit.Tests.csproj"],
+      "sources": ["nuget-runner-2.4.3", "nuget-runner-2.5.3", "ms-dotnet-test-vstest"]
+    },
+    {
+      "check": "appsettings.json, appsettings.Tests.json and TestData/* are Content with CopyToOutputDirectory, because tests read them by relative path from the output directory.",
+      "failure": "Live tests fail at construction, or file-upload tests fail with FileNotFoundException.",
+      "where": ["tests/Transloadit.Tests/Transloadit.Tests.csproj Content items", "tests/Transloadit.Tests/Configuration/TestConfiguration.cs ReadFromAppSettings"],
+      "sources": ["ms-dotnet-test-vstest"]
+    },
+    {
+      "check": "Exactly one assembly-level CollectionBehavior attribute exists (TestBase.cs), and any [CollectionDefinition] lives in this test assembly.",
+      "failure": "A duplicate assembly attribute is a compile error. A collection definition in another assembly is ignored, so its fixture is never shared.",
+      "where": ["tests/Transloadit.Tests/Tests/TestBase.cs"],
+      "sources": ["xunit-parallel", "xunit-shared-context"]
+    }
+  ],
+  "performance": [
+    {
+      "note": "Global DisableTestParallelization also serializes the offline tests. That is acceptable at the current size. If the offline gate becomes slow, the documented fix is per-collection opt-out (live tests in a DisableParallelization collection) rather than removing the assembly attribute. maxParallelThreads multipliers such as '2x' need v2 2.8+, so 2.5.3 accepts integers only.",
+      "where": ["tests/Transloadit.Tests/Tests/TestBase.cs"],
+      "sources": ["xunit-parallel", "xunit-config-json"]
+    }
+  ],
+  "security": [
+    {
+      "note": "appsettings.Tests.json holds the real AuthKey/AuthSecret and is copied into bin/<cfg>/<tfm>/ on every build. Keep it gitignored, and never upload bin/ or obj/ as CI artifacts. tests.yml writes the file from secrets in a Release environment; keep that job's permissions at contents: read.",
+      "where": ["tests/Transloadit.Tests/Transloadit.Tests.csproj Content appsettings.Tests.json", ".github/workflows/tests.yml Create Test Settings"],
+      "sources": ["ms-dotnet-test-vstest"]
+    },
+    {
+      "note": "ITestOutputHelper output and assertion messages go into runner output, XML/TRX results and Test Explorer. Never write the secret, a computed signature, signed params/query strings or Smart CDN signed URLs to them. Log assembly ids and status codes only. Under auth stakes, a leaked secret in a CI log is a credential compromise.",
+      "where": ["tests/Transloadit.Tests/Tests/Api/AssemblyLifecycleApiTests.cs _output", "tests/Transloadit.Tests/Tests/Api/ResponseCoverageApiTests.cs _output"],
+      "sources": ["xunit-capturing-output"]
+    },
+    {
+      "note": "No GitHub security advisories are recorded for xunit* or Microsoft.TestPlatform* NuGet packages as of the research date.",
+      "sources": ["ghsa-xunit", "ghsa-testplatform"]
+    }
+  ],
+  "upgrade": {
+    "pins": [
+      "xunit 2.5.3: tests/Transloadit.Tests/Transloadit.Tests.csproj (unconditional)",
+      "xunit.runner.visualstudio 2.5.3: same csproj, condition TFM != net461 and != netstandard2.0",
+      "xunit.runner.visualstudio 2.4.3: same csproj, condition TFM == net461 (and the dead netstandard2.0 group)",
+      "Microsoft.NET.Test.Sdk 17.8.0: same csproj (unconditional; a commented-out 15.9.2 line hints at an earlier net461 workaround)",
+      "coverlet.collector 6.0.0: same csproj (used by coverlet.runsettings)"
+    ],
+    "lockStep": [
+      "xunit core and xunit.runner.visualstudio: same major family (v2 core with a 2.x adapter or a 3.x/4.x adapter; v3 core needs adapter 3.0+)",
+      "xunit.runner.visualstudio and Microsoft.NET.Test.Sdk: each adapter sets a floor on Microsoft.TestPlatform.ObjectModel for .NET Framework (2.5.3 needs 17.7.2+, 2.8.2 needs 17.10.0+, 3.0.2 needs 17.12.0+, 4.0.1 needs 17.13.0+)",
+      "Test TFM list and adapter/Test.Sdk versions: net461 caps the adapter at 2.4.3, net462 caps it at 2.8.2, net6.0/net7.0 cap it at 3.0.x and Test.Sdk at 17.x"
+    ],
+    "releaseNotes": [
+      "https://xunit.net/releases/",
+      "https://xunit.net/releases/v2/2.5.0",
+      "https://xunit.net/releases/v2/2.6.0",
+      "https://xunit.net/releases/v2/2.7.0",
+      "https://xunit.net/releases/v2/2.8.0",
+      "https://xunit.net/releases/v2/2.9.0",
+      "https://xunit.net/releases/v2/2.9.3",
+      "https://xunit.net/releases/visualstudio/3.1.0",
+      "https://github.com/microsoft/vstest/releases/tag/v18.0.0"
+    ],
+    "migrationGuides": [
+      "https://xunit.net/docs/getting-started/v3/migration",
+      "https://xunit.net/docs/getting-started/v3/whats-new"
+    ],
+    "deprecationsInUse": []
+  },
+  "sources": {
+    "xunit-parallel": {"url": "https://xunit.net/docs/running-tests-in-parallel", "title": "Running Tests in Parallel", "version": "v2 and v3", "accessed": "2026-11-09"},
+    "xunit-shared-context": {"url": "https://xunit.net/docs/shared-context", "title": "Shared Context between Tests", "version": "v2 and v3", "accessed": "2026-11-09"},
+    "xunit-capturing-output": {"url": "https://xunit.net/docs/capturing-output", "title": "Capturing Output", "version": "v2 and v3", "accessed": "2026-11-09"},
+    "xunit-config-json": {"url": "https://xunit.net/docs/config-xunit-runner-json", "title": "Configuration files (xunit.runner.json)", "version": "v2 2.1+ and v3", "accessed": "2026-11-09"},
+    "xunit-releases": {"url": "https://xunit.net/releases/", "title": "xUnit.net release notes index", "version": "v2 2.9.3, v3 4.0.3, VS adapter 4.0.1", "accessed": "2026-11-09"},
+    "xunit-2.5.0": {"url": "https://xunit.net/releases/v2/2.5.0", "title": "Core Framework v2 2.5.0 release notes", "version": "2.5.0", "accessed": "2026-11-09"},
+    "xunit-2.6.0": {"url": "https://xunit.net/releases/v2/2.6.0", "title": "Core Framework v2 2.6.0 release notes", "version": "2.6.0", "accessed": "2026-11-09"},
+    "xunit-2.7.0": {"url": "https://xunit.net/releases/v2/2.7.0", "title": "Core Framework v2 2.7.0 release notes", "version": "2.7.0", "accessed": "2026-11-09"},
+    "xunit-2.8.0": {"url": "https://xunit.net/releases/v2/2.8.0", "title": "Core Framework v2 2.8.0 release notes", "version": "2.8.0", "accessed": "2026-11-09"},
+    "xunit-2.9.0": {"url": "https://xunit.net/releases/v2/2.9.0", "title": "Core Framework v2 2.9.0 release notes", "version": "2.9.0", "accessed": "2026-11-09"},
+    "xunit-2.9.3": {"url": "https://xunit.net/releases/v2/2.9.3", "title": "Core Framework v2 2.9.3 release notes", "version": "2.9.3", "accessed": "2026-11-09"},
+    "xunit-v3-migration": {"url": "https://xunit.net/docs/getting-started/v3/migration", "title": "Migrating Unit Tests from v2 to v3", "version": "v3", "accessed": "2026-11-09"},
+    "xunit-v3-whatsnew": {"url": "https://xunit.net/docs/getting-started/v3/whats-new", "title": "What's New in v3", "version": "v3", "accessed": "2026-11-09"},
+    "xunit-skipexception": {"url": "https://api.xunit.net/v3/1.1.0/Xunit.Sdk.SkipException.html", "title": "SkipException API reference ('only works in v3 and later')", "version": "xunit.v3 1.1.0", "accessed": "2026-11-09"},
+    "xunit-vs-3.1.0": {"url": "https://xunit.net/releases/visualstudio/3.1.0", "title": "xunit.runner.visualstudio 3.1.0 release notes", "version": "3.1.0", "accessed": "2026-11-09"},
+    "xunit-assert-throws": {"url": "https://api.xunit.net/v3/3.0.0/v3.3.0.0-Xunit.Assert.Throws.html", "title": "Assert.Throws API reference", "version": "xunit.v3 3.0.0 assertion library (v2 page not available)", "accessed": "2026-11-09"},
+    "xunit-analyzers": {"url": "https://xunit.net/xunit.analyzers/rules/", "title": "xUnit.net Analyzer Rules", "version": "xunit.analyzers 2.3.0 (rules marked v2 and v3)", "accessed": "2026-11-09"},
+    "xunit1030": {"url": "https://xunit.net/xunit.analyzers/rules/xUnit1030", "title": "xUnit1030: Do not call ConfigureAwait in test method", "version": "v2 and v3", "accessed": "2026-11-09"},
+    "xunit1031": {"url": "https://xunit.net/xunit.analyzers/rules/xUnit1031", "title": "xUnit1031: Do not use blocking task operations in test method", "version": "v2 and v3", "accessed": "2026-11-09"},
+    "xunit1044": {"url": "https://xunit.net/xunit.analyzers/rules/xUnit1044", "title": "xUnit1044: Avoid using TheoryData type arguments that are not serializable", "version": "v2 and v3", "accessed": "2026-11-09"},
+    "nuget-runner-2.4.3": {"url": "https://www.nuget.org/packages/xunit.runner.visualstudio/2.4.3", "title": "xunit.runner.visualstudio 2.4.3 on NuGet", "version": "2.4.3", "accessed": "2026-11-09"},
+    "nuget-runner-2.5.3": {"url": "https://www.nuget.org/packages/xunit.runner.visualstudio/2.5.3", "title": "xunit.runner.visualstudio 2.5.3 on NuGet", "version": "2.5.3", "accessed": "2026-11-09"},
+    "nuget-runner-2.8.2": {"url": "https://www.nuget.org/packages/xunit.runner.visualstudio/2.8.2", "title": "xunit.runner.visualstudio 2.8.2 on NuGet", "version": "2.8.2", "accessed": "2026-11-09"},
+    "nuget-runner-3.0.2": {"url": "https://www.nuget.org/packages/xunit.runner.visualstudio/3.0.2", "title": "xunit.runner.visualstudio 3.0.2 on NuGet", "version": "3.0.2", "accessed": "2026-11-09"},
+    "nuget-runner-4.0.1": {"url": "https://www.nuget.org/packages/xunit.runner.visualstudio/4.0.1", "title": "xunit.runner.visualstudio 4.0.1 on NuGet", "version": "4.0.1", "accessed": "2026-11-09"},
+    "nuget-testsdk-17.8.0": {"url": "https://www.nuget.org/packages/Microsoft.NET.Test.Sdk/17.8.0", "title": "Microsoft.NET.Test.Sdk 17.8.0 on NuGet", "version": "17.8.0", "accessed": "2026-11-09"},
+    "nuget-testsdk-18.11.0": {"url": "https://www.nuget.org/packages/Microsoft.NET.Test.Sdk/18.11.0", "title": "Microsoft.NET.Test.Sdk 18.11.0 on NuGet", "version": "18.11.0", "accessed": "2026-11-09"},
+    "ms-selective-tests": {"url": "https://learn.microsoft.com/en-us/dotnet/core/testing/selective-unit-tests?pivots=xunit", "title": "Run selected unit tests (xUnit)", "version": "dotnet test (VSTest), updated 2026-11", "accessed": "2026-11-09"},
+    "ms-dotnet-test-vstest": {"url": "https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-test-vstest", "title": "dotnet test command with VSTest", "version": ".NET 6 SDK and later, updated 2026-09", "accessed": "2026-11-09"},
+    "ms-dotnet9-sdk": {"url": "https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-9/sdk", "title": "What's new in the SDK and tooling for .NET 9", "version": ".NET 9 SDK", "accessed": "2026-11-09"},
+    "ms-tfm-symbols": {"url": "https://learn.microsoft.com/en-us/dotnet/standard/frameworks", "title": "Target frameworks in SDK-style projects (preprocessor symbols)", "version": "SDK-style projects, updated 2026-04", "accessed": "2026-11-09"},
+    "ghsa-xunit": {"url": "https://github.com/advisories?query=ecosystem%3Anuget+xunit", "title": "GitHub Advisory Database: NuGet xunit", "version": "all", "accessed": "2026-11-09"},
+    "ghsa-testplatform": {"url": "https://github.com/advisories?query=ecosystem%3Anuget+Microsoft.TestPlatform", "title": "GitHub Advisory Database: NuGet Microsoft.TestPlatform", "version": "all", "accessed": "2026-11-09"},
+    "vstest-filter": {"url": "https://github.com/microsoft/vstest/blob/main/docs/filter.md", "title": "VSTest TestCase filter", "version": "vstest main", "accessed": "2026-11-09"},
+    "vstest-18.0.0": {"url": "https://github.com/microsoft/vstest/releases/tag/v18.0.0", "title": "vstest 18.0.0 release", "version": "18.0.0", "accessed": "2026-11-09"}
+  },
+  "notReached": [
+    "v2 API reference for Assert.Throws/ThrowsAny: api.xunit.net shows only v3 pages, and source.dot.net ExceptionAsserts.cs returned 404. The exact-type rule cites the xunit.v3 3.0.0 page (same assertion library lineage). The v2 2.5.3 behaviour is inferred from it, not read.",
+    "A documented v2 runtime-skip mechanism: none found. The SkipException docs say dynamic skip works only in v3 and later. The only v2 option found is the third-party Xunit.SkippableFact package, which is not an official source and would add a dependency, so the opt-in rule uses trait selection plus explicit failure instead.",
+    "Whether [Trait] on a base class is inherited by derived test classes in v2: no official source found. The rule therefore puts the trait on each subclass.",
+    "How the VSTest filter operators != and !~ treat tests that lack the trait (Category!=Live on untagged tests): vstest docs/filter.md does not say. Verify by comparing test counts.",
+    "vstest 18.0.0 release notes list 'Error on unsupported tfms' without detail. Dropping net6.0/net7.0 in Test.Sdk 18.x is inferred from the NuGet framework listing, not stated in release notes.",
+    "Whether Microsoft.NET.Test.Sdk 17.8.0 restores cleanly for net461 (the package lists net462 and netcoreapp3.1 only): not documented. It needs a local restore to confirm."
+  ],
+  "questions": [
+    "Microsoft.NET.Test.Sdk 17.8.0 has no net461 build, and the csproj keeps a commented-out 15.9.2 line for net461. Does the net461 leg actually restore and run today? It is not in tests.yml, so nothing would notice if it broke.",
+    "net461, net6.0 and net7.0 are test TFMs but never run in CI. Should they be added to the matrix, or dropped from the test project? Dropping net461/net462/net6.0/net7.0 is what unblocks adapter 3.x/4.x and xunit v3 (whose Explicit/SkipUnless replace the v2 opt-in workaround).",
+    "Opt-in trait name: the pack suggests [Trait(\"Category\", \"OptIn\")] next to Category=Live. Confirm the name, and whether the docs-sync skill's DOCS_SYNC_DUMP run can select it by filter.",
+    "Upgrade within v2 (xunit 2.9.3, adapter 2.8.2 for net462+ and still 2.4.3 for net461)? Behaviour changes to check: 2.6.0 assertion overload ambiguities on net6+, 2.7.0 Timeout on non-async tests fails, 2.9.0 TestOutputHelper use outside the test throws."
+  ]
+}

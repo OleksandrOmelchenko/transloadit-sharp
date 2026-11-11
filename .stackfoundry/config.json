@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "clients": ["claude-code"],
+  "docsRoot": "docs",
+  "researchRefreshDays": 90,
+  "defaultEffort": "standard"
+}
