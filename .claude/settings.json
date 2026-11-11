@@ -1,0 +1,13 @@
+{
+  "extraKnownMarketplaces": {
+    "stackfoundry": {
+      "source": {
+        "source": "github",
+        "repo": "OleksandrOmelchenko/stackfoundry"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "stackfoundry@stackfoundry": true
+  }
+}

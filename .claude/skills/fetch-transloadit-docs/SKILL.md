@@ -5,70 +5,76 @@ description: Fetch the authoritative parameter spec for a Transloadit Robot or A
 
 # Fetch Transloadit docs
 
-Pull the authoritative parameter list for a Robot or API endpoint so a C# model maps exactly. The reliable source **for parameters** is Transloadit's machine-readable **`llms-full.txt`**, which contains a **Zod schema** for every robot — exact keys, types, defaults, and descriptions. The rendered HTML pages and per-robot `.md` pages are JS stubs that omit parameters, so do **not** rely on `WebFetch` against them for the parameter list.
+Pull the authoritative parameter list for a Robot or API endpoint so a C# model maps exactly. For a whole-library drift report (everything that's new or changed), use the **transloadit-docs-sync** skill instead. Its `snapshot_docs.py` extracts the same sources for every robot and endpoint at once.
 
-## ⚠️ The LLM index can be stale — verify against the live docs page
+## Sources (strongest first)
 
-`llms-full.txt` / `llms.txt` are **not authoritative for whether a robot exists or is current**. They lag behind the live docs and have listed robots (with full schemas) that either 404 (no published docs page — e.g. `/document/extract`, `/mega/import`, `/image/enhance`) or are marked removed (e.g. `/edgly/deliver`). So **before implementing** a robot and **after** (as a final check), verify it exists as a published docs page.
+1. **The robot's Markdown page:** `https://transloadit.com/docs/robots/<slug>.md`. It lists every parameter as `### \`name\`` under `## Parameters`, followed by its description and a `Type:` line, and has a `Stage:` line (`alpha`/`beta`/`ga`/`removed`). This is the live site's content.
+2. **`https://transloadit.com/openapi.json`** (OpenAPI 3.1, ~1.2 MB). It has:
+   - every REST operation with its request and response schemas
+   - the credential `type` enum
+   - a step-schema variant per robot (`properties.robot.const == "/x/y"`), with the same params as the `.md` page
+3. **`llms-full.txt`** (~1.6 MB). Robot params appear as `##### \`param\`` headings under `#### \`/x/y\`` in its `### Robot parameters` section. It **no longer contains Zod schemas**. It lags the site, so use it only as a fallback.
 
-**Use reliable, server-side signals — NOT `WebFetch`.** `WebFetch` renders/summarizes these JS SPA pages with a small model and has been observed to **fabricate plausible content (fake headings, fake "beta/ga" stages) for pages that actually 404** — do not trust it for existence/status. Instead:
+## ⚠️ Verify the robot is published before implementing it
 
-1. **Sitemap** (authoritative list of published pages):
+The `llms*` indexes and `openapi.json` are **not authoritative for whether a robot is current**. They have listed robots whose docs page 404s (e.g. `/image/copyrightdetect`) or is marked `removed` (e.g. `/edgly/deliver`). Use reliable server-side signals, **not `WebFetch`**. `WebFetch` summarizes these SPA pages with a small model and has fabricated plausible content for pages that 404.
+
+1. **Sitemap**, the authoritative list of published pages:
    ```sh
-   curl -sSL https://transloadit.com/sitemap.xml | grep -oE 'docs/robots/[a-z-]+' | sort -u
+   curl -sSL https://transloadit.com/sitemap.xml | grep -oE 'docs/robots/[a-z0-9-]+/' | sort -u
    ```
-   If the robot's slug is **not** in the sitemap, its docs page is not published — treat it as not available.
-2. **HTTP status + server-rendered `<title>`** (the title is rendered server-side even on the SPA):
+2. **HTTP status, `Stage:` and `<title>`:**
    ```sh
-   curl -sS -o /dev/null -w '%{http_code}\n' -L "https://transloadit.com/docs/robots/<slug>/"
-   curl -sSL "https://transloadit.com/docs/robots/<slug>/" | grep -oiE '<title>[^<]*</title>'
+   curl -sS -o /dev/null -w '%{http_code}\n' -L "https://transloadit.com/docs/robots/<slug>.md"
+   curl -sSL "https://transloadit.com/docs/robots/<slug>.md" | grep -m1 '^Stage:'
    ```
-   A real page returns `200` with `<title>/x/y | Transloadit</title>`; a missing one returns `404` with `<title>404 - Not Found | Transloadit</title>`.
+   A real page returns `200` with a `Stage:` line. A missing one returns `404`.
 
-If the robot is **404 / not in the sitemap / removed → do not implement it** (and if it already exists in the repo, flag it for removal). Trust the sitemap + HTTP/title over the LLM index whenever they disagree.
+If the robot is 404, absent from the sitemap, or `Stage: removed`, **do not implement it**. If the repo already has it, flag it for removal.
 
 ## Slug mapping
 
-A robot's Assembly path maps to a docs slug by dropping the leading slash and replacing slashes with hyphens: `/image/resize` → `image-resize`, `/ftp/import` → `ftp-import`.
+A robot's Assembly path maps to a docs slug by dropping the leading slash and replacing the remaining slash with a hyphen: `/image/resize` → `image-resize`, `/ftp/import` → `ftp-import`.
 
-## Robots — primary method (curl + grep the Zod schema)
+## Robots: fetch the parameter list
 
-1. Download the full dump once per session to your scratch dir (it is ~650 KB / ~13k lines; `WebFetch` truncates it, so use `curl`):
-   ```sh
-   curl -sSL https://transloadit.com/llms-full.txt -o "$SCRATCH/llms-full.txt"
-   ```
-2. Find the robot's section anchor (each of the ~95 robots has one `[/x/y docs](...)` line):
-   ```sh
-   grep -n "\[/image/resize docs\]" "$SCRATCH/llms-full.txt"
-   ```
-3. Read from that line to the **next** `[/… docs](https://transloadit.com/docs/robots/` anchor — that span is the robot's `const xxxSchema = z.object({ … })` block. Read it with the Read tool (offset/limit) rather than dumping the whole file.
-4. The robot index (slug + one-line description for every robot) is `https://transloadit.com/llms.txt` (~230 lines) — handy for confirming the exact path/slug.
+```sh
+curl -sSL https://transloadit.com/docs/robots/<slug>.md -o "$SCRATCH/<slug>.md"
+grep -nE '^### `' "$SCRATCH/<slug>.md"             # one line per parameter
+```
 
-## Zod → C# mapping (how to read the schema)
+Read the file with the Read tool to get each parameter's description, `Type:` and default. Parameters that every robot lists, or every robot of one kind (`use`, `result`, `queue`, `force_accept`, `ignore_errors`, `output_meta`, `interpolate`, `credentials`, `path`, …), live on the base classes in `src/Transloadit/Models/Robots/RobotBase.cs`. Pick the base class that provides them; don't re-declare them.
 
-| Zod in `llms-full.txt` | C# in this repo |
+## `Type:` → C# mapping
+
+| `Type:` on the page | C# in this repo |
 |---|---|
-| `z.string()` | `string` |
-| `z.number().int().gte(1).lte(25000)` | `int?` |
-| `z.number()` (non-int) | `double?` |
-| `z.boolean()` / `z.union([z.boolean(), z.enum(['true','false'])])` | `bool?` |
-| `z.enum(['a','b'])` / `.literal('x')` | `string` + add/reuse a `Constants/` class, `<see cref>` it |
-| `z.union([z.string(), z.array(z.string())])` | `AnyOf<string, List<string>>` |
-| `z.union([z.boolean(), z.object(...)])` | `AnyOf<bool, SomeModel>` |
-| `.describe('...')` | the property's `///` `<summary>` text |
-| `.default(x)` | note `<para>Default: <c>x</c></para>` |
-| `.optional()` / `.default(...)` | nullable value type (`?`); reference types stay plain (no `string?`) |
+| `string` | `string` |
+| `number` (integral by its description/default) | `int?` |
+| `number` (fractional) | `double?` |
+| `string \| number` | `AnyOf<string, int>` (or `AnyOf<string, double>`), following a sibling with the same shape |
+| `boolean` | `bool?` |
+| `a \| b \| c` (literal choices) | `string` + add/reuse a `Constants/` class, `<see cref>` it |
+| `Array<string>` | `List<string>` |
+| `string \| Array<string>` | `AnyOf<string, List<string>>` |
+| `boolean \| Array<…>` | `AnyOf<bool, List<string>>` |
+| `object` / `Record<string, …>` | a model class, or `Dictionary<string, object>` when the shape is open |
+| `… \| null` | nullable value type (`?`); reference types stay plain (no `string?`) |
 
-Shared sub-schemas (`IgnoreErrorsSchema`, `UseSchema`, `OutputMetaSchema`, `ResultSchema`, `ForceAcceptSchema`) are already modeled on the base classes in `src/Transloadit/Models/Robots/RobotBase.cs` — don't re-declare them; pick the base class that provides them.
+The description text becomes the property's `///` `<summary>`. A documented default goes in `<para>Default: <c>x</c></para>`.
 
 ## API endpoints
 
-For service endpoints, use the API markdown pages via `curl` (some are non-empty, some 404 depending on slug):
+`openapi.json` is the most precise source. For example, to list operations and read one operation's response fields:
+
 ```sh
-curl -sSL https://transloadit.com/docs/api/authentication.md
+curl -sSL https://transloadit.com/openapi.json -o "$SCRATCH/openapi.json"
+python -I -c "import json,sys; o=json.load(open(sys.argv[1],encoding='utf-8')); [print(m.upper(),p) for p,v in o['paths'].items() for m in v]" "$SCRATCH/openapi.json"
 ```
-Discover the correct slug from the index at `https://transloadit.com/docs/api/`. The intro sections of `llms-full.txt` / `llms.txt` also describe Assembly Instructions and auth.
+
+Schemas are `$ref`s into `components.schemas`, which have hash-like names: resolve them, then flatten `allOf`/`anyOf`/`oneOf`, skipping error variants (`required: ["error"]`). The prose page `https://transloadit.com/docs/api/<slug>.md` adds explanations. Discover slugs from the `docs/api/` entries in `sitemap.xml`.
 
 ## Cross-check (required)
 
-Reconcile the fetched spec against a **sibling class in the same folder** — it is the source of truth for this repo's idioms (`AnyOf<>`, `Constants/`, nullable value types, doc style). If docs and siblings disagree on a shape, follow the sibling and note the discrepancy to the user. Downloaded files are cached in scratch for the session; re-`curl` only if you suspect staleness.
+Reconcile the fetched spec against a **sibling class in the same folder**. It's the source of truth for this repo's idioms (`AnyOf<>`, `Constants/`, nullable value types, doc style). If the docs and the siblings disagree on a shape, follow the sibling and note the discrepancy to the user. Downloaded files are cached in scratch for the session; re-`curl` only if you suspect staleness.

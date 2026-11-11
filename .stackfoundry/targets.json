@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "docsRoot": "docs",
+  "defaultBranch": "master",
+  "ci": {"provider": "github-actions", "cli": "gh run view <id> --log-failed"},
+  "targets": [
+    {
+      "name": "client",
+      "summary": "Transloadit Sharp: multi-targeted (net452..net10.0) .NET client library for the Transloadit REST API, published to nuget.org as `Transloadit` and called from third-party applications.",
+      "paths": ["src/Transloadit/**"],
+      "testPaths": ["tests/Transloadit.Tests/**"],
+      "packs": [
+        "language-csharp",
+        "app-model-dotnet-library",
+        "capability-system-text-json",
+        "capability-newtonsoft-json",
+        "tooling-xunit",
+        "tooling-cscheck",
+        "tooling-coverlet",
+        "tooling-github-actions"
+      ],
+      "exposure": "public",
+      "stakes": ["auth", "data-integrity"],
+      "webUi": false,
+      "profile": ".stackfoundry/targets/client.md",
+      "gate": {
+        "build": ["dotnet build Transloadit.slnx -c Release"],
+        "test": [
+          "dotnet test tests/Transloadit.Tests/Transloadit.Tests.csproj -c Release -f net10.0 --no-build --filter \"FullyQualifiedName!~.Api.&FullyQualifiedName!~Transloadit.Tests.Tests.AssemblyTrackerTests.\"",
+          "dotnet test tests/Transloadit.Tests/Transloadit.Tests.csproj -c Release -f net48 --no-build --filter \"FullyQualifiedName!~.Api.&FullyQualifiedName!~Transloadit.Tests.Tests.AssemblyTrackerTests.\"",
+          "dotnet test tests/Transloadit.Tests/Transloadit.Tests.csproj -c Release -f net461 --no-build --filter \"FullyQualifiedName!~.Api.&FullyQualifiedName!~Transloadit.Tests.Tests.AssemblyTrackerTests.\""
+        ],
+        "preconditions": [
+          ".NET SDK 10.x on PATH (no global.json pins it yet); the net10.0 TFM needs it",
+          "Windows with the .NET Framework 4.6.1+ runtime for the net461/net48 legs",
+          "tests/Transloadit.Tests/appsettings.Tests.json exists (gitignored; a copy of appsettings.json with empty values is enough for the offline filter)",
+          "The test legs use --no-build, so the build command runs first"
+        ]
+      },
+      "tests": [
+        {
+          "name": "offline",
+          "kind": "unit",
+          "command": "dotnet test tests/Transloadit.Tests/Transloadit.Tests.csproj -c Release -f net10.0 --filter \"FullyQualifiedName!~.Api.&FullyQualifiedName!~Transloadit.Tests.Tests.AssemblyTrackerTests.\"",
+          "affectedCommand": "dotnet test tests/Transloadit.Tests/Transloadit.Tests.csproj -c Release -f net10.0 --filter \"FullyQualifiedName~<TestClassName>\"",
+          "paths": [
+            "tests/Transloadit.Tests/Tests/Unit/**",
+            "tests/Transloadit.Tests/Tests/Models/**",
+            "tests/Transloadit.Tests/Tests/Constants/**",
+            "tests/Transloadit.Tests/Tests/Tooling/**",
+            "tests/Transloadit.Tests/Tests/SignatureTests.cs",
+            "tests/Transloadit.Tests/Tests/SerializationDefaultsTests.cs",
+            "tests/Transloadit.Tests/Tests/NewRobotsTests.cs",
+            "tests/Transloadit.Tests/Tests/ProjectTests.cs"
+          ],
+          "coverage": "dotnet tool restore && dotnet test tests/Transloadit.Tests/Transloadit.Tests.csproj -c Release -f net8.0 --collect:\"XPlat Code Coverage\" --settings coverlet.runsettings --results-directory <out> --filter \"FullyQualifiedName!~.Api.&FullyQualifiedName!~Transloadit.Tests.Tests.AssemblyTrackerTests.\" && dotnet tool run reportgenerator -reports:\"<out>/**/coverage.cobertura.xml\" -targetdir:\"<out>/report\" -reporttypes:\"MarkdownSummaryGithub;TextSummary\""
+        },
+        {
+          "name": "offline-netfx-stj",
+          "kind": "unit",
+          "command": "dotnet test tests/Transloadit.Tests/Transloadit.Tests.csproj -c Release -f net48 --filter \"FullyQualifiedName!~.Api.&FullyQualifiedName!~Transloadit.Tests.Tests.AssemblyTrackerTests.\"",
+          "paths": ["tests/Transloadit.Tests/Tests/Unit/**", "tests/Transloadit.Tests/Tests/Models/**"]
+        },
+        {
+          "name": "offline-newtonsoft",
+          "kind": "unit",
+          "command": "dotnet test tests/Transloadit.Tests/Transloadit.Tests.csproj -c Release -f net461 --filter \"FullyQualifiedName!~.Api.&FullyQualifiedName!~Transloadit.Tests.Tests.AssemblyTrackerTests.\"",
+          "paths": ["tests/Transloadit.Tests/Tests/Unit/**", "tests/Transloadit.Tests/Tests/Models/**"],
+          "covers": ["src/Transloadit/Serialization/**", "src/Transloadit/Models/**", "src/Transloadit/TransloaditClient.cs"]
+        },
+        {
+          "name": "live-api",
+          "kind": "integration",
+          "command": "dotnet test tests/Transloadit.Tests/Transloadit.Tests.csproj -c Release -f net8.0 --filter \"FullyQualifiedName~.Api.|FullyQualifiedName~Transloadit.Tests.Tests.AssemblyTrackerTests.\"",
+          "paths": ["tests/Transloadit.Tests/Tests/Api/**", "tests/Transloadit.Tests/Tests/AssemblyTrackerTests.cs"],
+          "covers": ["src/Transloadit/Services/**", "src/Transloadit/TransloaditClient.cs", "src/Transloadit/Utilities/AssemblyTracker.cs", "src/Transloadit/Models/**"]
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {"glob": "readme.md", "targets": ["client"], "note": "packed into the nupkg as PackageReadmeFile; examples must stay runnable"},
+    {"glob": "icon.png", "targets": ["client"], "note": "packed as PackageIcon"},
+    {"glob": "LICENSE", "targets": ["client"], "note": "packed as PackageLicenseFile"},
+    {"glob": ".github/workflows/**", "targets": ["client"], "note": "the only CI; manual dispatch only"},
+    {"glob": "Directory.Build.props", "targets": ["client"], "note": "framework-conditional package refs for every project"},
+    {"glob": "Transloadit.slnx", "targets": ["client"]},
+    {"glob": ".editorconfig", "targets": ["client"], "note": "analyzer severities feed TreatWarningsAsErrors"},
+    {"glob": ".config/dotnet-tools.json", "targets": ["client"], "note": "reportgenerator for coverage"},
+    {"glob": "coverlet.runsettings", "targets": ["client"], "note": "coverage only"}
+  ],
+  "specialists": [
+    {
+      "agent": "security-reviewer",
+      "why": "request signing, inbound notification signature validation, Smart CDN signed URLs, OAuth token requests",
+      "paths": [
+        "src/Transloadit/Utilities/SignatureUtilities.cs",
+        "src/Transloadit/Services/SignatureService.cs",
+        "src/Transloadit/Services/SmartCdnService.cs",
+        "src/Transloadit/Models/Tokens/**"
+      ]
+    },
+    {
+      "agent": "security-reviewer",
+      "why": "models that carry third-party cloud secrets (keys, passwords, private keys)",
+      "paths": ["src/Transloadit/Models/Credentials/**"]
+    },
+    {
+      "agent": "security-reviewer",
+      "why": "the central request pipeline handles auth key, secret and signature",
+      "contains": ["(?i)\\b(AuthSecret|signature|HMAC|AuthenticationHeaderValue|expires)\\b"],
+      "scope": ["src/Transloadit/TransloaditClient.cs", "src/Transloadit/TransloaditClientOptions.cs"]
+    },
+    {
+      "agent": "security-reviewer",
+      "why": "workflows handle publishing credentials (Trusted Publishing OIDC) and test secrets",
+      "paths": [".github/workflows/**"]
+    },
+    {
+      "agent": "csharp-build-reviewer",
+      "why": "repo agent: missing XML docs, nullable slips, framework-incompatible APIs that break the warnings-as-errors multi-target build",
+      "paths": ["src/Transloadit/**/*.cs"]
+    }
+  ],
+  "generated": [
+    "tests/Transloadit.Tests/Snapshots/**",
+    ".claude/skills/transloadit-docs-sync/baseline.json"
+  ],
+  "ignored": [
+    "docs/**",
+    ".claude/**",
+    ".stackfoundry/**",
+    "scripts/**",
+    "CLAUDE.md",
+    ".github/copilot-instructions.md",
+    ".gitignore",
+    ".gitattributes"
+  ],
+  "fullRunTriggers": [
+    "Directory.Build.props",
+    "Transloadit.slnx",
+    "src/Transloadit/Transloadit.csproj",
+    "tests/Transloadit.Tests/Transloadit.Tests.csproj",
+    ".editorconfig",
+    "tests/Transloadit.Tests/.editorconfig",
+    "tests/Transloadit.Tests/Infrastructure/**",
+    "tests/Transloadit.Tests/Fixtures/**",
+    "tests/Transloadit.Tests/Configuration/**",
+    "tests/Transloadit.Tests/Tests/TestBase.cs",
+    "src/Transloadit/Serialization/**"
+  ]
+}
