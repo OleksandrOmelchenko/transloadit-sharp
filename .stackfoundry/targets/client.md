@@ -43,11 +43,11 @@ dotnet test tests/Transloadit.Tests/Transloadit.Tests.csproj -c Release -f net48
 dotnet test tests/Transloadit.Tests/Transloadit.Tests.csproj -c Release -f net461 --no-build --filter "FullyQualifiedName!~.Api.&FullyQualifiedName!~Transloadit.Tests.Tests.AssemblyTrackerTests."
 ```
 
-Status (proven by init): the build **fails**: NuGet audit reports NU1902 for `Microsoft.Build.Tasks.Git` 8.0.0
-(transitive from `Microsoft.SourceLink.GitHub` 8.0.0) and `TreatWarningsAsErrors` makes it an error. With
-`-p:NuGetAudit=false` the build is green and all three test legs pass. The fix is in the language-csharp rulebook
-(global.json, `WarningsNotAsErrors` for NU1901–NU1904 plus an audit job) and the app-model rulebook (drop or bump
-the Source Link pin).
+Status: proven green with NuGet audit on (build plus all three test legs). Source Link comes from the .NET SDK;
+the `Microsoft.SourceLink.GitHub` package reference was removed because its `Microsoft.Build.Tasks.Git` 8.0.0
+dependency raised NU1902, which `TreatWarningsAsErrors` turns into a build error. A new advisory against any
+other package will fail the build the same way until the language-csharp rulebook's fix lands (global.json,
+`WarningsNotAsErrors` for NU1901–NU1904 plus a dedicated audit job).
 
 Preconditions: .NET SDK 10.x; Windows with the .NET Framework 4.6.1+ runtime for net48/net461;
 `tests/Transloadit.Tests/appsettings.Tests.json` present (a copy of `appsettings.json` with empty values is enough

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pluginVersion": "0.1.0",
+  "pluginVersion": "0.2.0",
   "files": {
     ".claude/rules/app-model-dotnet-library.md": {
       "template": "research",
@@ -95,7 +95,7 @@
     ".stackfoundry/guards.json": {
       "template": "profile",
       "templateVersion": "profile",
-      "sha256": "b2ce6f72fb3f3bdad2ec667848f61fd4d43f2dae083cec8d12fa786b0a2ae5f2",
+      "sha256": "cadf64385e127d6681dc5dcfd9d59361494c0a98e9a33d3e6dd90d6da47ed2cd",
       "kind": "generated"
     },
     ".stackfoundry/packs/app-model-dotnet-library/pack.json": {
@@ -149,7 +149,7 @@
     ".stackfoundry/profile.md": {
       "template": "reference/templates/profile.md",
       "templateVersion": "1",
-      "sha256": "40c8dfaa43aae773947d1157aaee4b20170d1c88347c31794ac5b43837edf4ee",
+      "sha256": "d046d379b92ae4af23f61dae7726112bcb6c851b6948b57378ceebd6e501cee6",
       "kind": "generated"
     },
     ".stackfoundry/rules/app-model-dotnet-library.md": {
@@ -227,7 +227,7 @@
     ".stackfoundry/targets/client.md": {
       "template": "reference/templates/target.md",
       "templateVersion": "1",
-      "sha256": "a998a15aeac25bab54abb2809b6a0f656ac04b9563560c96cdf92140fe90741a",
+      "sha256": "bd11ee5cd2ec827a9b28c27829d2986c4e2ea351fb6dd235ae49e446868efe5f",
       "kind": "generated"
     },
     "CLAUDE.md": {

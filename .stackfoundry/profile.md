@@ -42,7 +42,9 @@ dropped target frameworks, and golden-file regeneration.
 
 ## Working agreements
 
-- Git: the owner decides every commit, push, tag and PR (enforced as `guards.json` `git.writes: ask`).
+- Git: Claude commits, pushes, tags or opens a PR only when the user asks for it in plain language in the
+  conversation, never by default; when asked, it does so without a further prompt (`guards.json` `git.writes:
+  allow`, so the policy is behavioural rather than enforced by the hook).
 - Generated files: `tests/Transloadit.Tests/Snapshots/*.json` regenerate only through the `UPDATE_*` variables on
   net8.0; `.claude/skills/transloadit-docs-sync/baseline.json` only through that skill's accept-baseline step
   (enforced by the guard hook).
